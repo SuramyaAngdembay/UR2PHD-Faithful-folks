@@ -1,0 +1,83 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+\title{Premise-Grounded Detection of Unfaithful\\
+Chain-of-Thought Reasoning}
+\author{Suramya Raj Angdembay \and Dikshant Aryal}
+\date{Summer 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{Research Problem}
+
+Large language models can generate fluent chain-of-thought (CoT) explanations
+that appear logical even when the stated reasoning did not support, or was not
+responsible for, the model's final answer. This makes answer accuracy alone an
+insufficient measure of trustworthy reasoning: a model may reach the correct
+answer through an invalid path, rely on an unstated premise, ignore relevant
+evidence, or construct a plausible explanation after already committing to an
+answer. Recent work such as FaithCoT-Bench shows that detecting instance-level
+CoT unfaithfulness remains difficult, particularly for knowledge-intensive
+questions and convincing traces produced by stronger models
+\cite{shen2026faithcot}. Our project will investigate whether explicitly
+representing and verifying the premises behind individual reasoning steps can
+improve the detection and localization of unfaithful CoT reasoning.
+
+\subsection{Initial Approach}
+
+We propose decomposing each CoT into atomic reasoning steps and representing the
+dependencies between those steps as a premise graph. Each step will be checked
+against the question, its declared earlier premises, and relevant external
+evidence. The graph will also identify load-bearing premises for targeted
+counterfactual tests: we will alter or remove a premise and observe whether the
+downstream reasoning and final answer change appropriately. This approach is
+motivated by Premise-Augmented Reasoning Chains, which demonstrates the value of
+explicit premise links for reasoning-error identification
+\cite{mukherjee2025parc}. We plan to evaluate the resulting detector on
+FaithCoT-Bench/FINE-CoT using instance-level F1, step-level error localization,
+counterfactual consistency, and comparisons with whole-trace and step-level
+LLM-as-judge baselines. If time permits, we will explore whether answer
+representations become detectable before the written CoT, following recent
+work on post-hoc reasoning \cite{cox2026decoding}.
+
+\section{Team and LaTeX Practice}
+
+Table~\ref{tab:team} demonstrates a formatted table in LaTeX. Add or replace
+rows if the group has additional members.
+
+\begin{table}[h]
+    \centering
+    \caption{Research team}
+    \label{tab:team}
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Name} & \textbf{Role} \\
+        \midrule
+        Suramya Raj Angdembay & Undergraduate researcher \\
+        Dikshant Aryal & Undergraduate researcher \\
+        Dr. Nick Rahimi & Faculty advisor / graduate mentor \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+As part of the Overleaf and LaTeX tutorial, our group practiced:
+
+\begin{itemize}
+    \item organizing a document with sections and paragraphs;
+    \item formatting tables and bulleted lists;
+    \item adding citations with the \verb|\cite| command; and
+    \item managing references in a separate BibTeX file.
+\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{ur2phd}
+
+\end{document}

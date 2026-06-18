@@ -39,9 +39,34 @@ MCP may be used as implementation infrastructure for tool calls, evidence
 retrieval, and trace logging. It is not the primary research contribution and
 does not replace RAG or provide faithfulness by itself.
 
+## Datasets
+
+**Primary target: FaithCoT-Bench / FINE-CoT** (ICLR 2026) — the only instance-level CoT
+*faithfulness* benchmark, with expert annotations and step-level evidence. Its four domains define
+our core evaluation: **LogiQA** (logical), **TruthfulQA** (factual / common misconceptions),
+**AQuA** (math word problems), and **HLE-Bio** (biomedical, knowledge-intensive). Instance-level
+detection is scored by F1 / accuracy / Cohen's κ; localization is scored against the step-level
+evidence annotations.
+
+**Potential / supporting datasets**, grouped by role (rationale in
+[related-work-and-positioning.md](related-work-and-positioning.md) §4):
+
+| Role | Datasets |
+|---|---|
+| Faithfulness-labeled (evaluation) | **FaithCoT-Bench / FINE-CoT** *(primary)*, GRACE, RFEval |
+| Step-error / first-error localization (baselines) | ProcessBench, DeltaBench, REVEAL, PRM800K, PRMBench, BIG-Bench Mistake |
+| Gold premises → clean counterfactual interventions | FOLIO (FOL-verified premises), StrategyQA (gold decomposition + per-step Wikipedia evidence), EntailmentBank |
+| Knowledge-intensive substrate (trace source / retrieval; *no* faithfulness labels) | CRAG benchmark, HotpotQA, 2WikiMultiHopQA, MMLU-Pro |
+| Controlled math errors | PARC's **PERL** (premise + error annotations) |
+
+**Deprioritized:** plain GSM8K as a faithfulness set — it measures answer correctness, not CoT
+faithfulness; use PERL for controlled math-error checks instead. Always report synthetic-corruption
+vs. real-error results **separately** (synthetic negatives are systematically easier to detect).
+
 ## Documents
 
 - [Research direction](research-direction.md)
 - [Experimental plan](experimental-plan.md)
+- [Related work & positioning](related-work-and-positioning.md)
 - [Literature map](literature-map.md)
 

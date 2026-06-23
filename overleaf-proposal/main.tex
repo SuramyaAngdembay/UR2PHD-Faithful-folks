@@ -14,83 +14,39 @@ Chain-of-Thought Reasoning}
 
 \maketitle
 
-\section{Research Context and Problem Statement}
+\section{Introduction}
 
-Large language models (LLMs) increasingly solve hard problems by emitting a
-chain-of-thought (CoT): a step-by-step natural-language explanation that precedes the
-final answer. These explanations are widely treated as a window into how a model
-reasons, and they are becoming central to AI-safety practices such as CoT monitoring.
-A fluent CoT can nonetheless be \emph{unfaithful}: the stated reasoning may not
-actually support, or be responsible for, the answer the model gives. A model may reach
-an answer before constructing its explanation, rely on an unstated or invalid premise,
-ignore evidence it appears to cite, or arrive at a correct answer through an invalid
-path~\cite{lanham2023measuring, cox2026decoding}. Because final-answer accuracy cannot
-reveal any of these failures, accuracy alone is an insufficient measure of trustworthy
-reasoning.
+\subsection{Research content and problem statement}
 
-This matters wherever reasoning is used to justify a decision---scientific, medical,
-legal, or educational---and wherever CoT is relied upon for oversight: if explanations
-cannot be trusted to reflect the reasoning that produced an answer, they cannot be used
-to audit, debug, or safely supervise a model. The recent FaithCoT-Bench benchmark shows
-that detecting instance-level CoT unfaithfulness remains difficult, and that current
-detectors are weakest precisely where they matter most---on knowledge-intensive
-questions and on the convincing traces produced by stronger
-models~\cite{shen2026faithcot}.
+Large language models can generate fluent chain-of-thought (CoT) explanations
+that appear logical even when the stated reasoning did not support, or was not
+responsible for, the model's final answer. This makes answer accuracy alone an
+insufficient measure of trustworthy reasoning: a model may reach the correct
+answer through an invalid path, rely on an unstated premise, ignore relevant
+evidence, or construct a plausible explanation after already committing to an
+answer. Recent work such as FaithCoT-Bench shows that detecting instance-level
+CoT unfaithfulness remains difficult, particularly for knowledge-intensive
+questions and convincing traces produced by stronger models
+\cite{shen2026faithcot}. Our project will investigate whether explicitly
+representing and verifying the premises behind individual reasoning steps can
+improve the detection and localization of unfaithful CoT reasoning.
 
-\textbf{Problem.} Given a question, a generated CoT, and a final answer, we will
-(1)~predict whether the reasoning trace is faithful, (2)~localize the first step that
-becomes unsupported or causally irrelevant, and (3)~identify the premise or evidence
-item responsible for the failure. We target \emph{observable trace faithfulness}---%
-whether the stated reasoning is sufficiently supported and affects the answer as
-claimed---rather than the stronger mechanistic claim that the text exactly describes the
-model's internal computation. The specific gap we address is that existing detectors
-judge a CoT holistically and perturb it without regard to which parts of the reasoning
-are actually load-bearing.
+\subsection{Initial Approach}
 
-\section{Proposed Solution}
-
-We propose a \emph{premise-grounded} faithfulness detector that converts a free-form CoT
-into an auditable dependency structure and verifies it locally. The pipeline has five
-stages:
-
-\begin{enumerate}
-  \item \textbf{Decompose} the CoT into atomic reasoning steps, each expressing a single
-        claim, inference, or calculation.
-  \item \textbf{Build a premise graph.} Following Premise-Augmented Reasoning Chains
-        (PARC), we represent the trace as a directed acyclic graph in which each step
-        points to the earlier steps, given facts, and external evidence it depends
-        on~\cite{mukherjee2025parc}.
-  \item \textbf{Verify local support} for each step against \emph{only} its declared
-        premises, using two complementary channels: a \emph{logical} channel (a
-        premise-restricted LLM judge, with symbolic execution where the step is
-        formalizable) and a \emph{factual} channel (natural-language inference and
-        retrieved external evidence, behind a retrieval-quality gate that separates
-        retrieval failure from reasoning failure)~\cite{asai2024selfrag}.
-  \item \textbf{Test causal relevance} with graph-guided counterfactual interventions:
-        we use the graph to select load-bearing premises, then remove, replace, or
-        contradict them and observe whether the downstream reasoning and answer change
-        appropriately. Because the targets are chosen from the model's own declared
-        dependencies, these interventions should yield a stronger faithfulness signal
-        than the random or position-based perturbations used by prior
-        work~\cite{lanham2023measuring}.
-  \item \textbf{Aggregate} the structural, evidential, and interventional signals into an
-        instance-level faithfulness label plus a first-unsupported-step localization, via
-        a transparent weighted score or lightweight classifier (no frontier-scale
-        training).
-\end{enumerate}
-
-This design \emph{extends}, rather than re-derives, recent structured-verification work.
-PARC and the Graph-of-Verification framework already build premise/dependency graphs and
-verify steps under their premises, but for \emph{error correctness} in mathematics and
-with an LLM judge alone~\cite{mukherjee2025parc, fang2025gov}; VeriCoT adds neuro-symbolic
-per-step premise checking but likewise targets logical validity rather than
-faithfulness~\cite{feng2025vericot}. Our contribution is to (a)~repurpose the premise
-graph to \emph{select} counterfactual interventions on load-bearing premises, (b)~ground
-step verification in retrieved evidence for the knowledge-intensive regime where holistic
-judges fail~\cite{shen2026faithcot}, and (c)~unify instance-level detection with
-first-unsupported-step localization. The method is model-agnostic and
-black-box/gray-box; a white-box validation using linear probes is an optional later
-extension.
+We propose decomposing each CoT into atomic reasoning steps and representing the
+dependencies between those steps as a premise graph. Each step will be checked
+against the question, its declared earlier premises, and relevant external
+evidence. The graph will also identify load-bearing premises for targeted
+counterfactual tests: we will alter or remove a premise and observe whether the
+downstream reasoning and final answer change appropriately. This approach is
+motivated by Premise-Augmented Reasoning Chains, which demonstrates the value of
+explicit premise links for reasoning-error identification
+\cite{mukherjee2025parc}. We plan to evaluate the resulting detector on
+FaithCoT-Bench/FINE-CoT using instance-level F1, step-level error localization,
+counterfactual consistency, and comparisons with whole-trace and step-level
+LLM-as-judge baselines. If time permits, we will explore whether answer
+representations become detectable before the written CoT, following recent
+work on post-hoc reasoning \cite{cox2026decoding}.
 
 \section{Evaluation and Implementation Plan}
 
@@ -125,51 +81,11 @@ accuracy. \emph{Intervention:} answer-flip rate when a load-bearing premise is p
 consistency measured as a distributional answer shift. \emph{Cost:} tokens,
 verifier/retrieval calls, latency, and estimated cost per example.
 
-\textbf{Success criteria.} The project succeeds if the premise-grounded detector achieves
-at least one of: (i)~a $\geq 5$-point absolute macro-F1 gain over a strong judge baseline
-on a knowledge-intensive subset; (ii)~a clear improvement in first-error or step-level
-localization; (iii)~substantially better sensitivity to critical perturbations without
-increased sensitivity to irrelevant ones; or (iv)~comparable detection using a smaller,
-cheaper judge. We will report confidence intervals and paired significance tests and---%
-following critiques that faithfulness metrics can track answer-choice bias---control for
-accuracy and option bias throughout. Small gains in answer accuracy alone will not be
-treated as success.
 
-\subsection{Timeline}
+\section{Team and LaTeX Practice}
 
-We organize the work as a roughly twelve-week summer effort
-(Table~\ref{tab:timeline}). Each phase produces a concrete, evaluable deliverable, so
-that a useful result exists even if later phases are cut for time. The minimum viable
-study runs through Phase~3; the white-box probe in Phase~4 is a stretch goal.
-
-\begin{table}[h]
-    \centering
-    \caption{Proposed summer timeline (approximately twelve weeks).}
-    \label{tab:timeline}
-    \begin{tabular}{p{0.17\textwidth} p{0.17\textwidth} p{0.54\textwidth}}
-        \toprule
-        \textbf{Phase} & \textbf{Period} & \textbf{Milestones / deliverables} \\
-        \midrule
-        0.~Setup \& baselines & Weeks 1--2 (late June) &
-        Reproduce FaithCoT-Bench baselines; stand up the PARC code and PERL data;
-        identify the weakest task/model combinations. \\
-        1.~Structural detector & Weeks 3--5 (July) &
-        CoT segmentation; premise-link prediction; premise-restricted two-channel local
-        verification (LLM judge + NLI). \\
-        2.~Evidence \& interventions & Weeks 6--8 (late July--Aug.) &
-        Evidence retrieval with a relevance gate for factual premises; graph-guided
-        counterfactual interventions; symbolic checking on the logic (FOLIO) subset. \\
-        3.~Evaluation \& ablations & Weeks 9--10 (mid-Aug.) &
-        Full comparison against baselines; ablations; paired significance tests; cost and
-        qualitative error analysis. \\
-        4.~Writing \& stretch & Weeks 11--12 (late Aug.--Sept.) &
-        Workshop-style write-up; optional white-box (linear-probe) validation if time
-        permits. \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\section{Team}
+Table~\ref{tab:team} demonstrates a formatted table in LaTeX. Add or replace
+rows if the group has additional members.
 
 \begin{table}[h]
     \centering
@@ -181,10 +97,21 @@ study runs through Phase~3; the white-box probe in Phase~4 is a stretch goal.
         \midrule
         Suramya Raj Angdembay & Undergraduate researcher \\
         Dikshant Aryal & Undergraduate researcher \\
-        Dr. Nick Rahimi & Faculty advisor / graduate mentor \\
+        Dr. Nick Rahimi & Faculty advisor \\
+        Aelin MeD & graduate mentor \\
+
         \bottomrule
     \end{tabular}
 \end{table}
+
+As part of the Overleaf and LaTeX tutorial, our group practiced:
+
+\begin{itemize}
+    \item organizing a document with sections and paragraphs;
+    \item formatting tables and bulleted lists;
+    \item adding citations with the \verb|\cite| command; and
+    \item managing references in a separate BibTeX file.
+\end{itemize}
 
 \bibliographystyle{plain}
 \bibliography{ur2phd}

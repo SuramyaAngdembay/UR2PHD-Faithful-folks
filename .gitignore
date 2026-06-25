@@ -19,3 +19,4 @@
 *.swp
 *~
 upstream/
+.env

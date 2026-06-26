@@ -20,6 +20,9 @@ reasoning model).
 - [related-work-and-positioning.md](related-work-and-positioning.md) — **the canonical reference**:
   verified related work (tiered), novelty verdict, ranked extensions, tightened datasets, per-stage
   approaches, CRAG verdict, reviewer objections, BibTeX to-add list.
+- [paper-positioning-blackboxnlp.md](paper-positioning-blackboxnlp.md) — **target venue
+  (BlackboxNLP @ EMNLP 2026) + paper framing**: contributions C1–C3, abstract sketch, positioning
+  vs prior work, experiment status, reviewer objections.
 - [overleaf-proposal/](overleaf-proposal/) — LaTeX proposal (`main.tex`, `ur2phd.bib`).
 - [scripts/](scripts/) — Aquaman env setup + all experiment harnesses (run on the GPU box).
 - [results/](results/) — raw per-trace experiment outputs (intervention v1/v2).
@@ -42,6 +45,12 @@ an **analysis / negative-results paper** (negative results + the post-hoc-on-cor
 polarity inversion), with **white-box/mechanistic** detection of the ft1v2 cases as the evidence-motivated
 forward experiment. (The 2026-06-18 lit/novelty positioning remains valid as background — see related-work doc.)
 
+**Hardened (2026-06-26):** scaled to **4 domains × 4 models** (n=634 complete-feature / 1304 traces) with
+**bootstrap 95% CIs** — F1 (post-hoc-on-correct frontier: every signal's CI includes 0.5, n=270) and F2
+(metric inversion: +0.139 [+0.096, +0.182]) are now **statistically backed**; correctness strongest (0.697\*),
+DAG structure ns (except weakly on math). **Target venue: BlackboxNLP @ EMNLP 2026** — framing in
+`paper-positioning-blackboxnlp.md`.
+
 ## Conventions
 - Citations must be verified before going into a submission; see the provenance caveat in the latest
   notes file. Prefer peer-reviewed venues; mark unrefereed preprints as such (e.g. Corrective-RAG).
@@ -56,9 +65,10 @@ forward experiment. (The 2026-06-18 lit/novelty positioning remains valid as bac
 4. `notes/2026-06-25-finding-intervention-v1-null.md` — v1 intervention null (heuristic targets).
 5. `notes/2026-06-25-finding-intervention-v2-bury.md` — decision-gate: DAG/intervention buried.
 6. `notes/2026-06-25-finding-nli-and-frontier.md` — NLI support null; post-hoc-on-correct frontier.
+7. `notes/2026-06-26-rigorous-scaled-results.md` — scaled 4×4 + bootstrap CIs; F1 & F2 significant.
 
-## Open next steps
-(a) draft the analysis/negative-results paper around the three findings + the white-box hook
-    (into `overleaf-proposal/main.tex`);
-(b) optional white-box pilot on the ft1v2 (post-hoc-on-correct) cases — the one untested mechanism;
-(c) extend runs to the qwen-matched + aqua/HLE_BIO domains if the paper needs broader coverage.
+## Open next steps (BlackboxNLP-targeted — see paper-positioning-blackboxnlp.md)
+(a) validate the **LLM** extractor vs PERL gold (licenses the v2 intervention claim; heuristic was F1 0.57);
+(b) **GRACE** step-level NLI replication (preliminary 2nd benchmark; 40 examples public);
+(c) **white-box pilot** on ft1v2 — highest upside (flips C1 from a null to "the signal is inside");
+(d) write the paper (C1 frontier + C2 metric inversion + C3 rigorous negatives) into `overleaf-proposal/`.

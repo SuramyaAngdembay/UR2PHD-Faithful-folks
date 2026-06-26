@@ -21,16 +21,26 @@ reasoning model).
   verified related work (tiered), novelty verdict, ranked extensions, tightened datasets, per-stage
   approaches, CRAG verdict, reviewer objections, BibTeX to-add list.
 - [overleaf-proposal/](overleaf-proposal/) — LaTeX proposal (`main.tex`, `ur2phd.bib`).
-- [notes/](notes/) — dated session logs. Newest: `notes/2026-06-18-litreview-and-positioning-session.md`.
+- [scripts/](scripts/) — Aquaman env setup + all experiment harnesses (run on the GPU box).
+- [results/](results/) — raw per-trace experiment outputs (intervention v1/v2).
+- [notes/](notes/) — dated session logs + the findings log (see below).
 
-## Current state (as of 2026-06-18)
-- Proposal **re-scoped**: the generic "premise DAG + faithfulness" framing is largely anticipated by
-  recent work (GoV 2506.12509, VeriCoT 2511.04662, Breaking-the-Chain 2603.16475, StepGap 2605.24733;
-  FaithCoT-Bench already benchmarks counterfactual + judge detectors). The **defensible novelty** is
-  (i) premise-DAG-*guided* intervention *selection*, (ii) evidence+NLI grounding in the DAG for
-  knowledge-intensive faithfulness, (iii) DFS "accumulation faithfulness" localization.
-- **CRAG**: not core — adopt only Corrective-RAG's retrieval-*gate* idea (cite Self-RAG); CRAG benchmark
-  is an optional substrate (no faithfulness labels).
+## Current state (as of 2026-06-25)
+**The premise-DAG / intervention thesis was empirically tested and BURIED.** On FaithCoT-Bench
+(truthfulqa+logiqa, llama+qwen, human `unfaithfulness` label), four orthogonal method families all fail
+to beat or augment answer-tracing (`soft_faithfulness`, AUROC ≈ 0.73):
+- premise-DAG structure ≈ chance (AUROC 0.51–0.59);
+- targeted counterfactual interventions: v1 null, v2 weak (g 0.56–0.61) and dominated by `soft`;
+- per-step NLI support: weak (≤0.58), adds ~nothing to `soft` (local entailment ≠ faithfulness).
+
+**The real open frontier** (annotated `faithful_type` split): detecting **post-hoc rationalization on
+*correct* answers (ft1 vs ft2)** — every black-box signal is at chance (≈0.51) there. Methodological
+finding: `soft_faithfulness` *anti-correlates* with human faithfulness (higher for unfaithful traces).
+
+**Pivot:** instance-level detection is saturated by answer-tracing → stop method-hunting. Consolidate into
+an **analysis / negative-results paper** (negative results + the post-hoc-on-correct frontier + the metric
+polarity inversion), with **white-box/mechanistic** detection of the ft1v2 cases as the evidence-motivated
+forward experiment. (The 2026-06-18 lit/novelty positioning remains valid as background — see related-work doc.)
 
 ## Conventions
 - Citations must be verified before going into a submission; see the provenance caveat in the latest
@@ -38,8 +48,17 @@ reasoning model).
 - Add new findings as dated files in `notes/`; keep `related-work-and-positioning.md` as the living
   canonical reference; keep this CLAUDE.md's "Current state" section current.
 
+## Findings log (chronological)
+1. `notes/2026-06-18-litreview-and-positioning-session.md` — lit review + novelty positioning.
+2. `notes/2026-06-25-finding-human-label-baseline.md` — soft/hard = answer-tracing AUC; human
+   `unfaithfulness` is the real target; honest baselines (soft ≈0.73, correctness ≈0.76).
+3. `notes/2026-06-25-exp1-targeted-interventions-spec.md` — Exp-1 design.
+4. `notes/2026-06-25-finding-intervention-v1-null.md` — v1 intervention null (heuristic targets).
+5. `notes/2026-06-25-finding-intervention-v2-bury.md` — decision-gate: DAG/intervention buried.
+6. `notes/2026-06-25-finding-nli-and-frontier.md` — NLI support null; post-hoc-on-correct frontier.
+
 ## Open next steps
-(a) draft sharpened novelty/related-work into `overleaf-proposal/main.tex` + BibTeX;
-(b) refresh `literature-map.md` with verified tiers;
-(c) spec the MVP experiment (graph-targeted vs random interventions on a FaithCoT-Bench
-knowledge-intensive subset, reusing PARC code + PERL + the FaithCoT-Bench harness).
+(a) draft the analysis/negative-results paper around the three findings + the white-box hook
+    (into `overleaf-proposal/main.tex`);
+(b) optional white-box pilot on the ft1v2 (post-hoc-on-correct) cases — the one untested mechanism;
+(c) extend runs to the qwen-matched + aqua/HLE_BIO domains if the paper needs broader coverage.

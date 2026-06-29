@@ -63,14 +63,16 @@ motivate mechanistic (white-box) methods for the residual frontier.
 
 ## Experiment status (for the paper)
 - DONE: scale (4×4, n=634 complete-feature / 1304 traces), bootstrap CIs, C1, C2, C3; heuristic
-  extractor validated vs PERL gold (F1 0.57).
+  extractor F1 0.57 vs PERL gold; **LLM extractor R 0.82 / F1 0.79 vs PERL gold** (licenses the v2
+  fair-test claim — the intervention null is not an extraction artifact); **GRACE step-level NLI
+  replication (preliminary)** — NLI ≈ chance (0.51–0.58), consistent with FaithCoT but only 8
+  unfaithful steps in the public sample.
 - REMAINING (in priority order):
-  1. **LLM-extractor validation** vs PERL gold (licenses the v2 intervention claim).
-  2. **GRACE** step-level NLI replication (preliminary; 40 examples public, full set on release).
-  3. **White-box pilot** on ft1v2 — *highest upside*: if internal probes detect post-hoc-on-correct
+  1. **White-box pilot** on ft1v2 — *highest upside*: if internal probes detect post-hoc-on-correct
      above black-box chance, it converts C1 from a pure null into "black-box is blind here, but the
      signal is inside" — a strong BlackboxNLP story.
-  4. Write-up.
+  2. Full GRACE eval set (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release).
+  3. Write-up.
 
 ## Honest acceptance read
 With C1/C2 CI-backed (done) + GRACE + LLM-extraction validation + write-up → a **credible
@@ -85,4 +87,5 @@ small. BlackboxNLP is selective for a workshop, so execution on the remaining it
 - *"Single benchmark."* → GRACE second benchmark (preliminary; full on release).
 - *"Novelty over FaithCoT-Bench."* → failure **localization** + **metric inversion** + new methods.
 - *"Small n in the key regime."* → ft1v2 now n=270 with CIs.
-- *"Extraction was weak."* → heuristic F1 0.57 reported; v2 uses LLM extraction, validated vs PERL.
+- *"Extraction was weak."* → heuristic F1 0.57 reported; v2 uses LLM extraction, **validated at
+  0.82 recall / 0.79 F1 vs PERL gold** — so the intervention null is a fair test, not an artifact.

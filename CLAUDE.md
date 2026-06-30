@@ -25,7 +25,7 @@ reasoning model).
   vs prior work, experiment status, reviewer objections.
 - [overleaf-proposal/](overleaf-proposal/) — LaTeX proposal (`main.tex`, `ur2phd.bib`).
 - [scripts/](scripts/) — Aquaman env setup + all experiment harnesses (run on the GPU box).
-- [results/](results/) — raw per-trace experiment outputs (intervention v1/v2).
+- [results/](results/) — raw experiment outputs (intervention v1/v2, rigorous feature table, white-box probe results).
 - [notes/](notes/) — dated session logs + the findings log (see below).
 
 ## Current state (as of 2026-06-25)
@@ -51,6 +51,12 @@ forward experiment. (The 2026-06-18 lit/novelty positioning remains valid as bac
 DAG structure ns (except weakly on math). **Target venue: BlackboxNLP @ EMNLP 2026** — framing in
 `paper-positioning-blackboxnlp.md`.
 
+**White-box pilot (2026-06-29):** an internal linear probe detects post-hoc-on-correct (ft1v2) in
+**Llama-3.1-8B (AUROC 0.71, permutation p=0.01, layers 16–31)** but **not significantly in Qwen
+(0.62, p=0.32)** — so C1 becomes a black-box-vs-internals contrast (behaviorally blind, internally
+(partially) decodable in *some* models). Also: LLM extractor validated at **0.82 recall** vs PERL
+gold (licenses the v2 null); GRACE NLI replicates the weak-NLI finding (preliminary, underpowered).
+
 ## Conventions
 - Citations must be verified before going into a submission; see the provenance caveat in the latest
   notes file. Prefer peer-reviewed venues; mark unrefereed preprints as such (e.g. Corrective-RAG).
@@ -66,9 +72,11 @@ DAG structure ns (except weakly on math). **Target venue: BlackboxNLP @ EMNLP 20
 5. `notes/2026-06-25-finding-intervention-v2-bury.md` — decision-gate: DAG/intervention buried.
 6. `notes/2026-06-25-finding-nli-and-frontier.md` — NLI support null; post-hoc-on-correct frontier.
 7. `notes/2026-06-26-rigorous-scaled-results.md` — scaled 4×4 + bootstrap CIs; F1 & F2 significant.
+8. `notes/2026-06-29-validation-grace-and-extraction.md` — LLM extractor 0.82 recall vs PERL; GRACE NLI ~chance (preliminary).
+9. `notes/2026-06-29-whitebox-pilot.md` — internal probe: Llama ft1v2 AUROC 0.71 (p=0.01), Qwen n.s. (p=0.32).
 
 ## Open next steps (BlackboxNLP-targeted — see paper-positioning-blackboxnlp.md)
-(a) validate the **LLM** extractor vs PERL gold (licenses the v2 intervention claim; heuristic was F1 0.57);
-(b) **GRACE** step-level NLI replication (preliminary 2nd benchmark; 40 examples public);
-(c) **white-box pilot** on ft1v2 — highest upside (flips C1 from a null to "the signal is inside");
-(d) write the paper (C1 frontier + C2 metric inversion + C3 rigorous negatives) into `overleaf-proposal/`.
+DONE: 4×4 + CIs (F1/F2 sig); LLM-extractor validation (0.82 recall); GRACE NLI (preliminary); white-box pilot (Llama sig, Qwen n.s.).
+(a) **firm up the probe** — mean-pool / per-token reps, nonlinear probes, more models, to pin the Llama-vs-Qwen asymmetry (small-n, single permutation test);
+(b) **full GRACE eval set** (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release);
+(c) **write the paper** (C1 frontier + black-box-vs-internals + C2 metric inversion + C3 rigorous negatives) into `overleaf-proposal/`.

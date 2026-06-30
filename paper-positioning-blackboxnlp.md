@@ -21,11 +21,16 @@ faithfulness**. Together these map the limits of black-box CoT-faithfulness dete
 motivate mechanistic (white-box) methods for the residual frontier.
 
 ## Contributions
-- **C1 (frontier).** Across 4 domains × 4 models (n=270 in-regime), **no black-box signal detects
-  post-hoc rationalization on correct answers (ft1 vs ft2) above chance** — answer-tracing 0.545
-  [0.468,0.611], interventions 0.485, NLI 0.514, DAG 0.490; all CIs include 0.5. We give the
-  mechanistic reason: post-hoc rationalizations are locally coherent and yield confident, stable
-  answers, so they are externally indistinguishable.
+- **C1 (frontier + black-box-vs-internals contrast).** Across 4 domains × 4 models (n=270 in-regime),
+  **no black-box signal detects post-hoc rationalization on correct answers (ft1 vs ft2) above chance** —
+  answer-tracing 0.545 [0.468,0.611], interventions 0.485, NLI 0.514, DAG 0.490; all CIs include 0.5.
+  Mechanistic reason: post-hoc rationalizations are locally coherent and yield confident, stable answers,
+  so they are externally indistinguishable. **Yet the information is internally (partially) present:** a
+  linear probe on hidden states detects ft1-vs-ft2 in **Llama-3.1-8B (AUROC 0.71, layers 16–31,
+  permutation p=0.01)** though **not significantly in Qwen-2.5-7B (0.62, p=0.32)**. So the distinction is
+  *behaviorally inaccessible yet linearly decodable from activations in some models* — the
+  black-box-vs-internals contrast that anchors the paper. (Caveat: small n, modest effect, model-dependent;
+  Qwen is "not detected," not "absent.")
 - **C2 (metric inversion).** The standard step-removal AUC metric (FaithCoT-Bench `soft_faithfulness`)
   **anti-correlates** with human faithfulness: mean diff +0.139 [+0.096, +0.182] (higher for
   *unfaithful* traces). A concrete caution for a widely-used family of interpretability metrics.
@@ -67,10 +72,11 @@ motivate mechanistic (white-box) methods for the residual frontier.
   fair-test claim — the intervention null is not an extraction artifact); **GRACE step-level NLI
   replication (preliminary)** — NLI ≈ chance (0.51–0.58), consistent with FaithCoT but only 8
   unfaithful steps in the public sample.
+  **White-box pilot DONE:** internal linear probe detects ft1-vs-ft2 in Llama (AUROC 0.71, p=0.01),
+  not significantly in Qwen (p=0.32) — C1 upgraded to the black-box-vs-internals contrast.
 - REMAINING (in priority order):
-  1. **White-box pilot** on ft1v2 — *highest upside*: if internal probes detect post-hoc-on-correct
-     above black-box chance, it converts C1 from a pure null into "black-box is blind here, but the
-     signal is inside" — a strong BlackboxNLP story.
+  1. **Firm up the probe** — mean-pool / per-layer-per-token reps, nonlinear probes, more models, to
+     pin the Llama-vs-Qwen asymmetry (currently small-n, single permutation test).
   2. Full GRACE eval set (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release).
   3. Write-up.
 

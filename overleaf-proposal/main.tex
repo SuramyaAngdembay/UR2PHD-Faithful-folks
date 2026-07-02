@@ -4,9 +4,9 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
+\usepackage{amsmath}
 
-\title{Premise-Grounded Detection of Unfaithful\\
-Chain-of-Thought Reasoning}
+\title{The Black-Box Frontier of Chain-of-Thought Faithfulness:\\Post-Hoc Rationalization on Correct Answers}
 \author{Suramya Raj Angdembay \and Dikshant Aryal}
 \date{Summer 2026}
 
@@ -14,104 +14,33 @@ Chain-of-Thought Reasoning}
 
 \maketitle
 
+\begin{abstract}
+Chain-of-thought (CoT) faithfulness---whether a model's stated reasoning reflects the process that produced its answer---is increasingly central to oversight. We ask how far \emph{black-box} signals can go at detecting instance-level CoT unfaithfulness. On FaithCoT-Bench (spanning 4 domains and 4 models) and GRACE, we find that instance-level detection is saturated by simple answer-tracing and is strongly confounded by answer correctness. Three further signal families (premise-DAG structure, graph-targeted counterfactual interventions, and NLI step-support) fail to beat or augment answer-tracing. We localize the failure: detecting \emph{post-hoc rationalization on correct answers} is at chance for every black-box method, because such rationalizations are locally coherent and yield stable answers. Furthermore, we show a widely-used step-removal faithfulness metric anti-correlates with human judgments. Our results bound black-box faithfulness detection and motivate mechanistic (white-box) approaches for the residual frontier.
+\end{abstract}
+
 \section{Introduction}
+Large language models can generate fluent chain-of-thought (CoT) explanations that appear logical even when the stated reasoning did not actually produce the model's final answer. Recent work such as FaithCoT-Bench shows that detecting instance-level CoT unfaithfulness remains difficult \cite{shen2026faithcot}. 
 
-\subsection{Research content and problem statement}
+Our work empirically audits the limits of black-box faithfulness detection. Instance-level detection of unfaithful CoT is saturated by answer-tracing and confounded by answer correctness. We rigorously test three further black-box signal families---premise-DAG structure, graph-targeted counterfactual interventions, and per-step NLI entailment support---and show none of them meaningfully augment simple answer-tracing.
 
-Large language models can generate fluent chain-of-thought (CoT) explanations
-that appear logical even when the stated reasoning did not support, or was not
-responsible for, the model's final answer. This makes answer accuracy alone an
-insufficient measure of trustworthy reasoning: a model may reach the correct
-answer through an invalid path, rely on an unstated premise, ignore relevant
-evidence, or construct a plausible explanation after already committing to an
-answer. Recent work such as FaithCoT-Bench shows that detecting instance-level
-CoT unfaithfulness remains difficult, particularly for knowledge-intensive
-questions and convincing traces produced by stronger models
-\cite{shen2026faithcot}. Our project will investigate whether explicitly
-representing and verifying the premises behind individual reasoning steps can
-improve the detection and localization of unfaithful CoT reasoning.
+\section{Contributions}
 
-\subsection{Initial Approach}
+\textbf{C1. The Black-Box Frontier vs. Internal Probes.} Across 4 domains and 4 models (n=270 in-regime traces), no black-box signal detects post-hoc rationalization on correct answers above chance. Answer-tracing, targeted interventions, NLI support, and DAG centrality all yield AUROCs hovering around 0.50. Mechanistically, post-hoc rationalizations are locally coherent and yield stable answers, rendering them externally indistinguishable. However, the information is internally decodable: a linear probe on hidden states detects post-hoc rationalization in Llama-3.1-8B (AUROC 0.71, permutation p=0.01) \cite{lanham2023measuring}.
 
-We propose decomposing each CoT into atomic reasoning steps and representing the
-dependencies between those steps as a premise graph. Each step will be checked
-against the question, its declared earlier premises, and relevant external
-evidence. The graph will also identify load-bearing premises for targeted
-counterfactual tests: we will alter or remove a premise and observe whether the
-downstream reasoning and final answer change appropriately. This approach is
-motivated by Premise-Augmented Reasoning Chains, which demonstrates the value of
-explicit premise links for reasoning-error identification
-\cite{mukherjee2025parc}. We plan to evaluate the resulting detector on
-FaithCoT-Bench/FINE-CoT using instance-level F1, step-level error localization,
-counterfactual consistency, and comparisons with whole-trace and step-level
-LLM-as-judge baselines. If time permits, we will explore whether answer
-representations become detectable before the written CoT, following recent
-work on post-hoc reasoning \cite{cox2026decoding}.
+\textbf{C2. Metric Inversion.} The standard step-removal AUC metric widely used for faithfulness evaluation (e.g., \emph{soft\_faithfulness} in FaithCoT-Bench) actually anti-correlates with human faithfulness labels, exhibiting a mean difference of +0.139 (95\% CI: [+0.096, +0.182]), scoring higher for unfaithful traces. This serves as a concrete caution for a widely-used family of interpretability metrics.
 
-\section{Evaluation and Implementation Plan}
+\textbf{C3. Rigorous Negatives and Accuracy Confound.} Premise-DAG structure and graph-targeted counterfactual interventions do not beat answer-tracing. Answer correctness is the single strongest predictor of apparent unfaithfulness (0.697 AUROC)---quantifying the ``unfaithfulness as disguised accuracy'' confound. We note nuance where DAG centrality does show weak significance on mathematical domains (e.g., AQuA) where premise structure is explicit \cite{mukherjee2025parc}.
 
-\subsection{Evaluation Plan}
+\section{Methodology and Evaluation}
 
-\textbf{Datasets.} Our primary benchmark is FaithCoT-Bench/FINE-CoT, the only
-instance-level CoT-faithfulness benchmark with expert annotations and step-level
-evidence, spanning logical (LogiQA), factual (TruthfulQA), mathematical (AQuA), and
-knowledge-intensive biomedical (HLE-Bio) reasoning~\cite{shen2026faithcot}. We will test
-cross-dataset generalization on the parallel step-level faithfulness benchmark
-GRACE~\cite{pham2026grace}, evaluate step-level localization against process-error
-benchmarks (ProcessBench, REVEAL)~\cite{zheng2024processbench, jacovi2024reveal}, and use
-datasets with machine-verified premises (FOLIO) to obtain gold premise graphs and clean
-premise-removal counterfactuals~\cite{han2024folio}. Where faithfulness labels are
-unavailable, results on synthetic-corruption and human-labeled data will be reported
-separately, since synthetic errors are systematically easier to detect.
+\subsection{Datasets and Settings}
+We evaluate across 4 domains (LogiQA, TruthfulQA, AQuA, HLE-Bio) using 4 distinct language models (Llama-3.1-8B, Qwen-2.5-7B, etc.), comprising 1,304 extracted traces. We utilize FaithCoT-Bench for primary annotations and validate structural findings against the GRACE step-level benchmark \cite{shen2026faithcot, pham2026grace}.
 
-\textbf{Conditions and baselines.} We will compare the full detector against:
-final-answer correctness; whole-trace and step-level LLM-as-judge; untargeted
-(random/position-based) perturbation~\cite{lanham2023measuring}; and premise-graph
-verification without interventions or evidence (a PARC/GoV-style
-baseline)~\cite{mukherjee2025parc, fang2025gov}. Ablations will remove graph-guided
-intervention, remove evidence retrieval, substitute gold premise links for inferred
-ones, vary the premise extractor's size, and use a cross-model judge to control for
-self-preference bias.
+\subsection{White-box Probing}
+To test the behavioral accessibility limit, we fit a linear probe on the internal activations (last-token hidden states; PCA to 50 dimensions, logistic regression, 5-fold cross-validation) to separate post-hoc rationalization from genuine reasoning on correct answers. Statistical significance is verified via a 200-permutation selection-corrected test.
 
-\textbf{Metrics.} \emph{Detection:} macro-F1, precision/recall for unfaithful traces,
-AUROC/AUPRC, Cohen's~$\kappa$, and calibration error. \emph{Localization:} first-error
-accuracy, step-level precision/recall/F1, and premise-link and evidence-attribution
-accuracy. \emph{Intervention:} answer-flip rate when a load-bearing premise is perturbed,
-(in)appropriate stability under critical versus irrelevant changes, and counterfactual
-consistency measured as a distributional answer shift. \emph{Cost:} tokens,
-verifier/retrieval calls, latency, and estimated cost per example.
-
-
-\section{Team and LaTeX Practice}
-
-Table~\ref{tab:team} demonstrates a formatted table in LaTeX. Add or replace
-rows if the group has additional members.
-
-\begin{table}[h]
-    \centering
-    \caption{Research team}
-    \label{tab:team}
-    \begin{tabular}{ll}
-        \toprule
-        \textbf{Name} & \textbf{Role} \\
-        \midrule
-        Suramya Raj Angdembay & Undergraduate researcher \\
-        Dikshant Aryal & Undergraduate researcher \\
-        Dr. Nick Rahimi & Faculty advisor \\
-        Aelin MeD & graduate mentor \\
-
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-As part of the Overleaf and LaTeX tutorial, our group practiced:
-
-\begin{itemize}
-    \item organizing a document with sections and paragraphs;
-    \item formatting tables and bulleted lists;
-    \item adding citations with the \verb|\cite| command; and
-    \item managing references in a separate BibTeX file.
-\end{itemize}
+\section{Conclusion and Next Steps}
+Our findings rigorously map the limits of black-box CoT-faithfulness detection. Because behavioral metrics fail on the frontier of post-hoc rationalization on correct answers, future oversight tools must leverage mechanistic white-box methods or representation engineering to reliably audit reasoning integrity.
 
 \bibliographystyle{plain}
 \bibliography{ur2phd}

@@ -75,11 +75,14 @@ motivate mechanistic (white-box) methods for the residual frontier.
   **White-box pilot + firm-up (a,b,d,e) DONE:** Llama **held-out AUROC 0.70 / F1 0.70** (25×70/30),
   **cross-domain 0.60–0.71** (leave-one-domain-out), signal **~linear** (MLP no gain), perm p=0.03; Qwen
   weak (held-out 0.58); mechanism **model-dependent** (pre-CoT answer-commitment sig in Qwen p=0.044
-  uncorrected, null in Llama). C1 = the black-box-vs-internals contrast. **Item (c) causal
-  activation-patching NOT done yet.**
+  uncorrected, null in Llama). C1 = the black-box-vs-internals contrast. **Item (c) causal steering
+  (2026-07-02): weak/suggestive** — post-hoc direction perturbs answers ~2–3× more than random at +6σ
+  (functionally active but modest; n=51, large-α only). **All white-box a–e done.**
 - REMAINING (in priority order):
-  1. **Causal patching (item c) — NOT DONE** — activation steering along the L19 post-hoc direction
-     (~10 min forward-pass version); the one white-box firm-up step not yet run.
+  1. **Synthetic-construction generalization** — answer-first (post-hoc) vs reason-first (genuine) on
+     GSM8K/AQuA across the open roster (Llama-3.1-8B / Qwen-2.5-7B / Qwen3-8B / small Gemma /
+     DeepSeek-R1-Distill), with the **FaithCoT↔synthetic transfer test** (AQuA↔GSM8K, same model) as the
+     validity bridge. (White-box a–e all done; (c) causal weak/suggestive.)
   2. Full GRACE eval set (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release).
   3. Write-up.
 

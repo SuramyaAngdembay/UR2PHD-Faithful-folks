@@ -60,7 +60,10 @@ gold (licenses the v2 null); GRACE NLI replicates the weak-NLI finding (prelimin
 **White-box firm-up (2026-07-02):** items (a),(b),(d),(e) done — Llama **held-out AUROC 0.70 / F1 0.70**
 (25×70/30), cross-domain 0.60–0.71 (leave-one-domain-out), signal ~**linear** (MLP no gain), perm p=0.03;
 Qwen weak (held-out 0.58); mechanism **model-dependent** (a2 pre-CoT answer-commitment sig in Qwen p=0.044
-uncorrected, null in Llama). **Item (c) causal activation-patching NOT done yet.** Caveats: small n (144/126),
+uncorrected, null in Llama). **Item (c) causal steering (2026-07-02): weak/suggestive** — post-hoc
+direction flips answers ~2–3× more than a random direction at +6σ (0.22 vs 0.08) and lowers confidence
+more → functionally active, not a passive correlate, but modest (large-α only, n=51, indirect readout).
+**All white-box firm-up items a–e now done.** Caveats: small n (144/126),
 (a)-sweep PCA-once inflation (use strict numbers), a2 uncorrected.
 
 ## Conventions
@@ -80,10 +83,11 @@ uncorrected, null in Llama). **Item (c) causal activation-patching NOT done yet.
 7. `notes/2026-06-26-rigorous-scaled-results.md` — scaled 4×4 + bootstrap CIs; F1 & F2 significant.
 8. `notes/2026-06-29-validation-grace-and-extraction.md` — LLM extractor 0.82 recall vs PERL; GRACE NLI ~chance (preliminary).
 9. `notes/2026-06-29-whitebox-pilot.md` — internal probe: Llama ft1v2 AUROC 0.71 (p=0.01), Qwen n.s. (p=0.32).
-10. `notes/2026-07-02-whitebox-method-abde.md` — white-box firm-up (a,b,d,e): Llama held-out 0.70/F1 0.70, cross-domain, ~linear, model-dependent; (c) causal pending.
+10. `notes/2026-07-02-whitebox-method-abde.md` — white-box firm-up (a,b,d,e): Llama held-out 0.70/F1 0.70, cross-domain, ~linear, model-dependent.
+11. `notes/2026-07-02-whitebox-causal-c.md` — item (c) causal steering: weak/suggestive (post-hoc dir perturbs answers ~2–3× > random at +6σ; functionally active, modest).
 
 ## Open next steps (BlackboxNLP-targeted — see paper-positioning-blackboxnlp.md)
 DONE: 4×4 + CIs (F1/F2 sig); LLM-extractor validation (0.82 recall); GRACE NLI (preliminary); white-box pilot + firm-up a/b/d/e (Llama held-out 0.70, Qwen weak).
-(a) **causal patching (item c) — NOT DONE** — activation steering along the L19 post-hoc direction (~10 min forward-pass version); the one white-box firm-up step remaining;
+(a) **synthetic-construction generalization** — answer-first (post-hoc) vs reason-first (genuine) on GSM8K/AQuA across the open-model roster (Llama-3.1-8B, Qwen-2.5-7B, Qwen3-8B, small Gemma, DeepSeek-R1-Distill), with the **FaithCoT↔synthetic transfer test** (AQuA↔GSM8K, same model) as the validity bridge [white-box a–e all done: probe real-but-modest in Llama, weak in Qwen, weak/suggestive causal];
 (b) **full GRACE eval set** (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release);
 (c) **write the paper** (C1 frontier + black-box-vs-internals incl. Llama held-out 0.70 + C2 metric inversion + C3 rigorous negatives) into `overleaf-proposal/`.

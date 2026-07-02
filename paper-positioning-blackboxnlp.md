@@ -72,11 +72,14 @@ motivate mechanistic (white-box) methods for the residual frontier.
   fair-test claim — the intervention null is not an extraction artifact); **GRACE step-level NLI
   replication (preliminary)** — NLI ≈ chance (0.51–0.58), consistent with FaithCoT but only 8
   unfaithful steps in the public sample.
-  **White-box pilot DONE:** internal linear probe detects ft1-vs-ft2 in Llama (AUROC 0.71, p=0.01),
-  not significantly in Qwen (p=0.32) — C1 upgraded to the black-box-vs-internals contrast.
+  **White-box pilot + firm-up (a,b,d,e) DONE:** Llama **held-out AUROC 0.70 / F1 0.70** (25×70/30),
+  **cross-domain 0.60–0.71** (leave-one-domain-out), signal **~linear** (MLP no gain), perm p=0.03; Qwen
+  weak (held-out 0.58); mechanism **model-dependent** (pre-CoT answer-commitment sig in Qwen p=0.044
+  uncorrected, null in Llama). C1 = the black-box-vs-internals contrast. **Item (c) causal
+  activation-patching NOT done yet.**
 - REMAINING (in priority order):
-  1. **Firm up the probe** — mean-pool / per-layer-per-token reps, nonlinear probes, more models, to
-     pin the Llama-vs-Qwen asymmetry (currently small-n, single permutation test).
+  1. **Causal patching (item c) — NOT DONE** — activation steering along the L19 post-hoc direction
+     (~10 min forward-pass version); the one white-box firm-up step not yet run.
   2. Full GRACE eval set (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release).
   3. Write-up.
 

@@ -14,14 +14,14 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--model", required=True, choices=["llama", "qwen"])
+ap.add_argument("--model", required=True, choices=["llama", "qwen", "deepseek"])
 ap.add_argument("--gpu", type=int, default=0)
 a = ap.parse_args()
 
 BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 DOMAINS = ["truthfulqa", "logiqa", "aqua", "HLE_BIO"]
-MODELS = {"llama": "meta-llama/Llama-3.1-8B-Instruct", "qwen": "Qwen/Qwen2.5-7B-Instruct"}
-MDIR = {"llama": "llama-3.1-8b-instruct", "qwen": "Qwen2.5-7B-Instruct"}
+MODELS = {"llama": "meta-llama/Llama-3.1-8B-Instruct", "qwen": "Qwen/Qwen2.5-7B-Instruct", "deepseek": "deepseek-ai/deepseek-llm-7b-chat"}
+MDIR = {"llama": "llama-3.1-8b-instruct", "qwen": "Qwen2.5-7B-Instruct", "deepseek": "deepseek-llm-7b-chat"}
 mname, mdir = MODELS[a.model], MDIR[a.model]
 DEV = f"cuda:{a.gpu}"
 OUT = os.path.expanduser(f"~/wbrep_{a.model}.npz")

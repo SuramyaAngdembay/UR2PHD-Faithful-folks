@@ -39,12 +39,14 @@ print(f"=== {args.mdir}: {X.shape[1]} traces, {NL} layers, "
 def clf(): return make_pipeline(StandardScaler(),
                                 PCA(n_components=min(50, X.shape[2]), random_state=0),
                                 LogisticRegression(max_iter=2000, C=1.0))
+def clf_plain(): return make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000, C=1.0))
 
-def cv_auroc(Xl, yy, seed=0):
+def cv_auroc(Xl, yy, seed=0, factory=None):
+    factory = factory or clf
     skf = StratifiedKFold(5, shuffle=True, random_state=seed)
     oof = np.zeros(len(yy))
     for tr, te in skf.split(Xl, yy):
-        m = clf().fit(Xl[tr], yy[tr]); oof[te] = m.predict_proba(Xl[te])[:, 1]
+        m = factory().fit(Xl[tr], yy[tr]); oof[te] = m.predict_proba(Xl[te])[:, 1]
     return roc_auc_score(yy, oof)
 
 # ---- white-box: per-layer CV, best layer, held-out, permutation ----
@@ -72,13 +74,14 @@ print(f"[WB] max-over-layers obs {obs:.3f}, perm p={pval:.3f} (n={args.nperm})",
 # ---- black-box baselines ----
 bb = {}
 amask = (ds == "aqua") & ~np.isnan(soft)
+print(f"[BB] soft coverage: {amask.sum()} aqua traces with non-nan soft (of {(ds=='aqua').sum()} aqua)", flush=True)
 if amask.sum() > 10 and len(np.unique(y[amask])) == 2:
     s = soft[amask]; ys = y[amask]
     # soft high = more faithful => predicts genuine (y=0); AUROC for posthoc uses -soft
     bb["soft_auroc_aqua"] = float(roc_auc_score(ys, -s))
     print(f"[BB] answer-tracing soft_faithfulness AUROC (AQuA, n={amask.sum()}): {bb['soft_auroc_aqua']:.3f}", flush=True)
 sc = surf.astype(np.float32)
-bb["surface_auroc"] = float(cv_auroc(sc, y))
+bb["surface_auroc"] = float(cv_auroc(sc, y, factory=clf_plain))
 print(f"[BB] surface-feature LR CV AUROC (both ds): {bb['surface_auroc']:.3f}", flush=True)
 
 # ---- transfer (a): cross-dataset within model ----

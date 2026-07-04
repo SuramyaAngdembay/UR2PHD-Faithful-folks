@@ -66,6 +66,20 @@ more → functionally active, not a passive correlate, but modest (large-α only
 **All white-box firm-up items a–e now done.** Caveats: small n (144/126),
 (a)-sweep PCA-once inflation (use strict numbers), a2 uncorrected.
 
+**Synthetic-construction generalization (2026-07-04):** built matched **genuine (reason-first,
+keep-if-correct) vs post-hoc (answer-first, rationalize gold)** CoT on **AQuA+GSM8K** for **Llama-3.1-8B
+(229 pairs) + Qwen-2.5-7B (277 pairs)** — the post-hoc-on-correct frontier with ground-truth construction
+labels at scale. **(i) White-box probe strong in BOTH models** (held-out **Llama 0.74 / Qwen 0.81**,
+perm **p=0.005**), generalizing **across AQuA↔GSM8K** (0.66–0.73) — so the earlier Qwen null was largely
+FaithCoT label-noise/small-n, not absence of signal; C1's "internally decodable" leg now holds in two
+models on clean labels. **(ii) The FaithCoT(real)↔synthetic BRIDGE FAILS** — synthetic post-hoc peaks
+**early** (L9/L10), real ft1v2 peaks **late** (L29/L22); cross-distribution transfer is **~chance even
+best-of-32-layers and domain-matched** (Llama FC→synth best 0.55 mean 0.48; Qwen 0.60/0.50). ⇒ **synthetic
+answer-first is NOT a representational proxy for organic post-hoc** — a publishable methodological caution,
+and the honest answer to "how do the two buckets connect" (they don't, internally). Caveat: Llama synthetic
+**surface-feature baseline 0.639** (partial surface tell); soft_faithfulness uncomputable on numeric-option
+AQuA. Extra models (DeepSeek-R1-Distill / Qwen3-8B / Gemma) deferred — disk-gated (34 GB free).
+
 ## Conventions
 - Citations must be verified before going into a submission; see the provenance caveat in the latest
   notes file. Prefer peer-reviewed venues; mark unrefereed preprints as such (e.g. Corrective-RAG).
@@ -85,9 +99,10 @@ more → functionally active, not a passive correlate, but modest (large-α only
 9. `notes/2026-06-29-whitebox-pilot.md` — internal probe: Llama ft1v2 AUROC 0.71 (p=0.01), Qwen n.s. (p=0.32).
 10. `notes/2026-07-02-whitebox-method-abde.md` — white-box firm-up (a,b,d,e): Llama held-out 0.70/F1 0.70, cross-domain, ~linear, model-dependent.
 11. `notes/2026-07-02-whitebox-causal-c.md` — item (c) causal steering: weak/suggestive (post-hoc dir perturbs answers ~2–3× > random at +6σ; functionally active, modest).
+12. `notes/2026-07-04-synthetic-construction-generalization.md` — synthetic genuine-vs-post-hoc on AQuA+GSM8K: WB probe strong in BOTH models (held-out Llama 0.74 / Qwen 0.81, p=0.005), generalizes across math datasets; but FaithCoT↔synthetic bridge FAILS (~chance, depth-mismatched) ⇒ synthetic post-hoc ≠ real proxy.
 
 ## Open next steps (BlackboxNLP-targeted — see paper-positioning-blackboxnlp.md)
-DONE: 4×4 + CIs (F1/F2 sig); LLM-extractor validation (0.82 recall); GRACE NLI (preliminary); white-box pilot + firm-up a/b/d/e (Llama held-out 0.70, Qwen weak).
-(a) **synthetic-construction generalization** — answer-first (post-hoc) vs reason-first (genuine) on GSM8K/AQuA across the open-model roster (Llama-3.1-8B, Qwen-2.5-7B, Qwen3-8B, small Gemma, DeepSeek-R1-Distill), with the **FaithCoT↔synthetic transfer test** (AQuA↔GSM8K, same model) as the validity bridge [white-box a–e all done: probe real-but-modest in Llama, weak in Qwen, weak/suggestive causal];
+DONE: 4×4 + CIs (F1/F2 sig); LLM-extractor validation (0.82 recall); GRACE NLI (preliminary); white-box pilot + firm-up a/b/d/e (Llama held-out 0.70, Qwen weak); **synthetic-construction generalization** (WB strong in both models on clean labels; **bridge to real post-hoc fails → new methodological caution**).
+(a) **write the paper** (C1 frontier + black-box-vs-internals incl. Llama held-out 0.70 + synthetic 2-model WB 0.74/0.81 + C2 metric inversion + C3 rigorous negatives + **C4 synthetic-proxy caution**) into `overleaf-proposal/`;
 (b) **full GRACE eval set** (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release);
-(c) **write the paper** (C1 frontier + black-box-vs-internals incl. Llama held-out 0.70 + C2 metric inversion + C3 rigorous negatives) into `overleaf-proposal/`.
+(c) *(optional)* extra models on the synthetic study (DeepSeek-R1-Distill / Qwen3-8B / Gemma) via download-run-delete — disk-gated (34 GB free).

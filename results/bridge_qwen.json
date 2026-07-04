@@ -1,0 +1,28 @@
+{
+  "model": "qwen",
+  "synth_best_layer": 10,
+  "synth_best_cv": 0.7577578229873972,
+  "faithcot_best_layer": 22,
+  "faithcot_best_cv": 0.6165280927185689,
+  "sweep_all": {
+    "fc2s_best": 0.5950292588200029,
+    "fc2s_best_layer": 27,
+    "fc2s_mean": 0.4947728834134235,
+    "s2fc_best": 0.5787351977828169,
+    "s2fc_best_layer": 26,
+    "s2fc_mean": 0.5145952560918549,
+    "fc_n": 126,
+    "synth_n": 554
+  },
+  "sweep_aqua_matched": {},
+  "sweep_nonmath": {
+    "fc2s_best": 0.6046214599434373,
+    "fc2s_best_layer": 0,
+    "fc2s_mean": 0.49589417672215574,
+    "s2fc_best": 0.5866071428571429,
+    "s2fc_best_layer": 12,
+    "s2fc_mean": 0.4987244897959183,
+    "fc_n": 116,
+    "synth_n": 554
+  }
+}

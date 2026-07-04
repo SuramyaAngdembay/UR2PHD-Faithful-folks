@@ -40,6 +40,16 @@ motivate mechanistic (white-box) methods for the residual frontier.
   the "unfaithfulness = disguised accuracy" confound, quantified. NLI support only weakly
   significant (0.570\*). Nuance reported honestly: DAG `max_lb` *is* weakly significant on **math**
   (aqua 0.636\*) where premise structure is explicit.
+- **C4 (synthetic-proxy caution + 2-model internal replication).** With ground-truth *constructed*
+  labels (answer-first vs reason-first CoT on AQuA+GSM8K), the post-hoc-on-correct distinction is
+  **strongly internally decodable in BOTH Llama (held-out 0.74) and Qwen (0.81), perm p=0.005**, and
+  generalizes across math datasets (AQuA↔GSM8K 0.66–0.73) — independently confirming C1's internals leg
+  under clean labels (and recovering a Qwen signal that was n.s. on noisy human labels). **But a
+  probe trained on real FaithCoT post-hoc does NOT transfer to the synthetic construction (or vice
+  versa): ~chance even best-of-layers and domain-matched, and the two peak at different depths
+  (synthetic early L9/L10, real late L29/L22).** ⇒ prompt-induced answer-first is **not a
+  representational proxy** for organic post-hoc rationalization — a caution for the common practice of
+  training/evaluating faithfulness detectors on synthetically-constructed unfaithfulness.
 - **(Methodological) Circularity caution.** The benchmark's own faithfulness label is an
   answer-tracing metric; naively correlating a structural metric against it is near-circular
   (we reproduce the trap: ρ=0.87 that collapses to ~0.5–0.7 against the human label).
@@ -78,13 +88,17 @@ motivate mechanistic (white-box) methods for the residual frontier.
   uncorrected, null in Llama). C1 = the black-box-vs-internals contrast. **Item (c) causal steering
   (2026-07-02): weak/suggestive** — post-hoc direction perturbs answers ~2–3× more than random at +6σ
   (functionally active but modest; n=51, large-α only). **All white-box a–e done.**
+  **Synthetic-construction generalization DONE (2026-07-04):** matched genuine (reason-first, keep-if-correct)
+  vs post-hoc (answer-first, rationalize gold) CoT on **AQuA+GSM8K**, Llama-3.1-8B (229 pairs) + Qwen-2.5-7B
+  (277 pairs). **WB probe strong in BOTH models** (held-out **Llama 0.74 / Qwen 0.81**, perm **p=0.005**),
+  generalizing **across AQuA↔GSM8K** (0.66–0.73). **But the FaithCoT↔synthetic bridge FAILS** — synthetic
+  post-hoc peaks early (L9/L10), real ft1v2 late (L29/L22); cross-distribution transfer ~chance even
+  best-of-layers/domain-matched (Llama 0.55, Qwen 0.60). ⇒ synthetic answer-first is NOT a representational
+  proxy for organic post-hoc (**new C4 caution**). Caveat: Llama synthetic surface baseline 0.639.
 - REMAINING (in priority order):
-  1. **Synthetic-construction generalization** — answer-first (post-hoc) vs reason-first (genuine) on
-     GSM8K/AQuA across the open roster (Llama-3.1-8B / Qwen-2.5-7B / Qwen3-8B / small Gemma /
-     DeepSeek-R1-Distill), with the **FaithCoT↔synthetic transfer test** (AQuA↔GSM8K, same model) as the
-     validity bridge. (White-box a–e all done; (c) causal weak/suggestive.)
+  1. **Write-up** — fold in synthetic 2-model WB (0.74/0.81) and C4.
   2. Full GRACE eval set (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release).
-  3. Write-up.
+  3. *(optional)* extra models on synthetic study (DeepSeek-R1-Distill / Qwen3-8B / Gemma), disk-gated.
 
 ## Honest acceptance read
 With C1/C2 CI-backed (done) + GRACE + LLM-extraction validation + write-up → a **credible

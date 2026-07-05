@@ -29,7 +29,9 @@ ap.add_argument("--dataset", required=True, choices=["aqua", "gsm8k"])
 ap.add_argument("--n", type=int, default=250)     # problems to attempt
 ap.add_argument("--gpu", type=int, default=0)
 ap.add_argument("--max_new", type=int, default=512)
+ap.add_argument("--no_think", action="store_true", help="pass enable_thinking=False (Qwen3 etc.)")
 args = ap.parse_args()
+TMPL_KW = {"enable_thinking": False} if args.no_think else {}
 
 SYNTH = os.path.expanduser("~/synth")
 probs = json.load(open(os.path.join(SYNTH, f"{args.dataset}_problems.json")))[: args.n]
@@ -63,7 +65,7 @@ def posthoc_prompt(p):
 @torch.no_grad()
 def generate(user):
     enc = tok.apply_chat_template([{"role": "user", "content": user}],
-                                  add_generation_prompt=True, return_tensors="pt", return_dict=True).to(DEV)
+                                  add_generation_prompt=True, return_tensors="pt", return_dict=True, **TMPL_KW).to(DEV)
     out = model.generate(**enc, max_new_tokens=args.max_new, do_sample=True,
                          temperature=0.7, top_p=0.9, repetition_penalty=1.1,
                          pad_token_id=tok.pad_token_id)

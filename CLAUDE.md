@@ -69,16 +69,21 @@ more → functionally active, not a passive correlate, but modest (large-α only
 **Synthetic-construction generalization (2026-07-04):** built matched **genuine (reason-first,
 keep-if-correct) vs post-hoc (answer-first, rationalize gold)** CoT on **AQuA+GSM8K** for **Llama-3.1-8B
 (229 pairs) + Qwen-2.5-7B (277 pairs)** — the post-hoc-on-correct frontier with ground-truth construction
-labels at scale. **(i) White-box probe strong in BOTH models** (held-out **Llama 0.74 / Qwen 0.81**,
-perm **p=0.005**), generalizing **across AQuA↔GSM8K** (0.66–0.73) — so the earlier Qwen null was largely
-FaithCoT label-noise/small-n, not absence of signal; C1's "internally decodable" leg now holds in two
-models on clean labels. **(ii) The FaithCoT(real)↔synthetic BRIDGE FAILS** — synthetic post-hoc peaks
+labels at scale; **later scaled to 4 models / 3 families** (+Qwen3-8B no-think 175 pairs, +DeepSeek-R1-
+Distill-7B 251 pairs, 2026-07-05). **(i) White-box probe permutation-significant (p=0.005) in ALL FOUR**
+(held-out Qwen2.5 **0.81** / Llama **0.74** / Qwen3 **0.72** / DeepSeek **0.62**), generalizing
+**across AQuA↔GSM8K** (0.52–0.73); effect **model-dependent** (weakest in reasoning-distilled DeepSeek).
+Surface baseline ≈0.54 for 3 models (Llama 0.64 caveat) ⇒ signal is genuinely internal. The earlier Qwen
+null was largely FaithCoT label-noise/small-n; C1's "internally decodable" leg now holds cross-family on
+clean labels. **(ii) The FaithCoT(real)↔synthetic BRIDGE FAILS** (Llama/Qwen2.5 only — FaithCoT has no
+real traces for the newer models) — synthetic post-hoc peaks
 **early** (L9/L10), real ft1v2 peaks **late** (L29/L22); cross-distribution transfer is **~chance even
 best-of-32-layers and domain-matched** (Llama FC→synth best 0.55 mean 0.48; Qwen 0.60/0.50). ⇒ **synthetic
 answer-first is NOT a representational proxy for organic post-hoc** — a publishable methodological caution,
 and the honest answer to "how do the two buckets connect" (they don't, internally). Caveat: Llama synthetic
 **surface-feature baseline 0.639** (partial surface tell); soft_faithfulness uncomputable on numeric-option
-AQuA. Extra models (DeepSeek-R1-Distill / Qwen3-8B / Gemma) deferred — disk-gated (34 GB free).
+AQuA; Gemma-2-9b blocked on HF gated access. **Disk constraint resolved (2026-07-05): HF cache moved to
+`/data` (5.6 TB free) via symlink — no more download-run-delete.**
 
 ## Conventions
 - Citations must be verified before going into a submission; see the provenance caveat in the latest

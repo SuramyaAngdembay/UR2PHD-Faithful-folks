@@ -25,7 +25,9 @@ MODELS = {"llama": "meta-llama/Llama-3.1-8B-Instruct", "qwen": "Qwen/Qwen2.5-7B-
 ap = argparse.ArgumentParser()
 ap.add_argument("--mdir", required=True)
 ap.add_argument("--gpu", type=int, default=0)
+ap.add_argument("--no_think", action="store_true")
 args = ap.parse_args()
+TMPL_KW = {"enable_thinking": False} if args.no_think else {}
 SYNTH = os.path.expanduser("~/synth")
 DEV = f"cuda:{args.gpu}"
 
@@ -62,7 +64,7 @@ def surface(cot):
 def hidden_all_layers(question, options, cot):
     user = question + (("\n\nOptions:\n" + "\n".join(options)) if options else "")
     enc = tok.apply_chat_template([{"role": "user", "content": user}, {"role": "assistant", "content": cot}],
-                                  return_tensors="pt", return_dict=True).to(DEV)
+                                  return_tensors="pt", return_dict=True, **TMPL_KW).to(DEV)
     hs = model(**enc, output_hidden_states=True).hidden_states  # tuple len NL+1
     return np.stack([hs[L][0, -1, :].float().cpu().numpy() for L in range(1, NL + 1)])  # [NL, dim]
 

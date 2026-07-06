@@ -22,31 +22,44 @@ in the post-hoc *generation* prompt), so the signal is how the CoT was produced,
 
 Yields: **Llama** 229 matched pairs (27 AQuA + 202 GSM8K); **Qwen2.5** 277 pairs (60 + 217).
 
-## Result 1 — white-box probe: significant in ALL FOUR models (reinforces C1, cross-family)
+## Result 1 — white-box probe: significant in ALL SIX models across 3 families, 2024→2026
 Detecting post-hoc vs genuine from last-token hidden states (StandardScaler→PCA(50)→LogReg):
 
-| model | family | pairs | best block-L | 5-fold CV | held-out 70/30 | perm p (n=200) | surface BB | xds a→g / g→a |
+| model | family / era | pairs | best L | 5-fold CV | held-out 70/30 | perm p (n=200) | surface BB | xds a→g / g→a |
 |---|---|---|---|---|---|---|---|---|
-| Qwen-2.5-7B | Qwen | 277 | 10 | 0.758 | **0.809** | **0.005** | 0.545 | 0.72 / 0.72 |
-| Llama-3.1-8B | Llama | 229 | 9 | 0.770 | **0.739** | **0.005** | 0.639 | 0.66 / 0.73 |
-| Qwen3-8B (no-think) | Qwen | 175 | 10 | 0.713 | **0.716** | **0.005** | 0.535 | 0.62 / 0.56 |
-| DeepSeek-R1-Distill-Qwen-7B | DeepSeek/reasoning | 251 | 7 | 0.645 | **0.617** | **0.005** | 0.534 | 0.56 / 0.52 |
+| Qwen-2.5-7B | Qwen · 2024 (bridge) | 277 | 10 | 0.758 | **0.809** | **0.005** | 0.545 | 0.72 / 0.72 |
+| Llama-3.1-8B | Llama · 2024 (bridge) | 229 | 9 | 0.770 | **0.739** | **0.005** | 0.639 | 0.66 / 0.73 |
+| Qwen3-8B (no-think) | Qwen · 2025 | 175 | 10 | 0.713 | **0.716** | **0.005** | 0.535 | 0.62 / 0.56 |
+| DeepSeek-R1-Distill-Qwen-7B | DeepSeek/reasoning · 2025 | 251 | 7 | 0.645 | **0.617** | **0.005** | 0.534 | 0.56 / 0.52 |
+| Gemma-2-9b-it | Gemma · 2024 | 243 | 5 | 0.586 | **0.600** | **0.020** | 0.548 | 0.53 / 0.60 |
+| DeepSeek-R1-0528-Qwen3-8B | DeepSeek/reasoning · 2026 | 81 | 22 | 0.675 | 0.558¹ | **0.025** | 0.473 | — (aqua n=8) |
 
-**All four permutation-significant (p=0.005).** The signal is internal (real): for the three models
-with surface baseline ≈0.54, the probe clearly beats surface; Llama's 0.639 surface is the lone caveat.
-**Effect is model-dependent** — strongest in standard instruct models (Qwen2.5 0.81, Llama 0.74),
-weaker in Qwen3 (0.72), **weakest in the reasoning-distilled DeepSeek (0.62)** whose elaborate reasoning
-likely blurs the genuine/post-hoc boundary (its cross-dataset transfer is also near-chance, 0.56/0.52).
-Notably **Qwen2.5 was n.s. on the noisy FaithCoT human labels (pilot p=0.32)** yet strong here on clean
-construction labels ⇒ that earlier null was largely label-noise/small-n, not absence of internal signal.
+¹ held-out noisy at n=81 (test≈24); the permutation read (obs 0.688, p=0.025) is the reliable one.
 
-**Cross-dataset transfer within a model (AQuA↔GSM8K, same probe):** strong for Qwen2.5/Llama
-(0.66–0.73), moderate for Qwen3 (0.56–0.62), weak for DeepSeek (0.52–0.56). The synthetic post-hoc
-axis generalizes across math datasets in the instruct models; less so in the reasoning-distilled model.
+**All six permutation-significant.** The signal is internal (real): surface baseline ≈0.47–0.55 for
+five of six (Llama's 0.639 is the lone caveat), so the probe beats surface everywhere. **Effect is
+strongly model-dependent, and the pattern is interpretable:** standard instruct models are strongest
+(Qwen2.5 0.81, Llama 0.74, Qwen3 0.72), while **reasoning-distilled models (DeepSeek ×2, 0.56–0.62) and
+Gemma-2 (0.60) are weak-but-significant** — the elaborate/among-family reasoning styles blur the
+genuine↔post-hoc boundary. Notably **Qwen2.5 was n.s. on the noisy FaithCoT human labels (pilot p=0.32)**
+yet strong here on clean construction labels ⇒ that earlier null was largely label-noise/small-n.
 
-*(Original 2-model core — Llama + Qwen2.5 — plus the FaithCoT↔synthetic bridge below; Qwen3 + DeepSeek
-added 2026-07-05 for cross-family robustness. Bridge is Llama/Qwen2.5-only: FaithCoT-Bench has no real
-traces for Qwen3/DeepSeek/Gemma. Gemma-2-9b-it blocked on HF gated-access approval.)*
+**Cross-dataset transfer within a model (AQuA↔GSM8K, same probe):** strong for Qwen2.5/Llama (0.66–0.73),
+moderate for Qwen3 (0.56–0.62), weak for the reasoning distills and Gemma (0.52–0.60). The synthetic
+post-hoc axis generalizes across math datasets in the standard instruct models; less so otherwise.
+
+### Roster / hardware notes
+- **Design:** bridge (Result 3) is Llama/Qwen2.5-only — FaithCoT-Bench released real traces for exactly
+  4 models (Llama-3.1-8B, Qwen2.5-7B, +closed Gemini-2.5-flash / GPT-4o-mini). The generalization roster
+  deliberately spans **2024 → 2026 SOTA** to show the internal-decodability result isn't a single-
+  generation artifact. Latest models serve Result 1 only (no real annotated post-hoc exists for them).
+- **DeepSeek-R1-0528-Qwen3-8B (2026):** its long `<think>` reasoning overflows the 1024-token budget, so
+  only 81 matched pairs parsed (biased toward shorter/easier problems) — small-n caveat; still sig.
+- **Gemma-4 (2026) not viable on the 8 GB RTX 3070s:** the 12B multimodal-unified model loads but peaks
+  **7.83 GB** on a trivial forward (no headroom for long-CoT `output_hidden_states` extraction); the
+  E4B variant **OOMs during generation** (MatFormer + vision stack loaded even for text-only use). So the
+  Gemma family is represented by **Gemma-2-9b-it**, which loads cleanly as a text CausalLM at peer scale.
+  (Gemma-4 deferred to ≥16 GB hardware — a hardware limit, not a design choice.)
 
 ## Result 2 — black-box baselines
 - **Answer-tracing (soft_faithfulness):** could NOT be computed on synthetic AQuA — the option lists
@@ -80,11 +93,12 @@ rationalization**: the two are encoded at different depths and along non-transfe
 "answer-first" ≠ naturally-occurring ft2.
 
 ## Bottom line (for the paper)
-1. **C1 reinforced + extended:** internal decodability of post-hoc-on-correct is now shown in **four
-   models across three families** (Llama, Qwen2.5/Qwen3, DeepSeek-R1-Distill) on a **clean, large,
-   ground-truth synthetic benchmark** (held-out 0.62–0.81, all perm p=0.005), generalizing across two
-   math datasets — where every black-box behavioral signal is at chance. Effect is model-dependent
-   (weakest in the reasoning-distilled DeepSeek).
+1. **C1 reinforced + extended:** internal decodability of post-hoc-on-correct is now shown in **six
+   models across three families spanning 2024→2026** (Llama-3.1, Qwen2.5/Qwen3, Gemma-2, DeepSeek-R1-
+   Distill ×2 incl. the 2026 R1-0528) on a **clean, large, ground-truth synthetic benchmark** (held-out
+   0.56–0.81, all permutation-significant), generalizing across two math datasets — where every black-box
+   behavioral signal is at chance. Effect is model-dependent (strong in standard instruct models,
+   weak-but-significant in reasoning-distilled models and Gemma).
 2. **New methodological caution:** synthetic answer-first/reason-first constructions — a common cheap
    proxy — do **not** transfer to real annotated post-hoc (different layer, ~chance cross-transfer).
    The real frontier is late-layer, weaker, and model-dependent (Llama > Qwen on real labels). Reported
@@ -97,7 +111,8 @@ Synthetic surface confound in Llama (0.639, others ≈0.54); AQuA yields thin fo
 synthetic AQuA is GSM8K-dominated; soft_faithfulness uncomputed on synthetic (numeric options);
 FaithCoT-aqua n tiny (19 Llama / 10 Qwen) so domain-matched transfer is underpowered. **Bridge is
 Llama/Qwen2.5-only** — FaithCoT-Bench released real traces for only 4 models (Llama, Qwen2.5, +closed
-Gemini/GPT-4o-mini), so Qwen3/DeepSeek get within-synthetic + cross-dataset only, no real↔synthetic
-bridge. DeepSeek's long reasoning traces (up to ~1k tokens) make its post-hoc/genuine boundary diffuse
-(weakest signal). **Gemma-2-9b-it blocked** on HF gated-access approval (needs the user to request
-access). Disk constraint resolved 2026-07-05 (HF cache moved to /data, 5.6 TB free).
+Gemini/GPT-4o-mini), so the 2025–2026 models get within-synthetic + cross-dataset only, no real↔synthetic
+bridge. Reasoning-distilled models' long traces make their post-hoc/genuine boundary diffuse (weakest
+signals); R1-0528 also has small n=81 (reasoning overflowed the 1024-tok budget). **Gemma-4 not viable on
+the 8 GB 3070s** (12B multimodal peaks 7.83 GB; E4B OOMs) → Gemma family = Gemma-2-9b-it; Gemma-4 deferred
+to ≥16 GB. Disk constraint resolved 2026-07-05 (HF cache moved to /data, 5.6 TB free).

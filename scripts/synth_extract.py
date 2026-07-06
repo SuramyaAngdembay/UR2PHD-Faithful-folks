@@ -21,7 +21,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 MODELS = {"llama": "meta-llama/Llama-3.1-8B-Instruct", "qwen": "Qwen/Qwen2.5-7B-Instruct",
           "qwen3": "Qwen/Qwen3-8B", "deepseek": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
-          "gemma": "google/gemma-2-9b-it"}
+          "gemma": "google/gemma-2-9b-it", "dsr0528": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+          "gemma4": "google/gemma-4-12b-it", "gemma4e": "google/gemma-4-E4B-it"}
 ap = argparse.ArgumentParser()
 ap.add_argument("--mdir", required=True)
 ap.add_argument("--gpu", type=int, default=0)

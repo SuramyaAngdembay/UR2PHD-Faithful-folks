@@ -36,9 +36,10 @@ print(f"=== {args.mdir}: {X.shape[1]} traces, {NL} layers, "
       f"{(y==1).sum()} posthoc / {(y==0).sum()} genuine; "
       f"aqua {(ds=='aqua').sum()} gsm8k {(ds=='gsm8k').sum()} ===", flush=True)
 
-def clf(): return make_pipeline(StandardScaler(),
-                                PCA(n_components=min(50, X.shape[2]), random_state=0),
-                                LogisticRegression(max_iter=2000, C=1.0))
+def clf(ntrain=None):
+    nc = min(50, X.shape[2]) if ntrain is None else max(2, min(50, ntrain - 2))
+    return make_pipeline(StandardScaler(), PCA(n_components=nc, random_state=0),
+                         LogisticRegression(max_iter=2000, C=1.0))
 def clf_plain(): return make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000, C=1.0))
 
 def cv_auroc(Xl, yy, seed=0, factory=None):
@@ -89,7 +90,7 @@ xds = {}
 for tr_ds, te_ds in (("aqua", "gsm8k"), ("gsm8k", "aqua")):
     m1 = (ds == tr_ds); m2 = (ds == te_ds)
     if m1.sum() > 20 and m2.sum() > 20 and len(np.unique(y[m1])) == 2 and len(np.unique(y[m2])) == 2:
-        mdl = clf().fit(Xb[m1], y[m1]); a = roc_auc_score(y[m2], mdl.predict_proba(Xb[m2])[:, 1])
+        mdl = clf(int(m1.sum())).fit(Xb[m1], y[m1]); a = roc_auc_score(y[m2], mdl.predict_proba(Xb[m2])[:, 1])
         xds[f"{tr_ds}->{te_ds}"] = float(a)
         print(f"[TRANSFER-xds] train {tr_ds} -> test {te_ds} @L{best}: AUROC {a:.3f}", flush=True)
 

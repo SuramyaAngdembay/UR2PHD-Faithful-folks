@@ -40,13 +40,15 @@ motivate mechanistic (white-box) methods for the residual frontier.
   the "unfaithfulness = disguised accuracy" confound, quantified. NLI support only weakly
   significant (0.570\*). Nuance reported honestly: DAG `max_lb` *is* weakly significant on **math**
   (aqua 0.636\*) where premise structure is explicit.
-- **C4 (synthetic-proxy caution + 4-model internal replication).** With ground-truth *constructed*
+- **C4 (synthetic-proxy caution + 6-model internal replication).** With ground-truth *constructed*
   labels (answer-first vs reason-first CoT on AQuA+GSM8K), the post-hoc-on-correct distinction is
-  **internally decodable and permutation-significant (p=0.005) in ALL FOUR models across three families**
-  — Qwen2.5 0.81, Llama 0.74, Qwen3 0.72, DeepSeek-R1-Distill 0.62 (held-out) — generalizing across math
-  datasets (0.52–0.73), effect model-dependent (weakest in the reasoning-distilled model). Surface
-  baseline ≈0.54 for three of four ⇒ genuinely internal (Llama 0.64 is the caveat). Independently confirms
+  **internally decodable and permutation-significant in ALL SIX models across three families spanning
+  2024→2026** — Qwen2.5 0.81, Llama 0.74, Qwen3 0.72, DeepSeek-R1-Distill 0.62, Gemma-2 0.60, DeepSeek-R1-
+  0528 (2026) 0.56/perm-obs 0.688 (held-out) — generalizing across math datasets (0.52–0.73), effect
+  model-dependent (strong in standard instruct models; weak-but-sig in reasoning-distills + Gemma). Surface
+  baseline ≈0.47–0.55 for 5/6 ⇒ genuinely internal (Llama 0.64 is the caveat). Independently confirms
   C1's internals leg under clean labels, and recovers a Qwen signal that was n.s. on noisy human labels.
+  (Gemma-4 not viable on 8 GB hardware; R1-0528 n=81 from reasoning overflowing the token budget.)
   **But a
   probe trained on real FaithCoT post-hoc does NOT transfer to the synthetic construction (or vice
   versa): ~chance even best-of-layers and domain-matched, and the two peak at different depths
@@ -93,18 +95,20 @@ motivate mechanistic (white-box) methods for the residual frontier.
   (functionally active but modest; n=51, large-α only). **All white-box a–e done.**
   **Synthetic-construction generalization DONE (2026-07-04, scaled to 4 models 2026-07-05):** matched
   genuine (reason-first, keep-if-correct) vs post-hoc (answer-first, rationalize gold) CoT on **AQuA+GSM8K**
-  across **4 models / 3 families** — Qwen2.5-7B (277 pairs), Llama-3.1-8B (229), Qwen3-8B no-think (175),
-  DeepSeek-R1-Distill-7B (251). **WB probe permutation-significant (p=0.005) in ALL FOUR** (held-out 0.81 /
-  0.74 / 0.72 / 0.62), generalizing across AQuA↔GSM8K (0.52–0.73), model-dependent (weakest = reasoning-
-  distilled DeepSeek); surface baseline ≈0.54 (Llama 0.64 caveat). **But the FaithCoT↔synthetic bridge
+  across **6 models / 3 families spanning 2024→2026** — Qwen2.5-7B (277), Llama-3.1-8B (229), Qwen3-8B (175),
+  DeepSeek-R1-Distill-7B (251), Gemma-2-9b (243), DeepSeek-R1-0528-Qwen3-8B/2026 (81). **WB probe
+  permutation-significant in ALL SIX** (held-out 0.81/0.74/0.72/0.62/0.60/0.56), generalizing across
+  AQuA↔GSM8K (0.52–0.73), model-dependent (strong instruct, weak-but-sig reasoning-distills + Gemma);
+  surface baseline ≈0.47–0.55 (Llama 0.64 caveat). Gemma-4 not viable on 8 GB (deferred). **But the
+  FaithCoT↔synthetic bridge
   FAILS** (Llama/Qwen2.5 only — FaithCoT has no real traces for the newer models) — synthetic post-hoc peaks
   early (L9/L10), real ft1v2 late (L29/L22); cross-distribution transfer ~chance even best-of-layers/
   domain-matched (Llama 0.55, Qwen 0.60). ⇒ synthetic answer-first is NOT a representational proxy for
   organic post-hoc (**C4**).
 - REMAINING (in priority order):
-  1. **Write-up** — fold in synthetic 4-model WB (0.62–0.81, p=0.005) and C4.
+  1. **Write-up** — fold in synthetic 6-model WB (0.56–0.81, all perm-sig) and C4.
   2. Full GRACE eval set (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release).
-  3. *(optional)* Gemma-2-9b-it once HF gated access is approved (adds a 3rd distinct family).
+  3. *(optional, needs ≥16 GB GPU)* Gemma-4-12B / DeepSeek-V4 — don't fit the 8 GB 3070s.
 
 ## Honest acceptance read
 With C1/C2 CI-backed (done) + GRACE + LLM-extraction validation + write-up → a **credible

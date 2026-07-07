@@ -69,15 +69,16 @@ more → functionally active, not a passive correlate, but modest (large-α only
 **Synthetic-construction generalization (2026-07-04):** built matched **genuine (reason-first,
 keep-if-correct) vs post-hoc (answer-first, rationalize gold)** CoT on **AQuA+GSM8K** for **Llama-3.1-8B
 (229 pairs) + Qwen-2.5-7B (277 pairs)** — the post-hoc-on-correct frontier with ground-truth construction
-labels at scale; **scaled to 6 models / 3 families spanning 2024→2026** (+Qwen3-8B, +DeepSeek-R1-Distill-7B,
-+Gemma-2-9b, +DeepSeek-R1-0528-Qwen3-8B [2026]). **(i) White-box probe permutation-significant in ALL SIX**
-(held-out Qwen2.5 **0.81** / Llama **0.74** / Qwen3 **0.72** / DeepSeek-R1-Distill **0.62** / Gemma-2 **0.60**
-/ R1-0528 0.56 [n=81, perm obs 0.688]), generalizing **across AQuA↔GSM8K** (0.52–0.73); effect
-**model-dependent** — strong in standard instruct models, weak-but-sig in reasoning-distills + Gemma.
-Surface baseline ≈0.47–0.55 for 5/6 (Llama 0.64 caveat) ⇒ signal is genuinely internal. The earlier Qwen
-null was largely FaithCoT label-noise/small-n; C1's "internally decodable" leg now holds cross-family,
-cross-generation on clean labels. *(Gemma-4 not viable on 8 GB 3070s — 12B peaks 7.83 GB, E4B OOMs; hardware
-limit, deferred to ≥16 GB. R1-0528 n=81 from reasoning overflowing the 1024-tok budget.)* **(ii) The
+labels at scale; **scaled to 7 models / 3 families spanning 2024→2026** (+Qwen3-8B, +DeepSeek-R1-Distill-7B,
++Gemma-2-9b, +DeepSeek-R1-0528-Qwen3-8B [2026], +**Gemma-4-12B [2026, run via 2-GPU sharding]**).
+**(i) White-box probe permutation-significant in ALL SEVEN** (held-out Qwen2.5 **0.81** / Gemma-4-12B **0.80**
+/ Llama **0.74** / Qwen3 **0.72** / DeepSeek-R1-Distill **0.62** / Gemma-2 **0.60** / R1-0528 0.56 [n=81, perm
+obs 0.688]), generalizing **across AQuA↔GSM8K** (0.52–0.73); effect **model-dependent** — strong in Qwen2.5/
+Gemma-4/Llama, weak-but-sig in reasoning-distills + Gemma-2. Surface baseline ≈0.47–0.55 for 5/7 (Llama 0.64,
+Gemma-4 0.665 partial surface tell; WB still clears by ~0.1). C1's "internally decodable" leg now holds
+cross-family, cross-generation on clean labels. *(Gemma-4-12B runs via `--shard` device_map=auto across the
+2×8 GB 3070s, 5.4 GB/card — single-card was the only blocker; ZeRO/FSDP N/A for inference. R1-0528 n=81 from
+reasoning overflowing the 1024-tok budget.)* **(ii) The
 FaithCoT(real)↔synthetic BRIDGE FAILS** (Llama/Qwen2.5 only — FaithCoT has no real traces for the newer
 models) — synthetic post-hoc peaks
 **early** (L9/L10), real ft1v2 peaks **late** (L29/L22); cross-distribution transfer is **~chance even

@@ -27,10 +27,10 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--mdir", required=True)
 ap.add_argument("--gpu", type=int, default=0)
 ap.add_argument("--no_think", action="store_true")
+ap.add_argument("--shard", action="store_true", help="device_map='auto' across all visible GPUs")
 args = ap.parse_args()
 TMPL_KW = {"enable_thinking": False} if args.no_think else {}
 SYNTH = os.path.expanduser("~/synth")
-DEV = f"cuda:{args.gpu}"
 
 traces = []
 for ds in ("aqua", "gsm8k"):
@@ -38,16 +38,21 @@ for ds in ("aqua", "gsm8k"):
     if os.path.exists(p): traces += json.load(open(p))
 print(f"{args.mdir}: {len(traces)} traces ({sum(t['condition']=='genuine' for t in traces)} genuine)", flush=True)
 
-torch.cuda.set_device(args.gpu)
 bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
                          bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_use_double_quant=True)
+if args.shard:
+    DEV = "cuda:0"; dmap, kw = "auto", {"max_memory": {0: "7GiB", 1: "7GiB", "cpu": "60GiB"}}
+else:
+    torch.cuda.set_device(args.gpu); DEV = f"cuda:{args.gpu}"; dmap, kw = {"": args.gpu}, {}
 tok = AutoTokenizer.from_pretrained(MODELS[args.mdir])
 try:
-    model = AutoModelForCausalLM.from_pretrained(MODELS[args.mdir], quantization_config=bnb, device_map={"": args.gpu}, dtype=torch.bfloat16)
+    model = AutoModelForCausalLM.from_pretrained(MODELS[args.mdir], quantization_config=bnb, device_map=dmap, dtype=torch.bfloat16, **kw)
 except TypeError:
-    model = AutoModelForCausalLM.from_pretrained(MODELS[args.mdir], quantization_config=bnb, device_map={"": args.gpu}, torch_dtype=torch.bfloat16)
+    model = AutoModelForCausalLM.from_pretrained(MODELS[args.mdir], quantization_config=bnb, device_map=dmap, torch_dtype=torch.bfloat16, **kw)
 model.eval()
-NL = model.config.num_hidden_layers
+tcfg = getattr(model.config, "text_config", None)  # multimodal (e.g. gemma4) nests these
+NL = getattr(model.config, "num_hidden_layers", None) or getattr(tcfg, "num_hidden_layers", None)
+HID = getattr(model.config, "hidden_size", None) or getattr(tcfg, "hidden_size", None)
 
 HEDGE = re.compile(r"\b(maybe|perhaps|probably|likely|seems?|might|could|I think|actually|clearly|obviously|of course)\b", re.I)
 SELF = re.compile(r"\b(I |we |let me|let's|my )\b", re.I)
@@ -102,7 +107,7 @@ def soft_faithfulness(t):
         drops.append(abs(base - p_answer(t["question"], t["options"], red, tgt, valid)))
     return float(np.mean(drops))
 
-X = np.zeros((NL, len(traces), model.config.hidden_size), dtype=np.float16)
+X = np.zeros((NL, len(traces), HID), dtype=np.float16)
 y = np.array([1 if t["condition"] == "posthoc" else 0 for t in traces])  # 1 = post-hoc (unfaithful)
 dsarr = np.array([t["dataset"] for t in traces])
 soft = np.full(len(traces), np.nan)

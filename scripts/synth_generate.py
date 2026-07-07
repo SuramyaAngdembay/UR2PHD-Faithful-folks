@@ -30,22 +30,27 @@ ap.add_argument("--n", type=int, default=250)     # problems to attempt
 ap.add_argument("--gpu", type=int, default=0)
 ap.add_argument("--max_new", type=int, default=512)
 ap.add_argument("--no_think", action="store_true", help="pass enable_thinking=False (Qwen3 etc.)")
+ap.add_argument("--shard", action="store_true", help="device_map='auto' across all visible GPUs (big models)")
 args = ap.parse_args()
 TMPL_KW = {"enable_thinking": False} if args.no_think else {}
 
 SYNTH = os.path.expanduser("~/synth")
 probs = json.load(open(os.path.join(SYNTH, f"{args.dataset}_problems.json")))[: args.n]
 
-torch.cuda.set_device(args.gpu)
-DEV = f"cuda:{args.gpu}"
 bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
                          bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_use_double_quant=True)
+if args.shard:                       # pipeline-shard one big model across all visible GPUs
+    DEV = "cuda:0"
+    dmap, kw = "auto", {"max_memory": {0: "7GiB", 1: "7GiB", "cpu": "60GiB"}}
+else:
+    torch.cuda.set_device(args.gpu); DEV = f"cuda:{args.gpu}"
+    dmap, kw = {"": args.gpu}, {}
 tok = AutoTokenizer.from_pretrained(args.model)
 if tok.pad_token is None: tok.pad_token = tok.eos_token
 try:
-    model = AutoModelForCausalLM.from_pretrained(args.model, quantization_config=bnb, device_map={"": args.gpu}, dtype=torch.bfloat16)
+    model = AutoModelForCausalLM.from_pretrained(args.model, quantization_config=bnb, device_map=dmap, dtype=torch.bfloat16, **kw)
 except TypeError:
-    model = AutoModelForCausalLM.from_pretrained(args.model, quantization_config=bnb, device_map={"": args.gpu}, torch_dtype=torch.bfloat16)
+    model = AutoModelForCausalLM.from_pretrained(args.model, quantization_config=bnb, device_map=dmap, torch_dtype=torch.bfloat16, **kw)
 model.eval()
 
 def opts_block(p):

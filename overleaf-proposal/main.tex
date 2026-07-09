@@ -15,7 +15,7 @@
 \maketitle
 
 \begin{abstract}
-Chain-of-thought (CoT) faithfulness---whether a model's stated reasoning reflects the process that produced its answer---is increasingly central to oversight. We ask how far \emph{black-box} signals can go at detecting instance-level CoT unfaithfulness. On FaithCoT-Bench (spanning 4 domains and 4 models) and GRACE, we find that instance-level detection is saturated by simple answer-tracing and is strongly confounded by answer correctness. Three further signal families (premise-DAG structure, graph-targeted counterfactual interventions, and NLI step-support) fail to beat or augment answer-tracing. We localize the failure: detecting \emph{post-hoc rationalization on correct answers} is at chance for every black-box method, because such rationalizations are locally coherent and yield stable answers. Furthermore, we show a widely-used step-removal faithfulness metric anti-correlates with human judgments. Our results bound black-box faithfulness detection and motivate mechanistic (white-box) approaches for the residual frontier.
+Chain-of-thought (CoT) faithfulness---whether a model's stated reasoning reflects the process that produced its answer---is increasingly central to oversight. We ask how far \emph{black-box} signals can go at detecting instance-level CoT unfaithfulness. On FaithCoT-Bench, we find that instance-level detection is saturated by simple answer-tracing and is strongly confounded by answer correctness. Three further signal families (premise-DAG structure, graph-targeted counterfactual interventions, and NLI step-support) fail to beat or augment answer-tracing. We localize the failure: detecting \emph{post-hoc rationalization on correct answers} is at chance for every black-box method. However, the information is internally decodable. We scale a white-box probe to a synthetic dataset of matched genuine vs. post-hoc traces across 7 models spanning three families (Llama, Qwen, Gemma) and 2024--2026, where internal decodability is consistently significant, though model-dependent in strength. Crucially, we show this synthetic "answer-first" proxy does not transfer to real organic post-hoc rationalization, offering a methodological caution to the interpretability community.
 \end{abstract}
 
 \section{Introduction}
@@ -25,19 +25,59 @@ Our work empirically audits the limits of black-box faithfulness detection. Inst
 
 \section{Contributions}
 
-\textbf{C1. The Black-Box Frontier vs. Internal Probes.} Across 4 domains and 4 models (n=270 in-regime traces), no black-box signal detects post-hoc rationalization on correct answers above chance. Answer-tracing, targeted interventions, NLI support, and DAG centrality all yield AUROCs hovering around 0.50. Mechanistically, post-hoc rationalizations are locally coherent and yield stable answers, rendering them externally indistinguishable. However, the information is internally decodable: a linear probe on hidden states detects post-hoc rationalization in Llama-3.1-8B (AUROC 0.71, permutation p=0.01) \cite{lanham2023measuring}.
+\textbf{C1. The Black-Box Frontier vs. Internal Probes.} No black-box signal detects post-hoc rationalization on correct answers above chance (AUROCs $\approx 0.50$). However, the information is internally decodable. A linear probe on last-token hidden states separates the post-hoc-vs-genuine construction across 7 diverse models spanning three families from 2024 to 2026 (Llama-3.1, Qwen-2.5/Qwen3, Gemma-2/Gemma-4, and two DeepSeek-R1 distills) on a clean synthetic benchmark (held-out AUROC 0.56--0.81, permutation $p<0.025$ for all). The effect is model-dependent: strongest in standard instruct models (Qwen-2.5 0.81, Gemma-4-12B 0.80, Llama 0.74) and weak-but-significant in the reasoning-distilled models and the older Gemma-2. Surface-feature baselines ($\approx 0.47$--$0.55$ for five of seven) confirm the signal is internal rather than lexical.
 
-\textbf{C2. Metric Inversion.} The standard step-removal AUC metric widely used for faithfulness evaluation (e.g., \emph{soft\_faithfulness} in FaithCoT-Bench) actually anti-correlates with human faithfulness labels, exhibiting a mean difference of +0.139 (95\% CI: [+0.096, +0.182]), scoring higher for unfaithful traces. This serves as a concrete caution for a widely-used family of interpretability metrics.
+\textbf{C2. The Proxy Bridge Failure.} We identify a critical methodological gap: while synthetic "answer-first" post-hoc constructions are internally coherent and highly detectable within their own distribution (peaking at early layers), they do \emph{not} transfer to real, naturally occurring post-hoc rationalization (which peaks at late layers). This cautions against the widespread use of prompt-induced rationalization as a proxy for organic unfaithfulness.
 
-\textbf{C3. Rigorous Negatives and Accuracy Confound.} Premise-DAG structure and graph-targeted counterfactual interventions do not beat answer-tracing. Answer correctness is the single strongest predictor of apparent unfaithfulness (0.697 AUROC)---quantifying the ``unfaithfulness as disguised accuracy'' confound. We note nuance where DAG centrality does show weak significance on mathematical domains (e.g., AQuA) where premise structure is explicit \cite{mukherjee2025parc}.
+\textbf{C3. Metric Inversion.} The standard step-removal AUC metric widely used for faithfulness evaluation (e.g., \emph{soft\_faithfulness} in FaithCoT-Bench) actually anti-correlates with human faithfulness labels, exhibiting a mean difference of +0.139 (95\% CI: [+0.096, +0.182]), scoring higher for unfaithful traces. This serves as a concrete caution for a widely-used family of interpretability metrics.
+
+\textbf{C4. Rigorous Negatives and Accuracy Confound.} Premise-DAG structure and graph-targeted counterfactual interventions do not beat answer-tracing. Answer correctness is the single strongest predictor of apparent unfaithfulness (0.697 AUROC)---quantifying the ``unfaithfulness as disguised accuracy'' confound. We note nuance where DAG centrality does show weak significance on mathematical domains (e.g., AQuA) where premise structure is explicit \cite{mukherjee2025parc}.
 
 \section{Methodology and Evaluation}
 
 \subsection{Datasets and Settings}
-We evaluate across 4 domains (LogiQA, TruthfulQA, AQuA, HLE-Bio) using 4 distinct language models (Llama-3.1-8B, Qwen-2.5-7B, etc.), comprising 1,304 extracted traces. We utilize FaithCoT-Bench for primary annotations and validate structural findings against the GRACE step-level benchmark \cite{shen2026faithcot, pham2026grace}.
+We evaluate across 4 domains (LogiQA, TruthfulQA, AQuA, HLE-Bio) utilizing FaithCoT-Bench for primary annotations \cite{shen2026faithcot}. We additionally construct a large-scale \emph{Synthetic Post-Hoc} dataset on mathematical reasoning (AQuA/GSM8K), eliciting paired genuine (reasoning-first) and post-hoc (answer-first) traces constrained to yield the exact same correct final answer.
 
 \subsection{White-box Probing}
-To test the behavioral accessibility limit, we fit a linear probe on the internal activations (last-token hidden states; PCA to 50 dimensions, logistic regression, 5-fold cross-validation) to separate post-hoc rationalization from genuine reasoning on correct answers. Statistical significance is verified via a 200-permutation selection-corrected test.
+To test behavioral limits, we fit both dense linear probes (PCA to 50 dimensions, logistic regression/MLP) and sparse probes (L1-regularized Lasso regression directly on the 4096-dimensional stream) on last-token hidden states. This is applied to separate post-hoc rationalization from genuine reasoning. Significance is verified via 200-permutation selection-corrected tests.
+
+\section{Results}
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model} & \textbf{n pairs} & \textbf{Best Layer} & \textbf{Held-out AUROC} & \textbf{Perm $p$-value} \\
+\midrule
+Qwen-2.5-7B & 277 & 10 & 0.809 & 0.005 \\
+Gemma-4-12B & 248 & 23 & 0.797 & 0.005 \\
+Llama-3.1-8B & 229 & 9 & 0.739 & 0.005 \\
+Qwen3-8B & 175 & 10 & 0.716 & 0.005 \\
+DeepSeek-R1-Distill-Qwen-7B & 251 & 7 & 0.617 & 0.005 \\
+Gemma-2-9B-IT & 243 & 5 & 0.600 & 0.020 \\
+DeepSeek-R1-0528-Qwen3-8B & 81 & 22 & 0.558 & 0.025 \\
+\bottomrule
+\end{tabular}
+\caption{White-box linear probe detection of the post-hoc-vs-genuine construction on the synthetic benchmark across 7 models (2024--2026). $n$ = matched genuine/post-hoc pairs. Held-out is a single stratified 70/30 split; significance established via 200-permutation, selection-corrected tests. Gemma-4-12B was run 4-bit sharded across two 8\,GB GPUs.}
+\label{tab:synth_scaling}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model} & \textbf{Synth Best L} & \textbf{Real Best L} & \textbf{Real $\to$ Synth AUC} & \textbf{Synth $\to$ Real AUC} \\
+\midrule
+Qwen-2.5-7B & L10 & L22 & 0.595 & 0.579 \\
+Llama-3.1-8B & L9 & L29 & 0.554 & 0.531 \\
+\bottomrule
+\end{tabular}
+\caption{The Proxy Bridge Failure: Synthetic post-hoc is encoded at early layers (L9/L10) while real organic post-hoc is encoded late (L22/L29). Cross-distribution transfer peaks at near chance ($< 0.60$), demonstrating that prompt-induced rationalization does not transfer to real unfaithfulness.}
+\label{tab:bridge_failure}
+\end{table}
+
 
 \section{Conclusion and Next Steps}
 Our findings rigorously map the limits of black-box CoT-faithfulness detection. Because behavioral metrics fail on the frontier of post-hoc rationalization on correct answers, future oversight tools must leverage mechanistic white-box methods or representation engineering to reliably audit reasoning integrity.

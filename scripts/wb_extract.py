@@ -14,9 +14,9 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--model", required=True, choices=["llama", "qwen"])
-ap.add_argument("--gpu", type=int, default=0)
-a = ap.parse_args()
+ap.add_argument("--model", required=True, choices=["llama", "qwen"])  # FaithCoT-Bench ships real
+ap.add_argument("--gpu", type=int, default=0)                         # traces only for these two
+a = ap.parse_args()                                                   # open models (+ closed GPT/Gemini)
 
 BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 DOMAINS = ["truthfulqa", "logiqa", "aqua", "HLE_BIO"]

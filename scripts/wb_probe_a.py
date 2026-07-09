@@ -22,7 +22,7 @@ def project(X, nc):  # label-free standardize + PCA, fit once
 def cvauc(Z, y, cv):
     return cross_val_score(LogisticRegression(C=1.0, max_iter=1000), Z, y, cv=cv, scoring="roc_auc").mean()
 
-for model in ["llama", "qwen", "deepseek"]:
+for model in ["llama", "qwen"]:
     p = os.path.expanduser(f"~/wbrep_{model}.npz")
     if not os.path.exists(p):
         print(f"\n{model}: no cache"); continue

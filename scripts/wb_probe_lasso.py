@@ -1,7 +1,11 @@
 """
-Lasso Probe for Neuron Isolation.
+Lasso Probe for Neuron Isolation (EXPLORATORY).
 Runs L1-regularized Logistic Regression directly on the full-dimensional hidden states
-(no PCA) to isolate the sparse set of neurons/features responsible for unfaithful reasoning.
+(no PCA) to isolate the sparse set of neurons/features carrying the post-hoc signal.
+Runs on the FaithCoT-Bench white-box reps (real ft1/ft2), which exist only for llama/qwen.
+CAVEAT: the reported best-layer AUROC is selected over ~33 layers with NO permutation
+correction, so it is optimistically biased; treat it as descriptive (which neurons / how
+sparse), not as a headline detection number, until run through the selection-corrected test.
 """
 import os
 import numpy as np
@@ -9,7 +13,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import StratifiedKFold, cross_val_score
 
-for model in ["llama", "qwen", "deepseek"]:
+for model in ["llama", "qwen"]:
     p = os.path.expanduser(f"~/wbrep_{model}.npz")
     if not os.path.exists(p):
         print(f"\n{model}: no cache"); continue

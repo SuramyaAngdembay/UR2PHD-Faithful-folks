@@ -112,6 +112,6 @@ AQuA; Gemma-2-9b blocked on HF gated access. **Disk constraint resolved (2026-07
 
 ## Open next steps (BlackboxNLP-targeted — see paper-positioning-blackboxnlp.md)
 DONE: 4×4 + CIs (F1/F2 sig); LLM-extractor validation (0.82 recall); GRACE NLI (preliminary); white-box pilot + firm-up a/b/d/e (Llama held-out 0.70, Qwen weak); **synthetic-construction generalization** (WB strong in both models on clean labels; **bridge to real post-hoc fails → new methodological caution**).
-(a) **write the paper** (C1 frontier + black-box-vs-internals incl. Llama held-out 0.70 + synthetic 2-model WB 0.74/0.81 + C2 metric inversion + C3 rigorous negatives + **C4 synthetic-proxy caution**) into `overleaf-proposal/`;
+(a) **paper drafted (2026-07-09)** — full research-paper draft in `overleaf-proposal/main.tex` (abstract, intro, related work, Parts I–IV = audit / frontier / white-box / synthetic+bridge, C1–C4, limitations; all numbers from `results/`, honest caveats inline). Next: polish pass + advisor review + verify BlackboxNLP 2026 CFP deadline/format (likely ACL-style template + page limit);
 (b) **full GRACE eval set** (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release);
 (c) *(optional)* extra models on the synthetic study (DeepSeek-R1-Distill / Qwen3-8B / Gemma) via download-run-delete — disk-gated (34 GB free).

@@ -107,7 +107,9 @@ motivate mechanistic (white-box) methods for the residual frontier.
   domain-matched (Llama 0.55, Qwen 0.60). ⇒ synthetic answer-first is NOT a representational proxy for
   organic post-hoc (**C4**).
 - REMAINING (in priority order):
-  1. **Write-up** — fold in synthetic 7-model WB (0.56–0.81, all perm-sig, incl. 2026 Gemma-4-12B) and C4.
+  1. ~~Write-up~~ **DRAFTED (2026-07-09)** — full paper draft in `overleaf-proposal/main.tex` (Parts I–IV,
+     C1–C4, limitations, 3 tables). Remaining: polish, advisor review, port to the official BlackboxNLP/ACL
+     template + fit page limit once the 2026 CFP is verified.
   2. Full GRACE eval set (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release).
   3. *(optional, needs aggregate >16 GB)* Gemma-4-31B / 26B-MoE / DeepSeek-V4 — exceed 2×8 GB even sharded.
 

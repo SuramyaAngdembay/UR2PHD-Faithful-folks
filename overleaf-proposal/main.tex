@@ -4,187 +4,237 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
-\usepackage{amsmath}
-\usepackage{multirow}
-\usepackage[numbers]{natbib}
 
-\title{The Black-Box Frontier of Chain-of-Thought Faithfulness:\\Detecting Post-Hoc Rationalization on Correct Answers}
-\author{Suramya Raj Angdembay \and Dikshant Aryal\\[2pt]
-\normalsize Advisor: Dr.\ Nick Rahimi --- Team ChainTrackers}
-\date{Research Proposal (revised) --- UR2PhD, Summer 2026}
+\title{The Black-Box Frontier of Chain-of-Thought Faithfulness:\\
+Post-Hoc Rationalization on Correct Answers}
+\author{Suramya Raj Angdembay \and Dikshant Aryal}
+\date{Summer 2026}
 
 \begin{document}
 
 \maketitle
 
-\begin{abstract}
-Chain-of-thought (CoT) explanations are increasingly used to audit language-model reasoning, but an explanation is only useful for oversight if it is \emph{faithful}---if the stated reasoning actually produced the answer. This proposal asks how far \emph{black-box} (behavioral) methods can go at detecting unfaithful CoT at the level of individual traces, and what to do where they cannot. Our preliminary explorations on FaithCoT-Bench indicate that black-box detection is largely confounded by answer correctness, that a widely-used faithfulness metric in fact anti-correlates with human judgments, and that in the hardest regime---post-hoc rationalization on \emph{correct} answers---every behavioral signal we tested performs at chance. Early white-box experiments suggest the missing information is partially recoverable from model internals, with strength that varies by model, and a scaling exploration across seven open models supports this while exposing a caution: synthetically constructed unfaithfulness does not appear to share a representation with the organic kind. We propose to consolidate these threads into a rigorous analysis paper for BlackboxNLP @ EMNLP 2026, to validate the findings on a second benchmark, to strengthen the causal evidence, and to pilot a protocol for collecting organic unfaithfulness data.
-\end{abstract}
+\section{Introduction}
 
-\section{Research Context and Problem Statement}
+\subsection{Research context and problem statement}
 
-Large language models produce fluent step-by-step explanations that appear to lay out a reasoning process. A growing body of work shows these explanations cannot be taken at face value: the stated reasoning is sometimes not the process that produced the answer at all \cite{lanham2023measuring}. The model may commit to an answer internally and then compose a plausible derivation after the fact---\emph{post-hoc rationalization}. As CoT becomes an oversight surface, where a human or automated auditor reads the reasoning to decide whether to trust the answer, this gap matters at the level of \emph{individual traces}: the practical question is not whether models are faithful on average, but whether \emph{this} explanation can be trusted.
+Large language models can generate fluent chain-of-thought (CoT) explanations
+that appear logical even when the stated reasoning did not support, or was not
+responsible for, the model's final answer \cite{lanham2023measuring}. This makes
+answer accuracy alone an insufficient measure of trustworthy reasoning: a model
+may reach the correct answer and then construct a plausible explanation after
+already committing to it---\emph{post-hoc rationalization}. As CoT becomes an
+oversight surface, where an auditor reads the reasoning to decide whether to
+trust the answer, the practical question is instance-level: can \emph{this}
+explanation be trusted? FaithCoT-Bench \cite{shen2026faithcot} formalizes this
+problem with human annotations across four domains and four models, and shows
+that detection remains difficult.
 
-FaithCoT-Bench \cite{shen2026faithcot} recently formalized instance-level faithfulness detection, contributing human annotations across four domains and four models and showing that a broad panel of detectors performs poorly in aggregate. Related structural approaches verify reasoning by building premise graphs over the chain \cite{mukherjee2025parc,fang2025gov,feng2025vericot}, and step-level benchmarks evaluate adjacent properties \cite{zheng2024processbench,jacovi2024reveal,pham2026grace}. What remains open---and what this project targets---is a sharper pair of questions: \textbf{(RQ1)} \emph{where exactly} does black-box detection fail, and why? \textbf{(RQ2)} when behavior is uninformative, is the distinguishing information nevertheless present in the model's internal activations \cite{cox2026decoding}? And \textbf{(RQ3)} can the field study this regime at scale with constructed data, or does synthetic unfaithfulness differ from the real thing?
+Our previous proposal set out to \emph{build} a premise-grounded detector,
+combining PARC-style premise graphs \cite{mukherjee2025parc} with graph-targeted
+counterfactual interventions. We implemented and evaluated that method first,
+and its rigorously-established failure (below) reshaped the project. The revised
+project asks three questions:
 
-Our original proposal set out to \emph{build} a premise-grounded detector, combining PARC-style premise DAGs with graph-targeted counterfactual interventions. As described in the revisions section, we implemented and evaluated that method first---and its failure, established with some care, reshaped the project into the diagnostic questions above. The proposal that follows presents those preliminary explorations and the research program they motivate.
+\begin{itemize}
+    \item \textbf{RQ1:} Where exactly does black-box (behavioral) faithfulness
+          detection fail, and why?
+    \item \textbf{RQ2:} Where behavior is uninformative, is the distinguishing
+          information still present in the model's internal activations
+          \cite{cox2026decoding}?
+    \item \textbf{RQ3:} Can this regime be studied at scale with synthetically
+          constructed data, or does constructed unfaithfulness differ from the
+          organic kind?
+\end{itemize}
 
-\section{Preliminary Work and Findings}
+\subsection{Approach and preliminary findings}
 
-All experiments below were run on FaithCoT-Bench (LogiQA, TruthfulQA, AQuA, HLE-Bio; Llama-3.1-8B-Instruct, Qwen-2.5-7B-Instruct, GPT-4o-mini, Gemini-2.5-Flash; 1{,}304 traces), evaluated against its \emph{human} annotations rather than its derived metrics, on our lab's dual-GPU workstation with 4-bit quantization. We report these as preliminary findings: they are individually caveated, and part of the proposed work is to harden them.
-
-\subsection{Exploration 1: How far do black-box signals go?}
-
-We implemented four families of behavioral signals: answer-tracing (sensitivity of the answer to removing individual steps, the basis of the benchmark's own \texttt{soft\_faithfulness} metric); premise-DAG structural features adapted from PARC; graph-targeted counterfactual interventions, using an LLM premise extractor we validated against PARC's gold annotations (0.82 recall / 0.79 F1, versus 0.57 F1 for a heuristic extractor, so that the test is not bottlenecked by extraction); and per-step NLI entailment support. Table~\ref{tab:audit} summarizes their discriminative power against the human unfaithfulness label with bootstrap confidence intervals.
-
-Two things stand out. First, \textbf{answer correctness alone is the strongest single signal (AUROC 0.696)}: in this benchmark unfaithful traces are disproportionately \emph{correct} ones, so much of what appears to be unfaithfulness detection is accuracy prediction in disguise. Second, the benchmark's step-removal metric, used in its intended direction, scores \textbf{significantly below chance (0.349)}---it \emph{anti-correlates} with human faithfulness (mean difference $+0.139$, 95\% CI $[+0.096, +0.182]$, unfaithful traces scoring higher). Our reading is that post-hoc rationalizations are tightly answer-coupled step by step, so removing steps moves the answer \emph{more}, not less; the metric measures coupling, not faithfulness. A related methodological trap we documented: correlating a new detector against \texttt{soft\_faithfulness} itself is near-circular (an apparent $\rho = 0.87$ collapses to chance-level discrimination against the human labels). The structural families added nothing significant, with one honest nuance---DAG max-lookback is weakly informative on AQuA (0.636), the one domain where premise structure is explicit.
-
-\begin{table}[htbp]
-\centering
-\small
-\begin{tabular}{llccc}
-\toprule
-\textbf{Family} & \textbf{Signal (direction scored)} & \textbf{AUROC} & \textbf{95\% CI} & \textbf{Sig.} \\
-\midrule
-Confound & answer correctness ($\Rightarrow$ unfaithful) & \textbf{0.696} & [0.662, 0.734] & yes \\
-\midrule
-\multirow{2}{*}{Answer-tracing} & \texttt{soft} inverted (high coupling $\Rightarrow$ unf.) & 0.651 & [0.611, 0.695] & yes \\
- & \texttt{soft} as intended (low coupling $\Rightarrow$ unf.) & 0.349 & [0.305, 0.389] & inverted \\
-\midrule
-\multirow{3}{*}{NLI support} & \# unsupported steps & 0.569 & [0.523, 0.615] & weak \\
- & mean entailment (low $\Rightarrow$ unf.) & 0.493 & [0.447, 0.538] & no \\
- & contradiction fraction & 0.507 & [0.461, 0.554] & no \\
-\midrule
-\multirow{2}{*}{Premise-DAG} & linearity (low $\Rightarrow$ unf.) & 0.530 & [0.483, 0.577] & no \\
- & max lookback & 0.543 & [0.496, 0.588] & no \\
-\bottomrule
-\end{tabular}
-\caption{\textbf{Preliminary finding 1} --- black-box signals vs.\ the human unfaithfulness label ($n{=}633$ traces with all features available; 4 domains $\times$ 4 models; 2{,}000-resample bootstrap CIs). Correctness dominates; the standard metric works only inverted; structure adds nothing significant. Counterfactual interventions (not shown; effect sizes $g=0.56$--$0.61$) were likewise dominated by answer-tracing.}
-\label{tab:audit}
-\end{table}
-
-\subsection{Exploration 2: Localizing the failure}
-
-The confound suggests a controlled test: restrict to traces where the model's answer is \emph{correct}, and ask whether any signal separates genuinely faithful reasoning from post-hoc rationalization (the benchmark's ft1 vs.\ ft2 annotation, $n=270$). Table~\ref{tab:frontier} shows the result: \textbf{every black-box signal collapses to chance}---all bootstrap CIs include 0.5. This is intuitive in hindsight. A post-hoc rationalization is locally coherent, supports its answer, and yields a confident, stable answer distribution: exactly the external profile of a faithful trace. We refer to this regime as the \emph{black-box frontier}, and it anchors everything we propose below.
-
-\begin{table}[htbp]
-\centering
-\small
-\begin{tabular}{lcc}
-\toprule
-\textbf{Black-box signal} & \textbf{AUROC (faithful vs.\ post-hoc)} & \textbf{95\% CI} \\
-\midrule
-Answer-tracing (\texttt{soft\_faithfulness}) & 0.545 & [0.468, 0.611] \\
-Counterfactual interventions & 0.485 & CI $\ni$ 0.5 \\
-NLI step-support & 0.514 & CI $\ni$ 0.5 \\
-Premise-DAG structure & 0.490 & CI $\ni$ 0.5 \\
-\bottomrule
-\end{tabular}
-\caption{\textbf{Preliminary finding 2} --- the frontier: on human-annotated \emph{correct-answer} traces (ft1 vs.\ ft2, $n=270$), no black-box signal beats chance.}
-\label{tab:frontier}
-\end{table}
-
-\subsection{Exploration 3: Is the information inside the model?}
-
-For the two open models in the benchmark we extracted hidden states at every layer and fit simple linear probes (standardization, PCA to 50 dimensions, logistic regression, 5-fold cross-validation), with a \emph{selection-corrected} permutation test---the null distribution takes the maximum over layers, since the best layer is chosen post hoc. The picture (Table~\ref{tab:whitebox}) is encouraging but asymmetric. In Llama-3.1-8B the probe separates faithful from post-hoc reasoning at held-out AUROC 0.70, generalizes across domains (leave-one-domain-out 0.60--0.71), and appears approximately linear (an MLP adds nothing). In Qwen-2.5-7B the probe is weak and not significant; with $n=126$ we can claim ``not detected,'' not ``absent.'' A first causal check points the same direction: steering activations along the probe's post-hoc direction flips the model's answers two to three times more often than a norm-matched random direction (0.22 vs.\ 0.08 at $+6\sigma$), though we regard this as weak, suggestive evidence---effects appear only at large perturbations, on $n=51$ traces, with an indirect readout.
+\textbf{Black-box signals fail on a specific, identifiable frontier (RQ1).}
+We implemented four families of behavioral detectors on FaithCoT-Bench---answer-tracing
+(step-removal sensitivity), premise-graph structure, targeted counterfactual
+interventions (with an LLM premise extractor validated at 0.82 recall against gold
+annotations, so the test is not an extraction artifact), and per-step NLI
+support---and scored them against the \emph{human} labels with bootstrap confidence
+intervals. Two diagnoses emerged. First, answer correctness alone is the strongest
+single ``unfaithfulness'' signal (AUROC 0.696): unfaithful traces in this benchmark
+are disproportionately \emph{correct} ones, so black-box detection largely reduces to
+accuracy prediction. Second, the benchmark's own step-removal metric
+\emph{anti-correlates} with human faithfulness (unfaithful traces score higher by
+$+0.139$, 95\% CI $[+0.096,+0.182]$); used as intended it performs significantly
+\emph{below} chance (AUROC 0.349). The controlled test follows: restrict to traces
+where the answer is correct, and ask whether anything separates genuine reasoning
+from post-hoc rationalization. Table~\ref{tab:frontier} shows the result---every
+black-box signal is at chance. We call this the \emph{black-box frontier}.
 
 \begin{table}[htbp]
-\centering
-\small
-\begin{tabular}{lcc}
-\toprule
- & \textbf{Llama-3.1-8B} ($n{=}144$) & \textbf{Qwen-2.5-7B} ($n{=}126$) \\
-\midrule
-In-distribution CV AUROC (best layer) & 0.71 & 0.62 \\
-Selection-corrected permutation $p$ & 0.01--0.03 & 0.32 (n.s.) \\
-Held-out AUROC (25$\times$ 70/30 splits) & \textbf{0.70} (F1 0.70) & 0.58 \\
-Leave-one-domain-out AUROC & 0.60--0.71 & --- \\
-Peak layers & late (16--31) & late ($\approx$22) \\
-\bottomrule
-\end{tabular}
-\caption{\textbf{Preliminary finding 3} --- linear probes on internal activations, real annotated regime. The information black-box methods cannot see is partially decodable inside the model, with model-dependent strength.}
-\label{tab:whitebox}
+    \centering
+    \small
+    \caption{Preliminary finding (RQ1): on human-annotated \emph{correct-answer}
+    traces (faithful vs.\ post-hoc, $n=270$, 4 domains $\times$ 4 models), every
+    black-box signal is at chance; all bootstrap 95\% CIs include 0.5.}
+    \label{tab:frontier}
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{Black-box signal} & \textbf{AUROC} & \textbf{95\% CI} \\
+        \midrule
+        Answer-tracing (\texttt{soft\_faithfulness}) & 0.545 & [0.468, 0.611] \\
+        Counterfactual interventions & 0.485 & CI $\ni$ 0.5 \\
+        NLI step-support & 0.514 & CI $\ni$ 0.5 \\
+        Premise-graph structure & 0.490 & CI $\ni$ 0.5 \\
+        \bottomrule
+    \end{tabular}
 \end{table}
 
-\subsection{Exploration 4: Scaling with constructed data --- and a caution}
+\textbf{The information is partially inside the model (RQ2).} On the same
+human-annotated regime, simple linear probes over hidden activations (PCA-50 +
+logistic regression, with selection-corrected permutation tests) succeed where
+behavior fails---in some models. In Llama-3.1-8B the probe reaches held-out AUROC
+0.70 and generalizes across domains (0.60--0.71 leave-one-domain-out); in
+Qwen-2.5-7B it is weak and not significant ($n=126$), so the effect is
+model-dependent. A first causal check points the same way: steering activations
+along the probe direction flips answers 2--3$\times$ more than a norm-matched
+random direction (0.22 vs.\ 0.08), though we treat this as weak, suggestive
+evidence.
 
-Human-annotated post-hoc traces are scarce, so we explored whether the regime can be studied at scale with \emph{constructed} labels: for math problems (AQuA, GSM8K) the same model either solves the problem step-by-step (kept only when correct---reasoning caused the answer; ``genuine'') or is handed the gold answer and asked to justify it (``post-hoc''). The two conditions end at the same correct answer and are probed in an identical context, so only the causal role of the reasoning differs. Across \textbf{seven open models spanning three families and 2024--2026}---including Gemma-4-12B, which we ran by pipeline-sharding the quantized model across our two 8\,GB GPUs---the internal signal is permutation-significant in every model (Table~\ref{tab:synth}), with an interpretable pattern: standard instruct models are strongest, reasoning-distilled models weakest. Surface-feature baselines (a classifier over step counts, token counts, and style features, with no access to activations) remain near chance for five of seven models, indicating the probe reads something genuinely internal. Notably, Qwen-2.5---not significant on the small, noisier human-labeled set---is the strongest model here, suggesting its earlier null owed more to label noise and sample size than to an absent signal.
+\textbf{Scaling with constructed data works---but the construction is not the
+real thing (RQ3).} Because annotated post-hoc traces are scarce, we built matched
+pairs on math datasets (AQuA, GSM8K): the same model either solves a problem
+step-by-step (kept only when correct; ``genuine'') or is handed the gold answer
+and asked to justify it (``post-hoc''). Both end at the same correct answer, so
+only the causal role of the reasoning differs. Across seven open models spanning
+three families and 2024--2026 (Table~\ref{tab:synth}), the internal signal is
+permutation-significant in every model, strongest in standard instruct models and
+weakest in reasoning-distilled ones, and it is not explained by surface style
+(the black-box baseline stays near chance for five of seven). However, probes
+trained on this construction do \emph{not} transfer to the real annotated traces,
+or vice versa (Table~\ref{tab:bridge}): the two signals peak at different network
+depths and cross-transfer is near chance. Preliminarily, prompt-induced
+``answer-first'' reasoning is not a representational proxy for organic post-hoc
+rationalization---a caution for a common shortcut in the field, and the
+motivation for RQ3's proposed data-collection work.
 
 \begin{table}[htbp]
-\centering
-\small
-\begin{tabular}{lcccccc}
-\toprule
-\textbf{Model} & \textbf{n pairs} & \textbf{Best L} & \textbf{Held-out} & \textbf{Perm $p$} & \textbf{Surface} & \textbf{XDS (a$\to$g / g$\to$a)} \\
-\midrule
-Qwen-2.5-7B & 277 & 10 & 0.809 & 0.005 & 0.545 & 0.72 / 0.72 \\
-Gemma-4-12B$^{\dagger}$ & 248 & 23 & 0.797 & 0.005 & 0.665 & 0.65 / 0.54 \\
-Llama-3.1-8B & 229 & 9 & 0.739 & 0.005 & 0.639 & 0.66 / 0.73 \\
-Qwen3-8B & 175 & 10 & 0.716 & 0.005 & 0.535 & 0.62 / 0.56 \\
-DeepSeek-R1-Distill-Qwen-7B & 251 & 7 & 0.617 & 0.005 & 0.534 & 0.56 / 0.52 \\
-Gemma-2-9B-IT & 243 & 5 & 0.600 & 0.020 & 0.548 & 0.53 / 0.60 \\
-DeepSeek-R1-0528-Qwen3-8B & 81 & 22 & 0.558$^{\ddagger}$ & 0.025 & 0.473 & --- \\
-\bottomrule
-\end{tabular}
-\caption{\textbf{Preliminary finding 4a} --- probing the genuine-vs-post-hoc construction across 7 models (2024--2026). Held-out = stratified 70/30 split; Perm $p$ = 200-permutation, selection-corrected; Surface = black-box style baseline; XDS = cross-dataset transfer (AQuA$\leftrightarrow$GSM8K). $^{\dagger}$4-bit, sharded across two 8\,GB GPUs. $^{\ddagger}$Small-$n$; the permutation statistic (0.688) is the more reliable read.}
-\label{tab:synth}
+    \centering
+    \small
+    \caption{Preliminary finding (RQ2/RQ3): probing the genuine-vs-post-hoc
+    construction across 7 models. Held-out = stratified 70/30 split; permutation
+    tests are selection-corrected (200 permutations); Surface = black-box
+    style-features baseline. Gemma-4-12B ran 4-bit, sharded across two 8\,GB GPUs.}
+    \label{tab:synth}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Model} & \textbf{n pairs} & \textbf{Held-out AUROC} & \textbf{Perm $p$} & \textbf{Surface} \\
+        \midrule
+        Qwen-2.5-7B (2024) & 277 & 0.809 & 0.005 & 0.545 \\
+        Gemma-4-12B (2026) & 248 & 0.797 & 0.005 & 0.665 \\
+        Llama-3.1-8B (2024) & 229 & 0.739 & 0.005 & 0.639 \\
+        Qwen3-8B (2025) & 175 & 0.716 & 0.005 & 0.535 \\
+        DeepSeek-R1-Distill-7B (2025) & 251 & 0.617 & 0.005 & 0.534 \\
+        Gemma-2-9B (2024) & 243 & 0.600 & 0.020 & 0.548 \\
+        DeepSeek-R1-0528-8B (2026) & 81 & 0.558 & 0.025 & 0.473 \\
+        \bottomrule
+    \end{tabular}
 \end{table}
-
-The caution came from connecting the two data sources. For the two models with both real and constructed traces we trained probes on one distribution and tested on the other, sweeping all layers and domain-matching where possible. Transfer is near chance in both directions (best-of-all-layers $\leq 0.60$; layer-averages at chance), and the two signals peak at different depths---the construction early (layers 9--10), the organic regime late (layers 22--29) (Table~\ref{tab:bridge}). Preliminarily, then, \textbf{prompt-induced ``answer-first'' reasoning is not a representational proxy for organic post-hoc rationalization}. If this holds up, it is a caution for a common shortcut in the field---and it means the frontier cannot be studied on constructed data alone, which motivates the organic-data component of our proposed work.
 
 \begin{table}[htbp]
-\centering
-\small
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Model} & \textbf{Synth best L} & \textbf{Real best L} & \textbf{Real $\to$ Synth} & \textbf{Synth $\to$ Real} \\
-\midrule
-Qwen-2.5-7B & L10 & L22 & 0.595 (mean 0.495) & 0.579 (mean 0.515) \\
-Llama-3.1-8B & L9 & L29 & 0.554 (mean 0.476) & 0.531 (mean 0.431) \\
-\bottomrule
-\end{tabular}
-\caption{\textbf{Preliminary finding 4b} --- the real$\leftrightarrow$synthetic bridge fails: different depths, near-chance transfer even at the best of all layers.}
-\label{tab:bridge}
+    \centering
+    \small
+    \caption{Preliminary finding (RQ3): the real$\leftrightarrow$synthetic bridge
+    fails---different depths, near-chance transfer even taking the best of all layers.}
+    \label{tab:bridge}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Model} & \textbf{Synth peak} & \textbf{Real peak} & \textbf{Real$\to$Synth} & \textbf{Synth$\to$Real} \\
+        \midrule
+        Qwen-2.5-7B & L10 & L22 & 0.595 & 0.579 \\
+        Llama-3.1-8B & L9 & L29 & 0.554 & 0.531 \\
+        \bottomrule
+    \end{tabular}
 \end{table}
-
-\section{Proposed Research}
-
-The preliminary work answers the original feasibility question and reframes the project around three research questions, each with a concrete work package for the remainder of the program.
-
-\textbf{RQ1 --- the limits of black-box detection (consolidate and validate).} The audit, the confound, the metric inversion, and the frontier localization are individually established on one benchmark. We propose to (a)~consolidate them into a single rigorous analysis with consistent statistics, and (b)~validate on a second, independent benchmark: the GRACE step-level faithfulness dataset \cite{pham2026grace}, whose full evaluation set ($\sim$437 traces) we will use upon release (authors contacted; our replication on the 40-example public sample is directionally consistent but underpowered).
-
-\textbf{RQ2 --- internal decodability (strengthen the causal claim).} The probe results establish correlation with the construction/annotation; the steering experiment is only suggestive. We propose activation-patching and ablation experiments along the probe direction with pre-registered success criteria, and a closer study of \emph{why} the effect is model-dependent---in particular whether reasoning-distilled models genuinely blur the genuine/post-hoc boundary or encode it elsewhere.
-
-\textbf{RQ3 --- organic unfaithfulness data (address the bridge failure).} If synthetic constructions do not transfer, the field's bottleneck is naturally occurring labeled post-hoc traces. We propose a collection pilot: sample many traces per question at temperature, use answer-precommitment probes and consistency checks to nominate candidate post-hoc traces, and human-verify a subset---aiming for a small but organic evaluation set for the frontier.
 
 \section{Evaluation and Implementation Plan}
 
 \subsection{Evaluation Plan}
-Every claim carries an explicit statistical test and an explicit failure criterion. Detection claims use AUROC with bootstrap 95\% CIs; probe claims use held-out splits plus selection-corrected permutation tests (the max-over-layers null); causal claims require the treated direction to beat norm-matched random-direction controls at matched perturbation norms, with effect sizes reported regardless of outcome. Negative results are reported as findings, not omitted---this proposal's core results are themselves rigorously established negatives. Extraction-dependent methods are only interpreted after the extractor is validated against gold annotations, as done for the intervention experiments. All code, prompts, and per-trace outputs live in the team repository and will be made public at submission.
+
+\textbf{Datasets.} FaithCoT-Bench remains the primary benchmark (the only
+instance-level CoT-faithfulness dataset with expert annotations)
+\cite{shen2026faithcot}, evaluated strictly against its human labels---we showed
+that evaluating against its derived metric is near-circular. For external
+validity we will replicate on the GRACE step-level faithfulness benchmark
+\cite{pham2026grace} when its full evaluation set ($\sim$437 traces) is released
+(authors contacted; our run on the 40-example public sample is directionally
+consistent but underpowered). The constructed genuine/post-hoc dataset (AQuA,
+GSM8K) supports the scaling work; per the bridge result, conclusions about
+\emph{organic} unfaithfulness will not be drawn from constructed data alone.
+
+\textbf{Statistical standards.} Detection claims use AUROC with 2{,}000-resample
+bootstrap 95\% CIs; probe claims use held-out splits plus selection-corrected
+permutation tests (max-over-layers null); causal claims must beat norm-matched
+random-direction controls, with effect sizes reported regardless of outcome.
+Negative results are reported as findings. Extraction-dependent methods are
+interpreted only after validating the extractor against gold annotations.
+
+\textbf{Remaining work.} In priority order:
+\begin{itemize}
+    \item \textbf{Consolidation (RQ1):} finalize the analysis manuscript
+          (maintained separately from this proposal) and port it to the
+          ACL/BlackboxNLP template; target venue BlackboxNLP @ EMNLP 2026.
+    \item \textbf{Causal strengthening (RQ2):} activation-patching/ablation along
+          the probe direction with pre-registered success criteria, and a study of
+          why decodability is model-dependent (reasoning-distilled models are
+          consistently harder to read).
+    \item \textbf{Organic data pilot (RQ3):} sample many traces per question at
+          temperature, nominate candidate post-hoc traces via answer-precommitment
+          probes and consistency checks, and human-verify a subset---a small but
+          organic evaluation set for the frontier.
+\end{itemize}
 
 \subsection{Timeline}
-\textbf{July 2026:} polish the consolidated analysis; advisor review (Dr.\ Rahimi); port to the ACL/BlackboxNLP template and compress to the page limit. \textbf{August 2026:} submit to BlackboxNLP @ EMNLP 2026 (CFP deadline expected August; to be verified); begin RQ2 activation-patching experiments. \textbf{September--October 2026:} GRACE full-set replication upon release; organic-data collection pilot (RQ3). \textbf{Stretch goals (hardware-gated):} extend the model roster to $\geq$16\,GB-class models (Gemma-4-31B, DeepSeek-V4).
 
-\subsection{Risks and Mitigations}
-The main risks are external: GRACE may not release its full set on our timeline (mitigation: the paper stands on FaithCoT-Bench alone, with GRACE framed as extension); the organic-data pilot may yield few verified post-hoc traces (mitigation: even a small organic set is informative for the bridge question, and a null there is reportable); and compute limits cap model scale (mitigation: the 7-model roster already spans families and generations; larger models are framed as stretch goals).
+\begin{itemize}
+    \item \textbf{July 2026:} manuscript polish; advisor review; ACL-template port.
+    \item \textbf{August 2026:} BlackboxNLP @ EMNLP 2026 submission (CFP deadline
+          expected August; to be verified); begin activation-patching experiments.
+    \item \textbf{September--October 2026:} GRACE replication upon release;
+          organic-data pilot. \emph{Stretch (hardware-gated):} extend the roster to
+          $\geq$16\,GB-class models (Gemma-4-31B, DeepSeek-V4).
+\end{itemize}
 
-\section{Expected Contributions}
-
-If the proposed work completes as planned, the resulting paper contributes: \textbf{(C1)} a localization of black-box faithfulness-detection failure to post-hoc rationalization on correct answers, with the accuracy confound quantified; \textbf{(C2)} evidence that this regime is internally decodable with model-dependent strength, including causal probing; \textbf{(C3)} the metric-inversion result as a caution for a widely-used metric family; and \textbf{(C4)} the synthetic-proxy caution, that constructed unfaithfulness does not representationally match the organic kind. Target venue: BlackboxNLP @ EMNLP 2026 (archival workshop track), with the full paper maintained separately from this proposal.
+\textbf{Risks.} GRACE may not release in time (the paper stands on FaithCoT-Bench
+alone); the organic pilot may yield few verified traces (even a small set, or a
+null, is informative for the bridge question); compute caps model scale (the
+7-model roster already spans families and generations).
 
 \section*{Revisions Since the Previous Submission}
 
-The previously submitted proposal (\emph{``Premise-Grounded Detection of Unfaithful Chain-of-Thought Reasoning''}) proposed to \emph{build} a detector combining PARC-style premise DAGs with graph-targeted counterfactual interventions on FaithCoT-Bench. Following advisor guidance to validate the core assumption empirically before further method-building, and incorporating feedback on evaluation rigor, this revision reflects the following changes:
+Following advisor guidance to validate the core assumption before further
+method-building, and incorporating feedback on evaluation rigor:
 
 \begin{enumerate}
-\item \textbf{The proposed method was implemented, evaluated---and it failed.} Premise-DAG structure and targeted interventions do not beat simple answer-tracing against human labels (Table~\ref{tab:audit}). Rather than discard this, we report it as a rigorous negative result and re-scoped the project from method-building to an \emph{analysis of the limits of black-box faithfulness detection}, with three forward-looking research questions (RQ1--RQ3); the title changed accordingly.
-\item \textbf{Ground truth changed from derived metrics to human annotations.} We found that evaluating against the benchmark's own \texttt{soft\_faithfulness} score is near-circular (an apparent $\rho=0.87$ collapses against human labels) and that the metric itself \emph{anti-correlates} with human judgments. All evaluation now targets the human labels.
-\item \textbf{Scale and statistical rigor were upgraded} in response to feedback that early results lacked uncertainty quantification: from a 2-domain pilot to 4 domains $\times$ 4 models with bootstrap CIs, selection-corrected permutation tests, and premise extraction validated against gold annotations (0.82 recall).
-\item \textbf{New preliminary work since the last submission:} the frontier localization (Table~\ref{tab:frontier}); white-box probing with a first causal check (Table~\ref{tab:whitebox}); a seven-model constructed-data study (Table~\ref{tab:synth}); and the real$\leftrightarrow$synthetic transfer failure (Table~\ref{tab:bridge}), which now motivates a dedicated work package (RQ3).
-\item \textbf{Structural revisions per the course rubric:} the document is reorganized as a proposal---preliminary findings with confidence intervals in clearly-marked tables, a proposed-research section organized by research question, an explicit evaluation plan with failure criteria, a timeline with named risks and mitigations, and a named target venue. The full paper manuscript is maintained separately.
+    \item \textbf{The previously proposed method was implemented, evaluated---and
+          it failed.} Premise-graph structure and targeted interventions do not
+          beat simple answer-tracing against human labels. We report this as a
+          rigorous negative result and re-scoped the project from method-building
+          to an analysis of the limits of black-box faithfulness detection
+          (RQ1--RQ3); the title changed accordingly.
+    \item \textbf{Ground truth changed from derived metrics to human annotations},
+          after finding the benchmark's own metric is near-circular to evaluate
+          against and anti-correlates with human judgments.
+    \item \textbf{Scale and rigor were upgraded:} from a 2-domain pilot to 4
+          domains $\times$ 4 models with bootstrap CIs, selection-corrected
+          permutation tests, and gold-validated premise extraction.
+    \item \textbf{New preliminary work since the last submission:} the frontier
+          localization (Table~\ref{tab:frontier}); white-box probing with a first
+          causal check; the seven-model constructed-data study
+          (Table~\ref{tab:synth}); and the real$\leftrightarrow$synthetic transfer
+          failure (Table~\ref{tab:bridge}), now a dedicated work package.
+    \item \textbf{Structure:} restored to the course proposal format, with
+          preliminary findings in tables, an explicit evaluation plan with failure
+          criteria, a timeline with risks, and a named target venue. The full
+          paper manuscript is maintained in a separate document.
 \end{enumerate}
 
-\bibliographystyle{plainnat}
+\bibliographystyle{plain}
 \bibliography{ur2phd}
 
 \end{document}

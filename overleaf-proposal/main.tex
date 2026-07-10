@@ -5,11 +5,13 @@
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage{amsmath}
+\usepackage{multirow}
 \usepackage[numbers]{natbib}
 
 \title{The Black-Box Frontier of Chain-of-Thought Faithfulness:\\Post-Hoc Rationalization on Correct Answers}
-\author{Suramya Raj Angdembay \and Dikshant Aryal}
-\date{Summer 2026 --- working draft (target: BlackboxNLP @ EMNLP 2026)}
+\author{Suramya Raj Angdembay \and Dikshant Aryal\\[2pt]
+\normalsize Advisor: Dr.\ Nick Rahimi --- Team ChainTrackers, UR2PhD Summer 2026}
+\date{Research Proposal (revised) --- target venue: BlackboxNLP @ EMNLP 2026}
 
 \begin{document}
 
@@ -52,9 +54,36 @@ We use FaithCoT-Bench \cite{shen2026faithcot} across four domains (LogiQA, Truth
 \textbf{Answer-tracing} (\texttt{soft}/\texttt{hard} faithfulness): sensitivity of the final-answer distribution to removing individual steps. \textbf{Premise-DAG structure}: we adapt PARC to build premise graphs over CoT steps and extract structural features (linearity \texttt{dag\_lin}; max lookback \texttt{dag\_maxlb}). \textbf{Graph-targeted counterfactual interventions}: corrupt the most load-bearing premise (by DAG centrality) and measure answer stability; a fair test requires good premise extraction, so we use an LLM extractor validated against PARC's gold PERL annotations (recall 0.82, F1 0.79, vs.\ 0.57 F1 for a heuristic extractor)---the intervention null below is not an extraction artifact. \textbf{Per-step NLI support}: entailment of each step from the question and prior steps (RoBERTa-large-MNLI; min/mean entailment, unsupported-step counts).
 
 \subsection{Results: nothing beats answer-tracing; correctness confounds everything}
-Against the human \texttt{unfaithfulness} label (4 domains $\times$ 4 models, bootstrap 95\% CIs), point-biserial AUROCs are: answer correctness \textbf{0.697} (significant; the strongest single feature), answer-tracing $\approx$0.73 within the benchmark's own metric family but adding nothing beyond correctness, NLI support 0.570 (weakly significant), DAG structure not significant (\texttt{dag\_lin} 0.469, \texttt{dag\_maxlb} 0.544). Counterfactual interventions are null in a first heuristic version and weak in the validated-extraction version (effect sizes $g=0.56$--$0.61$), dominated by answer-tracing. One honest nuance: DAG max-lookback \emph{is} weakly significant on AQuA (0.636), the domain where premise structure is explicit---structure helps exactly where reasoning is formally structured, and nowhere else. The overall picture: \textbf{answer correctness is most of what black-box ``faithfulness'' detectors measure}.
+Table~\ref{tab:audit} scores every signal against the human \texttt{unfaithfulness} label with bootstrap 95\% CIs. Three readings. (1) \textbf{Answer correctness alone is the strongest single feature (0.696)}: in this benchmark, unfaithful traces are disproportionately \emph{correct} ones (post-hoc rationalization), so ``unfaithfulness detection'' largely reduces to accuracy prediction. (2) Answer-tracing is informative only in the \emph{inverted} direction (0.651)---used as intended (low coupling $\Rightarrow$ unfaithful) it scores \textbf{0.349, significantly worse than chance} (the metric inversion, \S\ref{sec:inversion}). (3) The structural families add nothing significant: premise-DAG features and most NLI features have CIs spanning 0.5; counterfactual interventions are null in a first heuristic version and weak in the validated-extraction version (effect sizes $g=0.56$--$0.61$), dominated by answer-tracing. One honest nuance: DAG max-lookback \emph{is} weakly significant on AQuA (0.636), the one domain where premise structure is explicit---structure helps exactly where reasoning is formally structured, and nowhere else.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llccc}
+\toprule
+\textbf{Family} & \textbf{Signal (direction scored)} & \textbf{AUROC} & \textbf{95\% CI} & \textbf{Sig.} \\
+\midrule
+Confound & answer correctness ($\Rightarrow$ unfaithful) & \textbf{0.696} & [0.662, 0.734] & yes \\
+\midrule
+\multirow{2}{*}{Answer-tracing} & \texttt{soft} inverted (high coupling $\Rightarrow$ unf.) & 0.651 & [0.611, 0.695] & yes \\
+ & \texttt{soft} as intended (low coupling $\Rightarrow$ unf.) & 0.349 & [0.305, 0.389] & inverted \\
+\midrule
+\multirow{3}{*}{NLI support} & \# unsupported steps & 0.569 & [0.523, 0.615] & weak \\
+ & mean entailment (low $\Rightarrow$ unf.) & 0.493 & [0.447, 0.538] & no \\
+ & contradiction fraction & 0.507 & [0.461, 0.554] & no \\
+\midrule
+\multirow{2}{*}{Premise-DAG} & linearity (low $\Rightarrow$ unf.) & 0.530 & [0.483, 0.577] & no \\
+ & max lookback & 0.543 & [0.496, 0.588] & no \\
+\bottomrule
+\end{tabular}
+\caption{Black-box audit against the human unfaithfulness label ($n{=}633$ traces with all features available; 4 domains $\times$ 4 models; 2{,}000-resample bootstrap CIs). Correctness dominates; answer-tracing works only inverted; structure adds nothing significant.}
+\label{tab:audit}
+\end{table}
+
+The overall picture: \textbf{answer correctness is most of what black-box ``faithfulness'' detectors measure}.
 
 \subsection{Metric inversion}
+\label{sec:inversion}
 The step-removal metric \texttt{soft\_faithfulness} \emph{anti-correlates} with human faithfulness: unfaithful traces score \emph{higher} by $+0.139$ (95\% CI $[+0.096, +0.182]$). Post-hoc rationalizations are tightly answer-coupled step by step (each step exists to support the answer), so step removal moves the answer \emph{more}, not less. Step-removal AUC measures answer--reasoning \emph{coupling}, not faithfulness; work using it as a faithfulness score may be optimizing the wrong sign in this regime.
 
 \section{Part II: The Frontier---Post-Hoc Rationalization on Correct Answers}
@@ -85,10 +114,49 @@ Premise-DAG structure & 0.490 & CI $\ni$ 0.5 \\
 For each correct-answer trace we extract hidden states at every layer at three positions (last question token before the CoT; last CoT token; mean over CoT tokens), and fit standardized PCA-50 logistic-regression probes with 5-fold cross-validation. Because the best layer is selected post hoc, significance uses a \emph{selection-corrected} permutation test: the null distribution is the max-over-layers AUROC under label permutation (200 permutations).
 
 \subsection{Results on the real annotated regime}
-In \textbf{Llama-3.1-8B}, the probe separates ft1 from ft2 at held-out AUROC \textbf{0.70} (F1 0.70; averaged over 25 stratified 70/30 splits; permutation $p=0.03$), with signal concentrated in late layers (16--31). It generalizes across domains: leave-one-domain-out AUROC 0.60--0.71. A multi-layer perceptron does not beat the linear probe, suggesting an approximately linear encoding. In \textbf{Qwen-2.5-7B} the probe is weak (held-out 0.58; pilot permutation $p=0.32$): the effect is \emph{model-dependent}, and for Qwen we can only claim ``not detected,'' not ``absent'' ($n=126$). An exploratory L1 (Lasso) probe on the same representations isolates a sparse set of active dimensions; we report it descriptively as its layer selection is not permutation-corrected.
+Table~\ref{tab:whitebox} summarizes. In \textbf{Llama-3.1-8B}, the probe separates ft1 from ft2 at held-out AUROC \textbf{0.70} (F1 0.70; averaged over 25 stratified 70/30 splits; permutation $p=0.03$), with signal concentrated in late layers (16--31). It generalizes across domains: leave-one-domain-out AUROC 0.60--0.71. A multi-layer perceptron does not beat the linear probe, suggesting an approximately linear encoding. In \textbf{Qwen-2.5-7B} the probe is weak (held-out 0.58; pilot permutation $p=0.32$): the effect is \emph{model-dependent}, and for Qwen we can only claim ``not detected,'' not ``absent'' ($n=126$). An exploratory L1 (Lasso) probe on the same representations isolates a sparse set of active dimensions; we report it descriptively as its layer selection is not permutation-corrected.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Llama-3.1-8B} ($n{=}144$) & \textbf{Qwen-2.5-7B} ($n{=}126$) \\
+\midrule
+In-distribution CV AUROC (best layer) & 0.71 & 0.62 \\
+Selection-corrected permutation $p$ & 0.01--0.03 & 0.32 (n.s.) \\
+Held-out AUROC (25$\times$ 70/30 splits) & \textbf{0.70} (F1 0.70) & 0.58 \\
+Leave-one-domain-out AUROC & 0.60--0.71 & --- \\
+Peak layers & late (16--31; best $\approx$29) & late (best $\approx$22) \\
+MLP vs.\ linear & no gain ($\approx$linear) & --- \\
+\bottomrule
+\end{tabular}
+\caption{White-box probing on the \emph{real}, human-annotated post-hoc-on-correct regime (ft1 vs.\ ft2). The internal signal is present and generalizes across domains in Llama but is not significant in Qwen: model-dependent.}
+\label{tab:whitebox}
+\end{table}
 
 \subsection{Causal probe: weak but directional}
-If the probe direction is merely a passive correlate, steering along it should perturb behavior no more than a random direction. Adding $\pm\alpha\sigma$ along the (train-split) post-hoc direction to the residual stream at the best layer of Llama on 51 held-out multiple-choice traces: at $+6\sigma$, the answer-flip rate is \textbf{0.22 vs.\ 0.08} for a norm-matched random direction, and mean $P(\text{original answer})$ drops to 0.748 vs.\ 0.815. The direction is functionally active, but we state this as \emph{weak/suggestive}: effects appear only at large $\alpha$, $n=51$, and answer-change is an indirect readout of post-hoc-ness.
+If the probe direction is merely a passive correlate, steering along it should perturb behavior no more than a random direction. We add $\pm\alpha\sigma$ along the (train-split) post-hoc direction to the residual stream at the best layer of Llama on 51 held-out multiple-choice traces, against a norm-matched random-direction control (Table~\ref{tab:steering}). At $+6\sigma$ the answer-flip rate is \textbf{0.22 vs.\ 0.08}, and mean $P(\text{original answer})$ drops to 0.748 vs.\ 0.815. The direction is functionally active, but we state this as \emph{weak/suggestive}: effects appear only at large $\alpha$, $n=51$, and answer-change is an indirect readout of post-hoc-ness.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{ccccc}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Answer-flip rate}} & \multicolumn{2}{c}{\textbf{Mean $P(\text{orig.\ answer})$}} \\
+$\alpha$ (in $\sigma$) & post-hoc dir. & random dir. & post-hoc dir. & random dir. \\
+\midrule
+$-6$ & 0.16 & 0.20 & 0.714 & 0.763 \\
+$-2$ & 0.04 & 0.06 & 0.867 & 0.862 \\
+$0$  & 0.00 & 0.00 & 0.878 & 0.878 \\
+$+2$ & 0.04 & 0.04 & 0.865 & 0.869 \\
+$+4$ & \textbf{0.16} & 0.06 & 0.808 & 0.852 \\
+$+6$ & \textbf{0.22} & 0.08 & 0.748 & 0.815 \\
+\bottomrule
+\end{tabular}
+\caption{Activation-steering dose--response (Llama-3.1-8B, best layer, 51 held-out traces). Steering \emph{toward} post-hoc ($+\alpha$) perturbs answers 2--3$\times$ more than a norm-matched random direction; the $-\alpha$ side is mixed. Weak but directional causal evidence.}
+\label{tab:steering}
+\end{table}
 
 \section{Part IV: Synthetic Construction at Scale---and the Bridge That Fails}
 \label{sec:synth}
@@ -152,6 +220,18 @@ Prompt-induced ``answer-first'' rationalization is therefore \textbf{not a repre
 
 \textbf{C4. Rigorous negatives and the accuracy confound.} Premise-DAG structure, graph-targeted interventions (with extraction validated at 0.82 recall against gold), and NLI step-support fail to beat answer-tracing; answer correctness (0.697) is the strongest single predictor---quantifying the ``unfaithfulness as disguised accuracy'' confound---with the honest nuance that DAG structure is weakly informative on math (AQuA 0.636).
 
+\section{Proposed Work and Timeline}
+
+The empirical core above is complete; the remaining work is consolidation, external validation, and submission.
+
+\textbf{Evaluation plan (remaining).}
+(1) \emph{Second benchmark:} replicate the black-box audit and, where labels permit, the frontier analysis on the GRACE step-level faithfulness benchmark \cite{pham2026grace} when its full evaluation set ($\sim$437 traces) is released (authors contacted); our preliminary run on the public 40-example sample is consistent with the FaithCoT findings but underpowered.
+(2) \emph{Stronger causal validation:} move beyond steering to activation patching/ablation of the probe direction, with pre-registered success criteria.
+(3) \emph{Organic unfaithfulness data:} the bridge failure (\S\ref{sec:synth}) implies the field needs naturally occurring post-hoc traces rather than prompted ones; we will pilot a collection protocol (temperature-resampled traces filtered by answer-precommitment probes).
+(4) \emph{Scale-up (hardware-gated):} extend the synthetic roster to $\geq$16\,GB-class models (Gemma-4-31B, DeepSeek-V4) if compute allows.
+
+\textbf{Timeline.} \emph{July 2026:} internal polish; advisor review (Dr.\ Rahimi); port to the ACL/BlackboxNLP template and compress to the page limit. \emph{August 2026:} submit to BlackboxNLP @ EMNLP 2026 (CFP deadline expected August; to be verified). \emph{Fall 2026:} GRACE replication on release; activation-patching experiments; organic-data pilot. Repository and all experiment code are release-ready (currently private; public at submission).
+
 \section{Limitations}
 
 Our real-label results rest on one human-annotated benchmark (FaithCoT-Bench); its in-regime $n$ is 270, and per-model white-box $n$ is 144/126, so the Qwen contrast is ``not detected,'' not ``absent.'' The causal steering evidence is weak (large perturbations only, $n=51$, indirect readout). The synthetic study is math-only; its labels are construction labels, not human judgments; Llama and Gemma-4 carry partial surface tells (0.64/0.67); and the 2026 DeepSeek-R1-0528 yields only 81 pairs because its long reasoning overflows our token budget. The bridge test exists only for the two open models with real annotations. Probes use one architecture family of methods (linear/PCA; MLP checked); richer white-box methods may decode more. Closed models (GPT-4o-mini, Gemini) cannot be probed at all---which is itself part of the argument for open-weight oversight.
@@ -159,6 +239,18 @@ Our real-label results rest on one human-annotated benchmark (FaithCoT-Bench); i
 \section{Conclusion}
 
 Black-box CoT-faithfulness detection is largely answer-correctness detection; where correctness is controlled---post-hoc rationalization on correct answers---every behavioral signal we tested is blind, and a widely-used metric points the wrong way. The information exists inside the model, unevenly across models, and can be partially steered. But the cheap route to scaling this frontier---synthesizing unfaithfulness by prompting---produces a different internal phenomenon than the real thing. Oversight of reasoning will need white-box access, and evaluations of it will need organically unfaithful data.
+
+\section*{Revisions Since the Previous Submission}
+
+The previously submitted proposal (\emph{``Premise-Grounded Detection of Unfaithful Chain-of-Thought Reasoning''}) proposed to \emph{build} a detector combining PARC-style premise DAGs with graph-targeted counterfactual interventions on FaithCoT-Bench. Following advisor guidance to validate the core assumption empirically before further method-building, and incorporating feedback on evaluation rigor, this revision reflects the following changes:
+
+\begin{enumerate}
+\item \textbf{The proposed method was implemented, rigorously evaluated---and it failed.} Premise-DAG structure and targeted interventions do not beat simple answer-tracing against human labels (Table~\ref{tab:audit}). Rather than discard this, we report it as a rigorous negative result and re-scoped the project from method-building to an \emph{analysis of the limits of black-box faithfulness detection}; the title changed accordingly.
+\item \textbf{Ground truth changed from derived metrics to human annotations.} We found that evaluating against the benchmark's own \texttt{soft\_faithfulness} score is near-circular (an apparent $\rho=0.87$ collapses against human labels) and that the metric itself \emph{anti-correlates} with human judgments (\S\ref{sec:inversion}). All evaluation now targets the human labels.
+\item \textbf{Scale and statistical rigor were upgraded.} From a 2-domain pilot to 4 domains $\times$ 4 models ($n=1{,}304$ traces) with bootstrap 95\% CIs, selection-corrected permutation tests, and LLM-based premise extraction validated against gold annotations (0.82 recall)---addressing feedback that early results lacked uncertainty quantification.
+\item \textbf{New contributions since the last submission:} localization of the black-box failure to post-hoc rationalization on correct answers (\S\ref{sec:frontier}); white-box probing with causal steering (\S\ref{sec:whitebox}); a 7-model synthetic-construction study across three model families, 2024--2026 (\S\ref{sec:synth}); and the real$\leftrightarrow$synthetic transfer failure (Table~\ref{tab:bridge_failure}), a methodological caution in its own right.
+\item \textbf{Structural revisions per the course rubric:} results are now presented in tables with confidence intervals throughout; a \emph{Proposed Work and Timeline} section replaces the earlier implementation plan; a target venue (BlackboxNLP @ EMNLP 2026) is named; and known weaknesses are consolidated in an explicit \emph{Limitations} section rather than dispersed caveats.
+\end{enumerate}
 
 \bibliographystyle{plainnat}
 \bibliography{ur2phd}

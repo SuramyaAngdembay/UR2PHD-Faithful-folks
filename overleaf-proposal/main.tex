@@ -28,7 +28,12 @@ oversight surface, where an auditor reads the reasoning to decide whether to
 trust the answer, the practical question is instance-level: can \emph{this}
 explanation be trusted? FaithCoT-Bench \cite{shen2026faithcot} formalizes this
 problem with human annotations across four domains and four models, and shows
-that detection remains difficult.
+that detection remains difficult. Adjacent lines of work verify reasoning chains
+structurally, via premise graphs and logical-consistency checks
+\cite{mukherjee2025parc, fang2025gov, feng2025vericot}, or evaluate step-level
+error localization \cite{zheng2024processbench, jacovi2024reveal}---these target
+reasoning \emph{correctness}, whereas our question is whether the stated
+reasoning is the \emph{actual cause} of the answer.
 
 Our previous proposal set out to \emph{build} a premise-grounded detector,
 combining PARC-style premise graphs \cite{mukherjee2025parc} with graph-targeted

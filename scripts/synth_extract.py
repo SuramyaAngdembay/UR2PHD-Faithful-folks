@@ -28,15 +28,17 @@ ap.add_argument("--mdir", required=True)
 ap.add_argument("--gpu", type=int, default=0)
 ap.add_argument("--no_think", action="store_true")
 ap.add_argument("--shard", action="store_true", help="device_map='auto' across all visible GPUs")
+ap.add_argument("--tag", default="", help="trace-file infix: 'hint' reads traces_<mdir>_hint_<ds>.json, writes acts_<mdir>_hint.npz")
 args = ap.parse_args()
 TMPL_KW = {"enable_thinking": False} if args.no_think else {}
 SYNTH = os.path.expanduser("~/synth")
+TAG = f"_{args.tag}" if args.tag else ""
 
 traces = []
-for ds in ("aqua", "gsm8k"):
-    p = os.path.join(SYNTH, f"traces_{args.mdir}_{ds}.json")
+for ds in ("aqua", "gsm8k", "aquarat"):
+    p = os.path.join(SYNTH, f"traces_{args.mdir}{TAG}_{ds}.json")
     if os.path.exists(p): traces += json.load(open(p))
-print(f"{args.mdir}: {len(traces)} traces ({sum(t['condition']=='genuine' for t in traces)} genuine)", flush=True)
+print(f"{args.mdir}{TAG}: {len(traces)} traces ({sum(t['condition']=='genuine' for t in traces)} genuine)", flush=True)
 
 bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
                          bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_use_double_quant=True)
@@ -93,7 +95,7 @@ def p_answer(question, options, cot, target_letter, valid):
     return (dist.get(target_letter, 0.0)) / s
 
 def soft_faithfulness(t):
-    if t["dataset"] != "aqua": return np.nan
+    if t["dataset"] not in ("aqua", "aquarat"): return np.nan  # letter readout needs MC options
     valid = [o[0].upper() for o in t["options"] if o and o[0].isalpha()]
     if len(valid) < 2: return np.nan
     tgt = (t["model_answer"] or t["gold"]).upper()[:1]
@@ -118,6 +120,6 @@ for i, t in enumerate(traces):
     soft[i] = soft_faithfulness(t)
     if (i + 1) % 50 == 0: print(f"  extracted {i+1}/{len(traces)}", flush=True)
 
-out = os.path.join(SYNTH, f"acts_{args.mdir}.npz")
+out = os.path.join(SYNTH, f"acts_{args.mdir}{TAG}.npz")
 np.savez_compressed(out, X=X, y=y, dataset=dsarr, soft=soft, surface=surf, n_layers=NL)
-print(f"SYNTH_EXTRACT DONE {args.mdir}: X{X.shape} -> {out}", flush=True)
+print(f"SYNTH_EXTRACT DONE {args.mdir}{TAG}: X{X.shape} -> {out}", flush=True)

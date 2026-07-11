@@ -106,12 +106,24 @@ motivate mechanistic (white-box) methods for the residual frontier.
   early (L9/L10), real ft1v2 late (L29/L22); cross-distribution transfer ~chance even best-of-layers/
   domain-matched (Llama 0.55, Qwen 0.60). ⇒ synthetic answer-first is NOT a representational proxy for
   organic post-hoc (**C4**).
+  **Hint-induced ORGANIC testbed + 3-way bridge DONE (2026-07-11)** — Turpin-style biased-context
+  construction with causal labels (baseline-wrong → hint-flipped, no hint mention; leakage-audited);
+  Llama 185 / Qwen 70 organic post-hoc + matched genuine. (i) decodable both models (held-out 0.75/0.84,
+  p=0.005); (ii) **C2 inversion replicates with causal labels** (soft intended-dir 0.389/0.251);
+  (iii) **hint→FaithCoT transfers (layer-mean 0.616, selection-free) where synthetic fails (0.431)**;
+  depth gradient instructed L9 → hint L17 → annotated L29 ⇒ **C4 sharpened: INSTRUCTED rationalization is
+  the artifact; spontaneous rationalization is continuous with the real phenomenon.** Qwen bridge
+  inconclusive (weak FC anchor, n=70). **This replaces GRACE as the second-benchmark leg** (organic,
+  causal, construct-matched) — GRACE demotes to optional extension.
 - REMAINING (in priority order):
   1. ~~Write-up~~ **DRAFTED (2026-07-09)** — full paper draft in `overleaf-proposal/main.tex` (Parts I–IV,
-     C1–C4, limitations, 3 tables). Remaining: polish, advisor review, port to the official BlackboxNLP/ACL
-     template + fit page limit once the 2026 CFP is verified.
-  2. Full GRACE eval set (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release).
-  3. *(optional, needs aggregate >16 GB)* Gemma-4-31B / 26B-MoE / DeepSeek-V4 — exceed 2×8 GB even sharded.
+     C1–C4, limitations, 3 tables). Remaining: fold in the hint-testbed results (new C4 statement + external
+     validation), polish, advisor review, port to the official BlackboxNLP/ACL template + fit page limit
+     once the 2026 CFP is verified.
+  2. Rigor add-ons for the hint results: label-permutation p for the hint→FC transfer mean; a second hint
+     template (metadata-style) for template-robustness; (optional) extend hint testbed to more models.
+  3. GRACE full set — now optional extension, not load-bearing (email sent / await release).
+  4. *(optional, needs aggregate >16 GB)* Gemma-4-31B / 26B-MoE / DeepSeek-V4 — exceed 2×8 GB even sharded.
 
 ## Honest acceptance read
 With C1/C2 CI-backed (done) + GRACE + LLM-extraction validation + write-up → a **credible
@@ -123,7 +135,10 @@ small. BlackboxNLP is selective for a workshop, so execution on the remaining it
 ## Anticipated reviewer objections → responses
 - *"Negative results — did you try hard enough?"* → four method families, **proper LLM extraction
   (validated vs gold)**, bootstrap CIs, 4 domains × 4 models; and C1/C2 are positive findings.
-- *"Single benchmark."* → GRACE second benchmark (preliminary; full on release).
+- *"Single benchmark."* → (i) 4 domains × 4 models with human labels; (ii) frontier + inversion +
+  decodability all **replicate on an independent organic testbed** (hint-induced, causally labeled);
+  (iii) no other human-labeled instance-level benchmark exists — the scarcity is part of our argument,
+  and our collection protocol addresses it. (GRACE: optional extension on release.)
 - *"Novelty over FaithCoT-Bench."* → failure **localization** + **metric inversion** + new methods.
 - *"Small n in the key regime."* → ft1v2 now n=270 with CIs.
 - *"Extraction was weak."* → heuristic F1 0.57 reported; v2 uses LLM extraction, **validated at

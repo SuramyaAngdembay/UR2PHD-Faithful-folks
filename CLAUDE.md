@@ -89,6 +89,21 @@ and the honest answer to "how do the two buckets connect" (they don't, internall
 AQuA; Gemma-2-9b blocked on HF gated access. **Disk constraint resolved (2026-07-05): HF cache moved to
 `/data` (5.6 TB free) via symlink — no more download-run-delete.**
 
+**Hint-induced ORGANIC post-hoc + 3-way bridge (2026-07-11):** built a Turpin-style biased-context testbed
+(baseline-wrong → hint("I think the answer is {gold}") → flips-to-gold + never mentions hint = **organic
+post-hoc with a causal label**; clean probed context; leakage-audited). Full AQuA-RAT test (254) + full
+GSM8K test (1319). Yields: **Llama 428 genuine + 185 organic-ph; Qwen 464 + 70.** Results: **(i)** organic
+post-hoc internally decodable in both (held-out Llama **0.75** / Qwen **0.84**, perm p=0.005; Qwen surface
+0.703 caveat). **(ii) C2 inversion replicates with causal labels** — soft intended-direction **0.389 / 0.251**
+(far below chance) on traces where reasoning provably didn't produce the answer. **(iii) 3-way bridge
+(bridge3.py): depth gradient instructed L9 → hint-organic L17 → annotated L29 (Llama), and hint→FaithCoT
+transfers (best 0.694, layer-MEAN 0.616, selection-free) where synthetic→FaithCoT fails (0.531/0.431)** ⇒
+C4 sharpens: *instructed* rationalization is the artifact; *spontaneous* rationalization is
+representationally continuous with the annotated organic phenomenon. Qwen bridge inconclusive (weak FC
+anchor, n=70). **This is the GRACE-independent external validation** — frontier + inversion + decodability
+all replicate on an independent organic testbed; the dataset/protocol is itself a contribution (RQ3 v1).
+Caveats: single hint template; math-only; transfer perm-test TODO; class imbalance.
+
 ## Conventions
 - Citations must be verified before going into a submission; see the provenance caveat in the latest
   notes file. Prefer peer-reviewed venues; mark unrefereed preprints as such (e.g. Corrective-RAG).
@@ -109,6 +124,7 @@ AQuA; Gemma-2-9b blocked on HF gated access. **Disk constraint resolved (2026-07
 10. `notes/2026-07-02-whitebox-method-abde.md` — white-box firm-up (a,b,d,e): Llama held-out 0.70/F1 0.70, cross-domain, ~linear, model-dependent.
 11. `notes/2026-07-02-whitebox-causal-c.md` — item (c) causal steering: weak/suggestive (post-hoc dir perturbs answers ~2–3× > random at +6σ; functionally active, modest).
 12. `notes/2026-07-04-synthetic-construction-generalization.md` — synthetic genuine-vs-post-hoc on AQuA+GSM8K: WB probe strong in BOTH models (held-out Llama 0.74 / Qwen 0.81, p=0.005), generalizes across math datasets; but FaithCoT↔synthetic bridge FAILS (~chance, depth-mismatched) ⇒ synthetic post-hoc ≠ real proxy.
+13. `notes/2026-07-11-hint-organic-bridge.md` — hint-induced ORGANIC post-hoc (causal labels, leakage-audited): decodable both models (0.75/0.84, p=0.005); **inversion replicates with causal labels (soft intended 0.39/0.25)**; **3-way bridge: hint→FaithCoT transfers (mean 0.616) where synthetic fails (0.431)** ⇒ instructed rationalization is the artifact; depth gradient L9→L17→L29.
 
 ## Open next steps (BlackboxNLP-targeted — see paper-positioning-blackboxnlp.md)
 DONE: 4×4 + CIs (F1/F2 sig); LLM-extractor validation (0.82 recall); GRACE NLI (preliminary); white-box pilot + firm-up a/b/d/e (Llama held-out 0.70, Qwen weak); **synthetic-construction generalization** (WB strong in both models on clean labels; **bridge to real post-hoc fails → new methodological caution**).

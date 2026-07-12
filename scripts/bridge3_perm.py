@@ -66,10 +66,26 @@ for l in tqdm(range(NL)):
 
 obs_mean = obs_aucs.mean()
 null_means = null_aucs.mean(axis=1)
+pval_mean = (1 + (null_means >= obs_mean).sum()) / (1 + args.nperm)
 
-pval = (1 + (null_means >= obs_mean).sum()) / (1 + args.nperm)
+# best-of-layers statistic: null must take the max over layers WITHIN each permutation
+# (selection-corrected, same coupling as the mean)
+obs_best = obs_aucs.max()
+null_bests = null_aucs.max(axis=1)
+pval_best = (1 + (null_bests >= obs_best).sum()) / (1 + args.nperm)
 
 print(f"\n=== RESULTS FOR {args.mdir} ===")
-print(f"Observed hint->faithcot layer-mean AUROC: {obs_mean:.3f}")
-print(f"Permutation p-value (n={args.nperm}): {pval:.3f}")
+print(f"Observed hint->faithcot layer-mean AUROC: {obs_mean:.3f}  perm p={pval_mean:.3f}")
+print(f"Observed hint->faithcot best-of-layers AUROC: {obs_best:.3f} @L{int(obs_aucs.argmax())}  perm p={pval_best:.3f}")
+
+import json
+out = {"model": args.mdir, "nperm": args.nperm,
+       "obs_layer_mean": float(obs_mean), "p_layer_mean": float(pval_mean),
+       "obs_best": float(obs_best), "best_layer": int(obs_aucs.argmax()), "p_best": float(pval_best),
+       "null_mean_quantiles": {q: float(np.percentile(null_means, qq)) for q, qq in
+                               [("p50", 50), ("p95", 95), ("p99", 99)]},
+       "per_layer_obs": [float(a) for a in obs_aucs]}
+res_path = os.path.join(SYNTH, "results", f"bridge3_perm_{args.mdir}.json")
+json.dump(out, open(res_path, "w"), indent=2)
+print(f"BRIDGE3_PERM DONE {args.mdir} -> {res_path}")
 

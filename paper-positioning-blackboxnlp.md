@@ -120,8 +120,9 @@ motivate mechanistic (white-box) methods for the residual frontier.
      C1–C4, limitations, 3 tables). Remaining: fold in the hint-testbed results (new C4 statement + external
      validation), polish, advisor review, port to the official BlackboxNLP/ACL template + fit page limit
      once the 2026 CFP is verified.
-  2. Rigor add-ons for the hint results: label-permutation p for the hint→FC transfer mean; a second hint
-     template (metadata-style) for template-robustness; (optional) extend hint testbed to more models.
+  2. ~~Label-permutation p~~ **DONE (2026-07-12, PR #4): Llama hint→FC layer-mean p=0.010; best-of-layers
+     corrected p=0.050; Qwen p=0.741 (null).** Remaining rigor add-ons: a second hint template
+     (metadata-style) for template-robustness; (optional) extend hint testbed to more models.
   3. GRACE full set — now optional extension, not load-bearing (email sent / await release).
   4. *(optional, needs aggregate >16 GB)* Gemma-4-31B / 26B-MoE / DeepSeek-V4 — exceed 2×8 GB even sharded.
 

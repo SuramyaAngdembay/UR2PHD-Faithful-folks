@@ -102,7 +102,7 @@ C4 sharpens: *instructed* rationalization is the artifact; *spontaneous* rationa
 representationally continuous with the annotated organic phenomenon. Qwen bridge inconclusive (weak FC
 anchor, n=70). **This is the GRACE-independent external validation** — frontier + inversion + decodability
 all replicate on an independent organic testbed; the dataset/protocol is itself a contribution (RQ3 v1).
-Caveats: single hint template; math-only; transfer perm-test TODO; class imbalance.
+**Perm-tested (2026-07-12): Llama layer-mean p=0.010 (best 0.694 corrected p=0.050); Qwen p=0.741 (null).** Caveats: single hint template; math-only; class imbalance.
 
 ## Conventions
 - Citations must be verified before going into a submission; see the provenance caveat in the latest

@@ -52,6 +52,11 @@ annotated signal):
 layer-selection optimism, computed on the same target set. Spontaneous (hint-elicited) rationalization
 shares representation with human-annotated organic post-hoc; instructed answer-first does not.
 
+**Permutation-tested (2026-07-12, `bridge3_perm.py`, PR #4 + fixes):** null = probes retrained on
+permuted hint labels, permutations coupled across layers. Llama layer-mean **p=0.010**; best-of-layers
+0.694 with max-over-layers (selection-corrected) null **p=0.050**. Qwen layer-mean 0.484 **p=0.741**
+(confirms inconclusive/null). The organic bridge in Llama is statistically significant.
+
 Qwen: hint→faithcot best 0.583 / mean 0.484 — **inconclusive, not negative**: the FaithCoT anchor itself
 is weak in Qwen (own CV 0.617, never significant on human labels) and hint-posthoc n=70; you cannot
 measure transfer onto a signal that barely exists in the target.
@@ -70,8 +75,7 @@ measure transfer onto a signal that barely exists in the target.
    field lacks (and RQ3's pilot, already done in v1 form).
 
 ## Caveats (report all)
-Hint→FC best-of-layers has selection optimism (use the mean, 0.616); FC target n=144/126;
-Qwen inconclusive (weak anchor, n=70, surface 0.703); class imbalance in hint sets (185/428, 70/464 —
-AUROC tolerant but report); single hint template (sycophancy phrasing) — template-robustness unchecked;
-math-only domains; transfer significance not yet permutation-tested (TODO: label-perm p for the
-hint→FC layer-mean).
+Hint→FC best-of-layers has selection optimism (mean is the primary claim: 0.616, p=0.010; best 0.694
+corrected p=0.050); FC target n=144/126; Qwen inconclusive (weak anchor, n=70, surface 0.703; perm
+p=0.741); class imbalance in hint sets (185/428, 70/464 — AUROC tolerant but report); single hint
+template (sycophancy phrasing) — template-robustness unchecked; math-only domains.

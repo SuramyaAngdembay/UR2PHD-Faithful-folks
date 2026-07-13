@@ -29,7 +29,8 @@ Cross-dataset within model: Llama 0.62/0.66, Qwen 0.69/0.85.
 
 ## Result 2 — C2's metric inversion REPLICATES on causally-labeled organic data
 `soft_faithfulness` in its intended direction (low coupling ⇒ unfaithful), on the letter-MC organic pairs:
-**Llama 0.389, Qwen 0.251** — both far below chance; inverted 0.611/0.749. On traces where we *know*
+**Llama 0.389 [95% CI 0.301, 0.481], Qwen 0.251 [0.166, 0.350]** — both CIs entirely below chance
+(2,000-resample bootstrap, 2026-07-12); inverted 0.611/0.749. On traces where we *know*
 the reasoning didn't produce the answer, the standard metric confidently points the wrong way. This is
 the strongest form of the inversion yet (previous evidence used human labels; this uses causal labels).
 

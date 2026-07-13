@@ -136,10 +136,11 @@ small. BlackboxNLP is selective for a workshop, so execution on the remaining it
 ## Anticipated reviewer objections → responses
 - *"Negative results — did you try hard enough?"* → four method families, **proper LLM extraction
   (validated vs gold)**, bootstrap CIs, 4 domains × 4 models; and C1/C2 are positive findings.
-- *"Single benchmark."* → (i) 4 domains × 4 models with human labels; (ii) frontier + inversion +
-  decodability all **replicate on an independent organic testbed** (hint-induced, causally labeled);
-  (iii) no other human-labeled instance-level benchmark exists — the scarcity is part of our argument,
-  and our collection protocol addresses it. (GRACE: optional extension on release.)
+- *"Single benchmark."* → (i) 4 domains × 4 models with human labels; (ii) inversion + decodability +
+  the organic bridge **replicate on an independent, causally-labeled organic testbed**; the at-chance
+  frontier claim itself stays FaithCoT-anchored (hint surface baselines partially separate, 0.63/0.70 —
+  reported honestly); (iii) no other human-labeled instance-level benchmark exists — the scarcity is part
+  of our argument, and our collection protocol addresses it. (GRACE: optional extension on release.)
 - *"Novelty over FaithCoT-Bench."* → failure **localization** + **metric inversion** + new methods.
 - *"Small n in the key regime."* → ft1v2 now n=270 with CIs.
 - *"Extraction was weak."* → heuristic F1 0.57 reported; v2 uses LLM extraction, **validated at

@@ -100,8 +100,10 @@ post-hoc internally decodable in both (held-out Llama **0.75** / Qwen **0.84**, 
 transfers (best 0.694, layer-MEAN 0.616, selection-free) where synthetic→FaithCoT fails (0.531/0.431)** ⇒
 C4 sharpens: *instructed* rationalization is the artifact; *spontaneous* rationalization is
 representationally continuous with the annotated organic phenomenon. Qwen bridge inconclusive (weak FC
-anchor, n=70). **This is the GRACE-independent external validation** — frontier + inversion + decodability
-all replicate on an independent organic testbed; the dataset/protocol is itself a contribution (RQ3 v1).
+anchor, n=70). **This is the GRACE-independent external validation** — inversion + decodability + the
+organic bridge replicate on an independent, causally-labeled testbed. *(Scope note: the at-chance
+FRONTIER claim stays FaithCoT-anchored — hint-testbed surface baselines partially separate, 0.63/0.70,
+so do not claim black-box-at-chance there.)* The dataset/protocol is itself a contribution (RQ3 v1).
 **Perm-tested (2026-07-12): Llama layer-mean p=0.010 (best 0.694 corrected p=0.050); Qwen p=0.741 (null).** Caveats: single hint template; math-only; class imbalance.
 
 ## Conventions

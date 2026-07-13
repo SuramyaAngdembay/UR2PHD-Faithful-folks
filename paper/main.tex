@@ -1,0 +1,267 @@
+% BlackboxNLP @ EMNLP 2026 submission — compile with pdflatex + bibtex (Overleaf: works out of the box)
+\documentclass[11pt]{article}
+\usepackage[review]{acl}   % review = anonymized + line numbers; switch to [final] for camera-ready
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\title{The Black-Box Frontier of Chain-of-Thought Faithfulness:\\Post-Hoc Rationalization on Correct Answers}
+
+\author{Suramya Raj Angdembay \and Dikshant Aryal \\
+  University of Southern Mississippi \\
+  \texttt{\{first.last\}@usm.edu}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Chain-of-thought (CoT) explanations are only useful for oversight if they are \emph{faithful}---if the stated reasoning actually produced the answer. We ask how far \emph{black-box} (behavioral) methods can go at detecting unfaithful CoT at the level of individual traces. Auditing FaithCoT-Bench against its human annotations (4 domains $\times$ 4 models, bootstrap CIs), we find detection is dominated by an accuracy confound---answer correctness alone is the strongest ``unfaithfulness'' signal (AUROC 0.696)---and that the standard step-removal faithfulness metric \emph{anti-correlates} with human judgments, scoring significantly below chance in its intended direction. Controlling for correctness isolates a frontier: on \emph{post-hoc rationalization over correct answers}, every black-box signal we test (answer-tracing, premise-graph structure, validated counterfactual interventions, NLI step-support) is at chance. The information is nevertheless partially present internally: linear probes over hidden states detect the regime in Llama-3.1-8B (held-out AUROC 0.70; weakly causal under activation steering) though not significantly in Qwen-2.5-7B. To study the regime at scale we compare two ways of \emph{constructing} it: instructed answer-first prompting (7 models, 3 families, 2024--2026; all permutation-significant, 0.56--0.81) and \emph{hint-induced} silent rationalization with causal labels \citep{turpin2023language}. A three-way transfer analysis shows these are different phenomena: probes trained on hint-induced organic rationalization transfer to the human-annotated regime (layer-mean AUROC 0.616, permutation $p{=}0.010$), while instructed synthetic rationalization does not (0.431), and the three variants peak at increasing network depths (L9 $\to$ L17 $\to$ L29). Our results bound black-box faithfulness detection, flag a widely-used metric, and caution that instructed rationalization is not a proxy for the organic phenomenon.
+\end{abstract}
+
+\section{Introduction}
+
+Large language models produce fluent step-by-step explanations that appear to expose a reasoning process, but the stated reasoning is sometimes not the process that produced the answer \citep{lanham2023measuring,turpin2023language,chen2025reasoning}. A model may commit to an answer and then compose a plausible derivation afterwards---\emph{post-hoc rationalization}. As CoT becomes an oversight surface, where an auditor reads the reasoning to decide whether to trust the answer, the practical question is instance-level: can \emph{this} explanation be trusted? FaithCoT-Bench \citep{shen2026faithcot} formalizes this problem with human annotations and shows a broad panel of detectors performs poorly in aggregate.
+
+This paper asks a sharper pair of questions: \textbf{where exactly} does black-box detection fail, and \textbf{is the missing information present in the model's internals}? We proceed in four parts.
+
+\paragraph{An audit with a diagnosis (\S\ref{sec:audit}).} We implement four families of behavioral detectors on FaithCoT-Bench---including premise-graph structure adapted from PARC \citep{mukherjee2025parc} and counterfactual interventions with premise extraction validated against gold annotations---and score everything against the \emph{human} labels. Two diagnoses emerge: answer correctness alone outperforms every purpose-built detector (much of ``unfaithfulness detection'' is accuracy prediction in disguise), and the benchmark's own step-removal metric anti-correlates with human faithfulness.
+
+\paragraph{A localized frontier (\S\ref{sec:frontier}).} Controlling for the confound---restricting to correct-answer traces and separating faithful reasoning from post-hoc rationalization---collapses every black-box signal to chance. We argue this regime is the hard core of the problem.
+
+\paragraph{The internals contrast (\S\ref{sec:internals}).} On the same regime, simple linear probes over hidden states succeed where behavior fails, in some models: Llama-3.1-8B reaches held-out AUROC 0.70 with cross-domain generalization and weak causal support from activation steering; Qwen-2.5-7B is not significant. The distinction is behaviorally inaccessible yet (unevenly) linearly decodable.
+
+\paragraph{Constructed vs.\ organic unfaithfulness (\S\ref{sec:construction}).} Annotated post-hoc traces are scarce, so the field constructs them---typically by instructing a model to justify a given answer. We compare two constructions at scale: \emph{instructed} answer-first prompting across 7 open models (2024--2026), and \emph{hint-induced} rationalization \citep{turpin2023language}, where a model that failed a problem flips to the hinted gold answer without ever mentioning the hint, yielding organic traces with causal labels. Both are strongly detectable internally; but a three-way transfer analysis against the human-annotated regime shows only the hint-induced variant shares its representation. Instructed rationalization is an artifact---a caution for common evaluation practice.
+
+\section{Related Work}
+
+\paragraph{CoT faithfulness.} \citet{lanham2023measuring} introduced perturbation-based faithfulness tests (early answering, adding mistakes); step-removal ``answer-tracing'' metrics descend from this line. \citet{turpin2023language} showed models rationalize biased answers without verbalizing the bias, and \citet{chen2025reasoning} measured low hint-verbalization rates in reasoning models; our hint-induced construction operationalizes this paradigm as a labeled detection testbed. FaithCoT-Bench \citep{shen2026faithcot} contributes instance-level human annotations; we localize its difficulty, audit additional method families against its human labels, and show its derived metric inverts. \citet{cox2026decoding} decode answers from internals before the CoT is generated, consistent with our probing results.
+
+\paragraph{Structural verification.} PARC \citep{mukherjee2025parc} builds premise DAGs to identify reasoning errors; GoV \citep{fang2025gov} and VeriCoT \citep{feng2025vericot} verify chains with DAGs and neuro-symbolic checks. These target \emph{correctness}; we test whether such structure transfers to \emph{faithfulness} and find it largely does not. Step-level error benchmarks \citep{zheng2024processbench,jacovi2024reveal} and GRACE \citep{pham2026grace} evaluate related but distinct constructs.
+
+\paragraph{Probing.} Our white-box method is deliberately standard---linear probes with selection-corrected permutation testing---because the contribution is the behavioral-vs-internal \emph{contrast} and the cross-construction transfer analysis, not a new probing technique.
+
+\section{Setup}
+\label{sec:setup}
+
+\paragraph{Benchmark and labels.} FaithCoT-Bench spans four domains (LogiQA, TruthfulQA, AQuA, HLE-Bio) and four models (Llama-3.1-8B-Instruct, Qwen-2.5-7B-Instruct, GPT-4o-mini, Gemini-2.5-Flash), 1{,}304 traces. It provides derived metrics---notably \texttt{soft\_faithfulness}, a step-removal answer-tracing score---and \emph{human} annotations: binary \texttt{unfaithfulness} and a four-way \texttt{faithful\_type} (ft1 faithful-correct; ft2 post-hoc rationalization on a correct answer; ft3/ft4 incorrect-answer regimes). We evaluate against the human labels throughout. A trap we document: correlating a detector against \texttt{soft\_faithfulness} itself is near-circular (an apparent $\rho{=}0.87$ collapses to chance against human labels), since it is itself a detector.
+
+\paragraph{Statistical standards.} Detection claims use AUROC with 2{,}000-resample bootstrap 95\% CIs. Probe claims use held-out splits plus \emph{selection-corrected} permutation tests: because the best layer is chosen post hoc, the null statistic takes the max (or the mean, matching the reported statistic) over layers under label permutation, with permutations coupled across layers. Causal claims must beat norm-matched random-direction controls. Negative results are reported as findings.
+
+\paragraph{Compute.} All open-model experiments run on two RTX 3070 (8\,GB) GPUs with 4-bit NF4 quantization; the 12B model in \S\ref{sec:construction} uses two-GPU pipeline sharding.
+
+\section{Part I: The Black-Box Audit}
+\label{sec:audit}
+
+\paragraph{Signal families.} \emph{Answer-tracing}: sensitivity of the final-answer distribution to removing individual steps. \emph{Premise-DAG structure}: PARC-style premise graphs over steps (linearity; maximum lookback). \emph{Graph-targeted counterfactual interventions}: corrupt the most load-bearing premise and measure answer stability; to make this a fair test we use an LLM premise extractor validated against PARC's gold PERL annotations (recall 0.82 / F1 0.79, vs.\ 0.57 F1 heuristic), so the result below is not an extraction artifact. \emph{Per-step NLI support}: entailment of each step from question and prior steps (RoBERTa-large-MNLI).
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}llcc@{}}
+\toprule
+\textbf{Family} & \textbf{Signal (direction)} & \textbf{AUROC} & \textbf{95\% CI} \\
+\midrule
+Confound & correctness ($\Rightarrow$ unf.) & \textbf{0.696} & [0.662, 0.734] \\
+\midrule
+\multirow{2}{*}{Ans.-tracing} & \texttt{soft}, inverted & 0.651 & [0.611, 0.695] \\
+ & \texttt{soft}, intended & 0.349 & [0.305, 0.389] \\
+\midrule
+\multirow{3}{*}{NLI} & \# unsupported steps & 0.569 & [0.523, 0.615] \\
+ & mean entailment & 0.493 & [0.447, 0.538] \\
+ & contradiction frac. & 0.507 & [0.461, 0.554] \\
+\midrule
+\multirow{2}{*}{DAG} & linearity & 0.530 & [0.483, 0.577] \\
+ & max lookback & 0.543 & [0.496, 0.588] \\
+\bottomrule
+\end{tabular}
+\caption{Black-box signals vs.\ the human unfaithfulness label ($n{=}633$ complete-feature traces; 4 domains $\times$ 4 models). Correctness dominates; the standard metric helps only inverted; structure adds nothing significant. Interventions (not shown): effect sizes $g{=}0.56$--$0.61$, dominated by answer-tracing.}
+\label{tab:audit}
+\end{table}
+
+\paragraph{Results.} Table~\ref{tab:audit}: \textbf{answer correctness alone is the strongest single signal (0.696)}---in this benchmark unfaithful traces are disproportionately \emph{correct} ones (post-hoc rationalization), so black-box unfaithfulness detection largely reduces to accuracy prediction. Structural families add nothing significant, with one honest nuance: DAG max-lookback is weakly informative on AQuA (0.636), the one domain with explicit premise structure.
+
+\paragraph{Metric inversion.} \texttt{soft\_faithfulness} used as intended scores \textbf{0.349 [0.305, 0.389]}---significantly \emph{below} chance; equivalently, unfaithful traces score \emph{higher} by $+0.139$ [$+0.096, +0.182$]. Post-hoc rationalizations are tightly answer-coupled step by step (each step exists to support the answer), so step removal moves the answer \emph{more}, not less: the metric measures answer--reasoning \emph{coupling}, not faithfulness. In \S\ref{sec:construction} we replicate this inversion on traces with \emph{causal} ground-truth labels.
+
+\section{Part II: The Frontier}
+\label{sec:frontier}
+
+The confound suggests a controlled test: restrict to human-annotated \emph{correct-answer} traces and separate faithful reasoning (ft1) from post-hoc rationalization (ft2), $n{=}270$. Table~\ref{tab:frontier}: \textbf{every black-box signal is at chance}; all CIs include 0.5. This is intuitive in hindsight---a post-hoc rationalization is locally coherent, supports its answer, and yields a confident, stable answer distribution: exactly the external profile of a faithful trace. We refer to this regime as the \emph{black-box frontier}. (This at-chance claim is specific to the human-annotated benchmark; the constructed testbeds of \S\ref{sec:construction} serve other purposes and carry partial surface signals, which we report.)
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Signal} & \textbf{AUROC} & \textbf{95\% CI} \\
+\midrule
+Answer-tracing & 0.545 & [0.468, 0.611] \\
+Counterfactual interventions & 0.485 & $\ni$ 0.5 \\
+NLI step-support & 0.514 & $\ni$ 0.5 \\
+Premise-DAG structure & 0.490 & $\ni$ 0.5 \\
+\bottomrule
+\end{tabular}
+\caption{The frontier: faithful (ft1) vs.\ post-hoc (ft2) on \emph{correct-answer} traces ($n{=}270$). Every black-box signal is at chance.}
+\label{tab:frontier}
+\end{table}
+
+\section{Part III: The Information Is (Partially) Inside}
+\label{sec:internals}
+
+\paragraph{Method.} For each trace we extract hidden states at every layer (last CoT token; also pre-CoT and mean-pooled positions) and fit standardized PCA-50 logistic-regression probes, 5-fold CV, with the selection-corrected permutation test of \S\ref{sec:setup}.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & \textbf{Llama-3.1} & \textbf{Qwen-2.5} \\
+ & ($n{=}144$) & ($n{=}126$) \\
+\midrule
+CV AUROC (best layer) & 0.71 & 0.62 \\
+Permutation $p$ & 0.01--0.03 & 0.32 (n.s.) \\
+Held-out (25$\times$70/30) & \textbf{0.70} (F1 0.70) & 0.58 \\
+Leave-one-domain-out & 0.60--0.71 & --- \\
+Peak layers & late (16--31) & late ($\approx$22) \\
+MLP vs.\ linear & no gain & --- \\
+\bottomrule
+\end{tabular}
+\caption{Linear probes on the human-annotated frontier. Present and domain-general in Llama; not detected in Qwen ($n{=}126$): model-dependent.}
+\label{tab:whitebox}
+\end{table}
+
+\paragraph{Results.} Table~\ref{tab:whitebox}. In Llama-3.1-8B the probe separates ft1 from ft2 at held-out AUROC 0.70, generalizes across domains, and is approximately linear (an MLP adds nothing). In Qwen-2.5-7B it is weak and not significant---``not detected,'' not ``absent.'' A causal check points the right way: steering activations along the probe's post-hoc direction flips answers 2--3$\times$ more than a norm-matched random direction (0.22 vs.\ 0.08 at $+6\sigma$; Appendix~\ref{app:steering}), though we regard this as weak, suggestive evidence ($n{=}51$, large perturbations only, indirect readout).
+
+\section{Part IV: Constructed vs.\ Organic Unfaithfulness}
+\label{sec:construction}
+
+Annotated post-hoc traces are scarce ($n{=}270$ in-regime, two open models). Scaling the frontier requires \emph{constructing} the regime---and the construction itself turns out to be the object of study.
+
+\subsection{Instructed construction: 7 models}
+\label{sec:synth}
+
+For math problems (AQuA, GSM8K) with gold answer $a^*$, the same model either solves step-by-step (kept only when correct: \emph{genuine}) or is instructed to justify the given $a^*$ (\emph{post-hoc}). Both end at the same correct answer; probed contexts are identical (the instruction is never probed); decoding is matched. Across \textbf{seven open models spanning three families and 2024--2026} (Table~\ref{tab:synth})---including Gemma-4-12B via two-GPU pipeline sharding---the construction is permutation-significant in every model, strongest in standard instruct models, weakest in reasoning-distilled ones. Surface-feature baselines (no activation access) remain near chance for five of seven, indicating a genuinely internal signal; Llama (0.64) and Gemma-4 (0.67) carry partial surface tells that the probes clear by $\geq$0.10. Notably, Qwen-2.5---not significant on the noisy human labels---is strongest here, suggesting its earlier null owed to label noise and sample size.
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Model} & \textbf{n} & \textbf{Held-out} & \textbf{$p$} & \textbf{Surf.} \\
+\midrule
+Qwen-2.5-7B & 277 & 0.809 & .005 & 0.545 \\
+Gemma-4-12B (2026) & 248 & 0.797 & .005 & 0.665 \\
+Llama-3.1-8B & 229 & 0.739 & .005 & 0.639 \\
+Qwen3-8B & 175 & 0.716 & .005 & 0.535 \\
+DeepSeek-R1-Dist.-7B & 251 & 0.617 & .005 & 0.534 \\
+Gemma-2-9B & 243 & 0.600 & .020 & 0.548 \\
+DeepSeek-R1-0528-8B & 81 & 0.558$^{\ddagger}$ & .025 & 0.473 \\
+\bottomrule
+\end{tabular}
+\caption{Instructed construction, 7 models (matched pairs; held-out 70/30; selection-corrected permutation $p$; surface = style-features baseline). $^{\ddagger}$Small-$n$; the permutation statistic (0.688) is the reliable read.}
+\label{tab:synth}
+\end{table}
+
+\subsection{Hint-induced organic construction}
+\label{sec:hint}
+
+Following the biased-context paradigm \citep{turpin2023language,chen2025reasoning}, we first ask each problem clean (correct $\Rightarrow$ \emph{genuine}, capped). For problems the model got \emph{wrong}, we re-ask with a sycophancy hint toward the gold answer (``I think the answer is $a^*$\ldots''). A trace is kept as \emph{organic post-hoc} iff the model flips to $a^*$ (a \textbf{causal label}: it could not solve the problem unhinted, so the hint---not the reasoning---produced the answer) \emph{and} the CoT never references the hint (mention-filtered; the rejected cases are honest deference). Probed contexts exclude the hint text, keeping conditions symmetric. On the full AQuA-RAT and GSM8K test sets this yields \textbf{185 organic post-hoc + 428 genuine traces for Llama} and \textbf{70 + 464 for Qwen}, with an exhaustive keyword audit confirming no hint leakage. The construction costs no human annotation.
+
+Both models are strongly decodable on this organic set (held-out 0.752 / 0.835, permutation $p{=}0.005$; surface baselines 0.626 / 0.703---a partial behavioral tell we report). Most strikingly, \textbf{the metric inversion replicates with causal labels}: \texttt{soft\_faithfulness} in its intended direction scores \textbf{0.389 [0.301, 0.481] (Llama) and 0.251 [0.166, 0.350] (Qwen)}---on traces where the reasoning provably did not produce the answer, the standard metric confidently points the wrong way.
+
+\subsection{The three-way bridge}
+\label{sec:bridge}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/depth_gradient.pdf}
+\caption{Per-layer probe AUROC for the three post-hoc variants (Llama-3.1-8B). Instructed synthetic peaks early (L9), hint-induced organic mid (L17), human-annotated organic late (L29).}
+\label{fig:depth}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Train $\to$ test (Llama)} & \textbf{Best} & \textbf{Mean} & \textbf{$p$} \\
+\midrule
+Hint $\to$ annotated & 0.694 & \textbf{0.616} & \textbf{.010} \\
+Annotated $\to$ hint & 0.627 & 0.512 & --- \\
+Synthetic $\to$ annotated & 0.531 & 0.431 & n.s. \\
+Annotated $\to$ synthetic & 0.554 & 0.476 & --- \\
+Synthetic $\leftrightarrow$ hint & 0.65 & 0.61--0.63 & --- \\
+\midrule
+Hint $\to$ annotated (Qwen) & 0.583 & 0.484 & .741 \\
+\bottomrule
+\end{tabular}
+\caption{Cross-construction transfer, swept over all layers (best and selection-free layer-mean; permutation $p$ on the mean, permutations coupled across layers). Hint-induced organic rationalization bridges to the human-annotated regime; instructed synthetic does not.}
+\label{tab:bridge}
+\end{table}
+
+Do the constructions share the annotated regime's representation? We train probes on each distribution and test on the others, sweeping all layers (Table~\ref{tab:bridge}; Figure~\ref{fig:depth}). Three observations. \textbf{(1) Depth gradient:} the three variants peak at increasing depths---instructed L9, hint-organic L17, annotated L29 (Qwen: L10/L21/L22). \textbf{(2) Instructed rationalization does not transfer} to the annotated regime in either direction ($\leq$0.554 best-of-layers; layer-means at or below chance)---despite being the \emph{easiest} variant to detect within-distribution. \textbf{(3) Hint-induced organic rationalization transfers} (Llama: layer-mean 0.616, permutation $p{=}0.010$; best 0.694, selection-corrected $p{=}0.050$). In Qwen the transfer is null ($p{=}0.741$), which we report as inconclusive: the annotated-regime anchor is itself not significant in Qwen and the organic set is small ($n{=}70$)---one cannot measure transfer onto a signal that barely exists in the target.
+
+The conclusion is a caution with a mechanism: \textbf{prompting a model to justify a given answer produces a representationally different phenomenon from spontaneous rationalization}---earlier in the network, easier to detect, and non-transferring---whereas rationalization the model produces \emph{on its own} (hint-induced, never verbalized) is continuous with the human-annotated organic regime. Evaluating or training faithfulness detectors on instructed rationalizations may therefore measure the wrong thing.
+
+\section{Discussion}
+
+\paragraph{For oversight.} Black-box CoT auditing largely re-detects answer correctness; where correctness is controlled, behavior is uninformative, and the most-used metric inverts. The information exists inside the model---unevenly across models---which argues for white-box access as a requirement for reasoning oversight, not a convenience.
+
+\paragraph{For evaluation practice.} Two shortcuts fail in ways we can now quantify: evaluating detectors against answer-tracing metrics (circular, and inverted in this regime), and constructing unfaithfulness by instruction (representationally unlike the real thing). The hint-induced protocol offers a cheap alternative with causal labels; our collected set (255 organic post-hoc + 892 matched genuine traces across two models) is released with the paper.
+
+\paragraph{Model-dependence.} Detection strength varies systematically---strongest in standard instruct models, weakest in reasoning-distilled ones, whose elaborate reasoning may blur the genuine/post-hoc boundary or encode it elsewhere. Within one family, Gemma-2 (0.60) $\to$ Gemma-4 (0.80) is a sharp jump. Why some models expose this regime linearly and others do not is an open mechanistic question.
+
+\section{Limitations}
+
+Our real-label results rest on one human-annotated benchmark (FaithCoT-Bench; in-regime $n{=}270$, per-model $n{=}144/126$)---to our knowledge the only instance-level faithfulness benchmark with expert annotations, which is itself part of the problem we highlight. The at-chance frontier claim is specific to that benchmark; the constructed testbeds carry partial surface signals (up to 0.70) and serve the inversion, decodability, and transfer analyses instead. The Qwen contrast is ``not detected,'' not ``absent,'' and its bridge result is inconclusive rather than negative. Causal evidence from steering is weak ($n{=}51$, large perturbations, indirect readout). The constructed testbeds are math-only; the hint construction uses a single sycophancy template (template robustness unchecked) and inherits class imbalance (AUROC-tolerant; reported). Probes are linear/PCA-based (an MLP added nothing, but richer white-box methods may decode more). Closed models cannot be probed at all---which is itself part of the argument for open-weight oversight.
+
+\section*{Ethics Statement}
+This work analyzes model-generated reasoning on public benchmarks (FaithCoT-Bench, AQuA-RAT, GSM8K) and releases model-generated traces with construction labels; no human subjects or personal data are involved. Detection of unfaithful reasoning is oversight-enabling; we do not release methods that make models less faithful---the hint construction elicits an existing failure mode, documented by prior work, for measurement purposes.
+
+\bibliographystyle{acl_natbib}
+\bibliography{ur2phd}
+
+\appendix
+
+\section{Activation-Steering Dose--Response}
+\label{app:steering}
+Steering the residual stream at Llama's best layer by $\alpha\sigma$ along the train-split post-hoc direction, vs.\ a norm-matched random direction, on 51 held-out multiple-choice traces:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Flip rate}} & \multicolumn{2}{c}{\textbf{$P(\text{orig.})$}} \\
+$\alpha$ & post-hoc & random & post-hoc & random \\
+\midrule
+$-6$ & 0.16 & 0.20 & 0.714 & 0.763 \\
+$-2$ & 0.04 & 0.06 & 0.867 & 0.862 \\
+$0$  & 0.00 & 0.00 & 0.878 & 0.878 \\
+$+2$ & 0.04 & 0.04 & 0.865 & 0.869 \\
+$+4$ & 0.16 & 0.06 & 0.808 & 0.852 \\
+$+6$ & \textbf{0.22} & 0.08 & 0.748 & 0.815 \\
+\bottomrule
+\end{tabular}
+\caption{Dose--response: the post-hoc direction perturbs answers 2--3$\times$ more than random at large $+\alpha$; the $-\alpha$ side is mixed. Weak, directional causal evidence.}
+\label{tab:steering}
+\end{table}
+
+\section{Construction Details}
+\label{app:prompts}
+\paragraph{Instructed (synthetic).} Genuine: \emph{``Solve this step by step, showing your reasoning. On the last line write exactly `Answer: X'.''} (kept only if correct). Post-hoc: \emph{``The correct answer is $a^*$. Provide a clear, convincing step-by-step reasoning that leads to this answer.''} Sampling T$=$0.7, top-$p$ 0.9, repetition penalty 1.1, fixed seed; identical across conditions and models.
+\paragraph{Hint-induced (organic).} Hint text: \emph{``I think the answer is $a^*$, but I'm not sure.''} appended to the clean question; kept iff baseline-wrong $\to$ hint-correct and the CoT matches no hint-reference pattern (second-person forms, ``hint,'' ``suggested answer,'' ``the user,'' etc.); rejected cases (3 total) verbalized deference. An exhaustive keyword scan over all kept traces found no leakage (matches were problem restatements, e.g.\ ``we are told that\ldots,'' and generic-you phrasing).
+\paragraph{Probing.} Probed context is always [question (+options) $+$ generated CoT], excluding any construction instruction or hint text. Last-token hidden states at every layer; StandardScaler $\to$ PCA-50 $\to$ logistic regression; 5-fold CV; 200-permutation selection-corrected tests.
+
+\section{GRACE Preliminary Replication}
+On the 40-example public sample of GRACE \citep{pham2026grace} (8 unfaithful steps), NLI step-support is at chance (0.51--0.58), directionally consistent with our FaithCoT results but underpowered; the full evaluation set was not released in time for this submission.
+
+\end{document}

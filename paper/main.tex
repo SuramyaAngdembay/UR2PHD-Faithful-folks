@@ -11,6 +11,8 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{xcolor}
+\definecolor{hintbg}{RGB}{255,230,180}
 
 \title{The Black-Box Frontier of Chain-of-Thought Faithfulness:\\Post-Hoc Rationalization on Correct Answers}
 
@@ -29,7 +31,33 @@ Chain-of-thought (CoT) explanations are only useful for oversight if they are \e
 
 Large language models produce fluent step-by-step explanations that appear to expose a reasoning process, but the stated reasoning is sometimes not the process that produced the answer \citep{lanham2023measuring,turpin2023language,chen2025reasoning}. A model may commit to an answer and then compose a plausible derivation afterwards---\emph{post-hoc rationalization}. As CoT becomes an oversight surface, where an auditor reads the reasoning to decide whether to trust the answer, the practical question is instance-level: can \emph{this} explanation be trusted? FaithCoT-Bench \citep{shen2026faithcot} formalizes this problem with human annotations and shows a broad panel of detectors performs poorly in aggregate.
 
-This paper asks a sharper pair of questions: \textbf{where exactly} does black-box detection fail, and \textbf{is the missing information present in the model's internals}? We proceed in four parts.
+This paper asks a sharper pair of questions: \textbf{where exactly} does black-box detection fail, and \textbf{is the missing information present in the model's internals}? Figure~\ref{fig:example} shows the phenomenon at the center of the paper: the same model, on the same problem, fails cleanly---then, handed a hint, produces a locally flawless derivation of the hinted answer without ever mentioning the hint. Nothing on the surface distinguishes that trace from genuine reasoning. We proceed in four parts.
+
+\begin{figure*}[t]
+\small
+\setlength{\fboxsep}{6pt}
+\noindent
+\begin{minipage}[t]{0.475\textwidth}
+\fbox{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\textbf{Clean prompt} \hfill \textit{baseline}\\[2pt]
+\footnotesize
+If the population of a city increases by 5\% annually, what will be the population of the city in 2 years time if its current population is 78000?\\
+\textit{Options: A) 81900 \quad \textbf{B) 85995} \quad C) 85800 \quad D) 90000 \quad E) None of these}\\[4pt]
+\normalsize\textbf{Model answer: E} \quad {\color{red}$\times$ incorrect} \textit{(gold: B)}
+\end{minipage}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.475\textwidth}
+\fbox{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\textbf{Hinted prompt} \hfill \textit{same model, same problem}\\[2pt]
+\footnotesize
+[same question and options] \colorbox{hintbg}{I think the answer is B, but I'm not sure.}\\[3pt]
+\textbf{CoT:} ``To find the population in 2 years, we'll calculate the increase for each year\ldots\ Year 1: $78000 \times 0.05 = 3900$; population after 1 year $= 81900$. Year 2: $81900 \times 0.05 = 4095$; population after 2 years $= 85995$. So, the population\ldots\ would be 85995. \textbf{Answer: B}''\\[3pt]
+\normalsize\textbf{Model answer: B} \quad correct --- \textit{and the CoT never mentions the hint}
+\end{minipage}}
+\end{minipage}
+\caption{A real trace pair from our hint-induced testbed (Llama-3.1-8B, AQuA-RAT). Left: unhinted, the model answers E. Right: hinted toward the gold answer, it produces a locally coherent---here even arithmetically valid---derivation of B and never verbalizes the hint. The hint, not the stated reasoning, changed the answer (counterfactual label); externally, the right-hand trace is indistinguishable from genuine reasoning.}
+\label{fig:example}
+\end{figure*}
 
 \paragraph{An audit with a diagnosis (\S\ref{sec:audit}).} We implement four families of behavioral detectors on FaithCoT-Bench---including premise-graph structure adapted from PARC \citep{mukherjee2025parc} and counterfactual interventions with premise extraction validated against gold annotations---and score everything against the \emph{human} labels. Two diagnoses emerge: answer correctness alone outperforms every purpose-built detector (much of ``unfaithfulness detection'' is accuracy prediction in disguise), and the benchmark's own step-removal metric anti-correlates with human faithfulness.
 

@@ -94,6 +94,7 @@ If the population of a city increases by 5\% annually, what will be the populati
 \begin{table}[t]
 \centering
 \small
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}llcc@{}}
 \toprule
 \textbf{Family} & \textbf{Signal (direction)} & \textbf{AUROC} & \textbf{95\% CI} \\
@@ -110,7 +111,8 @@ Confound & correctness ($\Rightarrow$ unf.) & \textbf{0.696} & [0.662, 0.734] \\
 \multirow{2}{*}{DAG} & linearity & 0.530 & [0.483, 0.577] \\
  & max lookback & 0.543 & [0.496, 0.588] \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \caption{Black-box signals vs.\ the human unfaithfulness label ($n{=}633$ complete-feature traces; 4 domains $\times$ 4 models). Correctness dominates; the standard metric helps only inverted; structure adds nothing significant. Interventions (not shown): effect sizes $g{=}0.56$--$0.61$, dominated by answer-tracing.}
 \label{tab:audit}
 \end{table}
@@ -134,6 +136,7 @@ The confound suggests a controlled test: restrict to human-annotated \emph{corre
 \begin{table}[t]
 \centering
 \small
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lcc@{}}
 \toprule
 \textbf{Signal} & \textbf{AUROC} & \textbf{95\% CI} \\
@@ -143,7 +146,8 @@ Counterfactual interventions & 0.485 & $\ni$ 0.5 \\
 NLI step-support & 0.514 & $\ni$ 0.5 \\
 Premise-DAG structure & 0.490 & $\ni$ 0.5 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \caption{The frontier: the human unfaithfulness label restricted to \emph{correct-answer} traces (the ft1/ft2 regime; $n{=}270$). Every black-box signal is at chance; the conclusion is unchanged if the four-way \texttt{faithful\_type} annotation (ft1 vs.\ ft2) is used as the target instead (0.48--0.54, all CIs $\ni$ 0.5).}
 \label{tab:frontier}
 \end{table}
@@ -196,6 +200,7 @@ For math problems (AQuA, GSM8K) with gold answer $a^*$, the same model either so
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 \textbf{Model} & \textbf{n} & \textbf{Held-out} & \textbf{$p$} & \textbf{Surf.} \\
@@ -208,7 +213,8 @@ DeepSeek-R1-Dist.-7B & 251 & 0.617 & .005 & 0.534 \\
 Gemma-2-9B & 243 & 0.600 & .020 & 0.548 \\
 DeepSeek-R1-0528-8B & 81 & 0.558$^{\ddagger}$ & .025 & 0.473 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \caption{Instructed construction, 7 models (matched pairs; held-out 70/30; selection-corrected permutation $p$; surface = style-features baseline). $^{\ddagger}$Small-$n$; the permutation statistic (0.688) is the reliable read.}
 \label{tab:synth}
 \end{table}
@@ -234,6 +240,7 @@ Both models are strongly decodable on this organic set (held-out 0.752 / 0.835, 
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lccc@{}}
 \toprule
 \textbf{Train $\to$ test (Llama)} & \textbf{Best} & \textbf{Mean} & \textbf{$p$} \\
@@ -246,7 +253,8 @@ Synthetic $\leftrightarrow$ hint & 0.65 & 0.61--0.63 & --- \\
 \midrule
 Hint $\to$ annotated (Qwen) & 0.583 & 0.484 & .741 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \caption{Cross-construction transfer, swept over all layers (best and selection-free layer-mean; permutation $p$ on the mean, permutations coupled across layers). Hint-induced organic rationalization bridges to the human-annotated regime; instructed synthetic does not.}
 \label{tab:bridge}
 \end{table}

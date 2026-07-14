@@ -87,7 +87,14 @@ Confound & correctness ($\Rightarrow$ unf.) & \textbf{0.696} & [0.662, 0.734] \\
 \label{tab:audit}
 \end{table}
 
-\paragraph{Results.} Table~\ref{tab:audit}: \textbf{answer correctness alone is the strongest single signal (0.696)}---in this benchmark unfaithful traces are disproportionately \emph{correct} ones (post-hoc rationalization), so black-box unfaithfulness detection largely reduces to accuracy prediction. Structural families add nothing significant, with one honest nuance: DAG max-lookback is weakly informative on AQuA (0.636), the one domain with explicit premise structure.
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/confound_frontier.pdf}
+\caption{The audit in one view. Left: on the full benchmark, answer correctness alone (red) beats every purpose-built signal against the human label. Right: restricted to correct-answer traces, every black-box signal collapses onto chance (dashed).}
+\label{fig:confound}
+\end{figure}
+
+\paragraph{Results.} Table~\ref{tab:audit} and Figure~\ref{fig:confound}: \textbf{answer correctness alone is the strongest single signal (0.696)}---in this benchmark unfaithful traces are disproportionately \emph{correct} ones (post-hoc rationalization), so black-box unfaithfulness detection largely reduces to accuracy prediction. Structural families add nothing significant, with one honest nuance: DAG max-lookback is weakly informative on AQuA (0.636), the one domain with explicit premise structure.
 
 \paragraph{Metric inversion.} \texttt{soft\_faithfulness} used as intended scores \textbf{0.349 [0.305, 0.389]}---significantly \emph{below} chance; equivalently, unfaithful traces score \emph{higher} by $+0.139$ [$+0.096, +0.182$]. Concurrent meta-evaluation reports below-chance AUROCs for related perturbation metrics against constructed ground truth \citep{gurarieh2026bonafide}; our result is against \emph{human} labels on organic traces, and---the part the confound makes visible---has a mechanism: unfaithful traces skew toward correct, tightly answer-coupled post-hoc rationalizations, for which step removal moves the answer \emph{more}, not less. The metric measures answer--reasoning \emph{coupling}, not faithfulness. In \S\ref{sec:construction} we replicate the inversion on traces with counterfactual ground-truth labels.
 
@@ -150,6 +157,13 @@ Annotated post-hoc traces are scarce ($n{=}270$ in-regime, two open models). Sca
 
 For math problems (AQuA, GSM8K) with gold answer $a^*$, the same model either solves step-by-step (kept only when correct: \emph{genuine}) or is instructed to justify the given $a^*$ (\emph{post-hoc}). Both end at the same correct answer; probed contexts are identical (the instruction is never probed); decoding is matched. Across \textbf{seven open models spanning three families and 2024--2026} (Table~\ref{tab:synth})---including Gemma-4-12B via two-GPU pipeline sharding---the construction is permutation-significant in every model, strongest in standard instruct models, weakest in reasoning-distilled ones. Surface-feature baselines (no activation access) remain near chance for five of seven, indicating a genuinely internal signal; Llama (0.64) and Gemma-4 (0.67) carry partial surface tells that the probes clear by $\geq$0.10. Notably, Qwen-2.5---not significant on the noisy human labels---is strongest here, suggesting its earlier null owed to label noise and sample size.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/seven_models.pdf}
+\caption{Instructed construction across 7 models: probe held-out AUROC (circles) vs.\ the surface-feature black-box baseline (diamonds). The circle--diamond gap is the internal signal.}
+\label{fig:seven}
+\end{figure}
+
 \begin{table}[t]
 \centering
 \small
@@ -209,7 +223,14 @@ Hint $\to$ annotated (Qwen) & 0.583 & 0.484 & .741 \\
 \label{tab:bridge}
 \end{table}
 
-Do the constructions share the annotated regime's representation? We train probes on each distribution and test on the others, sweeping all layers (Table~\ref{tab:bridge}; Figure~\ref{fig:depth}). Three observations. \textbf{(1) Depth gradient:} the three variants peak at increasing depths---instructed L9, hint-organic L17, annotated L29 (Qwen: L10/L21/L22). \textbf{(2) Instructed rationalization does not transfer} to the annotated regime in either direction ($\leq$0.554 best-of-layers; layer-means at or below chance)---despite being the \emph{easiest} variant to detect within-distribution. \textbf{(3) Hint-induced organic rationalization transfers} (Llama: layer-mean 0.616, permutation $p{=}0.010$; best 0.694, selection-corrected $p{=}0.050$). In Qwen the transfer is null ($p{=}0.741$), which we report as inconclusive: the annotated-regime anchor is itself not significant in Qwen and the organic set is small ($n{=}70$)---one cannot measure transfer onto a signal that barely exists in the target.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\columnwidth]{figs/transfer_heatmap.pdf}
+\caption{The three-way bridge at a glance (Llama; diagonal = within-distribution CV, off-diagonal = layer-mean transfer). One off-diagonal cell is warm: hint-induced $\to$ annotated.}
+\label{fig:heatmap}
+\end{figure}
+
+Do the constructions share the annotated regime's representation? We train probes on each distribution and test on the others, sweeping all layers (Table~\ref{tab:bridge}; Figures~\ref{fig:depth} and~\ref{fig:heatmap}). Three observations. \textbf{(1) Depth gradient:} the three variants peak at increasing depths---instructed L9, hint-organic L17, annotated L29 (Qwen: L10/L21/L22). \textbf{(2) Instructed rationalization does not transfer} to the annotated regime in either direction ($\leq$0.554 best-of-layers; layer-means at or below chance)---despite being the \emph{easiest} variant to detect within-distribution. \textbf{(3) Hint-induced organic rationalization transfers} (Llama: layer-mean 0.616, permutation $p{=}0.010$; best 0.694, selection-corrected $p{=}0.050$). In Qwen the transfer is null ($p{=}0.741$), which we report as inconclusive: the annotated-regime anchor is itself not significant in Qwen and the organic set is small ($n{=}70$)---one cannot measure transfer onto a signal that barely exists in the target.
 
 Stated precisely, the transfer result concerns \emph{linearly decodable structure}: probes find \textbf{no shared linearly decodable direction between instructed rationalization and the annotated regime at any layer}, while hint-induced rationalization does share one---and the depth signatures (Figure~\ref{fig:depth}) tell the same story constructively. Transfer failure alone cannot rule out a shared representation encoded along non-aligned directions, and input-distribution differences contribute; but the three-way contrast controls for the boring versions of this (the two constructions share format and domain, yet only one transfers), and the result is robust to preprocessing choices: without PCA, and with the scaler refit on the target distribution, hint$\to$annotated layer-means remain 0.56--0.57 while instructed$\to$annotated stays at 0.45. The practical caution stands: \textbf{evaluating or training faithfulness detectors on instructed rationalizations may measure the wrong thing} \citep[cf.\ off-policy probe failures in deception detection;][]{offpolicy2025probes}.
 

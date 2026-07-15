@@ -156,3 +156,7 @@ for m in ('llama','qwen'):
     fs = _j.load(open(f'results/flip_stability_{m}.json'))
     strict = sum(1 for r in fs if not any(r['resample_correct']))
     print(f"  flip-stability {m}: {strict}/{len(fs)} fail both resamples ({strict/len(fs):.1%})")
+for m in ('llama','qwen'):
+    qt = _j.load(open(f'results/qonly_transfer_{m}.json'))
+    print(f"  qonly-TRANSFER {m}: mean {qt['qonly_transfer_mean']:.3f} p={qt['p_mean']:.3f} | "
+          f"best {qt['qonly_transfer_best']:.3f} p={qt['p_best']:.3f}  (difficulty-carrier control)")

@@ -1,0 +1,8 @@
+{
+  "model": "llama",
+  "qonly_transfer_mean": 0.4126612103174604,
+  "qonly_transfer_best": 0.5109126984126984,
+  "best_layer": 31,
+  "p_mean": 0.9960079840319361,
+  "p_best": 0.9880239520958084
+}

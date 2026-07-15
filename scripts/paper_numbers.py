@@ -135,3 +135,24 @@ print("""  Table 3 (real-label probes): scripts/wb_probe_a.py (CV+perm), wb_prob
   Circularity rho=0.87: scripts/analyze_human_label.py + notes/2026-06-25-finding-human-label-baseline.md
   Fig 4 FaithCoT curve: results/faithcot_perlayer.json (recompute: snippet in notes / bridge3.py curves)""")
 print("\nDONE — every [RECOMPUTED] value should match its [PAPER] value.")
+
+print()
+print("=" * 72)
+print("REVIEW-RESPONSE RERUNS (2026-07-15)")
+print("=" * 72)
+import json as _j
+gn = _j.load(open('results/grouped_nested.json'))
+for k, v in gn.items():
+    key = 'grouped_nested_auroc' if 'grouped_nested_auroc' in v else 'nested_auroc'
+    print(f"  {k:22s} nested {v[key]:.3f} +/- {v['std']:.3f}")
+eb = _j.load(open('results/embed_baseline.json'))
+for k, v in eb.items(): print(f"  embed-LR {k:16s} n={v['n']:4d} AUROC {v['auroc']:.3f}")
+for m in ('llama','qwen'):
+    q = _j.load(open(f'results/qonly_{m}.json'))
+    print(f"  qonly {m}: best CV {q['qonly_best_cv']:.3f} @L{q['qonly_best_layer']}")
+    s = _j.load(open(f'results/strict_{m}.json'))
+    print(f"  strict {m}: n_ph {s['n_posthoc_strict']}, within CV {s['within_cv_best']:.3f}, "
+          f"transfer mean {s['transfer_mean']:.3f} p={s['p_mean']:.3f} | best {s['transfer_best']:.3f} p={s['p_best']:.3f}")
+    fs = _j.load(open(f'results/flip_stability_{m}.json'))
+    strict = sum(1 for r in fs if not any(r['resample_correct']))
+    print(f"  flip-stability {m}: {strict}/{len(fs)} fail both resamples ({strict/len(fs):.1%})")

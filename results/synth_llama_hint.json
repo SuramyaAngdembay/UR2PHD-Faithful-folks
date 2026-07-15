@@ -7,7 +7,7 @@
   "wb_cv_auroc": 0.7327986865370043,
   "wb_heldout_auroc": 0.7515345982142857,
   "wb_perm_obs": 0.7319146249052791,
-  "wb_perm_p": 0.004975124378109453,
+  "wb_perm_p": 0.000999000999000999,
   "black_box": {
     "soft_auroc_intended": 0.38885613207547176,
     "soft_auroc_inverted": 0.6111438679245284,

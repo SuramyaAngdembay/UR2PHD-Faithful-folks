@@ -22,8 +22,8 @@ fc    = json.load(open(os.path.join(RES, "faithcot_perlayer.json")))["llama"]
 
 fig, ax = plt.subplots(figsize=(5.4, 3.0), dpi=300)
 for vals, color, label in [(synth, BLUE, "Instructed synthetic (answer-first prompt)"),
-                           (hint, ORANGE, "Hint-induced organic (spontaneous)"),
-                           (fc, RED, "Human-annotated organic (FaithCoT-Bench)")]:
+                           (hint, ORANGE, "Hint-induced (unverbalized flip)"),
+                           (fc, RED, "Human-annotated (FaithCoT-Bench)")]:
     ax.plot(range(len(vals)), vals, color=color, lw=1.8, label=label)
     b = max(range(len(vals)), key=lambda i: vals[i])
     ax.scatter([b], [vals[b]], color=color, s=26, zorder=5)

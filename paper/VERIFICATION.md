@@ -55,3 +55,32 @@ number and prints `[PAPER]` vs `[RECOMPUTED]` side by side. CI edges may differ 
 6. Skim `wb_probe_ed.py` (Table 3 hygiene: pipeline fit on train only) + `wb_causal_c.py` (Table 6) (30 min).
 7. Verify the 8 concurrent-work arXiv ids and our one-line characterizations of each (30 min).
 8. Full-paper prose proofread with the PDF and this table side by side.
+
+---
+
+# UPDATE 2026-07-15 — review-response additions (verify these too)
+
+*The page/line refs in section A above are from the 07-14 compile; the review-response edits
+(abstract, §5–§7.3, Tables 3–5, Limitations, Appendix D) shifted lines — recompile and use
+section anchors. `python3 scripts/paper_numbers.py` now also prints every artifact below.*
+
+## D. New claims from the review response
+
+| # | Claim / number | Paper location | Code | Artifact |
+|---|---|---|---|---|
+| 17 | Nested-layer held-out: Llama 0.67±0.08 / Qwen 0.55±0.08 (Table 3 row); instructed Nested column 0.63–0.79 (Table 4) — problem-grouped 10× splits, layer chosen by inner CV on train only | §6 + Tables 3–4 | `scripts/grouped_eval.py` | `results/grouped_nested.json` |
+| 18 | Learned text baseline FAILS on annotated frontier (0.446/0.474); instructed 0.502/0.564; hint 0.611/**0.751 (Qwen — disclosed 3×)** | §5, Table 4 caption, §7.2, Limitations | `scripts/embed_baseline.py` (frozen roberta-large-mnli + LR) | `results/embed_baseline.json` |
+| 19 | Question-only probes within hint testbed: 0.646/0.664 (difficulty is decodable from the question) | §7.2 | `scripts/qonly_extract.py` | `results/qonly_{llama,qwen}.json` |
+| 20 | **Difficulty-carrier control: question-only probe does NOT transfer** (Llama mean 0.413 p=0.996; Qwen 0.503) while CoT probe transfers 0.616 p=0.017 | §7.3 (after strict-subset sentence) | `scripts/qonly_transfer.py` | `results/qonly_transfer_{llama,qwen}.json` |
+| 21 | Flip stability: 59% solved on 1 resample; strict = fail-both-resamples: 47/185 (25.4%) Llama, 20/70 (28.6%) Qwen | §7.2, Limitations, App. D | `scripts/flip_stability2.py` | `results/flip_stability_{llama,qwen}.json` |
+| 22 | **Appendix D strict subset**: within-CV rises (0.818/0.837); Llama transfer magnitude preserved (mean 0.596, best 0.699) but underpowered (p=0.078/0.066); Qwen null (0.494, p=0.605) | App. D | `scripts/strict_subset.py` | `results/strict_{llama,qwen}.json` |
+| 23 | 1000-permutation headline p-values: transfer mean p=0.017, best p=0.049 (Table 5, abstract); hint decodability p≤0.001 | §3, §7.2, §7.3, Table 5 | `scripts/bridge3_perm.py --nperm 1000`; `synth_analyze.py --tag hint --nperm 1000` | `results/bridge3_perm_*.json`, `results/synth_*_hint.json` |
+| 24 | Cluster bootstrap over 8 model×domain cells: correctness [0.616, 0.753], inverted-soft [0.575, 0.728]; HLE-Bio ≈ chance per cell | Limitations | inline in this repo (see `paper_numbers.py` macro block + cluster snippet in session notes) | `results/cluster_bootstrap.json` (incl. per-cell values) |
+| 25 | Bridge robustness to preprocessing (no-PCA / target-fit scaler: hint 0.56–0.57 vs instructed 0.45) | §7.3 | Aquaman `~/transfer_robust.py` | `results/transfer_robust_llama.json` |
+
+## E. Terminology audit (2nd review) — spot-check these while proofreading
+- Zero remaining: "organic post-hoc", "causal labels", "silent rationalization" (grep the tex to confirm)
+- "is at chance" survives nowhere except quotes; frontier claims phrased as "no reliable above-chance discrimination"
+- Proxy claim + depth gradient are Llama-scoped in abstract, §7.3, Fig 4 caption
+- Hint traces named "hint-induced (unverbalized-flip)"; released set = "255 unverbalized hint-flip traces"
+- Title decision (keep vs. "…Correctness Confounds and Unverbalized Hint Dependence") — pending author/advisor call

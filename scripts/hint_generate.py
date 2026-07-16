@@ -27,7 +27,7 @@ set_seed(0)
 ap = argparse.ArgumentParser()
 ap.add_argument("--model", required=True)
 ap.add_argument("--mdir", required=True)
-ap.add_argument("--dataset", required=True, choices=["aquarat", "gsm8k"])
+ap.add_argument("--dataset", required=True, choices=["aquarat", "gsm8k", "logiqa"])
 ap.add_argument("--n", type=int, default=1400)
 ap.add_argument("--gpu", type=int, default=0)
 ap.add_argument("--max_new", type=int, default=512)
@@ -40,7 +40,7 @@ TMPL_KW = {"enable_thinking": False} if args.no_think else {}
 
 SYNTH = os.path.expanduser("~/synth")
 probs = json.load(open(os.path.join(SYNTH, f"{args.dataset}_problems.json")))[: args.n]
-LETTER = args.dataset == "aquarat"
+LETTER = args.dataset in ("aquarat", "logiqa")
 
 torch.cuda.set_device(args.gpu); DEV = f"cuda:{args.gpu}"
 bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",

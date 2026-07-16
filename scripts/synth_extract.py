@@ -35,7 +35,7 @@ SYNTH = os.path.expanduser("~/synth")
 TAG = f"_{args.tag}" if args.tag else ""
 
 traces = []
-for ds in ("aqua", "gsm8k", "aquarat"):
+for ds in ("aqua", "gsm8k", "aquarat", "logiqa"):
     p = os.path.join(SYNTH, f"traces_{args.mdir}{TAG}_{ds}.json")
     if os.path.exists(p): traces += json.load(open(p))
 print(f"{args.mdir}{TAG}: {len(traces)} traces ({sum(t['condition']=='genuine' for t in traces)} genuine)", flush=True)

@@ -1,5 +1,11 @@
 # Author verification guide — claim → paper location → code → artifact
 
+> **⚠️ CORRECTION (2026-07-16):** FaithCoT's released ft-codes invert the README's correctness pairing
+> (data: correct = ft3/ft4). Everywhere this document says "post-hoc-on-correct (ft1v2)" read
+> "incorrect-answer regime"; the framing below is PRE-correction and superseded by the two-regime plan in
+> CLAUDE.md. Numbers remain valid. See notes/2026-07-16-data-validation.md.
+
+
 *Page/line refs are from the 2026-07-14 compile ("submission (3)"). The latest commit rewrote the
 abstract, thinned intro em-dashes, and folded the AI note into Ethics — so lines after the abstract
 shift by a few; section anchors are stable. Recompile before final proofread.*

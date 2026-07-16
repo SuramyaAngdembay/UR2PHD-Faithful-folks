@@ -1,5 +1,13 @@
 # Finding (2026-06-25): `soft_faithfulness` is answer-tracing; the human label is the real target
 
+> **⚠️ CORRECTION (2026-07-16):** The `faithful_type` regime labels used in this note are INVERTED
+> relative to the released FaithCoT data: in the data, **ft1/ft2 = INCORRECT-answer regime, ft3/ft4 =
+> CORRECT-answer regime** (the repo README's pairing is wrong; verified per-domain vs parsed answers and
+> by reproducing the paper's own statistics; independently reported in FaithCoT-BENCH issue #3).
+> All numbers in this note are valid; wherever it says "correct-answer regime / post-hoc-on-correct
+> (ft1v2)" read "incorrect-answer regime". See `notes/2026-07-16-data-validation.md`.
+
+
 *Run on Aquaman over the official FaithCoT-Bench data (`github.com/se7esx/FaithCoT-BENCH`,
 cloned to `~/ur2phd/upstream/FaithCoT-BENCH`, extracted to `/tmp/fc`). Scripts:
 `scripts/analyze_human_label.py`.*

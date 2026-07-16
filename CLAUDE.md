@@ -28,6 +28,24 @@ reasoning model).
 - [results/](results/) — raw experiment outputs (intervention v1/v2, rigorous feature table, white-box probe results).
 - [notes/](notes/) — dated session logs + the findings log (see below).
 
+## ⚠️ CRITICAL CORRECTION (2026-07-16) — read before the history below
+**FaithCoT-Bench's released `faithful_type` codes INVERT the README's correctness pairing.** Verified
+(per-domain `parsed==label` crosstabs; reproduction of the paper's own Qwen-vs-Llama stats; independently
+reported in FaithCoT-BENCH GitHub issue #3, where we commented with the systematic evidence):
+**data coding = ft1 faithful-INCORRECT · ft2 unfaithful-INCORRECT · ft3 faithful-CORRECT · ft4
+unfaithful-CORRECT (post-hoc-on-correct).** All entries below written before 2026-07-16 use the README's
+(wrong) pairing: wherever they say "correct-answer regime / post-hoc-on-correct (ft1v2)", read
+**"incorrect-answer regime"**. All *numbers* remain valid; only regime names flip. Corrected two-regime
+results: `results/audit_corrected.json` (incorrect regime ft1v2: ALL black-box at chance = the true
+frontier; correct regime ft3v4: soft 0.667/interv 0.659/NLI 0.626 sig, inversion strongest +0.176);
+`results/faithcot_reproduce.json` (inversion reproduces on THEIR released scores, intended-dir 0.29–0.43);
+`results/ft34_probe_*.json` (ft3v4 internally decodable in Qwen p=.014; Llama underpowered n_ft4=26);
+`results/regime_transfers_*.json` (cross-regime transfer ~absent; same-regime construction transfers ns)
+⇒ regimes are largely representationally distinct; hint construction aligns with the incorrect-regime
+signal (0.616 p=.017). **The 2026-07-17 BlackboxNLP deadline was deliberately skipped** — see the phase
+plan in "Open next steps". Full forensics: `notes/2026-07-16-data-validation.md`; origin commits
+94335ba/2db16a4 (June-25 session overrode the correct `parsed==label` flag in favor of the README).
+
 ## Current state (as of 2026-06-25)
 **The premise-DAG / intervention thesis was empirically tested and BURIED.** On FaithCoT-Bench
 (truthfulqa+logiqa, llama+qwen, human `unfaithfulness` label), four orthogonal method families all fail
@@ -107,6 +125,12 @@ so do not claim black-box-at-chance there.)* The dataset/protocol is itself a co
 **Perm-tested (2026-07-12): Llama layer-mean p=0.010 (best 0.694 corrected p=0.050); Qwen p=0.741 (null).** Caveats: single hint template; math-only; class imbalance.
 
 ## Conventions
+- **Data over docs:** when a dataset's documentation and its raw contents disagree, the DATA is the
+  tiebreaker — resolve by inspecting ≥3 raw examples before trusting either. Never override an
+  empirically-derived flag because documentation disagrees with it (that is how the 2026-07-16
+  inversion happened).
+- **Benchmark due diligence includes the upstream issue tracker** (FaithCoT issue #3 predated our
+  discovery by a week).
 - Citations must be verified before going into a submission; see the provenance caveat in the latest
   notes file. Prefer peer-reviewed venues; mark unrefereed preprints as such (e.g. Corrective-RAG).
 - Add new findings as dated files in `notes/`; keep `related-work-and-positioning.md` as the living
@@ -128,8 +152,16 @@ so do not claim black-box-at-chance there.)* The dataset/protocol is itself a co
 12. `notes/2026-07-04-synthetic-construction-generalization.md` — synthetic genuine-vs-post-hoc on AQuA+GSM8K: WB probe strong in BOTH models (held-out Llama 0.74 / Qwen 0.81, p=0.005), generalizes across math datasets; but FaithCoT↔synthetic bridge FAILS (~chance, depth-mismatched) ⇒ synthetic post-hoc ≠ real proxy.
 13. `notes/2026-07-11-hint-organic-bridge.md` — hint-induced ORGANIC post-hoc (causal labels, leakage-audited): decodable both models (0.75/0.84, p=0.005); **inversion replicates with causal labels (soft intended 0.39/0.25)**; **3-way bridge: hint→FaithCoT transfers (mean 0.616) where synthetic fails (0.431)** ⇒ instructed rationalization is the artifact; depth gradient L9→L17→L29.
 
-## Open next steps (BlackboxNLP-targeted — see paper-positioning-blackboxnlp.md)
-DONE: 4×4 + CIs (F1/F2 sig); LLM-extractor validation (0.82 recall); GRACE NLI (preliminary); white-box pilot + firm-up a/b/d/e (Llama held-out 0.70, Qwen weak); **synthetic-construction generalization** (WB strong in both models on clean labels; **bridge to real post-hoc fails → new methodological caution**).
-(a) **paper drafted (2026-07-09)** — full research-paper draft in `overleaf-proposal/main.tex` (abstract, intro, related work, Parts I–IV = audit / frontier / white-box / synthetic+bridge, C1–C4, limitations; all numbers from `results/`, honest caveats inline). Next: polish pass + advisor review + verify BlackboxNLP 2026 CFP deadline/format (likely ACL-style template + page limit);
-(b) **full GRACE eval set** (437 traces) for a conclusive 2nd-benchmark claim (email authors / await release);
-(c) *(optional)* extra models on the synthetic study (DeepSeek-R1-Distill / Qwen3-8B / Gemma) via download-run-delete — disk-gated (34 GB free).
+## Open next steps — POST-CORRECTION PHASE PLAN (2026-07-16; deadline skipped deliberately)
+**Phase 0 (this week):** regime_transfers runs (llama done: cross-regime ~absent, same-regime ns; qwen running);
+FaithCoT issue #3 commented with our evidence (done, by Suramya); brief Dr. Rahimi (his earlier approval
+predates the correction — items 1/4 of his feedback folded into Phase 1); repo semantics corrected (done).
+**Phase 1 (wk 1–2):** write the TWO-REGIME paper properly (unfaithfulness lives mostly in wrong answers;
+black-box works on correct answers, collapses on incorrect; internals decode the blind regime in Llama and
+the detectable regime in Qwen; inversion three-legged incl. reproduction on their own scores; benchmark
+correction as community service) → **arXiv preprint ASAP to timestamp** vs concurrent work.
+**Phase 2 (wk 2–4):** power the correct-regime evidence via the hint testbed (2nd template, more models,
+non-math domain); explain regime-dependent model-dependence (cross-regime direction analysis → SAE
+feature-decomposition study, Llama Scope/Gemma Scope); GRACE if ever released.
+**Phase 3:** venue from strength — ARR / ICLR 2027 (~late Sept) / next workshop cycle as floor.
+The old BlackboxNLP draft (paper/main.tex, pre-correction framing) is superseded — do NOT submit it.

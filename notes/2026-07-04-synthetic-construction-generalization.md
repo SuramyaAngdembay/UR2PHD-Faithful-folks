@@ -1,5 +1,13 @@
 # Synthetic-construction generalization: white-box detectable in BOTH models, but does NOT bridge to real post-hoc (2026-07-04)
 
+> **⚠️ CORRECTION (2026-07-16):** The `faithful_type` regime labels used in this note are INVERTED
+> relative to the released FaithCoT data: in the data, **ft1/ft2 = INCORRECT-answer regime, ft3/ft4 =
+> CORRECT-answer regime** (the repo README's pairing is wrong; verified per-domain vs parsed answers and
+> by reproducing the paper's own statistics; independently reported in FaithCoT-BENCH issue #3).
+> All numbers in this note are valid; wherever it says "correct-answer regime / post-hoc-on-correct
+> (ft1v2)" read "incorrect-answer regime". See `notes/2026-07-16-data-validation.md`.
+
+
 *Scripts: `synth_generate.py` (matched genuine/post-hoc CoT), `synth_extract.py` (per-layer
 last-token acts + black-box signals), `synth_analyze.py` (probe + baselines + naive bridge),
 `synth_bridge.py` (layer-swept, domain-controlled bridge). Results: `results/synth_{llama,qwen}.json`,

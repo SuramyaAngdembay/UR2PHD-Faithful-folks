@@ -1,5 +1,13 @@
 # White-box item (c): causal activation-steering — weak/suggestive (2026-07-02)
 
+> **⚠️ CORRECTION (2026-07-16):** The `faithful_type` regime labels used in this note are INVERTED
+> relative to the released FaithCoT data: in the data, **ft1/ft2 = INCORRECT-answer regime, ft3/ft4 =
+> CORRECT-answer regime** (the repo README's pairing is wrong; verified per-domain vs parsed answers and
+> by reproducing the paper's own statistics; independently reported in FaithCoT-BENCH issue #3).
+> All numbers in this note are valid; wherever it says "correct-answer regime / post-hoc-on-correct
+> (ft1v2)" read "incorrect-answer regime". See `notes/2026-07-16-data-validation.md`.
+
+
 *`scripts/wb_causal_c.py`. Post-hoc direction = diff-of-means of cot_end @ L19 on a TRAIN split
 (Llama-3.1-8B); steer the residual stream (block 18 output) by ±α·σ on 51 held-out letter-MC
 traces; read answer-option distribution. Compared to a random unit direction (same norms).*

@@ -1,5 +1,11 @@
 # Paper positioning — BlackboxNLP (EMNLP 2026 workshop)
 
+> **⚠️ CORRECTION (2026-07-16):** FaithCoT's released ft-codes invert the README's correctness pairing
+> (data: correct = ft3/ft4). Everywhere this document says "post-hoc-on-correct (ft1v2)" read
+> "incorrect-answer regime"; the framing below is PRE-correction and superseded by the two-regime plan in
+> CLAUDE.md. Numbers remain valid. See notes/2026-07-16-data-validation.md.
+
+
 **Target venue:** BlackboxNLP @ EMNLP 2026 (workshop on analyzing & interpreting neural
 networks for NLP). Archival track. *Verify the 2026 CFP deadline (historically ~Aug).*
 **Why it fits:** the work is an analysis / limits-of-black-box study with a metric critique

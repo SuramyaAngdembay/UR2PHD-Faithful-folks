@@ -1,5 +1,13 @@
 # Hint-induced organic post-hoc: the bridge PARTIALLY HOLDS where synthetic failed (2026-07-11)
 
+> **⚠️ CORRECTION (2026-07-16):** The `faithful_type` regime labels used in this note are INVERTED
+> relative to the released FaithCoT data: in the data, **ft1/ft2 = INCORRECT-answer regime, ft3/ft4 =
+> CORRECT-answer regime** (the repo README's pairing is wrong; verified per-domain vs parsed answers and
+> by reproducing the paper's own statistics; independently reported in FaithCoT-BENCH issue #3).
+> All numbers in this note are valid; wherever it says "correct-answer regime / post-hoc-on-correct
+> (ft1v2)" read "incorrect-answer regime". See `notes/2026-07-16-data-validation.md`.
+
+
 *Scripts: `hint_generate.py` (Turpin-style biased-context construction), `synth_extract.py --tag hint`,
 `synth_analyze.py --tag hint`, `bridge3.py`. Results: `results/synth_{llama,qwen}_hint.json`,
 `results/bridge3_{llama,qwen}.json`. Motivation: GRACE-independent external validation of the frontier

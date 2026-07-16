@@ -1,5 +1,13 @@
 # White-box method — items (a),(b),(d),(e) done; (c) NOT done (2026-07-02)
 
+> **⚠️ CORRECTION (2026-07-16):** The `faithful_type` regime labels used in this note are INVERTED
+> relative to the released FaithCoT data: in the data, **ft1/ft2 = INCORRECT-answer regime, ft3/ft4 =
+> CORRECT-answer regime** (the repo README's pairing is wrong; verified per-domain vs parsed answers and
+> by reproducing the paper's own statistics; independently reported in FaithCoT-BENCH issue #3).
+> All numbers in this note are valid; wherever it says "correct-answer regime / post-hoc-on-correct
+> (ft1v2)" read "incorrect-answer regime". See `notes/2026-07-16-data-validation.md`.
+
+
 *Firm-up program for the internal-probe faithfulness detector on the F1 frontier (post-hoc ft2 vs
 genuine ft1, correct answers). Extractor `wb_extract.py` caches 3 positions × all layers to
 `wbrep_{model}.npz` (Aquaman; ~90/61 MB, not committed — regenerable). Open-weight generators only

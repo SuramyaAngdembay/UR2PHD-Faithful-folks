@@ -1,5 +1,13 @@
 # Validation runs (2026-06-29): LLM-extractor quality + GRACE 2nd-benchmark
 
+> **⚠️ CORRECTION (2026-07-16):** The `faithful_type` regime labels used in this note are INVERTED
+> relative to the released FaithCoT data: in the data, **ft1/ft2 = INCORRECT-answer regime, ft3/ft4 =
+> CORRECT-answer regime** (the repo README's pairing is wrong; verified per-domain vs parsed answers and
+> by reproducing the paper's own statistics; independently reported in FaithCoT-BENCH issue #3).
+> All numbers in this note are valid; wherever it says "correct-answer regime / post-hoc-on-correct
+> (ft1v2)" read "incorrect-answer regime". See `notes/2026-07-16-data-validation.md`.
+
+
 *Scripts: `scripts/validate_extraction_llm.py`, `scripts/grace_nli_replication.py`. Run on Aquaman.*
 
 ## Item 3 — extractor validation vs PERL gold premise links (DONE, favorable)

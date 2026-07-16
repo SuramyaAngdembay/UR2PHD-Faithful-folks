@@ -1,5 +1,13 @@
 # White-box pilot (2026-06-29): the F1 frontier is internally (partially) decodable
 
+> **⚠️ CORRECTION (2026-07-16):** The `faithful_type` regime labels used in this note are INVERTED
+> relative to the released FaithCoT data: in the data, **ft1/ft2 = INCORRECT-answer regime, ft3/ft4 =
+> CORRECT-answer regime** (the repo README's pairing is wrong; verified per-domain vs parsed answers and
+> by reproducing the paper's own statistics; independently reported in FaithCoT-BENCH issue #3).
+> All numbers in this note are valid; wherever it says "correct-answer regime / post-hoc-on-correct
+> (ft1v2)" read "incorrect-answer regime". See `notes/2026-07-16-data-validation.md`.
+
+
 *`scripts/whitebox_probe_v2.py`. Probe ft2 (post-hoc) vs ft1 (genuine) on CORRECT answers from
 last-token hidden states: per-layer 5-fold CV with PCA(50)→logistic, and a 200-permutation test
 on the max-over-layers AUROC (selection-corrected p). Results: `results/whitebox_*_results.json`.*

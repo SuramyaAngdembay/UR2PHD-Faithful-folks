@@ -1,0 +1,12 @@
+{
+  "model": "qwen",
+  "n": 200,
+  "n_ft4": 48,
+  "within_cv": 0.7010690789473684,
+  "within_best_layer": 24,
+  "within_perm_p": 0.013972055888223553,
+  "hint_to_ft34_mean": 0.42467007362155396,
+  "hint_to_ft34_best": 0.5609923245614035,
+  "instructed_to_ft34_mean": 0.5168193922305765,
+  "instructed_to_ft34_best": 0.701891447368421
+}

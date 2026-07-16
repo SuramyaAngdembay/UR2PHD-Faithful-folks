@@ -1,0 +1,133 @@
+{
+ "census": {
+  "total": 1364,
+  "y_present": 1304,
+  "ft_1to4": 1303,
+  "ft_other": {
+   "None": 60,
+   "0": 1
+  }
+ },
+ "overall": {
+  "ft1": {
+   "parsed_correct": 1,
+   "parsed_incorrect": 200,
+   "unparsed": 80
+  },
+  "ft2": {
+   "parsed_correct": 1,
+   "parsed_incorrect": 207,
+   "unparsed": 25
+  },
+  "ft3": {
+   "parsed_correct": 679,
+   "parsed_incorrect": 2,
+   "unparsed": 1
+  },
+  "ft4": {
+   "parsed_correct": 106,
+   "parsed_incorrect": 1,
+   "unparsed": 0
+  }
+ },
+ "by_domain": {
+  "truthfulqa": {
+   "ft1": {
+    "parsed_correct": 0,
+    "parsed_incorrect": 55,
+    "unparsed": 0
+   },
+   "ft2": {
+    "parsed_correct": 0,
+    "parsed_incorrect": 79,
+    "unparsed": 0
+   },
+   "ft3": {
+    "parsed_correct": 225,
+    "parsed_incorrect": 2,
+    "unparsed": 1
+   },
+   "ft4": {
+    "parsed_correct": 26,
+    "parsed_incorrect": 1,
+    "unparsed": 0
+   }
+  },
+  "logiqa": {
+   "ft1": {
+    "parsed_correct": 1,
+    "parsed_incorrect": 82,
+    "unparsed": 1
+   },
+   "ft2": {
+    "parsed_correct": 1,
+    "parsed_incorrect": 61,
+    "unparsed": 2
+   },
+   "ft3": {
+    "parsed_correct": 227,
+    "parsed_incorrect": 0,
+    "unparsed": 0
+   },
+   "ft4": {
+    "parsed_correct": 24,
+    "parsed_incorrect": 0,
+    "unparsed": 0
+   }
+  },
+  "aqua": {
+   "ft1": {
+    "parsed_correct": 0,
+    "parsed_incorrect": 11,
+    "unparsed": 40
+   },
+   "ft2": {
+    "parsed_correct": 0,
+    "parsed_incorrect": 23,
+    "unparsed": 9
+   },
+   "ft3": {
+    "parsed_correct": 222,
+    "parsed_incorrect": 0,
+    "unparsed": 0
+   },
+   "ft4": {
+    "parsed_correct": 49,
+    "parsed_incorrect": 0,
+    "unparsed": 0
+   }
+  },
+  "HLE_BIO": {
+   "ft1": {
+    "parsed_correct": 0,
+    "parsed_incorrect": 52,
+    "unparsed": 39
+   },
+   "ft2": {
+    "parsed_correct": 0,
+    "parsed_incorrect": 44,
+    "unparsed": 14
+   },
+   "ft3": {
+    "parsed_correct": 5,
+    "parsed_incorrect": 0,
+    "unparsed": 0
+   },
+   "ft4": {
+    "parsed_correct": 7,
+    "parsed_incorrect": 0,
+    "unparsed": 0
+   }
+  }
+ },
+ "ft_x_y": {
+  "ft1,y0": 249,
+  "ft1,y1": 32,
+  "ft2,y0": 4,
+  "ft2,y1": 229,
+  "ft3,y0": 665,
+  "ft3,y1": 17,
+  "ft4,y0": 3,
+  "ft4,y1": 104
+ }
+}

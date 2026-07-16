@@ -39,11 +39,19 @@ b = int(np.argmax(curve))
 print(f"within-strict CV best {curve[b]:.3f} @L{b}", flush=True)
 w = np.load(os.path.expanduser(f"~/wbrep_{a.mdir}.npz"), allow_pickle=True)
 fe, fy = w["cot_end"], w["y"]; NL = min(NL_h, fe.shape[1] - 1)
+# project once per layer (scaler+PCA are label-free), then permute labels over LR only
+PROJ = []
+for l in range(NL):
+    sc = StandardScaler().fit(Xs[l].astype(np.float32))
+    pc = PCA(max(2, min(50, Xs.shape[1]-2)), random_state=0).fit(sc.transform(Xs[l].astype(np.float32)))
+    PROJ.append((pc.transform(sc.transform(Xs[l].astype(np.float32))),
+                 pc.transform(sc.transform(fe[:, l+1, :].astype(np.float32)))))
 def sweep(yy):
     aucs = []
     for l in range(NL):
-        m = pipe(len(yy)).fit(Xs[l].astype(np.float32), yy)
-        aucs.append(roc_auc_score(fy, m.predict_proba(fe[:, l+1, :].astype(np.float32))[:, 1]))
+        Xtr, Xte = PROJ[l]
+        m = LogisticRegression(max_iter=2000, C=1.0).fit(Xtr, yy)
+        aucs.append(roc_auc_score(fy, m.predict_proba(Xte)[:, 1]))
     return np.array(aucs)
 obs = sweep(ys)
 rng = np.random.default_rng(0)

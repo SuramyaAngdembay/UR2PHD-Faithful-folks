@@ -24,7 +24,7 @@ BLUE, RED, GREY, GREEN = "#3b6fb6", "#c23b3b", "#8a8a8a", "#3b8a5a"
 # ---------------------------------------------------------------- two_regimes
 a = R("audit_corrected")
 SIGS = [("incorrectness", "incorrectness"), ("answer-tracing\n(inverted)", "soft_raw"),
-        ("interventions", "interventions"), ("NLI support", "nli_n_unsup"), ("DAG structure", "dag_maxlb")]
+        ("prefix instab.\n(inverted)", "interventions"), ("NLI support", "nli_n_unsup"), ("DAG structure", "dag_maxlb")]
 PANELS = [("Full benchmark  (n=633)", "full_audit"),
           ("INCORRECT answers  (n=270)\nhonest error vs. unfaithful error", "incorrect_regime"),
           ("CORRECT answers  (n=363)\nfaithful vs. post-hoc", "correct_regime")]

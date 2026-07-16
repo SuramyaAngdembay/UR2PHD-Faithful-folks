@@ -29,10 +29,12 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--layers", type=int, nargs="+", default=[9, 17, 25, 29])
 ap.add_argument("--topk", type=int, default=32)
 ap.add_argument("--device", default="cpu")
+ap.add_argument("--width", default="8x", choices=["8x", "32x"])
 args = ap.parse_args()
 
 SYNTH = os.path.expanduser("~/synth")
-OUT = os.path.join(SYNTH, "results", "sae_transfers_llama.json")
+OUT = os.path.join(SYNTH, "results",
+                   f"sae_transfers_llama{'' if args.width == '8x' else '_' + args.width}.json")
 
 def load_sets():
     sets = {}
@@ -50,8 +52,10 @@ def load_sets():
 def load_sae(layer):
     from sae_lens import SAE
     last = None
-    for rel, sid in [("llama_scope_lxr_8x", f"l{layer}r_8x"),
-                     ("llama_scope_lxr_32x", f"l{layer}r_32x")]:
+    cands = [("llama_scope_lxr_8x", f"l{layer}r_8x"), ("llama_scope_lxr_32x", f"l{layer}r_32x")]
+    if args.width == "32x":
+        cands.reverse()
+    for rel, sid in cands:
         try:
             try:
                 sae = SAE.from_pretrained(rel, sid, device=args.device)

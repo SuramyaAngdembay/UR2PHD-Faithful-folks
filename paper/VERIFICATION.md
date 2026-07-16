@@ -1,9 +1,61 @@
 # Author verification guide — claim → paper location → code → artifact
 
-> **⚠️ CORRECTION (2026-07-16):** FaithCoT's released ft-codes invert the README's correctness pairing
-> (data: correct = ft3/ft4). Everywhere this document says "post-hoc-on-correct (ft1v2)" read
-> "incorrect-answer regime"; the framing below is PRE-correction and superseded by the two-regime plan in
-> CLAUDE.md. Numbers remain valid. See notes/2026-07-16-data-validation.md.
+> **This file has two parts.** Part V2 (immediately below) maps the CURRENT two-regime paper
+> (`main.tex`, rewritten 2026-07-16 with corrected ft semantics). Parts A–E further down were
+> written for the superseded draft (archived as `main_v1_superseded.tex`); their code/artifact
+> pointers remain valid — only the paper locations and the ft-semantics framing are stale there.
+
+---
+
+# V2 — the two-regime paper (`main.tex`, 2026-07-16)
+
+**Corrected semantics (verified against released data):** ft1 faithful / ft2 unfaithful on
+**incorrect** answers; ft3 faithful / ft4 unfaithful (post-hoc) on **correct** answers. The old
+draft had these regimes swapped end-to-end. See `notes/2026-07-16-data-validation.md`.
+
+**Quick start:** `python3 scripts/paper_numbers.py` still recomputes the carried-over numbers;
+the v2-specific artifacts below are all committed JSONs — every table cell traces to one.
+
+## V2 claims map (new or re-framed vs. the old draft)
+
+| # | Claim / number | Paper location | Code | Artifact |
+|---|---|---|---|---|
+| V1 | **Label-semantics verification** (§3 "Label semantics" + App. A): parsed-answer×gold crosstabs by ft; reproduction of their per-model accuracy stats; inversion reproduces on THEIR stored scores (0.348 intended; per-model 0.43/0.29) | §3, App. A | `scripts/validate_data.py`, `scripts/validate_data2.py`, `scripts/faithcot_reproduce.py` | `results/faithcot_reproduce.json`; GitHub issue se7esx/FaithCoT-BENCH#3 |
+| V2 | ft counts 281/233/682/107 → **69% of unfaithfulness on incorrect answers** (233/340) | §3, §5 | `python3 -c` one-liner over `results/rigorous_features.json` (`ft` field) | `results/rigorous_features.json` |
+| V3 | **Table 1** full audit: incorrectness 0.696 [.662,.734]; soft-inv 0.651; interventions 0.626; NLI 0.569; DAG ns | §4 | `scripts/audit_corrected.py` | `results/audit_corrected.json` (`full_audit`) |
+| V4 | **Table 2 / Fig 2 two regimes**: incorrect regime ALL at chance (soft .530, interv .481, NLI .541, DAG .493); correct regime soft-inv **.667**, interv **.659**, NLI **.626** (CIs exclude .5); intended-dir soft in correct regime **.333** (+.176 inversion) | §5, Table 2, Fig 2 | `scripts/audit_corrected.py` | `results/audit_corrected.json` (`incorrect_regime`, `correct_regime`, `inversion_correct_regime`) |
+| V5 | **Table 3 top** incorrect-regime probes: Llama CV .709 p=.01–.03, nested .67±.08, LODO .60–.71; Qwen .616 p=.32 ns | §6 | `scripts/wb_probe_a.py`, `wb_probe_ed.py`, `grouped_eval.py` | `results/whitebox_{llama,qwen}_results.json`, `results/grouped_nested.json` (`faithcot_*`) |
+| V6 | **Table 3 mid** correct-regime probes: Qwen CV .701 @L24 **p=.014** (n=200, ft4=48); Llama .759 @L19 p=.19 underpowered (ft4=26) | §6 | `scripts/wb_extract_ft34.py` + `scripts/ft34_probe.py` | `results/ft34_probe_{llama,qwen}.json` |
+| V7 | **Table 3 bottom** cross-regime transfer ns both models both directions (.52–.57, p=.15–.56) → "representationally distinct" | §6 | `scripts/regime_transfers.py` | `results/regime_transfers_{llama,qwen}.json` |
+| V8 | **Table 5** transfers incl. same-regime rows: hint→correct-rgm .555 p=.108 (Llama) / .425 p=.93 (Qwen); instructed→correct-rgm .557 p=.116 / .517 (best .702 p=.062) | §7.3 | `scripts/regime_transfers.py` (same-regime rows), `scripts/bridge3_perm.py` (hint→incorrect-rgm) | `results/regime_transfers_*.json`, `results/bridge3_perm_*.json` |
+| V9 | "Fourth attestation" chain of the metric inversion: (1) full-set +0.139, (2) their released scores .348, (3) correct-regime .333, (4) hint counterfactual .389/.251 | §4, §5, §7.2 | rows above + `paper_numbers.py` block 2/5 | `rigorous_features.json`, `faithcot_reproduce.json`, `audit_corrected.json`, `hint_inversion_ci.json` |
+| V10 | Second hint template ("answer key" metadata phrasing) robustness — **run in progress on Aquaman**; Limitations currently says "in progress"; update before preprint | Limitations | `scripts/hint_generate.py --template metadata` | `~/hintB_{llama,qwen}.log` → `traces_*_hintB_*.json` (pending) |
+
+**Carried over unchanged** (verify via Parts A–E rows): instructed 7-model table (row 10/17),
+hint construction + leakage audit (11, 12, 21), bridge hint→annotated-incorrect + 1000 perms +
+qonly control + no-PCA robustness (13, 14, 20, 23, 25), strict subset (22), text baselines (18, 19),
+cluster bootstrap (24), extraction validation (4), steering appendix (9), GRACE (15).
+
+**Renamed throughout v2:** "frontier / post-hoc-on-correct (ft1v2)" → "incorrect regime (honest vs.
+unfaithful error)"; the old draft's "correct-answer traces" claims were actually computed on ft1v2 =
+incorrect-answer traces. All v2 table numbers come from the corrected artifacts above, not the old prose.
+
+## V2 figures
+
+| Figure | What to check | Source of truth |
+|---|---|---|
+| Fig 1 (example pair) | unchanged — see Part B row Fig 1 | `traces_llama_hint_aquarat.json` ("78000" item) |
+| **Fig 2 (two_regimes, 3-panel)** | bars+CIs = Table 1/Table 2 exactly; blue = CI excludes 0.5 | `paper/make_paper_figs3.py` reads `audit_corrected.json` directly — rerun it |
+| Fig 3 (7-model dumbbells) | unchanged | `make_paper_figs2.py`, `synth_*.json` |
+| **Fig 4 (depth curves)** | legend now says "annotated, incorrect rgm."; peaks L9/L17/L29 | `make_paper_figs3.py` reads `synth_llama.json`, `synth_llama_hint.json`, `faithcot_perlayer.json` |
+| **Fig 5 (heatmap)** | axis label now "annotated (incorrect rgm.)"; diag .77/.73/.70 | `make_paper_figs3.py` reads `bridge3_llama.json` |
+
+## V2 verification order (suggested)
+
+1. `scripts/audit_corrected.py` + `results/audit_corrected.json` vs Tables 1–2 (the paper's new core) — 20 min.
+2. §3 label-semantics paragraph vs `validate_data2.py` output + your own GitHub issue #3 comment — 15 min.
+3. `ft34_probe.py` + `regime_transfers.py` vs Table 3 (new cells) — 30 min.
+4. Then the carried-over order in Part C below.
 
 
 *Page/line refs are from the 2026-07-14 compile ("submission (3)"). The latest commit rewrote the

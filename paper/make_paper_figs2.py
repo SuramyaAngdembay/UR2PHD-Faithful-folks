@@ -17,20 +17,22 @@ for i, a in enumerate(names):
     for j, c in enumerate(names):
         M[i, j] = b["own_best"][a]["cv"] if i == j else b["transfers"][f"{a}->{c}"]["mean"]
 fig, ax = plt.subplots(figsize=(3.4, 2.9), dpi=300)
-im = ax.imshow(M, cmap="RdYlBu_r", vmin=0.4, vmax=0.85)
+im = ax.imshow(M, cmap="Blues", vmin=0.4, vmax=0.85)
 from matplotlib.patches import Rectangle
 for i in range(3):
     for j in range(3):
         ax.text(j, i, f"{M[i,j]:.2f}", ha="center", va="center", fontsize=10.5,
                 fontweight="bold" if i == j else "normal",
-                color="white" if abs(M[i,j]-0.625) > 0.13 else "black")
+                color="white" if M[i,j] > 0.65 else "black")
     ax.add_patch(Rectangle((i-0.5, i-0.5), 1, 1, fill=False, edgecolor="black", lw=1.6))  # mark diagonal
 ax.set_xticks(range(3), ["Instr.", "Hint", "Annot."], fontsize=8.5); ax.set_yticks(range(3), disp, fontsize=8.5)
 ax.set_xlabel("test on"); ax.set_ylabel("train on")
 ax.set_title("Probe transfer, layer-mean AUROC (Llama)", fontsize=9.5)
 fig.colorbar(im, shrink=0.8)
-fig.tight_layout(); fig.savefig(os.path.join(HERE, "figs", "transfer_heatmap.pdf"), bbox_inches="tight")
-print("transfer_heatmap.pdf")
+fig.tight_layout()
+fig.savefig(os.path.join(HERE, "figs", "transfer_heatmap.pdf"), bbox_inches="tight")
+fig.savefig(os.path.join(HERE, "figs", "transfer_heatmap.png"), bbox_inches="tight", dpi=300)
+print("transfer_heatmap.pdf/png")
 
 # ---- Fig: confound + frontier two panels ----
 fig, axes = plt.subplots(1, 2, figsize=(6.4, 2.5), dpi=300, sharey=True)

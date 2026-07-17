@@ -144,4 +144,4 @@ section anchors. `python3 scripts/paper_numbers.py` now also prints every artifa
 - "is at chance" survives nowhere except quotes; frontier claims phrased as "no reliable above-chance discrimination"
 - Proxy claim + depth gradient are Llama-scoped in abstract, §7.3, Fig 4 caption
 - Hint traces named "hint-induced (unverbalized-flip)"; released set = "255 unverbalized hint-flip traces"
-- Title decision (keep vs. "…Correctness Confounds and Unverbalized Hint Dependence") — pending author/advisor call
+- ~~Title decision (keep vs. "…Correctness Confounds and Unverbalized Hint Dependence")~~ — RESOLVED/OBSOLETE: that alternative was for the superseded pre-correction title; v2 title settled 2026-07-17 as "Two Regimes of Chain-of-Thought Unfaithfulness: Behavioral Detection Fails Where Models Are Wrong"

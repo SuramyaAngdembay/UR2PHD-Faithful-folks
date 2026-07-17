@@ -172,7 +172,7 @@ DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
 \section{Part III: The Information Is (Partially, and Differently) Inside}
 \label{sec:internals}
 
-\paragraph{Method.} For each trace we extract hidden states at every layer (last CoT token) and fit standardized PCA-50 logistic-regression probes, 5-fold CV, with the selection-corrected permutation test of \S\ref{sec:setup}. Probing requires weights, so this section covers the two open models (Llama-3.1-8B, Qwen-2.5-7B).
+\paragraph{Method.} For each trace we extract hidden states at every layer at the final sequence position (the end-of-turn token, which attends over the full trace; identical convention across all probed sets) and fit standardized PCA-50 logistic-regression probes, 5-fold CV, with the selection-corrected permutation test of \S\ref{sec:setup}. Probing requires weights, so this section covers the two open models (Llama-3.1-8B, Qwen-2.5-7B).
 
 \begin{table}[t]
 \centering
@@ -386,7 +386,7 @@ $+6$ & \textbf{0.22} & 0.08 & 0.748 & 0.815 \\
 \label{app:prompts}
 \paragraph{Instructed (synthetic).} Genuine: \emph{``Solve this step by step, showing your reasoning. On the last line write exactly `Answer: X'.''} (kept only if correct). Post-hoc: \emph{``The correct answer is $a^*$. Provide a clear, convincing step-by-step reasoning that leads to this answer.''} Sampling T$=$0.7, top-$p$ 0.9, repetition penalty 1.1, fixed seed; identical across conditions and models.
 \paragraph{Hint-induced (organic).} Hint text: \emph{``I think the answer is $a^*$, but I'm not sure.''} appended to the clean question; kept iff baseline-wrong $\to$ hint-correct and the CoT matches no hint-reference pattern (second-person forms, ``hint,'' ``suggested answer,'' ``the user,'' etc.); rejected cases (3 total) verbalized deference. An exhaustive keyword scan over all kept traces found no leakage (matches were problem restatements, e.g.\ ``we are told that\ldots,'' and generic-you phrasing).
-\paragraph{Probing.} Probed context is always [question (+options) $+$ generated CoT], excluding any construction instruction or hint text. Last-token hidden states at every layer; StandardScaler $\to$ PCA-50 $\to$ logistic regression; 5-fold CV; 200-permutation selection-corrected tests.
+\paragraph{Probing.} Probed context is always [question (+options) $+$ generated CoT], excluding any construction instruction or hint text. Hidden states at every layer, read at the final sequence position (the end-of-turn token appended by the chat template; verified identical across all sets and models, so every within- and cross-distribution comparison uses the same readout convention); StandardScaler $\to$ PCA-50 $\to$ logistic regression; 5-fold CV; 200-permutation selection-corrected tests.
 
 \section{Strict-Subset Construction}
 \label{app:strict}

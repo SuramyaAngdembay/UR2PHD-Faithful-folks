@@ -80,7 +80,9 @@ front = [("answer-tracing (soft)", 'soft', "0.545 [0.468,0.611]"),
          ("NLI (# unsupported)", 'nli_n_unsup', "0.514"),
          ("DAG (max lookback)", 'dag_maxlb', "0.490")]
 for name, k, paper in front:
-    s = np.array([r[k] if r[k] is not None else 0 for r in fr], float)
+    missing = sum(1 for r in fr if r[k] is None)
+    assert missing == 0, f"{k}: {missing} missing in subset -- extend the filter, do not impute"
+    s = np.array([r[k] for r in fr], float)
     a = auroc(s, y_h); a2 = auroc(s, y_ft); lo, hi = boot_ci(s, y_h)
     print(f"  {name:26s} [PAPER] {paper:20s} [RECOMPUTED] {a:.3f} [{lo:.3f},{hi:.3f}]  (ft-target: {a2:.3f})")
 

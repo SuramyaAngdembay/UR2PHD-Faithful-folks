@@ -25,7 +25,7 @@ BLUE, RED, GREY, GREEN = "#3b6fb6", "#c23b3b", "#8a8a8a", "#3b8a5a"
 a = R("audit_corrected")
 SIGS = [("incorrectness", "incorrectness"), ("answer-tracing\n(inverted)", "soft_raw"),
         ("prefix instab.\n(inverted)", "interventions"), ("NLI support", "nli_n_unsup"), ("DAG structure", "dag_maxlb")]
-PANELS = [("Full benchmark  (n=633)", "full_audit"),
+PANELS = [("Complete-feature subset\n(n=633; 2 open models)", "full_audit"),
           ("INCORRECT answers  (n=270)\nhonest error vs. unfaithful error", "incorrect_regime"),
           ("CORRECT answers  (n=363)\nfaithful vs. post-hoc", "correct_regime")]
 fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.5), sharey=True)

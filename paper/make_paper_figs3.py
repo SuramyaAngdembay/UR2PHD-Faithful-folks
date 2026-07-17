@@ -76,17 +76,19 @@ for i, tr in enumerate(names):
     for j, te in enumerate(names):
         M[i, j] = b3["own_best"][tr]["cv"] if tr == te else b3["transfers"][f"{tr}->{te}"]["mean"]
 fig, ax = plt.subplots(figsize=(3.1, 2.7))
-im = ax.imshow(M, cmap="Blues", vmin=0.35, vmax=0.85)   # faded sequential (cf. PR #5)
+# diverging, WHITE PINNED AT CHANCE (0.5): below-chance (anti-aligned) reads blue, not "faint"
+im = ax.imshow(M, cmap="RdBu_r", vmin=0.2, vmax=0.8)
 for i in range(3):
     for j in range(3):
         ax.text(j, i, f"{M[i,j]:.2f}", ha="center", va="center", fontsize=8.5,
                 fontweight="bold" if i == j else "normal",
-                color="white" if M[i, j] > 0.66 else "black")
+                color="white" if abs(M[i, j] - 0.5) > 0.21 else "black")
         if i == j:
             ax.add_patch(plt.Rectangle((j - .5, i - .5), 1, 1, fill=False, ec="k", lw=1.6))
 ax.set_xticks(range(3)); ax.set_xticklabels(disp, fontsize=7)
 ax.set_yticks(range(3)); ax.set_yticklabels(disp, fontsize=7)
 ax.set_xlabel("test on"); ax.set_ylabel("train on")
-fig.colorbar(im, ax=ax, shrink=0.85, label="AUROC")
+cb = fig.colorbar(im, ax=ax, shrink=0.85, label="AUROC (white = chance)")
+cb.ax.axhline(0.5, color="k", lw=0.8)
 fig.savefig("paper/figs/transfer_heatmap.pdf"); plt.close(fig)
 print("transfer_heatmap.pdf")

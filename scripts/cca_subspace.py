@@ -47,21 +47,33 @@ def mdiff(X, y):
     d = X[y == 1].mean(0) - X[y == 0].mean(0)
     return d / (np.linalg.norm(d) + 1e-12)
 
-def lr_dir(X, y):
-    from sklearn.linear_model import LogisticRegression
+def _proj(X):
+    """Scaler+PCA-50 fit once; returns (Z, back) where back maps a PCA-space LR coef to a
+    unit direction in RAW residual space: logit = w.(Pz) = (P^T w).z = ((P^T w)/sigma).x"""
     from sklearn.preprocessing import StandardScaler
+    from sklearn.decomposition import PCA
     sc = StandardScaler().fit(X)
-    m = LogisticRegression(max_iter=2000, C=1.0).fit(sc.transform(X), y)
-    w = m.coef_[0] / (sc.scale_ + 1e-9)
-    return w / (np.linalg.norm(w) + 1e-12)
+    pc = PCA(n_components=min(50, X.shape[0] - 2), random_state=0).fit(sc.transform(X))
+    Z = pc.transform(sc.transform(X))
+    def back(w_pca):
+        w = (pc.components_.T @ w_pca) / (sc.scale_ + 1e-9)
+        return w / (np.linalg.norm(w) + 1e-12)
+    return Z, back
 
-def subspace(X, y, k, nboot):
-    dirs = []
-    n = len(y)
+def _lr_pca(Z, y):
+    from sklearn.linear_model import LogisticRegression
+    return LogisticRegression(max_iter=2000, C=1.0).fit(Z, y).coef_[0]
+
+def lr_dir(X, y):
+    Z, back = _proj(X)
+    return back(_lr_pca(Z, y))
+
+def subspace_from(Z, back, y, k, nboot):
+    dirs, n = [], len(y)
     for _ in range(nboot):
         i = rng.integers(0, n, n)
         if len(set(y[i])) < 2: continue
-        dirs.append(lr_dir(X[i], y[i]))
+        dirs.append(back(_lr_pca(Z[i], y[i])))
     U, _, _ = np.linalg.svd(np.array(dirs).T, full_matrices=False)
     return U[:, :k]
 
@@ -107,26 +119,30 @@ for p in obs:
           f"(p={res['mean_diff'][p]['p_max']:.3f}) mean {res['mean_diff'][p]['mean_cos']} "
           f"(p={res['mean_diff'][p]['p_mean']:.3f})", flush=True)
 
-# ---- B. LR directions + C. subspaces at focus layers ----
+out = os.path.join(SYNTH, "results", f"cca_subspace_{args.model}.json")
+json.dump(res, open(out, "w"), indent=1)          # checkpoint after tier A
+
+# ---- B. LR directions + C. subspaces at focus layers (PCA-space fits, raw-space geometry) ----
 for L in args.focus:
     if L >= NL: continue
-    lw = {name: lr_dir(X[L], y) for name, (X, y) in sets.items()}
+    pr = {name: _proj(X[L]) for name, (X, y) in sets.items()}
+    lw = {name: pr[name][1](_lr_pca(pr[name][0], y)) for name, (X, y) in sets.items()}
     res["lr_dirs"][str(L)] = {f"{a}->{b}": round(float(lw[a] @ lw[b]), 4) for a, b in PAIRS}
-    Us = {name: subspace(X[L], y, args.rank, args.boot) for name, (X, y) in sets.items()}
+    Us = {name: subspace_from(*pr[name], y, args.rank, args.boot) for name, (X, y) in sets.items()}
     ss = {}
     for a, b in PAIRS:
         o = sub_sim(Us[a], Us[b])
         nulls = []
         for _ in range(100):
-            (Xa, ya), (Xb, yb) = sets[a], sets[b]
-            nulls.append(sub_sim(subspace(Xa[L], rng.permutation(ya), args.rank, max(8, args.boot // 2)),
-                                 subspace(Xb[L], rng.permutation(yb), args.rank, max(8, args.boot // 2))))
+            ya, yb = sets[a][1], sets[b][1]
+            nulls.append(sub_sim(subspace_from(*pr[a], rng.permutation(ya), args.rank, max(8, args.boot // 2)),
+                                 subspace_from(*pr[b], rng.permutation(yb), args.rank, max(8, args.boot // 2))))
         ss[f"{a}->{b}"] = {"sim": round(o, 4), "null_p95": round(float(np.percentile(nulls, 95)), 4),
                            "p": float((np.sum(np.array(nulls) >= o) + 1) / 101)}
     res["subspace"][str(L)] = ss
+    json.dump(res, open(out, "w"), indent=1)      # checkpoint per layer
     print(f"[L{L}] lr-cos {res['lr_dirs'][str(L)]} | subspace " +
           " ".join(f"{k}:{v['sim']}(p={v['p']:.2f})" for k, v in ss.items()), flush=True)
 
-out = os.path.join(SYNTH, "results", f"cca_subspace_{args.model}.json")
 json.dump(res, open(out, "w"), indent=1)
 print(f"CCA_SUBSPACE DONE {args.model} -> {out}", flush=True)

@@ -87,6 +87,6 @@ for i in range(3):
 ax.set_xticks(range(3)); ax.set_xticklabels(disp, fontsize=7)
 ax.set_yticks(range(3)); ax.set_yticklabels(disp, fontsize=7)
 ax.set_xlabel("test on"); ax.set_ylabel("train on")
-fig.colorbar(im, ax=ax, shrink=0.85, label="AUROC (diag: CV; off-diag: layer-mean)")
+fig.colorbar(im, ax=ax, shrink=0.85, label="AUROC")
 fig.savefig("paper/figs/transfer_heatmap.pdf"); plt.close(fig)
 print("transfer_heatmap.pdf")

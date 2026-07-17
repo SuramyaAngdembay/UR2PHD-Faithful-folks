@@ -1,0 +1,95 @@
+{
+ "accuracy_anchors": {
+  "llama/aquarat_B": {
+   "acc": 52.8,
+   "published_range": [
+    48,
+    58
+   ],
+   "within": true
+  },
+  "llama/gsm8k_B": {
+   "acc": 80.9,
+   "published_range": [
+    78,
+    86
+   ],
+   "within": true
+  },
+  "llama/logiqa_L": {
+   "acc": 43.5,
+   "published_range": [
+    38,
+    50
+   ],
+   "within": true
+  },
+  "qwen/aquarat_B": {
+   "acc": 66.9,
+   "published_range": [
+    60,
+    72
+   ],
+   "within": true
+  },
+  "qwen/gsm8k_B": {
+   "acc": 88.4,
+   "published_range": [
+    84,
+    92
+   ],
+   "within": true
+  },
+  "qwen/logiqa_L": {
+   "acc": 46.2,
+   "published_range": [
+    42,
+    56
+   ],
+   "within": true
+  }
+ },
+ "logiqa": {
+  "n": 651,
+  "gold_dist": {
+   "A": 132,
+   "B": 159,
+   "D": 181,
+   "C": 179
+  },
+  "dup_questions": 37,
+  "options_wellformed": true
+ },
+ "hint_consistency": {
+  "llama/hint": {
+   "n": 613,
+   "bad_posthoc": 0,
+   "bad_genuine": 0
+  },
+  "llama/hintB": {
+   "n": 617,
+   "bad_posthoc": 0,
+   "bad_genuine": 0
+  },
+  "llama/hintL": {
+   "n": 514,
+   "bad_posthoc": 0,
+   "bad_genuine": 0
+  },
+  "qwen/hint": {
+   "n": 534,
+   "bad_posthoc": 0,
+   "bad_genuine": 0
+  },
+  "qwen/hintB": {
+   "n": 574,
+   "bad_posthoc": 0,
+   "bad_genuine": 0
+  },
+  "qwen/hintL": {
+   "n": 429,
+   "bad_posthoc": 0,
+   "bad_genuine": 0
+  }
+ }
+}

@@ -190,7 +190,7 @@ DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
 \quad Leave-one-domain-out & 0.60--0.71 & --- \\
 \midrule
 \multicolumn{3}{@{}l}{\emph{Correct regime (ft3 vs.\ ft4)} \hfill $n{=}163$ / $200$} \\
-\quad CV AUROC (best layer) & 0.759 & 0.701 \\
+\quad CV AUROC (best layer) & 0.759$^{\S}$ & 0.701 \\
 \quad Permutation $p$ & 0.19 (n.s.) & \textbf{0.014} \\
 \quad Minority class $n$ (ft4) & 26 & 48 \\
 \midrule
@@ -200,7 +200,7 @@ DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
 \bottomrule
 \end{tabular}%
 }
-\caption{Linear probes on the human annotations, by regime. Each regime is decodable in a different model; neither transfers to the other. Significance is from selection-corrected permutation tests; nested rows select the layer by inner CV on training folds only.}
+\caption{Linear probes on the human annotations, by regime. Each regime is decodable in a different model; neither transfers to the other. Significance is from selection-corrected permutation tests; nested rows select the layer by inner CV on training folds only. $^{\S}$The permutation statistic uses a shared full-data projection and is more conservative than the in-fold-PCA CV shown (0.679 vs.\ 0.759); for Qwen the two coincide (0.700/0.701).}
 \label{tab:whitebox}
 \end{table}
 

@@ -30,7 +30,10 @@ def block(name, R, y):
     for lbl,k,sgn in sigs:
         if k=="ft_incorrect": s=np.array([1.0 if r['ft'] in (1,2) else 0.0 for r in R])
         elif R and R[0].get(k) is None: continue
-        else: s=np.array([sgn*float(r[k]) if r.get(k) is not None else 0.0 for r in R])
+        else:
+            missing=sum(1 for r in R if r.get(k) is None)
+            assert missing==0, f"{k}: {missing} missing values in subset -- add to completeness filter, do not impute"
+            s=np.array([sgn*float(r[k]) for r in R])
         a=auroc(s,y); lo,hi=ci(s,y); res[lbl]={"auroc":float(a),"ci":[float(lo),float(hi)]}
         print(f"   {lbl:16s} {a:.3f} [{lo:.3f},{hi:.3f}] {'SIG' if lo>0.5 or hi<0.5 else 'ns'}")
     return res

@@ -93,14 +93,14 @@ If the population of a city increases by 5\% annually, what will be the populati
 \label{sec:labels}
 The benchmark's documentation and its released data disagree about what the four \texttt{faithful\_type} codes mean. In the released data, the codes pair as: \textbf{ft1 faithful / ft2 unfaithful on \emph{incorrect} answers; ft3 faithful / ft4 unfaithful (post-hoc) on \emph{correct} answers}; the repository documentation states the pairing the other way around. The codes carry two axes; the faithful/unfaithful axis is anchored by the separate binary label (ft2/ft4 co-occur with \texttt{unfaithfulness}$=$1 at 95.7\%; Appendix~\ref{app:labels}), and we resolved the correctness axis empirically, three ways: (i) cross-tabulating the release's \emph{own stored} parsed final answers against its gold labels: the association is near-deterministic in every domain (among parseable traces, ft1 200/201 and ft2 207/208 incorrect; ft3 679/681 and ft4 106/107 \emph{correct}); (ii) reproducing the benchmark paper's own per-model accuracy statistics, which match only under the data-side semantics; and (iii) checking that the released per-trace metric scores behave consistently with (i)--(ii). We reported the discrepancy to the benchmark maintainers via their public issue tracker, where it had also been independently flagged\footnote{Link withheld for anonymity; included in the camera-ready.}, and use the verified data-side semantics throughout; Appendix~\ref{app:labels} gives the full cross-tabulations and census. Counts: ft1 $=$ 281, ft2 $=$ 233, ft3 $=$ 682, ft4 $=$ 107; hence \textbf{233/340 $\approx$ 69\% of annotated unfaithfulness sits on incorrect answers}. Beyond bookkeeping, the point is methodological: verify label semantics against released data, not documentation---any analysis inheriting the documented pairing silently swaps its regimes.
 
-\paragraph{Statistical standards.} Detection claims use AUROC with 2{,}000-resample percentile-bootstrap 95\% CIs (class imbalances are mild, 13--43\% minority); because traces cluster by model and domain, headline effects are additionally checked with a cluster bootstrap over the 8 model$\times$domain cells (both survive: incorrectness [0.616, 0.753]; inverted answer-tracing [0.575, 0.728]). Probe claims use held-out splits plus \emph{selection-corrected} permutation tests: because the best layer is chosen post hoc, the null takes the max (or mean, matching the reported statistic) over layers under label permutation, coupled across layers \citep{nichols2002nonparametric}. Values reported as 0.005 mean $p \leq 1/201$; headline transfer and hint-testbed tests use 1{,}000 permutations. The permutation null doubles as the memorization/selectivity control \citep{belinkov2022probing}. Scalers and PCA are fit within training folds only; causal claims must beat random-direction controls; negative results are reported as findings.
+\paragraph{Statistical standards.} Detection claims use AUROC with 2{,}000-resample percentile-bootstrap 95\% CIs (class imbalances are mild, 13--43\% minority); because traces cluster by model and domain, headline effects are additionally checked with a cluster bootstrap over the 8 model$\times$domain cells (both survive: incorrectness [0.616, 0.753]; inverted answer-tracing [0.575, 0.728]). Probe claims use held-out splits plus \emph{selection-corrected} permutation tests: because the best layer is chosen post hoc, the null takes the max (or mean, matching the reported statistic) over layers under label permutation, coupled across layers \citep[formal statements in Appendix~\ref{app:defs}]{nichols2002nonparametric}. Values reported as 0.005 mean $p \leq 1/201$; headline transfer and hint-testbed tests use 1{,}000 permutations. The permutation null doubles as the memorization/selectivity control \citep{belinkov2022probing}. Scalers and PCA are fit within training folds only; causal claims must beat random-direction controls; negative results are reported as findings.
 
 \paragraph{Compute.} All open-model experiments run on two RTX 3070 (8\,GB) GPUs with 4-bit NF4 quantization; the 12B model in \S\ref{sec:construction} uses two-GPU pipeline sharding.
 
 \section{Part I: The Black-Box Audit}
 \label{sec:audit}
 
-\paragraph{Signal families.} \emph{Answer-tracing}: sensitivity of the final-answer distribution to removing individual steps. \emph{Premise-DAG structure}: PARC-style premise graphs over steps (linearity; maximum lookback). \emph{Graph-targeted counterfactual interventions}: corrupt the most load-bearing premise and measure answer stability, with an LLM premise extractor validated against PARC's gold annotations (recall 0.82 / F1 0.79 vs.\ 0.57 heuristic), so the result is not an extraction artifact. \emph{Per-step NLI support}: entailment of each step from question and prior steps (RoBERTa-large-MNLI). From the benchmark's stored per-step answer distributions we additionally compute \emph{prefix instability} (mean total-variation shift between successive steps' answer distributions), an answer-tracing variant. Signal directions are fixed a priori by each family's faithfulness rationale; where a signal discriminates only in the \emph{opposite} direction we report it explicitly as inverted.
+\paragraph{Signal families.} \emph{Answer-tracing}: sensitivity of the final-answer distribution to removing individual steps. \emph{Premise-DAG structure}: PARC-style premise graphs over steps (linearity; maximum lookback). \emph{Graph-targeted counterfactual interventions}: corrupt the most load-bearing premise and measure answer stability, with an LLM premise extractor validated against PARC's gold annotations (recall 0.82 / F1 0.79 vs.\ 0.57 heuristic), so the result is not an extraction artifact. \emph{Per-step NLI support}: entailment of each step from question and prior steps (RoBERTa-large-MNLI). From the benchmark's stored per-step answer distributions we additionally compute \emph{prefix instability} (mean shift between successive steps' answer distributions; Appendix~\ref{app:defs}), an answer-tracing variant. Signal directions are fixed a priori by each family's faithfulness rationale; where a signal discriminates only in the \emph{opposite} direction we report it explicitly as inverted.
 
 \begin{table}[t]
 \centering
@@ -403,6 +403,45 @@ $+6$ & \textbf{0.22} & 0.08 & 0.748 & 0.815 \\
 \section{Strict-Subset Construction}
 \label{app:strict}
 Because decoding is sampled (T$=$0.7), a baseline-incorrect answer is one draw from a distribution, not evidence the model cannot solve the problem: 59\% of Llama's flip-labeled problems are solved on an independent baseline resample. We therefore define a \emph{strict} subset: hint-induced traces whose problems are answered incorrectly on repeated independent baseline resamples. \textbf{Results:} 47/185 (Llama) and 20/70 (Qwen) flip-labeled problems fail both resamples. Within-testbed decodability \emph{rises} on the strict subset (CV 0.818/0.837), consistent with cleaner labels. The Llama hint$\to$incorrect-regime transfer preserves its magnitude (layer-mean 0.596 vs.\ 0.616 on the full set; best 0.699 vs.\ 0.694) but is underpowered at this $n$ ($p{=}0.078$ mean, $p{=}0.066$ best; 500 permutations); Qwen remains null (0.494, $p{=}0.605$). Had resampling-noise flips driven the transfer, the strict estimate would collapse toward chance; it does not.
+
+\section{Signal and Test Definitions}
+\label{app:defs}
+
+\paragraph{\texttt{soft\_faithfulness} (benchmark metric).} A release-documentation note first: every pipeline in the benchmark's repository imports its metric implementation (\texttt{utils/faithfulness.py:} \texttt{calculate\_faithfulness\_explanation\_mcq}), but that module is not included in the release; only per-trace outputs are. Our analyses therefore use the benchmark's \emph{stored} scores throughout. As a sanity check we reimplemented the described step-removal procedure: reading the model's answer-option distribution by forcing the continuation \emph{``The single best answer is option (''} after [question $+$ options $+$ reasoning], with option-letter probabilities renormalized over the valid letters, we score $\frac{1}{T}\sum_{i=1}^{T}\lvert P(a^{\ast}\mid \text{CoT}) - P(a^{\ast}\mid \text{CoT}\setminus \text{step}_i)\rvert$ where $a^{\ast}$ is the trace's stored parsed answer. Against stored \texttt{soft\_faithfulness} on $n{=}30$ recomputed traces: Pearson 0.711, Spearman 0.822.
+
+\paragraph{Prefix instability.} From the benchmark's stored per-step answer distributions $p_t$ (the answer distribution after the first $t$ steps),
+\[ \mathrm{PI}(x) = \tfrac{1}{T-1}\textstyle\sum_{t=2}^{T} \lVert p_t - p_{t-1}\rVert_1 , \]
+i.e.\ the mean $L_1$ change between successive prefixes' answer distributions. Reported in its empirically discriminative (inverted) direction, higher $\Rightarrow$ unfaithful, as disclosed in \S\ref{sec:audit}.
+
+\paragraph{Selection-corrected permutation tests.} With per-layer statistics $\mathrm{AUROC}_\ell$, the selection-corrected null uses $T_{\max} = \max_{\ell\in L}\mathrm{AUROC}_\ell$ (or $T_{\mathrm{mean}} = \tfrac{1}{\lvert L\rvert}\sum_\ell \mathrm{AUROC}_\ell$, matching the reported statistic), with labels permuted identically across layers (coupled permutations), and
+\[ p = \frac{1 + \sum_{b=1}^{B} \mathbf{1}\!\left[T^{(b)} \ge T^{\mathrm{obs}}\right]}{B + 1}. \]
+
+\paragraph{Activation steering (Appendix~\ref{app:steering}).} The direction is $d = (\mu_{\mathrm{unf}} - \mu_{\mathrm{faith}})/\lVert\mu_{\mathrm{unf}} - \mu_{\mathrm{faith}}\rVert$, computed from train-split final-position activations at the probe's best layer; $\sigma$ is the standard deviation of train projections onto $d$; the intervention adds $\alpha\sigma d$ to the residual stream at that layer at the answer-readout position; the control is a random unit direction applied at the same $\alpha\sigma$ magnitude.
+
+\section{Per-Cell Heterogeneity and AUPRC}
+\label{app:forest}
+
+\begin{figure*}[h]
+\centering
+\includegraphics[width=0.92\textwidth]{figs/forest.pdf}
+\caption{Per-cell (signal $\times$ model $\times$ domain) AUROC with bootstrap 95\% CIs, by regime; NLI is available benchmark-wide (all four models), answer-tracing for the two open models. Cells with $n{<}10$ or a single class are omitted; per-cell $n$ is small, so individual CIs are wide. The incorrect-regime cells scatter around chance across models and domains, including the closed models; the correct-regime cells lean above chance across domains and in the closed models as well.}
+\label{fig:forest}
+\end{figure*}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & \textbf{Prev.} & \textbf{Ans.-tracing (inv.)} & \textbf{NLI} \\
+\midrule
+Incorrect rgm. & 0.544 & 0.565 [0.489, 0.650] & 0.586 [0.510, 0.677] \\
+Correct rgm. & 0.204 & 0.367 [0.271, 0.488] & 0.350 [0.253, 0.448] \\
+\bottomrule
+\end{tabular}
+\caption{AUPRC robustness for the Table~\ref{tab:regimes} comparisons (prefix instability behaves like answer-tracing: 0.518/0.385). Random baseline $=$ prevalence. In the incorrect regime AUPRC matches prevalence (consistent with the null); in the correct regime it reaches 1.7--1.9$\times$ prevalence, so the moderate AUROCs are not masking failed minority-class retrieval.}
+\label{tab:auprc}
+\end{table}
 
 \section{GRACE Preliminary Replication}
 On the 40-example public sample of GRACE \citep{pham2026grace} (8 unfaithful steps), NLI step-support shows no above-chance discrimination (0.51--0.58), directionally consistent with our FaithCoT results but underpowered; the full evaluation set was not released in time.

@@ -106,7 +106,6 @@ At the time of our analysis, the benchmark's documentation and its released data
 \begin{table}[t]
 \centering
 \small
-\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}llcc@{}}
 \toprule
 \textbf{Family} & \textbf{Signal (direction)} & \textbf{AUROC} & \textbf{95\% CI} \\
@@ -123,8 +122,7 @@ Confound & incorrectness ($\Rightarrow$ unf.) & \textbf{0.696} & [0.662, 0.734] 
 \multirow{2}{*}{DAG} & linearity & 0.530 & [0.483, 0.577] \\
  & max lookback & 0.543 & [0.496, 0.588] \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \caption{Black-box signals vs.\ the human label ($n{=}633$ complete-feature traces: 4 domains $\times$ the 2 open models bearing stored answer-tracing scores). \emph{In}correctness dominates; answer-tracing helps only inverted (prefix-instability intended direction: 0.374); structure adds nothing. Targeted interventions (v2 harness): $g{=}0.56$--$0.61$, dominated by answer-tracing (not shown).}
 \label{tab:audit}
 \end{table}
@@ -142,7 +140,6 @@ Stratifying the complete-feature subset by answer correctness gives each half it
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
-\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lcc@{}}
 \toprule
  & \textbf{Incorrect answers} & \textbf{Correct answers} \\
@@ -157,8 +154,7 @@ DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
 \midrule
 \texttt{soft}, intended dir. & 0.470 [0.402, 0.538] & \textbf{0.333} [0.264, 0.408] \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \caption{The two regimes (\texttt{faithful\_type} as target; bold = CI excludes 0.5). On correct answers three signals work moderately and the standard metric is confidently \emph{inverted}; on incorrect answers no tested signal is detectably above chance. Unchanged under the binary label (Appendix~\ref{app:labels}).}
 \label{tab:regimes}
 \end{table}
@@ -185,7 +181,6 @@ DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
-\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lcc@{}}
 \toprule
 \textbf{Probe target} & \textbf{Llama-3.1} & \textbf{Qwen-2.5} \\
@@ -205,8 +200,7 @@ DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
 \quad ft1v2 $\to$ ft3v4 & 0.522 ($p{=}.46$) & 0.574 ($p{=}.15$) \\
 \quad ft3v4 $\to$ ft1v2 & 0.529 ($p{=}.56$) & 0.546 ($p{=}.19$) \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \caption{Linear probes on the human annotations, by regime: each regime is decodable in a different model; neither transfers to the other. Selection-corrected permutation tests; nested rows select the layer by inner CV on training folds. $^{\S}$The permutation statistic uses a shared full-data projection, more conservative than the in-fold CV shown (0.679 vs.\ 0.759; for Qwen they coincide).}
 \label{tab:whitebox}
 \end{table}
@@ -238,7 +232,6 @@ For math problems (AQuA, GSM8K) with gold answer $a^*$, the same model either so
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
-\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lccccc@{}}
 \toprule
 \textbf{Model} & \textbf{n} & \textbf{Held-out} & \textbf{Nested} & \textbf{$p$} & \textbf{Surf.} \\
@@ -251,8 +244,7 @@ DeepSeek-R1-Dist.-7B & 251 & 0.617 & 0.675 & .005 & 0.534 \\
 Gemma-2-9B & 243 & 0.600 & 0.702 & .020 & 0.548 \\
 DeepSeek-R1-0528-8B & 81 & 0.558$^{\ddagger}$ & 0.627 & .025 & 0.473 \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \caption{Instructed construction, 7 models. Held-out = single 70/30 split at the disclosed full-data layer; Nested = 10 problem-grouped splits, layer by inner CV; $p$ = selection-corrected permutation; Surf.\ = style-features baseline (learned text baseline: 0.502/0.564 Llama/Qwen). $^{\ddagger}$Small-$n$; the permutation statistic (0.688) is the reliable read.}
 \label{tab:synth}
 \end{table}
@@ -271,7 +263,6 @@ Both models are strongly decodable on this hint-dependent set (held-out 0.752 / 
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
-\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lccc@{}}
 \toprule
 \textbf{Train $\to$ test (Llama)} & \textbf{Best} & \textbf{Mean} & \textbf{$p$} \\
@@ -286,8 +277,7 @@ Hint $\to$ annot.\ incorrect rgm.\ (Qwen) & 0.583 & 0.484 & .741 \\
 Hint $\to$ annot.\ correct rgm.\ (Qwen) & 0.561 & 0.425 & .930 \\
 Instructed $\to$ annot.\ correct rgm.\ (Qwen) & 0.702 & 0.517 & .062$^{\dagger}$ \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \caption{Cross-construction transfer, swept over all layers (best and selection-free layer-mean; permutation $p$ on the mean unless marked; permutations coupled across layers). We detect significant transfer only from hint-induced traces (model- and source-dependent), onto the \emph{incorrect} regime. $^{\dagger}$$p$ for the best layer; the mean is n.s.\ ($p{=}.37$).}
 \label{tab:bridge}
 \end{table}

@@ -1,0 +1,196 @@
+\begin{thebibliography}{23}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Arcuschin et~al.(2025)Arcuschin, Janiak, Krzyzanowski, Rajamanoharan,
+  Nanda, and Conmy]{arcuschin2025wild}
+Iv{\'a}n Arcuschin, Jett Janiak, Robert Krzyzanowski, Senthooran Rajamanoharan,
+  Neel Nanda, and Arthur Conmy.
+\newblock Chain-of-thought reasoning in the wild is not always faithful.
+\newblock \emph{arXiv preprint arXiv:2503.08679}, 2025.
+
+\bibitem[Belinkov(2022)]{belinkov2022probing}
+Yonatan Belinkov.
+\newblock Probing classifiers: Promises, shortcomings, and advances.
+\newblock \emph{Computational Linguistics}, 48\penalty0 (1):\penalty0 207--219,
+  2022.
+
+\bibitem[Bentham et~al.(2024)Bentham, Stringham, and
+  Marasovi{\'c}]{bentham2024disguised}
+Oliver Bentham, Nathan Stringham, and Ana Marasovi{\'c}.
+\newblock Chain-of-thought unfaithfulness as disguised accuracy.
+\newblock \emph{Transactions on Machine Learning Research}, 2024.
+\newblock {arXiv}:2402.14897.
+
+\bibitem[Chen et~al.(2025)Chen, Benton, Radhakrishnan, Uesato, Denison,
+  Schulman, Somani, Hase, Wagner, Roger, Mikulik, Bowman, Leike, Kaplan, and
+  Perez]{chen2025reasoning}
+Yanda Chen, Joe Benton, Ansh Radhakrishnan, Jonathan Uesato, Carson Denison,
+  John Schulman, Arushi Somani, Peter Hase, Misha Wagner, Fabien Roger, Vlad
+  Mikulik, Samuel~R. Bowman, Jan Leike, Jared Kaplan, and Ethan Perez.
+\newblock Reasoning models don't always say what they think.
+\newblock \emph{arXiv preprint arXiv:2505.05410}, 2025.
+
+\bibitem[Cox et~al.(2026)Cox, Kianersi, and Garriga-Alonso]{cox2026decoding}
+Kyle Cox, Darius Kianersi, and Adri\`a Garriga-Alonso.
+\newblock Post-hoc reasoning in chain of thought: Decoding and steering
+  pre-committed answers.
+\newblock \emph{arXiv preprint arXiv:2603.01437}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.01437}.
+
+\bibitem[Elazar et~al.(2021)Elazar, Ravfogel, Jacovi, and
+  Goldberg]{elazar2021amnesic}
+Yanai Elazar, Shauli Ravfogel, Alon Jacovi, and Yoav Goldberg.
+\newblock Amnesic probing: Behavioral explanation with amnesic counterfactuals.
+\newblock \emph{Transactions of the Association for Computational Linguistics},
+  9:\penalty0 160--175, 2021.
+
+\bibitem[Fang et~al.(2025)Fang, Zhang, Wang, Wan, and Xu]{fang2025gov}
+Jiwei Fang, Bin Zhang, Changwei Wang, Jin Wan, and Zhiwei Xu.
+\newblock Graph of verification: Structured verification of {LLM} reasoning
+  with directed acyclic graphs.
+\newblock \emph{arXiv preprint arXiv:2506.12509}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2506.12509}.
+
+\bibitem[Feng et~al.(2025)Feng, Weir, Bostrom, Bayless, Cassel, Chaudhary,
+  Kiesl-Reiter, and Rangwala]{feng2025vericot}
+Yu~Feng, Nathaniel Weir, Kaj Bostrom, Sam Bayless, Darion Cassel, Sapana
+  Chaudhary, Benjamin Kiesl-Reiter, and Huzefa Rangwala.
+\newblock {VeriCoT}: Neuro-symbolic chain-of-thought validation via logical
+  consistency checks.
+\newblock \emph{arXiv preprint arXiv:2511.04662}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2511.04662}.
+
+\bibitem[Gur-Arieh et~al.(2026)Gur-Arieh, Marasovi{\'c}, and
+  Geva]{gurarieh2026bonafide}
+Yoav Gur-Arieh, Ana Marasovi{\'c}, and Mor Geva.
+\newblock Faithfulness metrics don't measure faithfulness: A meta-evaluation
+  with ground truth.
+\newblock \emph{arXiv preprint arXiv:2605.25052}, 2026.
+
+\bibitem[Jacovi et~al.(2024)Jacovi, Bitton, Bohnet, Herzig, Honovich, Tseng,
+  Collins, Aharoni, and Geva]{jacovi2024reveal}
+Alon Jacovi, Yonatan Bitton, Bernd Bohnet, Jonathan Herzig, Or~Honovich,
+  Michael Tseng, Michael Collins, Roee Aharoni, and Mor Geva.
+\newblock A chain-of-thought is as strong as its weakest link: A benchmark for
+  verifiers of reasoning chains.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, pp.\  4615--4634,
+  2024.
+\newblock \doi{10.18653/v1/2024.acl-long.254}.
+\newblock URL \url{https://aclanthology.org/2024.acl-long.254/}.
+
+\bibitem[Kirch et~al.(2025)Kirch, Dower, Skapars, Yannakoudakis, Lubana, and
+  Krasheninnikov]{offpolicy2025probes}
+Nathalie Kirch, Samuel Dower, Adrians Skapars, Helen Yannakoudakis,
+  Ekdeep~Singh Lubana, and Dmitrii Krasheninnikov.
+\newblock The impact of off-policy training data on probe generalisation.
+\newblock \emph{arXiv preprint arXiv:2511.17408}, 2025.
+
+\bibitem[Lanham et~al.(2023)Lanham, Chen, Radhakrishnan, Steiner, Denison,
+  Hernandez, Li, Durmus, Hubinger, Kernion, Lukošiūtė, Nguyen, Cheng,
+  Joseph, Schiefer, Rausch, Larson, McCandlish, Kundu, Kadavath, Yang,
+  Henighan, Maxwell, Telleen-Lawton, Hume, Hatfield-Dodds, Kaplan, Brauner,
+  Bowman, and Perez]{lanham2023measuring}
+Tamera Lanham, Anna Chen, Ansh Radhakrishnan, Benoit Steiner, Carson Denison,
+  Danny Hernandez, Dustin Li, Esin Durmus, Evan Hubinger, Jackson Kernion,
+  Kamilė Lukošiūtė, Karina Nguyen, Newton Cheng, Nicholas Joseph, Nicholas
+  Schiefer, Oliver Rausch, Robin Larson, Sam McCandlish, Sandipan Kundu, Saurav
+  Kadavath, Shannon Yang, Thomas Henighan, Timothy Maxwell, Timothy
+  Telleen-Lawton, Tristan Hume, Zac Hatfield-Dodds, Jared Kaplan, Jan Brauner,
+  Samuel~R. Bowman, and Ethan Perez.
+\newblock Measuring faithfulness in chain-of-thought reasoning.
+\newblock \emph{arXiv preprint arXiv:2307.13702}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2307.13702}.
+
+\bibitem[Mirtaheri \& Belkin(2026)Mirtaheri and Belkin]{mirtaheri2026catching}
+Parsa Mirtaheri and Mikhail Belkin.
+\newblock Catching rationalization in the act: Detecting motivated reasoning
+  before and after cot via activation probing.
+\newblock \emph{arXiv preprint arXiv:2603.17199}, 2026.
+
+\bibitem[Mukherjee et~al.(2025)Mukherjee, Chinta, Kim, Sharma, and
+  Hakkani-T{\"u}r]{mukherjee2025parc}
+Sagnik Mukherjee, Abhinav Chinta, Takyoung Kim, Tarun~Anoop Sharma, and Dilek
+  Hakkani-T{\"u}r.
+\newblock Premise-augmented reasoning chains improve error identification in
+  math reasoning with {LLMs}.
+\newblock In \emph{Proceedings of the 42nd International Conference on Machine
+  Learning (ICML)}, volume 267 of \emph{Proceedings of Machine Learning
+  Research}. PMLR, 2025.
+\newblock URL \url{https://proceedings.mlr.press/v267/mukherjee25a.html}.
+
+\bibitem[Nichols \& Holmes(2002)Nichols and Holmes]{nichols2002nonparametric}
+Thomas~E. Nichols and Andrew~P. Holmes.
+\newblock Nonparametric permutation tests for functional neuroimaging: A primer
+  with examples.
+\newblock \emph{Human Brain Mapping}, 15\penalty0 (1):\penalty0 1--25, 2002.
+
+\bibitem[Occhipinti et~al.(2026)Occhipinti, Abate, and
+  Schoots]{occhipinti2026probing}
+Giovanni~Maria Occhipinti, Alessandro Abate, and Nandi Schoots.
+\newblock Probing and steering chain-of-thought unfaithfulness in language
+  models.
+\newblock In \emph{ICLR 2026 Workshop}, 2026.
+\newblock OpenReview LocRunEIxK.
+
+\bibitem[Pham et~al.(2026)Pham, Le, and Luu]{pham2026grace}
+Hoang Pham, Dong Le, and Anh~Tuan Luu.
+\newblock {GRACE}: Step-level benchmark for faithful reasoning over context.
+\newblock \emph{arXiv preprint arXiv:2606.16151}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.16151}.
+
+\bibitem[Shen et~al.(2026{\natexlab{a}})Shen, Tan, Wang, Hong, Miao, Wang, and
+  Chen]{shen2026cie}
+Xu~Shen, Zhen Tan, Song Wang, Pingjun Hong, Rui Miao, Xin Wang, and Tianlong
+  Chen.
+\newblock Detecting unfaithful chain-of-thought via circuit-guided
+  internal-external discrepancy.
+\newblock \emph{arXiv preprint arXiv:2605.25603}, 2026{\natexlab{a}}.
+
+\bibitem[Shen et~al.(2026{\natexlab{b}})Shen, Wang, Tan, Yao, Zhao, Xu, Wang,
+  and Chen]{shen2026faithcot}
+Xu~Shen, Song Wang, Zhen Tan, Laura Yao, Xinyu Zhao, Kaidi Xu, Xin Wang, and
+  Tianlong Chen.
+\newblock {FaithCoT-Bench}: Benchmarking instance-level faithfulness of
+  chain-of-thought reasoning.
+\newblock In \emph{The Fourteenth International Conference on Learning
+  Representations (ICLR)}, 2026{\natexlab{b}}.
+\newblock URL \url{https://openreview.net/forum?id=lN3yKqqzF1}.
+
+\bibitem[Tan et~al.(2024)Tan, Chanin, Lynch, Kanoulas, Paige, Garriga-Alonso,
+  and Kirk]{tan2024analysing}
+Daniel Tan, David Chanin, Aengus Lynch, Dimitrios Kanoulas, Brooks Paige,
+  Adri{\`a} Garriga-Alonso, and Robert Kirk.
+\newblock Analysing the generalisation and reliability of steering vectors.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2024.
+\newblock {arXiv}:2407.12404.
+
+\bibitem[Turpin et~al.(2023)Turpin, Michael, Perez, and
+  Bowman]{turpin2023language}
+Miles Turpin, Julian Michael, Ethan Perez, and Samuel~R. Bowman.
+\newblock Language models don't always say what they think: Unfaithful
+  explanations in chain-of-thought prompting.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2023.
+\newblock {arXiv}:2305.04388.
+
+\bibitem[Zaman \& Srivastava(2025)Zaman and Srivastava]{zaman2026hint}
+Kerem Zaman and Shashank Srivastava.
+\newblock Is chain-of-thought really not explainability? chain-of-thought can
+  be faithful without hint verbalization.
+\newblock \emph{arXiv preprint arXiv:2512.23032}, 2025.
+
+\bibitem[Zheng et~al.(2024)Zheng, Zhang, Zhang, Lin, Lu, Yu, Liu, Zhou, and
+  Lin]{zheng2024processbench}
+Chujie Zheng, Zhenru Zhang, Beichen Zhang, Runji Lin, Keming Lu, Bowen Yu,
+  Dayiheng Liu, Jingren Zhou, and Junyang Lin.
+\newblock {ProcessBench}: Identifying process errors in mathematical reasoning.
+\newblock \emph{arXiv preprint arXiv:2412.06559}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2412.06559}.
+
+\end{thebibliography}

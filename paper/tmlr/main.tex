@@ -275,7 +275,7 @@ For math problems (AQuA, GSM8K) with gold answer $a^*$, the same model either so
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{figs/seven_models.pdf}
+\includegraphics[width=0.69\columnwidth]{figs/seven_models.pdf}
 \caption{Instructed construction across 7 models: probe held-out AUROC (circles) vs.\ the surface-feature black-box baseline (diamonds). The circle--diamond gap measures improvement over the surface-feature baseline.}
 \label{fig:seven}
 \end{figure}
@@ -338,7 +338,7 @@ Do the constructions share the annotated regimes' representations? We train prob
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.46\columnwidth]{figs/transfer_heatmap.pdf}
+\includegraphics[width=0.59\columnwidth]{figs/transfer_heatmap.pdf}
 \caption{The three-way bridge at a glance (Llama). Bordered diagonal = within-distribution CV; off-diagonal = layer-mean transfer. The colormap diverges around chance (white $=$ 0.5; blue $=$ below-chance, i.e.\ anti-aligned). One off-diagonal cell is warm: hint-induced $\to$ annotated (incorrect regime).}
 \label{fig:heatmap}
 \end{figure}
@@ -429,7 +429,7 @@ $+6$ & \textbf{0.22} & 0.08 & 0.748 & 0.815 \\
 Figure~\ref{fig:depth} shows the per-layer depth profiles referenced in \S\ref{sec:bridge}; the three-way transfer heatmap is Figure~\ref{fig:heatmap} in the main text.
 \begin{figure}[h]
 \centering
-\includegraphics[width=\columnwidth]{figs/depth_gradient.pdf}
+\includegraphics[width=0.50\columnwidth]{figs/depth_gradient.pdf}
 \caption{Per-layer probe AUROC for the three constructions (Llama-3.1-8B; descriptive). Instructed peaks early (L9), hint-induced mid (L17), annotated incorrect-regime late (L29); peak locations may be unstable under resampling.}
 \label{fig:depth}
 \end{figure}

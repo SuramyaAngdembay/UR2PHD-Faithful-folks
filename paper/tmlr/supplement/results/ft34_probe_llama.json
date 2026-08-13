@@ -1,0 +1,12 @@
+{
+  "model": "llama",
+  "n": 163,
+  "n_ft4": 26,
+  "within_cv": 0.7591240875912408,
+  "within_best_layer": 19,
+  "within_perm_p": 0.18762475049900199,
+  "hint_to_ft34_mean": 0.5549112156092083,
+  "hint_to_ft34_best": 0.6339135317237506,
+  "instructed_to_ft34_mean": 0.5568939500280741,
+  "instructed_to_ft34_best": 0.639528354856822
+}

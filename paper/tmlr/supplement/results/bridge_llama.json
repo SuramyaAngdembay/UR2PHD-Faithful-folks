@@ -1,0 +1,37 @@
+{
+  "model": "llama",
+  "synth_best_layer": 9,
+  "synth_best_cv": 0.7698365782498426,
+  "faithcot_best_layer": 29,
+  "faithcot_best_cv": 0.7015873015873016,
+  "sweep_all": {
+    "fc2s_best": 0.5541084266127648,
+    "fc2s_best_layer": 3,
+    "fc2s_mean": 0.47597001868766803,
+    "s2fc_best": 0.5307539682539683,
+    "s2fc_best_layer": 1,
+    "s2fc_mean": 0.43092757936507936,
+    "fc_n": 144,
+    "synth_n": 458
+  },
+  "sweep_aqua_matched": {
+    "fc2s_best": 0.6392318244170095,
+    "fc2s_best_layer": 14,
+    "fc2s_mean": 0.5048868312757202,
+    "s2fc_best": 0.7692307692307694,
+    "s2fc_best_layer": 20,
+    "s2fc_mean": 0.5845352564102565,
+    "fc_n": 19,
+    "synth_n": 54
+  },
+  "sweep_nonmath": {
+    "fc2s_best": 0.5661600655975286,
+    "fc2s_best_layer": 16,
+    "fc2s_mean": 0.4812694265936958,
+    "s2fc_best": 0.5550339071465832,
+    "s2fc_best_layer": 1,
+    "s2fc_mean": 0.415794535732916,
+    "fc_n": 125,
+    "synth_n": 458
+  }
+}

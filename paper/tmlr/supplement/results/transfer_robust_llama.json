@@ -1,0 +1,6 @@
+{
+  "hint_noPCA_trainScaler": 0.5622209821428572,
+  "hint_noPCA_testScaler": 0.570796130952381,
+  "synth_noPCA_trainScaler": 0.45328000992063494,
+  "synth_noPCA_testScaler": 0.455797371031746
+}

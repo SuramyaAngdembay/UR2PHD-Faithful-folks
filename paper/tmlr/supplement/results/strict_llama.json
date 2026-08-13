@@ -1,0 +1,12 @@
+{
+  "model": "llama",
+  "n_strict": 475,
+  "n_posthoc_strict": 47,
+  "within_cv_best": 0.8182541260688009,
+  "within_best_layer": 22,
+  "transfer_mean": 0.5963479662698412,
+  "transfer_best": 0.6988095238095239,
+  "transfer_best_layer": 25,
+  "p_mean": 0.07784431137724551,
+  "p_best": 0.0658682634730539
+}

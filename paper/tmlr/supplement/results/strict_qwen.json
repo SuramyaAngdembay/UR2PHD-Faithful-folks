@@ -1,0 +1,12 @@
+{
+  "model": "qwen",
+  "n_strict": 484,
+  "n_posthoc_strict": 20,
+  "within_cv_best": 0.8366379310344827,
+  "within_best_layer": 16,
+  "transfer_mean": 0.49425008098477485,
+  "transfer_best": 0.6006550768455531,
+  "transfer_best_layer": 19,
+  "p_mean": 0.6047904191616766,
+  "p_best": 0.4530938123752495
+}

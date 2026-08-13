@@ -1,0 +1,58 @@
+{
+ "incorrect_ft1v2": {
+  "n": 514,
+  "n_models": 4,
+  "pos": 233,
+  "signals": {
+   "nli_n_unsup": {
+    "auroc": 0.518,
+    "ci": [
+     0.47,
+     0.567
+    ]
+   },
+   "dag_maxlb": {
+    "auroc": 0.476,
+    "ci": [
+     0.427,
+     0.525
+    ]
+   },
+   "dag_lin": {
+    "auroc": 0.527,
+    "ci": [
+     0.478,
+     0.576
+    ]
+   }
+  }
+ },
+ "correct_ft3v4": {
+  "n": 789,
+  "n_models": 4,
+  "pos": 107,
+  "signals": {
+   "nli_n_unsup": {
+    "auroc": 0.622,
+    "ci": [
+     0.563,
+     0.682
+    ]
+   },
+   "dag_maxlb": {
+    "auroc": 0.561,
+    "ci": [
+     0.501,
+     0.62
+    ]
+   },
+   "dag_lin": {
+    "auroc": 0.461,
+    "ci": [
+     0.4,
+     0.523
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "model": "qwen",
+ "source": "hint",
+ "layer": 21,
+ "hint_internal_cv": 0.832,
+ "DEPLOY_auroc": 0.515,
+ "auroc_ci": [
+  0.413,
+  0.618
+ ],
+ "AP_prauc": 0.548,
+ "test_base_rate": 0.5,
+ "chance_ref": 0.5,
+ "oracle_cv_auroc": 0.606,
+ "signal_captured_frac": 0.141,
+ "op_point_thr": 0.643,
+ "op_precision": 0.0,
+ "op_recall": 0.0,
+ "op_f1": 0.0,
+ "precision_at_recall50": 0.508,
+ "precision_at_10pct_baserate_r50": 0.103,
+ "lift_over_baserate": 1.02
+}

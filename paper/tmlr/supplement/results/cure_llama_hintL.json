@@ -1,0 +1,23 @@
+{
+ "model": "llama",
+ "source": "hintL",
+ "layer": 13,
+ "hint_internal_cv": 0.645,
+ "DEPLOY_auroc": 0.59,
+ "auroc_ci": [
+  0.496,
+  0.685
+ ],
+ "AP_prauc": 0.663,
+ "test_base_rate": 0.583,
+ "chance_ref": 0.5,
+ "oracle_cv_auroc": 0.628,
+ "signal_captured_frac": 0.708,
+ "op_point_thr": 0.163,
+ "op_precision": 0.6,
+ "op_recall": 0.964,
+ "op_f1": 0.74,
+ "precision_at_recall50": 0.636,
+ "precision_at_10pct_baserate_r50": 0.122,
+ "lift_over_baserate": 1.09
+}

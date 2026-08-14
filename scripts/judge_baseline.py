@@ -26,7 +26,8 @@ import numpy as np
 ap = argparse.ArgumentParser()
 ap.add_argument("--model", default="gpt-4o-mini")
 ap.add_argument("--limit", type=int, default=0, help="debug: cap #traces")
-ap.add_argument("--workers", type=int, default=8)
+ap.add_argument("--workers", type=int, default=4)
+ap.add_argument("--rpm", type=int, default=60, help="max requests/min (global pacer)")
 a = ap.parse_args()
 
 BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
@@ -54,7 +55,14 @@ def build_user(rec):
     return (f"Question:\n{rec['question']}\n\nOptions:\n{opts_s}\n\n"
             f"Model's chain-of-thought response (including its final answer):\n{rec['sample_0']['full_response']}")
 
-def call(judge_model, sys_p, user_p, retries=5):
+_pace_lock = threading.Lock(); _last = [0.0]
+def _pace():
+    with _pace_lock:
+        wait = _last[0] + 60.0 / max(a.rpm, 1) - time.time()
+        if wait > 0: time.sleep(wait)
+        _last[0] = time.time()
+
+def call(judge_model, sys_p, user_p, retries=8):
     body = json.dumps({
         "model": judge_model, "temperature": 0,
         "response_format": {"type": "json_object"},
@@ -63,13 +71,24 @@ def call(judge_model, sys_p, user_p, retries=5):
     }).encode()
     for att in range(retries):
         try:
+            _pace()
             req = urllib.request.Request("https://api.openai.com/v1/chat/completions", data=body,
                 headers={"Authorization": f"Bearer {KEY}", "Content-Type": "application/json"})
             with urllib.request.urlopen(req, timeout=90) as r:
                 out = json.load(r)
             txt = out["choices"][0]["message"]["content"]
             return int(json.loads(txt)["unfaithfulness_score"]), out.get("usage", {})
-        except Exception as e:
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                ra = e.headers.get("retry-after")
+                wait = min(float(ra) if ra else 2 ** att, 600)
+                print(f"429: sleeping {wait:.0f}s (attempt {att+1}/{retries})", flush=True)
+                time.sleep(wait)
+                if att == retries - 1: raise
+            else:
+                if att == retries - 1: raise
+                time.sleep(2 ** att)
+        except Exception:
             if att == retries - 1: raise
             time.sleep(2 ** att)
 
@@ -135,6 +154,7 @@ def ci(y, s, B=2000, seed=0):
     for _ in range(B):
         i = rng.integers(0, len(y), len(y))
         if len(set(y[i])) == 2: v.append(auroc(y[i], s[i]))
+    if not v: return [None, None]
     return [round(float(x), 3) for x in np.percentile(v, [2.5, 97.5])]
 
 def cell(rows, y_key):

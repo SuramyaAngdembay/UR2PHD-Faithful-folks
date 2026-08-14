@@ -18,6 +18,8 @@
 \usepackage{amssymb}
 \usepackage{xcolor}
 \usepackage{microtype}
+\usepackage{placeins}
+\usepackage{float}
 \usepackage{tikz}
 \usetikzlibrary{positioning,arrows.meta}
 \definecolor{hintbg}{RGB}{255,230,180}
@@ -231,7 +233,14 @@ DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
 
 \paragraph{Method.} For each trace we extract hidden states at every layer at the final sequence position (the end-of-turn token, which attends over the full trace; identical convention across all probed sets) and fit standardized PCA-50 logistic-regression probes. Activations are obtained by teacher-forced re-encoding of each stored trace with the same local 4-bit models (for benchmark traces, the same model identity that generated them); probe claims therefore concern what is linearly decodable from the model's representation of the \emph{completed} trace, not necessarily the states active during original generation. Probes are fit with 5-fold CV and the selection-corrected permutation test of \S\ref{sec:setup}; probing requires weights, so this section covers the two open models.
 
-\begin{table}[t]
+
+\paragraph{The blind regime is decodable, in Llama.} On ft1 vs.\ ft2, where every behavioral signal fails, a linear probe on Llama-3.1-8B reaches held-out AUROC 0.67 $\pm$ 0.08 under nested layer selection (0.70 at the disclosed full-data layer), generalizes across domains (LODO 0.60--0.71), and is approximately linear (an MLP adds nothing); in Qwen-2.5-7B it is weak and not significant: ``not detected,'' not ``absent'' ($n{=}126$; see also \S\ref{sec:bridge} (2b)). Whatever distinguishes an honest from an unfaithful error leaves a trace in Llama's hidden states with no measurable behavioral signature.
+
+\paragraph{The detectable regime is decodable, in Qwen.} On ft3 vs.\ ft4 the pattern flips: Qwen is significant (CV 0.701, $p{=}0.014$, $n{=}200$), while Llama's nominally higher curve (0.759) does not survive the selection-corrected test ($p{=}0.19$; ft4 $n{=}26$): underpowered rather than negative.
+
+\paragraph{No shared linear direction across regimes.} Probes trained on one regime do not transfer to the other in either model, in either direction (layer-means 0.52--0.57, all permutation-n.s.; Table~\ref{tab:whitebox} bottom). Null transfer at these sample sizes cannot by itself establish distinctness (power, rotated encodings, label noise); but combined with the \emph{flipped} model-dependence, the results are most consistent with unfaithful \emph{error} and post-hoc \emph{rationalization} being different phenomena, encoded along different directions---a hypothesis, not an established mechanism. An exploratory steering check on the Llama incorrect-regime direction points the right way (flip rate 0.22 vs.\ 0.08 for a norm-matched random control at $+6\sigma$; Appendix~\ref{app:steering}), presented strictly as a sanity check \citep[cf.][]{cox2026decoding,tan2024analysing}.
+
+\begin{table}[H]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -259,12 +268,6 @@ DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
 \label{tab:whitebox}
 \end{table}
 
-\paragraph{The blind regime is decodable, in Llama.} On ft1 vs.\ ft2, where every behavioral signal fails, a linear probe on Llama-3.1-8B reaches held-out AUROC 0.67 $\pm$ 0.08 under nested layer selection (0.70 at the disclosed full-data layer), generalizes across domains (LODO 0.60--0.71), and is approximately linear (an MLP adds nothing); in Qwen-2.5-7B it is weak and not significant: ``not detected,'' not ``absent'' ($n{=}126$; see also \S\ref{sec:bridge} (2b)). Whatever distinguishes an honest from an unfaithful error leaves a trace in Llama's hidden states with no measurable behavioral signature.
-
-\paragraph{The detectable regime is decodable, in Qwen.} On ft3 vs.\ ft4 the pattern flips: Qwen is significant (CV 0.701, $p{=}0.014$, $n{=}200$), while Llama's nominally higher curve (0.759) does not survive the selection-corrected test ($p{=}0.19$; ft4 $n{=}26$): underpowered rather than negative.
-
-\paragraph{No shared linear direction across regimes.} Probes trained on one regime do not transfer to the other in either model, in either direction (layer-means 0.52--0.57, all permutation-n.s.; Table~\ref{tab:whitebox} bottom). Null transfer at these sample sizes cannot by itself establish distinctness (power, rotated encodings, label noise); but combined with the \emph{flipped} model-dependence, the results are most consistent with unfaithful \emph{error} and post-hoc \emph{rationalization} being different phenomena, encoded along different directions---a hypothesis, not an established mechanism. An exploratory steering check on the Llama incorrect-regime direction points the right way (flip rate 0.22 vs.\ 0.08 for a norm-matched random control at $+6\sigma$; Appendix~\ref{app:steering}), presented strictly as a sanity check \citep[cf.][]{cox2026decoding,tan2024analysing}.
-
 \section{Constructed vs.\ Human-Annotated Unfaithfulness}
 \label{sec:construction}
 
@@ -273,7 +276,7 @@ Annotated unfaithful traces are scarce (221 across both regimes in the two probe
 \subsection{Instructed construction: 7 models}
 \label{sec:synth}
 
-For math problems (AQuA, GSM8K) with gold answer $a^*$, the same model either solves step-by-step (kept only when correct: \emph{genuine}) or is instructed to justify the given $a^*$ (\emph{post-hoc}). Both end at the same correct answer; probed contexts are identical (the instruction is never probed); decoding is matched. Across \textbf{seven open models spanning three families and 2024--2026} (Table~\ref{tab:synth}), the construction is permutation-significant in every model (Figure~\ref{fig:seven}), strongest in standard instruct models, weakest in reasoning-distilled ones. Surface-feature baselines (no activation access) remain near chance for five of seven, indicating signal beyond the measured surface features; Llama (0.64) and Gemma-4 (0.67) carry partial surface tells that the probes clear by $\geq$0.10. Notably, Qwen-2.5 is strongest here, consistent with its regime pattern (\S\ref{sec:internals}): this construction, like the correct-answer regime, pairs traces that all end at correct answers.
+For math problems (AQuA, GSM8K) with gold answer $a^*$, the same model either solves step-by-step (kept only when correct: \emph{genuine}) or is instructed to justify the given $a^*$ (\emph{post-hoc}). Both end at the same correct answer; probed contexts are identical (the instruction is never probed); decoding is matched. Across \textbf{seven open models spanning three families and 2024--2026}, the construction is permutation-significant in every model (Figure~\ref{fig:seven}; full per-model values in Table~\ref{tab:synth}, Appendix~\ref{app:robust}), strongest in standard instruct models, weakest in reasoning-distilled ones. Surface-feature baselines (no activation access) remain near chance for five of seven, indicating signal beyond the measured surface features; Llama (0.64) and Gemma-4 (0.67) carry partial surface tells that the probes clear by $\geq$0.10. Notably, Qwen-2.5 is strongest here, consistent with its regime pattern (\S\ref{sec:internals}): this construction, like the correct-answer regime, pairs traces that all end at correct answers.
 
 \begin{figure}[htbp]
 \centering
@@ -282,27 +285,8 @@ For math problems (AQuA, GSM8K) with gold answer $a^*$, the same model either so
 \label{fig:seven}
 \end{figure}
 
-\begin{table}[htbp]
-\centering
-\small
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lccccc@{}}
-\toprule
-\textbf{Model} & \textbf{n} & \textbf{Held-out} & \textbf{Nested} & \textbf{$p$} & \textbf{Surface} \\
-\midrule
-Qwen-2.5-7B & 277 & 0.809 & 0.772 & .005 & 0.545 \\
-Gemma-4-12B (2026) & 248 & 0.797 & 0.786 & .005 & 0.665 \\
-Llama-3.1-8B & 229 & 0.739 & 0.757 & .005 & 0.639 \\
-Qwen3-8B & 175 & 0.716 & 0.725 & .005 & 0.535 \\
-DeepSeek-R1-Dist.-7B & 251 & 0.617 & 0.675 & .005 & 0.534 \\
-Gemma-2-9B & 243 & 0.600 & 0.702 & .020 & 0.548 \\
-DeepSeek-R1-0528-8B & 81 & 0.558$^{\ddagger}$ & 0.627 & .025 & 0.473 \\
-\bottomrule
-\end{tabular}
-\caption{Instructed construction, 7 models. Held-out = single 70/30 split at the disclosed full-data layer; Nested = 10 problem-grouped splits, layer by inner CV; $p$ = selection-corrected permutation; Surface = style-features baseline (learned text baseline: 0.502/0.564 Llama/Qwen). $^{\ddagger}$Small-$n$; the permutation statistic (0.688) is the reliable read.}
-\label{tab:synth}
-\end{table}
 
+\FloatBarrier
 \subsection{Hint-induced counterfactual construction}
 \label{sec:hint}
 
@@ -364,10 +348,10 @@ Stated precisely, the transfer results concern \emph{linearly decodable structur
 \label{sec:discussion}
 
 \subsection{Implications for behavioral CoT auditing}
-Black-box CoT auditing largely re-detects answer correctness. Behavioral signals retain moderate power only on correct answers---often the lower-stakes regime---and none is detected above chance on incorrect answers, where 69\% of annotated unfaithfulness lives and where a deployed system is actively wrong. The practical asymmetry is what makes this consequential: an auditor screening by behavioral signals will concentrate scrutiny on traces that \emph{look} suspicious---largely the incorrect ones---which is exactly the regime where those signals carry no detected information about which errors are honest. Behavioral blindness here is a bounded claim, not an impossibility result: it concerns the tested signal families, on this benchmark, with intervals that do not exclude modest effects (see Limitations). What it does establish is that current behavioral practice provides no positive evidence of detection where the stakes are highest. Internals complement behavior---each regime is decodable somewhere---but in different models for different regimes, with no shared, positively aligned direction detected: there is no single-probe shortcut, and probing requires weights, which is itself an argument for open-weight deployment where oversight matters.
+Black-box CoT auditing largely re-detects answer correctness. Behavioral signals retain moderate power only on correct answers---often the lower-stakes regime---and none is detected above chance on incorrect answers, where 69\% of annotated unfaithfulness lives and where a deployed system is actively wrong. The practical asymmetry is what makes this consequential: an auditor screening by behavioral signals will concentrate scrutiny on traces that \emph{look} suspicious---largely the incorrect ones---which is exactly the regime where those signals carry no detected information about which errors are honest. Behavioral blindness here is a bounded claim, not an impossibility result: it concerns the tested signal families, on this benchmark, with intervals that do not exclude modest effects (see Limitations). What it does establish is that current behavioral practice provides no positive evidence of detection in the regime where the model is already wrong. Internals complement behavior---each regime is decodable somewhere---but in different models for different regimes, with no shared, positively aligned direction detected: there is no single-probe shortcut, and probing requires weights, which motivates treating weight access as an important capability where oversight matters.
 
 \subsection{What the metric inversion means}
-On these data the step-removal metric behaves as a measure of answer--reasoning \emph{coupling}, not of human-annotated faithfulness. A model that genuinely solved a problem can re-derive its answer when steps are deleted, so the metric reads its trace as ``unfaithful''; a rationalization tightly coupled to a predetermined answer cannot recover from deletions, so the metric reads it as ``faithful.'' The regime decomposition supports this reading: within the correct regime the metric is confidently inverted (0.333), within the incorrect regime it is merely uninformative (0.470), and the remainder of the overall effect is between-regime composition. Two consequences follow. First, scoring detectors against answer-tracing metrics is circular in the worst way: a detector rewarded for tracking the metric is rewarded for anti-tracking human judgment precisely on the distinction the metric was designed for. Second, deletion-based scores may remain useful \emph{as coupling measures}, but they should not serve as faithfulness ground truth without validation against human labels---here the inversion reproduced on the benchmark's own released scores and on counterfactually labeled hint traces.
+On these data the step-removal metric behaves as a measure of answer--reasoning \emph{coupling}, not of human-annotated faithfulness. A model that genuinely solved a problem can re-derive its answer when steps are deleted, so the metric reads its trace as ``unfaithful''; a rationalization tightly coupled to a predetermined answer cannot recover from deletions, so the metric reads it as ``faithful.'' The regime decomposition supports this reading: within the correct regime the metric is confidently inverted (0.333), within the incorrect regime it is merely uninformative (0.470), and the remainder of the overall effect is between-regime composition. Two consequences follow. First, scoring detectors against answer-tracing metrics is doubly misleading: a detector rewarded for tracking the metric is rewarded for anti-tracking human judgment precisely on the distinction the metric was designed for. Second, deletion-based scores may remain useful \emph{as coupling measures}, but they should not serve as faithfulness ground truth without validation against human labels---here the inversion reproduced on the benchmark's own released scores and on counterfactually labeled hint traces.
 
 \subsection{Construct validity for constructed evaluation data}
 Within-distribution detectability is not construct validity. The instructed construction is the easiest to classify internally---significant in all seven models---yet transfers to neither annotated regime; hint-induced traces are messier, with partly surface-explainable within-testbed signal, yet theirs is the only construction whose probes transfer onto annotated unfaithfulness, in model- and source-dependent settings. For building evaluation data this inverts a natural instinct: the cleanest, most controllable construction was the least valid proxy for the organic phenomenon. We take three prescriptions from this. Verify label semantics against raw data rather than documentation (\S\ref{sec:labels}). Transfer-validate constructed testbeds against annotated data before treating them as proxies. And report surface-feature and question-only baselines alongside probe results, so within-testbed decodability is not mistaken for construct validity. Our 898 hint-flip + 2{,}379 genuine traces will be released upon publication.
@@ -454,6 +438,27 @@ Figure~\ref{fig:depth} shows the per-layer depth profiles referenced in \S\ref{s
 
 \section{Robustness Extensions of the Hint Construction}
 \label{app:robust}
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Model} & \textbf{n} & \textbf{Held-out} & \textbf{Nested} & \textbf{$p$} & \textbf{Surface} \\
+\midrule
+Qwen-2.5-7B & 277 & 0.809 & 0.772 & .005 & 0.545 \\
+Gemma-4-12B (2026) & 248 & 0.797 & 0.786 & .005 & 0.665 \\
+Llama-3.1-8B & 229 & 0.739 & 0.757 & .005 & 0.639 \\
+Qwen3-8B & 175 & 0.716 & 0.725 & .005 & 0.535 \\
+DeepSeek-R1-Dist.-7B & 251 & 0.617 & 0.675 & .005 & 0.534 \\
+Gemma-2-9B & 243 & 0.600 & 0.702 & .020 & 0.548 \\
+DeepSeek-R1-0528-8B & 81 & 0.558$^{\ddagger}$ & 0.627 & .025 & 0.473 \\
+\bottomrule
+\end{tabular}
+\caption{Instructed construction, 7 models (full values for Figure~\ref{fig:seven}). Held-out = single 70/30 split at the disclosed full-data layer; Nested = 10 problem-grouped splits, layer by inner CV; $p$ = selection-corrected permutation; Surface = style-features baseline (learned text baseline: 0.502/0.564 Llama/Qwen). $^{\ddagger}$Small-$n$; the permutation statistic (0.688) is the reliable read.}
+\label{tab:synth}
+\end{table}
 \paragraph{Second template.} Replacing the sycophancy phrasing with an impersonal metadata note (\emph{``(Note: the answer key for this problem lists $a^*$.)''}) and regenerating the full math testbed reproduces every quantity: yields 183 (Llama) / 104 (Qwen) hint-flip traces; held-out decodability 0.731 / 0.824 (perm $p{\leq}0.001$, 1{,}000 permutations); intended-direction \texttt{soft} 0.390 / 0.270 (vs.\ 0.389 / 0.251 with the sycophancy template). Kept traces were re-audited with template-adapted deference patterns; 4/183 Llama traces verbalizing ``the given answer'' were excluded (numbers above are post-exclusion), 0 for Qwen. Llama's surface baseline is higher on this template (0.704 vs.\ 0.626), so its within-testbed decodability remains partly surface-explainable.
 \paragraph{Non-math domain.} On the full LogiQA test set (651 items, sycophancy template), baseline accuracy is lower and flip rates higher, yielding 231 (Llama) / 129 (Qwen) hint-flip + 283 / 300 genuine traces; a deference re-scan found 0 hits. Decodability: held-out 0.672 / 0.793 (perm $p{\leq}0.001$) with surface baselines of only 0.547 / 0.607---weaker surface tells than the math sets. The LogiQA-source transfer results are in \S\ref{sec:bridge} (2b).
 

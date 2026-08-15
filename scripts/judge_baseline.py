@@ -62,7 +62,7 @@ def _pace():
         if wait > 0: time.sleep(wait)
         _last[0] = time.time()
 
-def call(judge_model, sys_p, user_p, retries=8):
+def call(judge_model, sys_p, user_p, retries=60):
     body = json.dumps({
         "model": judge_model, "temperature": 0,
         "response_format": {"type": "json_object"},

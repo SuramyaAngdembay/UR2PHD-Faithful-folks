@@ -28,6 +28,9 @@ SIGS = [("incorrectness", "incorrectness"), ("answer-tracing\n(inverted)", "soft
 PANELS = [("Complete-feature subset\n(n=633; 2 open models)", "full_audit"),
           ("INCORRECT answers  (n=270)\nhonest error vs. unfaithful error", "incorrect_regime"),
           ("CORRECT answers  (n=363)\nfaithful vs. post-hoc", "correct_regime")]
+je = json.load(open("results/judge_extras.json"))["subset633"]
+JMAP = {"full_audit": "full", "incorrect_regime": "incorrect", "correct_regime": "correct"}
+GOLD = "#c9962e"
 fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.5), sharey=True)
 for ax, (title, key) in zip(axes, PANELS):
     labels, vals, los, his, cols = [], [], [], [], []
@@ -39,11 +42,16 @@ for ax, (title, key) in zip(axes, PANELS):
         los.append(v["auroc"] - v["ci"][0]); his.append(v["ci"][1] - v["auroc"])
         sig = v["ci"][0] > 0.5
         cols.append(RED if sk == "incorrectness" else (BLUE if sig else GREY))
+    jv = je[JMAP[key]]
+    labels.append("LLM judge"); vals.append(jv["auroc"])
+    los.append(jv["auroc"] - jv["ci95"][0]); his.append(jv["ci95"][1] - jv["auroc"])
+    cols.append(GOLD)
     x = np.arange(len(vals))
-    ax.bar(x, vals, 0.62, color=cols, yerr=[los, his], error_kw=dict(lw=0.9, capsize=2), zorder=3)
+    ec = ["black" if c == "#c9962e" else "none" for c in cols]
+    ax.bar(x, vals, 0.62, color=cols, edgecolor=ec, linewidth=0.9, yerr=[los, his], error_kw=dict(lw=0.9, capsize=2), zorder=3)
     ax.axhline(0.5, color="k", ls="--", lw=0.8, zorder=2)
     ax.set_xticks(x); ax.set_xticklabels(labels, rotation=38, ha="right", fontsize=7)
-    ax.set_ylim(0.38, 0.78); ax.set_title(title, fontsize=8)
+    ax.set_ylim(0.38, 0.9); ax.set_title(title, fontsize=8)
     ax.spines[["top", "right"]].set_visible(False)
 axes[0].set_ylabel("AUROC vs. human label")
 fig.savefig("paper/figs/two_regimes.pdf"); plt.close(fig)

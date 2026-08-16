@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{24}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -179,11 +179,21 @@ Miles Turpin, Julian Michael, Ethan Perez, and Samuel~R. Bowman.
   (NeurIPS)}, 2023.
 \newblock {arXiv}:2305.04388.
 
-\bibitem[Zaman \& Srivastava(2025)Zaman and Srivastava]{zaman2026hint}
+\bibitem[Zaman \& Srivastava(2025{\natexlab{a}})Zaman and
+  Srivastava]{zaman2025causal}
+Kerem Zaman and Shashank Srivastava.
+\newblock A causal lens for evaluating faithfulness metrics.
+\newblock In \emph{Proceedings of the 2025 Conference on Empirical Methods in
+  Natural Language Processing}, pp.\  29425--29449, 2025{\natexlab{a}}.
+\newblock \doi{10.18653/v1/2025.emnlp-main.1496}.
+\newblock URL \url{https://aclanthology.org/2025.emnlp-main.1496/}.
+
+\bibitem[Zaman \& Srivastava(2025{\natexlab{b}})Zaman and
+  Srivastava]{zaman2026hint}
 Kerem Zaman and Shashank Srivastava.
 \newblock Is chain-of-thought really not explainability? chain-of-thought can
   be faithful without hint verbalization.
-\newblock \emph{arXiv preprint arXiv:2512.23032}, 2025.
+\newblock \emph{arXiv preprint arXiv:2512.23032}, 2025{\natexlab{b}}.
 
 \bibitem[Zheng et~al.(2024)Zheng, Zhang, Zhang, Lin, Lu, Yu, Liu, Zhou, and
   Lin]{zheng2024processbench}

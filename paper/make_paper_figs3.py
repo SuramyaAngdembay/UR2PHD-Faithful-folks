@@ -31,7 +31,7 @@ PANELS = [("Complete-feature subset\n(n=633; 2 open models)", "full_audit"),
 je = json.load(open("results/judge_extras.json"))["subset633"]
 JMAP = {"full_audit": "full", "incorrect_regime": "incorrect", "correct_regime": "correct"}
 GOLD = "#c9962e"
-fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.5), sharey=True)
+fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.25), sharey=True)
 for ax, (title, key) in zip(axes, PANELS):
     labels, vals, los, his, cols = [], [], [], [], []
     for name, sk in SIGS:

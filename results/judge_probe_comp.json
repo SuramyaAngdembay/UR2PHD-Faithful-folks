@@ -1,0 +1,24 @@
+{
+ "n": 144,
+ "pos": 84,
+ "judge_auroc_same_traces": 0.599,
+ "probe_bestlayer_auroc": 0.702,
+ "best_layer": 30,
+ "probe_nested_auroc": 0.656,
+ "spearman_judge_probe": 0.049,
+ "combined_rankmean_auroc": 0.699,
+ "combined_rankmean_bestlayer_auroc": 0.708,
+ "combined_logistic_auroc": 0.666,
+ "delta_probe_minus_judge_ci": [
+  -0.077,
+  0.194
+ ],
+ "delta_combined_minus_judge_ci": [
+  0.016,
+  0.185
+ ],
+ "probe_on_judge_middle_tercile": {
+  "n": 48,
+  "auroc": 0.536
+ }
+}

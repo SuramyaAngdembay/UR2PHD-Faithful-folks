@@ -19,6 +19,7 @@ they will be released publicly with the camera-ready.
 - App. H AUPRC + forest: scripts/appendix_extras.py -> results/appendix_extras.json
 - Data integrity / external accuracy anchors: scripts/validate_data3.py -> results/validate3.json
 - S4/S5 LLM-judge baseline (fifth family; full labeled set): scripts/judge_baseline.py -> results/judge_baseline.json
+- S8 judge-probe complementarity (metric-blind regime): scripts/judge_probe_comp.py -> results/judge_probe_comp.json
 - Every headline number, recomputed from JSONs: scripts/paper_numbers.py
 
 ## Environment

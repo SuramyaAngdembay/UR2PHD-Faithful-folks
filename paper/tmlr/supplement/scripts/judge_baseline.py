@@ -16,7 +16,7 @@ and per-benchmark-model AUROCs. Bootstrap 95% CIs (2000 resamples).
 
 Resume-safe: raw responses appended to ~/synth/results/judge_raw.jsonl.
 Key: env OPENAI_API_KEY or first line of ~/.openai_key.
-Run (Aquaman, CPU): python judge_baseline.py [--model gpt-4o-mini] [--limit N]
+Run (the GPU server, CPU): python judge_baseline.py [--model gpt-4o-mini] [--limit N]
 """
 import argparse, json, os, glob, re, time, threading
 import urllib.request

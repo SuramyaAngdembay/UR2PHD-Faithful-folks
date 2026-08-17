@@ -1,4 +1,4 @@
-\begin{thebibliography}{25}
+\begin{thebibliography}{39}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -34,12 +34,33 @@ Yanda Chen, Joe Benton, Ansh Radhakrishnan, Jonathan Uesato, Carson Denison,
 \newblock Reasoning models don't always say what they think.
 \newblock \emph{arXiv preprint arXiv:2505.05410}, 2025.
 
+\bibitem[Cobbe et~al.(2021)Cobbe, Kosaraju, Bavarian, Chen, Jun, Kaiser,
+  Plappert, Tworek, Hilton, Nakano, Hesse, and Schulman]{cobbe2021gsm8k}
+Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz
+  Kaiser, Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano,
+  Christopher Hesse, and John Schulman.
+\newblock Training verifiers to solve math word problems.
+\newblock \emph{arXiv preprint arXiv:2110.14168}, 2021.
+
 \bibitem[Cox et~al.(2026)Cox, Kianersi, and Garriga-Alonso]{cox2026decoding}
 Kyle Cox, Darius Kianersi, and Adri\`a Garriga-Alonso.
 \newblock Post-hoc reasoning in chain of thought: Decoding and steering
   pre-committed answers.
 \newblock \emph{arXiv preprint arXiv:2603.01437}, 2026.
 \newblock URL \url{https://arxiv.org/abs/2603.01437}.
+
+\bibitem[{DeepSeek-AI} et~al.(2025)]{deepseek2025r1}
+{DeepSeek-AI} et~al.
+\newblock {DeepSeek-R1}: Incentivizing reasoning capability in {LLMs} via
+  reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2501.12948}, 2025.
+
+\bibitem[Dettmers et~al.(2023)Dettmers, Pagnoni, Holtzman, and
+  Zettlemoyer]{dettmers2023qlora}
+Tim Dettmers, Artidoro Pagnoni, Ari Holtzman, and Luke Zettlemoyer.
+\newblock {QLoRA}: Efficient finetuning of quantized {LLMs}.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2023.
 
 \bibitem[Elazar et~al.(2021)Elazar, Ravfogel, Jacovi, and
   Goldberg]{elazar2021amnesic}
@@ -64,12 +85,37 @@ Yu~Feng, Nathaniel Weir, Kaj Bostrom, Sam Bayless, Darion Cassel, Sapana
 \newblock \emph{arXiv preprint arXiv:2511.04662}, 2025.
 \newblock URL \url{https://arxiv.org/abs/2511.04662}.
 
+\bibitem[{Gemma Team} et~al.(2024)]{gemmateam2024gemma2}
+{Gemma Team} et~al.
+\newblock Gemma 2: Improving open language models at a practical size.
+\newblock \emph{arXiv preprint arXiv:2408.00118}, 2024.
+
+\bibitem[Grattafiori et~al.(2024)]{grattafiori2024llama3}
+Aaron Grattafiori et~al.
+\newblock The llama 3 herd of models.
+\newblock \emph{arXiv preprint arXiv:2407.21783}, 2024.
+
 \bibitem[Gur-Arieh et~al.(2026)Gur-Arieh, Marasovi{\'c}, and
   Geva]{gurarieh2026bonafide}
 Yoav Gur-Arieh, Ana Marasovi{\'c}, and Mor Geva.
 \newblock Faithfulness metrics don't measure faithfulness: A meta-evaluation
   with ground truth.
 \newblock \emph{arXiv preprint arXiv:2605.25052}, 2026.
+
+\bibitem[He et~al.(2024)He, Shu, Ge, Chen, Wang, Zhou, Liu, Guo, Huang, Wu,
+  Jiang, and Qiu]{he2024llamascope}
+Zhengfu He, Wentao Shu, Xuyang Ge, Lingjie Chen, Junxuan Wang, Yunhua Zhou,
+  Frances Liu, Qipeng Guo, Xuanjing Huang, Zuxuan Wu, Yu-Gang Jiang, and Xipeng
+  Qiu.
+\newblock Llama scope: Extracting millions of features from {Llama-3.1-8B} with
+  sparse autoencoders.
+\newblock \emph{arXiv preprint arXiv:2410.20526}, 2024.
+
+\bibitem[Hewitt \& Liang(2019)Hewitt and Liang]{hewitt2019control}
+John Hewitt and Percy Liang.
+\newblock Designing and interpreting probes with control tasks.
+\newblock In \emph{Proceedings of the 2019 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP-IJCNLP)}, 2019.
 
 \bibitem[Jacovi et~al.(2024)Jacovi, Bitton, Bohnet, Herzig, Honovich, Tseng,
   Collins, Aharoni, and Geva]{jacovi2024reveal}
@@ -105,6 +151,33 @@ Tamera Lanham, Anna Chen, Ansh Radhakrishnan, Benoit Steiner, Carson Denison,
 \newblock Measuring faithfulness in chain-of-thought reasoning.
 \newblock \emph{arXiv preprint arXiv:2307.13702}, 2023.
 \newblock URL \url{https://arxiv.org/abs/2307.13702}.
+
+\bibitem[Lin et~al.(2022)Lin, Hilton, and Evans]{lin2022truthfulqa}
+Stephanie Lin, Jacob Hilton, and Owain Evans.
+\newblock {TruthfulQA}: Measuring how models mimic human falsehoods.
+\newblock In \emph{Proceedings of the 60th Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, 2022.
+
+\bibitem[Ling et~al.(2017)Ling, Yogatama, Dyer, and Blunsom]{ling2017aqua}
+Wang Ling, Dani Yogatama, Chris Dyer, and Phil Blunsom.
+\newblock Program induction by rationale generation: Learning to solve and
+  explain algebraic word problems.
+\newblock In \emph{Proceedings of the 55th Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, 2017.
+
+\bibitem[Liu et~al.(2020)Liu, Cui, Liu, Huang, Wang, and Zhang]{liu2020logiqa}
+Jian Liu, Leyang Cui, Hanmeng Liu, Dandan Huang, Yile Wang, and Yue Zhang.
+\newblock {LogiQA}: A challenge dataset for machine reading comprehension with
+  logical reasoning.
+\newblock In \emph{Proceedings of the Twenty-Ninth International Joint
+  Conference on Artificial Intelligence (IJCAI)}, 2020.
+
+\bibitem[Liu et~al.(2019)Liu, Ott, Goyal, Du, Joshi, Chen, Levy, Lewis,
+  Zettlemoyer, and Stoyanov]{liu2019roberta}
+Yinhan Liu, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer
+  Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov.
+\newblock {RoBERTa}: A robustly optimized {BERT} pretraining approach.
+\newblock \emph{arXiv preprint arXiv:1907.11692}, 2019.
 
 \bibitem[Mirtaheri \& Belkin(2026)Mirtaheri and Belkin]{mirtaheri2026catching}
 Parsa Mirtaheri and Mikhail Belkin.
@@ -142,6 +215,16 @@ Hoang Pham, Dong Le, and Anh~Tuan Luu.
 \newblock {GRACE}: Step-level benchmark for faithful reasoning over context.
 \newblock \emph{arXiv preprint arXiv:2606.16151}, 2026.
 \newblock URL \url{https://arxiv.org/abs/2606.16151}.
+
+\bibitem[Phan et~al.(2025)]{phan2025hle}
+Long Phan et~al.
+\newblock Humanity's last exam.
+\newblock \emph{arXiv preprint arXiv:2501.14249}, 2025.
+
+\bibitem[{Qwen Team} et~al.(2024)]{qwen2025qwen25}
+{Qwen Team} et~al.
+\newblock Qwen2.5 technical report.
+\newblock \emph{arXiv preprint arXiv:2412.15115}, 2024.
 
 \bibitem[Sharma et~al.(2024)Sharma, Tong, Korbak, Duvenaud, Askell, Bowman,
   Cheng, Durmus, Hatfield-Dodds, Johnston, Kravec, Maxwell, McCandlish,
@@ -190,6 +273,14 @@ Miles Turpin, Julian Michael, Ethan Perez, and Samuel~R. Bowman.
 \newblock In \emph{Advances in Neural Information Processing Systems
   (NeurIPS)}, 2023.
 \newblock {arXiv}:2305.04388.
+
+\bibitem[Williams et~al.(2018)Williams, Nangia, and Bowman]{williams2018mnli}
+Adina Williams, Nikita Nangia, and Samuel~R. Bowman.
+\newblock A broad-coverage challenge corpus for sentence understanding through
+  inference.
+\newblock In \emph{Proceedings of the 2018 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies}, 2018.
 
 \bibitem[Zaman \& Srivastava(2025{\natexlab{a}})Zaman and
   Srivastava]{zaman2025causal}

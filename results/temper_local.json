@@ -44,5 +44,18 @@
    ]
   },
   "spearman_nli_steps": 0.86
+ },
+ "correct_regime_length_partial": {
+  "answer_tracing_inv": {
+   "raw": 0.667,
+   "partialed": 0.643,
+   "spearman_len": 0.198
+  },
+  "prefix_instability_inv": {
+   "raw": 0.659,
+   "partialed": 0.648,
+   "spearman_len": 0.075
+  },
+  "note": "rank-residualized on n_steps, complete-feature ft3v4 n=363"
  }
 }

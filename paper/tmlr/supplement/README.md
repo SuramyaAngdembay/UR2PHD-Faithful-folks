@@ -22,6 +22,7 @@ they will be released publicly with the camera-ready.
 - S4/S5 regime-difference + paired oracle-vs-metric tests: scripts/regime_delta_tests.py -> results/regime_delta_tests.json
 - S4/S5 judge same-sample comparisons, degradation test, own-trace exclusion: scripts/judge_extras.py -> results/judge_extras.json
 - S8 judge-probe complementarity (metric-blind regime): scripts/judge_probe_comp.py -> results/judge_probe_comp.json
+- Temper-search analyses (judge per-domain/composition, clustered bootstrap, length/NLI decomposition, text-transfer control): scripts/temper_patch.py, embed_transfer.py -> results/temper_patch.json, temper_local.json, embed_transfer.json
 - Every headline number, recomputed from JSONs: scripts/paper_numbers.py
 
 ## Environment

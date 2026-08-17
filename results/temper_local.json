@@ -1,0 +1,48 @@
+{
+ "length_fullset": {
+  "n": 1303,
+  "auroc": 0.554,
+  "ci95": [
+   0.518,
+   0.591
+  ]
+ },
+ "incorrect_bw": {
+  "n": 514,
+  "n_steps": {
+   "auroc": 0.505,
+   "ci95": [
+    0.457,
+    0.557
+   ]
+  },
+  "nli_n_unsup": 0.518,
+  "nli_fraction": {
+   "auroc": 0.507,
+   "ci95": [
+    0.467,
+    0.547
+   ]
+  },
+  "spearman_nli_steps": 0.892
+ },
+ "correct_bw": {
+  "n": 789,
+  "n_steps": {
+   "auroc": 0.62,
+   "ci95": [
+    0.56,
+    0.679
+   ]
+  },
+  "nli_n_unsup": 0.622,
+  "nli_fraction": {
+   "auroc": 0.528,
+   "ci95": [
+    0.48,
+    0.571
+   ]
+  },
+  "spearman_nli_steps": 0.86
+ }
+}

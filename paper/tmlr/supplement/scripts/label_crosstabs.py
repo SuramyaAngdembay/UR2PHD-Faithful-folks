@@ -1,7 +1,7 @@
 """Exact ft x parsed-correctness crosstabs (overall + per domain) + ft x y + census -> JSON artifact.
 CPU-only; run on the GPU server. Feeds paper Appendix A (reviewer-verifiable label-semantics table)."""
 import collections, glob, json, os
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 DOMAINS = ["truthfulqa", "logiqa", "aqua", "HLE_BIO"]
 MDIRS = ["llama-3.1-8b-instruct", "Qwen2.5-7B-Instruct", "gpt-4o-mini", "gemini-2.5-flash"]
 rows = []

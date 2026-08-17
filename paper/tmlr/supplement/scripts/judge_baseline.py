@@ -30,7 +30,7 @@ ap.add_argument("--workers", type=int, default=4)
 ap.add_argument("--rpm", type=int, default=60, help="max requests/min (global pacer)")
 a = ap.parse_args()
 
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 RAW = os.path.expanduser("~/synth/results/judge_raw.jsonl")
 OUT = os.path.expanduser("~/synth/results/judge_baseline.json")
 KEY = os.environ.get("OPENAI_API_KEY") or (open(os.path.expanduser("~/.openai_key")).read().strip()

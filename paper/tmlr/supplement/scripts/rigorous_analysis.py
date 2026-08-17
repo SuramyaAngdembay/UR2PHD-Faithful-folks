@@ -13,7 +13,7 @@ from scipy.stats import rankdata, spearmanr
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 NLI = "roberta-large-mnli"
 FEAT = os.path.expanduser("~/rigorous_features.json")
 DOMAINS = ["truthfulqa", "logiqa", "aqua", "HLE_BIO"]

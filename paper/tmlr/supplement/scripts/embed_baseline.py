@@ -29,7 +29,7 @@ def cv_auc(X, y):
         oof[te] = p.fit(X[tr], y[tr]).predict_proba(X[te])[:, 1]
     return roc_auc_score(y, oof)
 res = {}
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 MDIR = {"llama": "llama-3.1-8b-instruct", "qwen": "Qwen2.5-7B-Instruct"}
 for m, mdir in MDIR.items():
     texts, y = [], []

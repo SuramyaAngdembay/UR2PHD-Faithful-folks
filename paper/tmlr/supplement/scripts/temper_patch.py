@@ -11,7 +11,7 @@ import json, glob, os, hashlib
 from collections import Counter
 import numpy as np
 
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 RAW = os.path.expanduser("~/synth/results/judge_raw.jsonl")
 OUT = os.path.expanduser("~/synth/results/temper_patch.json")
 

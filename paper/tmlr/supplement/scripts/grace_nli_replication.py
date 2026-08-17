@@ -11,7 +11,7 @@ import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from scipy.stats import rankdata
 
-GRACE = os.path.expanduser("~/ur2phd/upstream/grace/data/grace_examples.json")
+GRACE = os.path.expanduser("~/project/upstream/grace/data/grace_examples.json")
 NLI = "roberta-large-mnli"; GPU = 0; DEV = f"cuda:{GPU}"
 torch.cuda.set_device(GPU)
 tok = AutoTokenizer.from_pretrained(NLI)

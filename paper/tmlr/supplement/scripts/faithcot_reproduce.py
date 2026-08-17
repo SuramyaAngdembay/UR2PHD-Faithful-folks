@@ -5,7 +5,7 @@ correct regime, per model, with bootstrap CIs. No model needed -- reads their st
 Also: does soft add value beyond correctness (their conflation caveat)? partial check."""
 import json, glob, os
 import numpy as np, collections
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 def auroc(s, t):
     s=np.asarray(s,float); t=np.asarray(t,float)
     o=np.argsort(s,kind='mergesort'); r=np.empty(len(s)); x=s[o]; i=0

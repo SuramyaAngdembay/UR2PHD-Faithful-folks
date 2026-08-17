@@ -25,7 +25,7 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import roc_auc_score
 from scipy.stats import spearmanr
 
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 DOMAINS = ["truthfulqa", "logiqa", "aqua", "HLE_BIO"]
 MDIR = "llama-3.1-8b-instruct"
 RAW = os.path.expanduser("~/synth/results/judge_raw.jsonl")

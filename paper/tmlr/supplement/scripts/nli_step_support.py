@@ -10,7 +10,7 @@ import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from scipy.stats import spearmanr
 
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 NLI = "roberta-large-mnli"
 GROUPS = [("truthfulqa", "llama-3.1-8b-instruct"), ("truthfulqa", "Qwen2.5-7B-Instruct"),
           ("logiqa", "llama-3.1-8b-instruct"), ("logiqa", "Qwen2.5-7B-Instruct")]

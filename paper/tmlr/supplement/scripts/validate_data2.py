@@ -11,7 +11,7 @@ import numpy as np, collections
 ap = argparse.ArgumentParser()
 ap.add_argument("--gpu", type=int, default=0); ap.add_argument("--nsoft", type=int, default=30)
 a = ap.parse_args()
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 DOMAINS = ["truthfulqa","logiqa","aqua","HLE_BIO"]; S = os.path.expanduser("~/synth")
 def norm(q): return re.sub(r"\s+"," ",q.strip().lower())[:200]
 recs = []

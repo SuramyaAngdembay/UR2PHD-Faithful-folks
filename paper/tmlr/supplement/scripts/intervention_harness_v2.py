@@ -18,7 +18,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 random.seed(0)
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 MODEL = "meta-llama/Llama-3.1-8B-Instruct"
 GROUPS = [("truthfulqa", "llama-3.1-8b-instruct"), ("logiqa", "llama-3.1-8b-instruct")]
 GPU = 0; DEV = f"cuda:{GPU}"

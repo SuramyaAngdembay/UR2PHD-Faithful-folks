@@ -11,7 +11,7 @@ CPU-only; reads the release + judge_raw.jsonl. Output: ~/synth/results/judge_ext
 import json, glob, os
 import numpy as np
 
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 RAW = os.path.expanduser("~/synth/results/judge_raw.jsonl")
 OUT = os.path.expanduser("~/synth/results/judge_extras.json")
 OPEN = {"llama-3.1-8b-instruct", "Qwen2.5-7B-Instruct"}

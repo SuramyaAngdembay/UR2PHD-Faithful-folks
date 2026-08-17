@@ -12,7 +12,7 @@ import numpy as np
 ap = argparse.ArgumentParser()
 ap.add_argument("--gpu", type=int, default=0); ap.add_argument("--nsoft", type=int, default=40)
 a = ap.parse_args()
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 DOMAINS = ["truthfulqa", "logiqa", "aqua", "HLE_BIO"]
 MDIRS = ["llama-3.1-8b-instruct", "Qwen2.5-7B-Instruct", "gpt-4o-mini", "gemini-2.5-flash"]
 def norm(q): return re.sub(r"\s+", " ", q.strip().lower())[:200]

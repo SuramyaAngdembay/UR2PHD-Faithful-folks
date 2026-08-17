@@ -37,7 +37,7 @@ if not tx:
 ty = np.array(ty); print(f"hint train n={len(ty)} pos={ty.sum()}", flush=True)
 
 # test set: annotated ft1v2 llama
-BASE = os.path.expanduser("~/ur2phd/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
+BASE = os.path.expanduser("~/project/upstream/FaithCoT-BENCH/faithcot_data/faithcot")
 ex, ey = [], []
 for dom in ("truthfulqa", "logiqa", "aqua", "HLE_BIO"):
     for f in glob.glob(os.path.join(BASE, dom, "llama-3.1-8b-instruct", "response_*.json")):

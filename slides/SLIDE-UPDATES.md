@@ -1,3 +1,11 @@
+> ## ⚠️ SUPERSEDED — WRONG REGIME LABELS (do not present)
+> Everything below predates the **2026-07-16 label-semantics correction** (see `notes/2026-07-16-data-validation.md`).
+> FaithCoT-Bench's data-side coding is: **ft1/ft2 = INCORRECT-answer regime; ft3/ft4 = correct-answer regime** —
+> the inverse of what these slides assume. Wherever this file (and the figures built by
+> `make_slide_figures.py`) say "correct answers only (ft1 vs ft2)", read **incorrect answers**.
+> The at-chance/frontier finding itself stands, but it lives in the *incorrect*-answer regime.
+> Current framing: `paper/tmlr/main.tex` (two-regime paper). Regenerate all slides from that before any talk.
+
 # Deck updates — slides 4+ (slides 1–3 untouched, already recorded)
 
 Figures in this folder are theme-matched (dark navy bg `#0e1420`, family colors, dashed

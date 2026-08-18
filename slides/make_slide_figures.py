@@ -1,3 +1,7 @@
+# ⚠️ SUPERSEDED (2026-07-16 label correction): this script and its figure titles use the
+# pre-correction pairing (ft1v2 labeled "correct answers"). Data-side truth: ft1v2 = INCORRECT-answer
+# regime, ft3v4 = correct. Do not regenerate/present these figures without fixing the labels.
+# See notes/2026-07-16-data-validation.md and paper/tmlr/main.tex.
 """
 Generate theme-matched figures for the proposal deck from real results/ data.
 Theme: dark navy bg, family-colored horizontal bars, dashed chance line, white labels

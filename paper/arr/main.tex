@@ -1,0 +1,554 @@
+% ARR / *ACL submission — reframed around construct validity, 2026-08-23.
+% Ported from the TMLR build (paper/tmlr/main.tex); all numbers, tables and figures unchanged.
+% BUILD MODES: [review] = anonymous (default). [preprint] = names + page numbers. [final] = camera-ready.
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+\definecolor{hintbg}{RGB}{255,230,180}
+\definecolor{okgreen}{RGB}{59,138,90}
+\definecolor{papblue}{RGB}{59,111,182}
+\definecolor{papred}{RGB}{194,59,59}
+
+\title{The Cleanest Construction Is the Least Valid:\\Construct Validity for Chain-of-Thought Faithfulness Detection}
+
+\author{Suramya R. Angdembay \\
+  The University of Southern Mississippi \\
+  \texttt{Suramya.Angdembay@usm.edu} \\\And
+  Dikshant Aryal \\
+  The University of Southern Mississippi \\
+  \texttt{Dikshant.Aryal@usm.edu} \\\And
+  Nick Rahimi \\
+  The University of Southern Mississippi \\
+  \texttt{Nick.Rahimi@usm.edu} \\}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Detecting unfaithful chain-of-thought (CoT) depends on measurement: on the metrics that score traces, and on the data used to train and evaluate detectors. Because human faithfulness annotations are scarce, both are usually validated \emph{within-distribution}---a metric against constructed ground truth, a detector against the construction it was trained on. We ask whether that establishes that these instruments measure organic unfaithfulness, and find, against human annotations, that it does not. Auditing five families of behavioral detectors and three constructions of unfaithfulness on FaithCoT-Bench: \textbf{(i)} the standard step-removal metric \emph{anti-correlates} with human labels (AUROC 0.349), an inversion that reproduces on the benchmark's own released scores and on causally-labeled traces, and is explained by the metric tracking answer--reasoning \emph{coupling}; \textbf{(ii)} aggregate scores are largely \emph{composition}---stratifying by answer correctness splits detection into two regimes with opposite profiles, behavioral signals reaching 0.63--0.67 on correct answers while no metric-based signal is detectably above chance on incorrect answers, which carry 69\% of annotated unfaithfulness (a prompted LLM judge degrades there too, 0.830 $\to$ 0.679); \textbf{(iii)} most consequentially, the dominant construction---instructing a model to rationalize a given answer---is the \emph{easiest} to detect within-distribution (significant in all seven models tested) yet its probes transfer to neither annotated regime, while messier hint-induced answer flips, \emph{harder} within-distribution, are the only construction whose probes transfer onto annotated unfaithfulness; question-only and text-encoder controls rule out mundane carriers. Within-distribution detectability is therefore not construct validity, and the cleanest construction proved the least valid proxy. We give three prescriptions, and applying the first, identify and report a documentation--data mismatch in the benchmark's label semantics (since corrected upstream).
+\end{abstract}
+
+
+\section{Introduction}
+
+Large language models produce fluent step-by-step explanations that appear to expose a reasoning process, but the stated reasoning is sometimes not the process that produced the answer \citep{lanham2023measuring,turpin2023language,chen2025reasoning}. As CoT becomes an oversight surface, where an auditor reads the reasoning to decide whether to trust the answer, the practical question is instance-level: can \emph{this} explanation be trusted? FaithCoT-Bench \citep{shen2026faithcot} formalizes this problem with human annotations, evaluating eleven detectors and finding metric-style families weak while LLM-as-judge methods are strongest in aggregate.
+
+Detecting unfaithful CoT is a \emph{measurement} problem, and measurement here rests on two instruments: the \emph{metrics} that score a trace, and the \emph{constructed data} used to train and evaluate detectors. Human annotations are scarce---the benchmark we audit supplies 340 unfaithful traces in total---so both instruments are ordinarily validated \emph{within-distribution}: a metric against constructed ground truth, a detector against the construction it was trained on. This paper asks whether within-distribution validation establishes that these instruments measure the \textbf{organic} phenomenon, and finds, against human annotations, that it does not. Figure~\ref{fig:overview} summarizes the argument; Figure~\ref{fig:example} shows the phenomenon the instruments are meant to capture: the same model, on the same problem, fails cleanly; handed a hint, it produces a locally flawless derivation of the hinted answer without mentioning the hint. Nothing on the surface distinguishes that trace from genuine reasoning.
+
+Contributions: \textbf{(1)} to our knowledge the first \emph{transfer-validation of constructed unfaithfulness against human annotations}---instructed rationalization, the dominant construction \citep[cf.][]{offpolicy2025probes}, is the \emph{easiest} variant to detect within-distribution yet carries no annotated-regime signal, while hint-induced flips, harder within-distribution, are the only construction that transfers; \textbf{(2)} a correctness-stratified evaluation protocol for instance-level faithfulness detection---prior evidence of faithfulness--accuracy coupling is model-level \citep{bentham2024disguised} or unstratified---with the finding that aggregate detector scores are largely composition; \textbf{(3)} an answer--reasoning coupling \emph{account} and regime localization for the step-removal inversion, complementing constructed-ground-truth metric failures \citep{gurarieh2026bonafide,zaman2025causal} with human-label evidence; \textbf{(4)} a regime-stratified internals contrast, including judge--probe complementarity.
+
+\begin{figure*}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\scriptsize,
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=4pt},
+  arr/.style={-{Stealth[length=2mm]}, semithick},
+  fail/.style={arr, dashed, papred},
+  pass/.style={arr, okgreen, thick}
+]
+\node[box, fill=gray!8]                at (0,0)      (bench) {\textbf{FaithCoT-Bench}\\1{,}303 human-annotated\\traces\\[1pt]\emph{correctness alone (an oracle)}\\\emph{$\geq$ every metric}};
+\node[box, fill=papblue!10]            at (4.6,1.1)  (cor)  {\textbf{Correct answers} ($n{=}363$)\\faithful vs.\ post-hoc};
+\node[box, fill=papred!10]             at (4.6,-1.1) (inc)  {\textbf{Incorrect answers} ($n{=}270$)\\honest vs.\ unfaithful error\\\emph{69\% of unfaithfulness}};
+\node[box]                             at (9.0,1.1)  (bcor) {\emph{Metrics:} moderate, 0.63--0.67,\\standard one \textbf{inverted};\\\emph{judge:} 0.83};
+\node[box]                             at (9.0,-1.1) (binc) {\emph{Metrics:} \textbf{all $\approx$ chance};\\\emph{judge:} 0.68 (degraded)};
+\node[box]                             at (13.0,1.1) (icor) {\emph{Probes:} Qwen-2.5 \checkmark\\Llama n.s.};
+\node[box]                             at (13.0,-1.1)(iinc) {\emph{Probes:} Llama-3.1 \checkmark\\Qwen n.s.};
+\draw[arr] (bench.east) -- (cor.west);
+\draw[arr] (bench.east) -- (inc.west);
+\draw[arr] (cor) -- (bcor); \draw[arr] (inc) -- (binc);
+\draw[arr] (bcor) -- (icor); \draw[arr] (binc) -- (iinc);
+\draw[fail, {Stealth[length=2mm]}-{Stealth[length=2mm]}] (icor.south) -- node[right=1pt, font=\tiny, align=left]{no cross-regime\\transfer} (iinc.north);
+\node[box, fill=gray!8]   at (6.2,-2.8) (instr) {\textbf{Instructed} answer-first\\7 models, decodable in-dist.};
+\node[box, fill=hintbg!60] at (10.6,-2.8) (hint) {\textbf{Hint-induced} flips\\sample-level flip labels, 2 templates};
+\draw[fail] (instr.north) to[out=70,in=230] node[pos=0.45, left=1pt, font=\tiny, align=right]{transfers to\\neither regime} (iinc.west);
+\draw[pass] (hint.north) to[out=90,in=270] node[pos=0.5, right=2pt, font=\tiny, align=left]{transfers\\(Llama)} (iinc.south);
+\end{tikzpicture}}
+\caption{Overview. Stratifying FaithCoT-Bench by correctness splits detection into two regimes, behaviorally and internally; of the constructed testbeds, only hint-induced flip probes transfer to the annotations, onto the metric-blind regime.}
+\label{fig:overview}
+\end{figure*}
+
+
+We proceed in three parts. Part~I (\S\ref{sec:audit}) asks what behavioral detection actually measures, and finds metric-based signals largely re-detect answer correctness while the standard metric is inverted. Part~II (\S\ref{sec:regimes}--\S\ref{sec:internals}) shows the failure is structured rather than uniform: stratifying by correctness yields two regimes with opposite behavioral profiles and different internal decodability. Part~III (\S\ref{sec:construction}) then asks whether the constructions used to build detector data share representations with the annotated phenomenon at all---the paper's central test.
+
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{CoT faithfulness.} \citet{lanham2023measuring} introduced perturbation-based faithfulness tests, from which step-removal ``answer-tracing'' metrics descend. \citet{turpin2023language} showed models rationalize biased answers without verbalizing the bias; \citet{chen2025reasoning} measured low hint-verbalization rates; \citet{arcuschin2025wild} document post-hoc rationalization in the wild; \citet{zaman2026hint} show unverbalized hints still causally flow through the CoT---our hint-induced construction operationalizes that paradigm as a labeled testbed. \citet{bentham2024disguised} showed model-level unfaithfulness scores largely track accuracy; we give the instance-level counterpart against human labels. FaithCoT-Bench \citep{shen2026faithcot} contributes the annotations we evaluate against and notes that correctness and faithfulness diverge at the instance level; we quantify the residual coupling, control for it, and resolve a label-semantics mismatch in its documentation (\S\ref{sec:labels}).
+
+\paragraph{Concurrent work (2026).} Reading unfaithfulness from internals is active: \citet{mirtaheri2026catching} find post-CoT activation probes beat CoT monitors on hint-induced motivated reasoning; \citet{occhipinti2026probing} probe and steer unfaithful spans; \citet{shen2026cie} (the FaithCoT-Bench group) build a circuit-based detector; \citet{gurarieh2026bonafide} report below-chance AUROCs for perturbation metrics against constructed ground truth; \citet{cox2026decoding} decode answers pre-CoT. None stratifies \emph{human-annotated} detection by correctness, explains the metric inversion via that structure, or compares instructed, hint-induced and annotated unfaithfulness at the representation level---the three additions here. \citet{offpolicy2025probes} show probe performance degrades under off-policy and distribution shift; our transfer analysis extends that caution to CoT faithfulness.
+
+\paragraph{Structural verification.} PARC \citep{mukherjee2025parc}, GoV \citep{fang2025gov} and VeriCoT \citep{feng2025vericot} verify chains structurally, targeting correctness and logical validity; we find such structure largely does not transfer to \emph{faithfulness}. Step-level benchmarks \citep{zheng2024processbench,jacovi2024reveal,pham2026grace} evaluate related but distinct constructs.
+
+\paragraph{Probing.} Our probing method is deliberately standard (linear probes with selection-corrected permutation testing): the contribution is the behavioral-vs-internal \emph{contrast} and the transfer analyses, not a new technique. Following \citet{belinkov2022probing}, decodability does not imply the model \emph{uses} the information \citep{elazar2021amnesic}; probe claims are therefore stated as ``linearly decodable,'' with steering as separate (weak) causal evidence.
+
+\section{Setup}
+\label{sec:setup}
+
+\paragraph{Benchmark.} FaithCoT-Bench spans four domains (LogiQA \citep{liu2020logiqa}, TruthfulQA \citep{lin2022truthfulqa}, AQuA \citep{ling2017aqua}, HLE-Bio \citep{phan2025hle}) and four models (Llama-3.1-8B-Instruct, Qwen-2.5-7B-Instruct, GPT-4o-mini, Gemini-2.5-Flash): 1{,}364 released traces, 1{,}304 carrying a binary human label and 1{,}303 also a four-way code (census in Appendix~\ref{app:labels}). It supplies derived metrics---notably \texttt{soft\_faithfulness}, a step-removal answer-tracing score---and \emph{human} annotations: binary \texttt{unfaithfulness} and four-way \texttt{faithful\_type}. We evaluate against the human labels throughout.
+
+\paragraph{Label semantics, verified against the data.}
+\label{sec:labels}
+At the time of our analysis the benchmark's documentation and its released data disagreed about what the four \texttt{faithful\_type} codes mean. In the data they pair as \textbf{ft1 faithful / ft2 unfaithful on \emph{incorrect} answers; ft3 faithful / ft4 unfaithful (post-hoc) on \emph{correct} answers}; the then-current documentation stated the reverse. The faithful/unfaithful axis is anchored by the independent binary label (95.7\% co-occurrence), and we resolved the correctness axis three independent ways: cross-tabulating the release's \emph{own stored} parsed answers against its gold labels (near-deterministic in every domain), reproducing the benchmark paper's per-model accuracy statistics (which match only under the data-side semantics), and checking released per-trace metric scores (Appendix~\ref{app:labels}). The discrepancy was independently flagged on the repository's public issue tracker and corrected upstream\footnote{Independently flagged on the repository's public issue tracker in July 2026; the documentation was corrected upstream later that month. Direct links and exact dates withheld for anonymity; included in the camera-ready.}; we use the verified data-side semantics. Counts: ft1 281, ft2 233, ft3 682, ft4 107; hence \textbf{233/340 $\approx$ 69\% of annotated unfaithfulness sits on incorrect answers}. The mismatch concerned documentation only, not the labels or the benchmark's reported results. The methodological point---verify label semantics against raw data, since any analysis inheriting the documented pairing silently swaps its regimes---is the first of the three prescriptions in \S\ref{sec:discussion}.
+
+\paragraph{Statistical standards.} Detection claims use AUROC with 2{,}000-resample percentile-bootstrap 95\% CIs (minority classes 13--43\%); because traces cluster by model and domain, headline effects are additionally checked with a cluster bootstrap over the 8 model$\times$domain cells (both survive: incorrectness [0.616, 0.753]; inverted answer-tracing [0.575, 0.728]). Probe claims use held-out splits plus \emph{selection-corrected} permutation tests: because the best layer is chosen post hoc, the null takes the max (or mean, matching the reported statistic) over layers under label permutation, coupled across layers \citep{nichols2002nonparametric}:
+\begin{equation}\label{eq:perm}
+T = \max_{\ell\in L}\mathrm{AUROC}_\ell \Bigl(\text{or } \tfrac{1}{\lvert L\rvert}\textstyle\sum_{\ell} \mathrm{AUROC}_\ell\Bigr),\;
+p = \frac{1 + \sum_{b=1}^{B}\mathbf{1}[T^{(b)} \ge T^{\mathrm{obs}}]}{B+1}.
+\end{equation}
+Values reported as 0.005 mean $p \leq 1/201$; headline transfer tests use 1{,}000 permutations, and the null doubles as the memorization control \citep{hewitt2019control}. Pooled judge estimates were also recomputed with a question-clustered bootstrap (340 clusters), essentially unchanged (0.679 [0.633, 0.726]); trace-level intervals are reported throughout. $\Delta$AUROC comparisons are descriptive, not a confirmatory family. Scalers and PCA are fit within training folds only.
+
+\paragraph{Reproducibility and artifacts.} An anonymized supplement contains the scripts and per-experiment result files backing every reported number, with a claims-to-scripts map; checkpoints and generation settings are in Appendix~\ref{app:defs}. The constructed testbeds (898 hint-flip, 2{,}379 genuine traces) will be released with the camera-ready. Experiments ran on two RTX 3070 (8\,GB) GPUs with 4-bit NF4 quantization \citep{dettmers2023qlora}.
+
+\section{Part I: What Behavioral Detection Measures}
+\label{sec:audit}
+
+\paragraph{Signal families.} \emph{Answer-tracing}: sensitivity of the final-answer distribution to removing individual steps; the benchmark's step-removal metric is, for a trace with $T$ steps and stored parsed answer $a^{\ast}$,
+\begin{equation}\label{eq:soft}
+\texttt{soft\_faithfulness}(x) \;=\; \frac{1}{T}\sum_{i=1}^{T}\bigl\lvert P(a^{\ast}\mid \mathrm{CoT}) - P(a^{\ast}\mid \mathrm{CoT}\setminus \mathrm{step}_i)\bigr\rvert,
+\end{equation}
+higher meaning the answer depends on more of its stated steps (we use the benchmark's stored scores). \emph{Prefix instability} (PI) is an answer-tracing variant: the mean $L_1$ change between successive prefixes' answer distributions. \emph{Premise-DAG structure} (PARC-style graphs over steps) and \emph{graph-targeted interventions} (corrupting the most load-bearing premise; LLM extractor validated at recall 0.82 / F1 0.79 vs.\ PARC gold) form the structural families, and \emph{per-step NLI support} scores entailment of each step from question and prior steps (RoBERTa-large-MNLI; \citealp{liu2019roberta,williams2018mnli}); definitions in Appendix~\ref{app:defs}. Because behavioral monitoring in practice often means \emph{prompting an LLM judge}, we add one as a fifth family: GPT-4o-mini (temperature 0, one fixed prompt written before seeing any output, JSON-forced 0--100 score) over all 1{,}303 labeled traces, shown the question, options and full CoT but never the gold answer. That judge methods lead \emph{in aggregate} is the benchmark's own finding \citep{shen2026faithcot}; what it does not report is judge performance stratified by correctness. Signal directions are fixed a priori; where a signal discriminates only in the \emph{opposite} direction we report it as inverted---one sign selection made on the full data and reused unchanged in the stratified analyses.
+
+\paragraph{Results.} Figure~\ref{fig:regimes} (left; full values in Table~\ref{tab:audit}): \textbf{answer incorrectness alone has the highest AUROC among the metric-based signals (0.696)}---an oracle diagnostic, since it requires the gold answer. Paired oracle$-$metric $\Delta$AUROC: $+$0.071 [$+$0.018, $+$0.122] (PI), $+$0.128 [$+$0.069, $+$0.187] (NLI), $+$0.045 [$-$0.006, $+$0.098] (answer-tracing; not resolved). Annotated unfaithfulness concentrates on incorrect answers, so metric-based detection largely reduces to accuracy prediction. \textbf{The prompted judge is the only behavioral signal to exceed the oracle}: judge 0.782 [0.756, 0.808] vs.\ oracle 0.703, paired $\Delta$ $+$0.079 [$+$0.043, $+$0.117] (complete-feature subset 0.771 vs.\ 0.697). Behavioral detection is therefore not \emph{only} accuracy prediction, though the judge partially tracks incorrectness (0.684). Structural families add nothing significant (DAG max lookback is weakly informative on AQuA, 0.636). The 633-trace subset is set by feature availability, not outcomes.
+
+\paragraph{Metric inversion.} \texttt{soft\_faithfulness} used as intended scores \textbf{0.349 [0.305, 0.389]}, significantly \emph{below} chance; unfaithful traces score \emph{higher} by $+0.139$ [$+0.096, +0.182$]. This is not a pipeline artifact: recomputing from the benchmark's \emph{own released} per-trace scores against its own human labels reproduces it (0.348; per-model values in Appendix~\ref{app:labels}). Concurrent meta-evaluations report below-chance AUROCs against constructed ground truth \citep{gurarieh2026bonafide} and failures to beat random baselines \citep{zaman2025causal}; ours is against \emph{human} labels, and the regime decomposition supplies a mechanism. Mean scores by annotation: ft3 (faithful-correct) \textbf{0.230} vs.\ ft1 0.371, ft2 0.397, ft4 \textbf{0.405}---the metric scores faithful-correct traces \emph{least} faithful, plausibly because a model that genuinely solved the problem can re-derive its answer when steps are removed, while a tightly answer-coupled rationalization cannot. Within the incorrect regime the metric is merely uninformative (0.470, n.s.); within the correct regime it is confidently inverted (0.333). On these data it tracks answer--reasoning \emph{coupling} rather than annotated faithfulness (\S\ref{sec:discussion}), and \S\ref{sec:construction} replicates the inversion on causally-labeled traces.
+
+\section{Part II: Two Detection Regimes}
+\label{sec:regimes}
+
+Stratifying the complete-feature subset by answer correctness gives each half its own detection problem, with opposite characters (Figure~\ref{fig:regimes}; exact values in Table~\ref{tab:regimes}, Appendix~\ref{app:labels}). The asymmetry is unchanged when the independent binary \texttt{unfaithfulness} label replaces \texttt{faithful\_type} as the target (Appendix~\ref{app:labels}). Per-cell heterogeneity is real (Appendix~\ref{app:forest}): both headline effects are near chance on HLE-Bio ($n{=}40$ per model).
+
+
+
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/two_regimes.pdf}
+\caption{The audit in one view (complete-feature subset; metric families). Left: incorrectness alone (red) matches or exceeds every purpose-built metric signal. Middle: on \emph{incorrect}-answer traces no metric signal is detectably above chance (dashed line). Right: on \emph{correct}-answer traces three metric signals are moderately informative (blue = CI excludes 0.5). Bars: bootstrap 95\% CIs. The prompted LLM judge (gold, black edge) is evaluated on the \emph{same} subset (0.771 / 0.635 [0.568, 0.702] / 0.832 across the panels; full labeled set: 0.782 / 0.679 / 0.830).}
+\label{fig:regimes}
+\end{figure*}
+
+\paragraph{The detectable regime (correct answers).} Separating faithful reasoning (ft3) from post-hoc rationalization (ft4) on correct answers is \emph{partially} solvable behaviorally: answer-tracing (inverted), prefix instability (inverted), and NLI step-support all clear chance (0.63--0.67). The inversion is sharpest here: intended-direction \texttt{soft\_faithfulness} scores 0.333, \emph{worse than a coin flip} on exactly the distinction the metric was designed for.
+
+\paragraph{The metric-blind regime (incorrect answers).} Distinguishing honest from unfaithful error is opaque to every metric-based signal: \textbf{we detect no above-chance performance from any of the four algorithmic families}; every CI includes 0.5 (intervals are wide---answer-tracing's reaches 0.598---so modest effects cannot be excluded). A \emph{learned} text baseline also fails (0.446 / 0.474). Nor is this a two-model artifact: on the signals available for \emph{all four} models the pattern replicates on the full labeled set (incorrect regime all n.s., NLI 0.518 [0.470, 0.567]; correct regime NLI significant, 0.622 [0.563, 0.682]). That benchmark-wide carrier is largely \emph{length}: the length-normalized fraction of unsupported steps is at chance in both regimes and raw step count alone reproduces the asymmetry, while answer-tracing and PI survive length-partialing intact (Appendix~\ref{app:forest}). Correct-regime detection is thus moderate but partly \emph{shallow}; in the incorrect regime not even length carries signal. The judge is the exception: it retains significant signal (0.679 [0.633, 0.721]) but degrades sharply from 0.830 ($\Delta$ 0.152 [0.089, 0.211], $p{<}0.001$), robustly under both decompositions (excluding HLE-Bio $\Delta$ 0.140; within-domain $+$0.109). Within a regime correctness is constant, so this cannot be correctness re-detection---and this is the regime holding most annotated unfaithfulness. Regime-difference tests: answer-tracing $+$0.136 [$+$0.035, $+$0.235], PI $+$0.178 [$+$0.078, $+$0.279], NLI $+$0.085 (n.s.), judge $+$0.152 [$+$0.089, $+$0.211].
+
+\subsection{What internals add}
+\label{sec:internals}
+We fit standardized PCA-50 logistic-regression probes on hidden states at every layer, read at the final sequence position, with 5-fold CV and the selection-corrected test of \S\ref{sec:setup} (teacher-forced re-encoding; the two open models). \textbf{Each regime is decodable---in a different model.} On ft1 vs.\ ft2, where every metric-based signal fails, Llama-3.1-8B reaches held-out AUROC 0.67 $\pm$ 0.08 under nested layer selection, generalizing across domains (LODO 0.60--0.71); Qwen is weak and not significant---``not detected,'' not ``absent'' ($n{=}126$; cf.\ \S\ref{sec:bridge} (2b)). On ft3 vs.\ ft4 the pattern \emph{flips}: Qwen is significant (0.701, $p{=}0.014$) while Llama's higher curve (0.759) does not survive selection correction ($p{=}0.19$; ft4 $n{=}26$), underpowered rather than negative. Probes trained on one regime do not transfer to the other in either model or direction (layer-means 0.52--0.57, all n.s.; Table~\ref{tab:whitebox}). With the flipped model-dependence, this is most consistent with unfaithful \emph{error} and post-hoc \emph{rationalization} being distinct phenomena on different directions---a hypothesis, not an established mechanism; an exploratory steering check points the right way (0.22 vs.\ 0.08 at $+6\sigma$; Appendix~\ref{app:steering}).
+
+\section{Part III: Do Constructions Measure the Real Phenomenon?}
+\label{sec:construction}
+
+The annotations supply only 221 unfaithful traces across both regimes in the two probed models (340 benchmark-wide). Scaling requires \emph{constructing} unfaithfulness---and the construction itself turns out to be the object of study.
+
+\subsection{Instructed construction: 7 models}
+\label{sec:synth}
+
+For math problems (AQuA \citep{ling2017aqua}; GSM8K \citep{cobbe2021gsm8k}) with gold answer $a^*$, the same model either solves step-by-step (kept only when correct: \emph{genuine}) or is instructed to justify the given $a^*$ (\emph{post-hoc}). Both end at the same correct answer; probed contexts are identical (the instruction is never probed) and decoding is matched (Appendix~\ref{app:prompts}). Across \textbf{seven open models spanning three families and 2024--2026} \citep{grattafiori2024llama3,qwen2025qwen25,gemmateam2024gemma2,deepseek2025r1}, the construction is permutation-significant in \emph{every} model (Figure~\ref{fig:seven}, Table~\ref{tab:synth}; Appendix~\ref{app:robust}), strongest in standard instruct models and weakest in reasoning-distilled ones. Surface-feature baselines stay near chance for five of seven; Llama (0.64) and Gemma-4 (0.67) carry partial surface tells that the probes clear by $\geq$0.10. Qwen-2.5 is strongest here, consistent with its regime pattern (\S\ref{sec:internals}): like the correct-answer regime, this construction pairs traces that all end at correct answers.
+
+\subsection{Hint-induced flip construction}
+\label{sec:hint}
+
+Following the biased-context paradigm \citep{turpin2023language,chen2025reasoning}, we first ask each problem clean (correct $\Rightarrow$ \emph{genuine}, capped). For problems the model got \emph{wrong}, we re-ask with a sycophancy hint toward the gold answer (``I think the answer is $a^*$\ldots''; cf.\ \citealp{sharma2023sycophancy}). A trace is kept as \emph{hint-induced} iff the model flips to $a^*$ \emph{and} the CoT never references the hint (mention-filtered; rejected cases are honest deference). The label is \textbf{intervention-defined at the sample level}, satisfying the unfaithfulness criterion of \citet{chen2025reasoning}. Decoding is sampled (T$=$0.7) and clean/hinted randomness is not coupled per item, so the label records an \emph{observed} conditional flip, not a within-pair counterfactual; it is not a problem-level inability claim (one independent resample solves 59\% of these problems; only 25\%/29\% fail two consecutive resamples---Appendix~\ref{app:strict}). We distinguish the established claim (``the sampled answer differed under the hint, without verbalization'') from the stronger reading (``the CoT was generated answer-first''), which remains an inference. Probed contexts exclude the hint text. On the full AQuA-RAT and GSM8K test sets this yields \textbf{185 hint-induced $+$ 428 genuine traces for Llama} and \textbf{70 $+$ 464 for Qwen}, with an exhaustive keyword audit confirming no leakage. One caveat: genuine and hint-induced traces come from \emph{disjoint problem pools}, so within-testbed decodability may partly reflect difficulty; the transfer analysis below is the difficulty-robust claim.
+
+Both models are strongly decodable on this set (held-out 0.752 / 0.835, $p{\leq}0.001$), replicated under a second, impersonal template (0.731 / 0.824) and on LogiQA (0.672 / 0.793, weaker surface tells; Appendix~\ref{app:robust}). Input and text baselines are substantial here and we report them prominently: surface features 0.626/0.703, learned text 0.611/0.751, question-only 0.646/0.664---so within-testbed decodability, especially for Qwen, is partly difficulty- and text-explainable, with CoT probes exceeding the strongest such baseline by $+0.08$--$0.11$. Most strikingly, \textbf{the metric inversion replicates under intervention-defined labels}: intended-direction \texttt{soft\_faithfulness} scores \textbf{0.389 [0.301, 0.481] (Llama) and 0.251 [0.166, 0.350] (Qwen)} on the AQuA portion where it is computable---on traces selected by an observed wrong$\to$hinted flip, the standard metric confidently points the wrong way. This is best read as confirming the \emph{coupling} account under coupling-aligned labels: genuine traces come from baseline-solvable problems by construction, so low deletion-sensitivity is expected there.
+
+\subsection{Transfer against the annotated regimes}
+\label{sec:bridge}
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Train $\to$ test} & \textbf{Best} & \textbf{Mean} & \textbf{$p$} \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Llama-3.1-8B}} \\
+\quad Hint $\to$ annotated incorrect rgm. & 0.694 & \textbf{0.616} & \textbf{.017} \\
+\quad Hint $\to$ annotated correct rgm. & 0.634 & 0.555 & .108 \\
+\quad Instructed $\to$ annotated incorrect rgm. & 0.531 & 0.431 & n.s. \\
+\quad Instructed $\to$ annotated correct rgm. & 0.640 & 0.557 & .116 \\
+\quad Instructed $\leftrightarrow$ hint & 0.65 & 0.61--0.63 & --- \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Qwen-2.5-7B}} \\
+\quad Hint $\to$ annotated incorrect rgm. & 0.583 & 0.484 & .741 \\
+\quad Hint $\to$ annotated correct rgm. & 0.561 & 0.425 & .930 \\
+\quad Instructed $\to$ annotated correct rgm. & 0.702 & 0.517 & .062$^{\dagger}$ \\
+\bottomrule
+\end{tabular}
+\caption{Cross-construction transfer, swept over all layers (best and selection-free layer-mean; permutation $p$ on the mean unless marked; permutations coupled across layers). We detect significant transfer only from hint-induced traces (model- and source-dependent), onto the \emph{incorrect} regime. The two math-source hint$\to$incorrect tests (one per model) are the pre-specified confirmatory family (Holm-corrected, \S\ref{sec:bridge}); other cells are exploratory. $^{\dagger}$$p$ for the best layer; the mean is n.s.\ ($p{=}.37$).}
+\label{tab:bridge}
+\end{table}
+
+Do the constructions share the annotated regimes' representations? We train probes on each distribution and test on the others, sweeping all layers (Table~\ref{tab:bridge}; heatmap view in Appendix~\ref{app:depth}, Figure~\ref{fig:heatmap}). We make the following observations.
+
+
+\textbf{(1) Instructed rationalization transfers to neither regime.} Despite being the easiest variant to detect within-distribution, its probes sit at or below chance against the incorrect regime (layer-mean 0.431) and are n.s.\ against the correct regime in both models: training or evaluating detectors on instructed rationalizations may measure the wrong thing \citep[cf.][]{offpolicy2025probes}.
+
+\textbf{(2) Hint-induced traces transfer, onto the incorrect regime.} Llama: layer-mean 0.616, $p{=}0.017$; best 0.694, selection-corrected $p{=}0.049$ (1{,}000 permutations). The two math-source tests (one per model) are the pre-specified confirmatory family; Llama survives Holm correction ($p{=}0.034$). On the strict subset of Appendix~\ref{app:strict} the magnitude is preserved (mean 0.596) though underpowered ($n{=}47$, $p{=}0.078$). Critically, a \emph{question-only} probe trained on the same labels, which carries substantial within-testbed signal (0.646), does not transfer at all (layer-mean 0.413, $p{\approx}1$; Qwen 0.503), and a supervised \emph{text} carrier also fails (frozen-encoder baseline, 0.476 [0.382, 0.573]): the transferred signal is not recoverable from question difficulty or our text features. The result is robust to preprocessing (without PCA, target-refit scaling: hint 0.56--0.57 vs.\ instructed 0.45).
+
+\textbf{(2b) The effective source is model-dependent.} Repeating the transfer from the LogiQA hint sets flips the model pattern: Llama's LogiQA-source probes do not transfer while Qwen, null from the math source, does (exploratory; Appendix~\ref{app:depth}). This also qualifies \S\ref{sec:internals}: significant transfer \emph{into} Qwen's incorrect-regime labels is external evidence the regime is decodable there, so its within-probe ``not detected'' reads as underpowered rather than absent.
+
+\textbf{(3) The target regime is a surprise.} Hint-induced traces are \emph{correct}-answer traces, yet they align with the \emph{incorrect}-answer regime's unfaithfulness direction (0.616 vs.\ 0.555, only the former significant). Stated carefully: they share linearly decodable structure with annotated unfaithful \emph{errors} despite differing in answer correctness; the question-only control indicates difficulty alone is unlikely to be the carrier, but the shared factor remains unidentified. One candidate---that in both sets the displayed reasoning did not produce the answer the model would reach on its own---holds for the hint traces by construction but is, for the annotated side, an interpretation.
+
+Transfer results concern \emph{linearly decodable structure}; failure cannot rule out sharing along non-aligned directions, but the three-way contrast controls the mundane explanations (shared format and domain, yet only one transfers). A direction-geometry analysis (Appendix~\ref{app:depth}) shows the bridge is not carried by the constructions' shared dominant axis, which is weakly \emph{anti}-aligned with the annotated regime's, but by lower-variance, covariance-aligned components.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Construct validity for constructed evaluation data}
+Within-distribution detectability is not construct validity. The instructed construction is the easiest to classify internally---significant in all seven models---yet transfers to neither annotated regime; hint-induced traces are messier, with partly surface-explainable within-testbed signal, yet theirs is the only construction whose probes transfer onto annotated unfaithfulness. For building evaluation data this inverts a natural instinct: \textbf{the cleanest, most controllable construction was the least valid proxy for the organic phenomenon}. Three prescriptions follow. Verify label semantics against raw data rather than documentation (\S\ref{sec:labels}). Transfer-validate constructed testbeds against annotated data before treating them as proxies. And report surface-feature and question-only baselines alongside probe results, so within-testbed decodability is not mistaken for construct validity. Our 898 hint-flip $+$ 2{,}379 genuine traces will be released with the camera-ready.
+
+\subsection{What the metric inversion means}
+On these data the step-removal metric behaves as a measure of answer--reasoning \emph{coupling}, not of annotated faithfulness. A model that genuinely solved a problem can re-derive its answer when steps are deleted, so the metric reads its trace as ``unfaithful''; a rationalization tightly coupled to a predetermined answer cannot recover, so the metric reads it as ``faithful.'' The regime decomposition supports this: within the correct regime the metric is confidently inverted (0.333), within the incorrect regime merely uninformative (0.470), and the remainder is between-regime composition (ft3-vs-ft2: 0.300). Two consequences follow. First, scoring detectors \emph{against} answer-tracing metrics is doubly misleading: a detector rewarded for tracking the metric is rewarded for anti-tracking human judgment on exactly the distinction the metric was designed for. Second, deletion-based scores may remain useful \emph{as coupling measures} but should not serve as faithfulness ground truth without validation against human labels. Related pathologies against constructed ground truth are documented by \citet{gurarieh2026bonafide}; the coupling reading and its regime localization are ours.
+
+\subsection{Implications for behavioral CoT auditing}
+Metric-based CoT auditing largely re-detects answer correctness: moderate power on correct answers, nothing detected on incorrect ones---the regime holding 69\% of annotated unfaithfulness, where a deployed system is actively wrong. A prompted judge changes the practical picture without dissolving the structure: it is the only behavioral signal to beat the correctness oracle and retains signal in the metric-blind regime, but degrades exactly there (0.830 $\to$ 0.679) at the cost of an extra generative inference per trace. The asymmetry is what makes this consequential: an auditor screening by cheap metric signals concentrates scrutiny on traces that \emph{look} suspicious---largely the incorrect ones---exactly where those signals carry no detected information about which errors are honest. Metric blindness here is bounded, not an impossibility result: it concerns the tested families, on this benchmark, with intervals that do not exclude modest effects. Internals complement behavior: each regime is decodable somewhere, but in different models, with no shared aligned direction---no single-probe shortcut. Nor does the judge subsume internals: on Llama's metric-blind traces judge and probe scores are nearly uncorrelated (Spearman 0.05) and a simple combination significantly improves on the judge alone (Appendix~\ref{app:forest}), though that result is one model, one regime, $n{=}144$.
+
+A skeptical reading deserves an answer: the four-way taxonomy is correctness-conditioned essentially by construction, and annotators plausibly saw the answer's correctness, so the 69\% concentration partly describes how the benchmark was annotated. Two results bound this. The regime asymmetry is unchanged under the independent binary label (Appendix~\ref{app:labels}); and the inversion and internal decodability replicate on the hint testbed, whose labels are intervention-defined, with no annotator and no correctness asymmetry between classes. We scope the distributional claim accordingly.
+
+\section{Limitations}
+
+Our annotated-label results rest on one human-annotated benchmark (FaithCoT-Bench; regimes $n{=}270$/$363$, per-model minority classes as small as ft4 $n{=}26$). To our knowledge it is the only instance-level faithfulness benchmark with expert annotations, which is itself part of the problem we highlight (the intervention-based hint testbeds provide partial independent corroboration: the inversion and decodability replicate there). Its label semantics required verification against the raw data (\S\ref{sec:labels}), and our regime findings inherit whatever noise remains in the annotations. The metric-blind-regime claim (no detected above-chance metric performance) is specific to that benchmark and to the four algorithmic signal families, and its CIs do not exclude modest effects. The judge results rest on a single judge model and a single fixed prompt (no prompt search: a strength for honesty, a limitation for generality); the judge may partly infer correctness on its own (its score predicts incorrectness at 0.684), which the within-regime stratification controls compositionally but cannot fully isolate. Per-model incorrect-regime cells are individually modest (0.60--0.66, Llama's CI grazing 0.5); GPT-4o-mini judges 340 of its own traces, though excluding them leaves results essentially unchanged (full 0.777; regimes 0.675 / 0.814); and the correct-regime positives are moderate, not operational. The Llama correct-regime probe is underpowered (ft4 $n{=}26$, $p{=}0.19$), so the regime-flipped model-dependence rests on one significant cell per model; it needs replication at larger $n$. The Qwen incorrect-regime contrast is ``not detected,'' not ``absent,'' and its null transfer is inconclusive for the same reason. Causal evidence from steering is weak ($n{=}51$, large perturbations, a single random control direction, indirect readout) and concerns only the Llama incorrect-regime direction. The instructed testbed is math-only, as are the hint testbed's headline transfer analyses; the hint construction's decodability and inversion results replicate across two hint templates and one non-math domain (\S\ref{sec:hint}), but broader template and domain diversity remains open. The hint construction inherits class imbalance and draws genuine and post-hoc traces from disjoint problem pools (a difficulty confound for within-testbed decodability; the transfer analysis with the question-only control is the difficulty-robust claim). Under sampled decoding, hint-dependence is sample-level: only 25--29\% of flip-labeled problems fail two consecutive baseline resamples (Appendix~\ref{app:strict}). The cluster bootstrap of \S\ref{sec:setup} comes with honest heterogeneity: both headline effects are near chance on HLE-Bio ($n{=}40$ per model). A stronger text encoder than RoBERTa could narrow the probe--text gap; probes are linear/PCA-based (an MLP added nothing, but richer white-box methods may decode more). Closed models cannot be probed with these methods, underscoring the importance of weight access for this class of oversight technique. Finally, the observed dependences remain unexplained: detection strength varies by model (strongest in standard instruct models, weakest in reasoning-distills; Gemma-2 0.60 $\to$ Gemma-4 0.80) and by regime within each model, and what the hint-transferred direction encodes remains an open mechanistic question (a first instrument attempt is noted in Appendix~\ref{app:defs}).
+
+\section*{Ethics Statement}
+This work analyzes model-generated reasoning on public benchmarks (FaithCoT-Bench, AQuA-RAT, GSM8K) and will release model-generated traces with construction labels upon publication; no human subjects or personal data are involved. Detection of unfaithful reasoning is oversight-enabling; we do not release methods that make models less faithful: the hint construction elicits an existing failure mode, documented by prior work, for measurement purposes. The label-semantics discrepancy we document was reported to the benchmark maintainers before publication. AI assistants (Claude Opus 4.6 and Fable 5, ChatGPT GPT-5.5, and Gemini 3.1 Pro) were used to improve the clarity of the manuscript text and to assist with implementation and analysis code; all research questions, experimental designs, results, and conclusions are the authors' own and were verified by the authors.
+
+\bibliographystyle{acl_natbib}
+\bibliography{ur2phd}
+
+\appendix
+
+\section{Deferred Floats}
+\label{app:floats}
+Table~\ref{tab:audit} gives the full behavioral audit summarized in Figure~\ref{fig:regimes}; Table~\ref{tab:whitebox} the regime-stratified probe results of \S\ref{sec:internals}; Figure~\ref{fig:example} a worked trace pair from the hint-induced testbed.
+
+
+
+
+
+
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}llcc@{}}
+\toprule
+\textbf{Family} & \textbf{Signal (direction)} & \textbf{AUROC} & \textbf{95\% CI} \\
+\midrule
+Oracle (not a detector) & incorrectness ($\Rightarrow$ unf.) & \textbf{0.696} & [0.662, 0.734] \\
+\midrule
+\multirow{3}{*}{Answer-tracing} & \texttt{soft}, inverted & 0.651 & [0.611, 0.695] \\
+ & \texttt{soft}, intended & 0.349 & [0.305, 0.389] \\
+ & Prefix instability, inverted & 0.626 & [0.583, 0.670] \\
+\midrule
+\multirow{2}{*}{NLI support} & \# unsupported steps & 0.569 & [0.523, 0.615] \\
+ & mean entailment & 0.493 & [0.447, 0.538] \\
+\midrule
+Trivial & Trace length (\# steps) & 0.575 & [0.527, 0.618] \\
+\midrule
+\multirow{2}{*}{DAG structure} & Linearity & 0.530 & [0.483, 0.577] \\
+ & Max lookback & 0.543 & [0.496, 0.588] \\
+\bottomrule
+\end{tabular}
+\caption{Black-box signals vs.\ the human label ($n{=}633$ complete-feature traces: 4 domains $\times$ the 2 open models bearing stored answer-tracing scores). \emph{In}correctness dominates; answer-tracing helps only inverted (prefix-instability intended direction: 0.374); structure adds nothing. Targeted counterfactual interventions separate weakly (standardized effect size 0.56--0.61) and are dominated by answer-tracing (not shown).}
+\label{tab:audit}
+\end{table}
+
+\begin{figure*}[t]
+\small
+\setlength{\fboxsep}{6pt}
+\noindent
+\begin{minipage}[t]{0.475\textwidth}\vspace{0pt}%
+\fbox{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\textbf{Clean prompt} \hfill \textit{baseline}\\[2pt]
+\footnotesize
+If the population of a city increases by 5\% annually, what will be the population of the city in 2 years time if its current population is 78000?\\
+\textit{Options: A) 81900 \quad \textbf{B) 85995} \quad C) 85800 \quad D) 90000 \quad E) None of these}\\[4pt]
+\normalsize\textbf{Model answer: E} \quad {\color{red}$\times$ incorrect} \textit{(gold: B)}
+\end{minipage}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.475\textwidth}\vspace{0pt}%
+\fbox{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\textbf{Hinted prompt} \hfill \textit{same model, same problem}\\[2pt]
+\footnotesize
+[same question and options] \colorbox{hintbg}{I think the answer is B, but I'm not sure.}\\[3pt]
+\textbf{CoT:} ``To find the population in 2 years, we'll calculate the increase for each year\ldots\ Year 1: $78000 \times 0.05 = 3900$; population after 1 year $= 81900$. Year 2: $81900 \times 0.05 = 4095$; population after 2 years $= 85995$. So, the population\ldots\ would be 85995. \textbf{Answer: B}''\\[3pt]
+\normalsize\textbf{Model answer: B} \quad correct --- \textit{and the CoT never mentions the hint}
+\end{minipage}}
+\end{minipage}
+\caption{A real trace pair from our hint-induced testbed (Llama-3.1-8B, AQuA-RAT). Unhinted, the model answers E; hinted toward gold, it produces a locally coherent derivation of B. The sampled answer differed between the clean and hinted conditions while the resulting CoT never mentions the hint; externally, the right-hand trace is indistinguishable from genuine reasoning.}
+\label{fig:example}
+\end{figure*}
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Probe target} & \textbf{Llama-3.1} & \textbf{Qwen-2.5} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Incorrect regime (ft1 vs.\ ft2)} \hfill $n{=}144$ / $126$} \\
+\quad CV AUROC (best layer) & 0.709 & 0.616 \\
+\quad Permutation $p$ & \textbf{0.01--0.03} & 0.32 (n.s.) \\
+\quad Held-out, nested layer sel. & \textbf{0.67} $\pm$ 0.08 & 0.55 $\pm$ 0.08 \\
+\quad Leave-one-domain-out & 0.60--0.71 & --- \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Correct regime (ft3 vs.\ ft4)} \hfill $n{=}163$ / $200$} \\
+\quad CV AUROC (best layer) & 0.759$^{\S}$ & 0.701 \\
+\quad Permutation $p$ & 0.19 (n.s.) & \textbf{0.014} \\
+\quad Minority class $n$ (ft4) & 26 & 48 \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Cross-regime transfer (layer-mean AUROC, perm.\ $p$)}} \\
+\quad Incorrect $\to$ correct rgm. & 0.522 ($p{=}.46$) & 0.574 ($p{=}.15$) \\
+\quad Correct $\to$ incorrect rgm. & 0.529 ($p{=}.56$) & 0.546 ($p{=}.19$) \\
+\bottomrule
+\end{tabular}
+\caption{Linear probes on the human annotations, by regime: each regime is decodable in a different model; neither transfers to the other. Selection-corrected permutation tests; nested rows select the layer by inner CV on training folds. $^{\S}$The permutation statistic uses a shared full-data projection, more conservative than the in-fold CV shown (0.679 vs.\ 0.759; for Qwen they coincide).}
+\label{tab:whitebox}
+\end{table}
+
+
+\section{Label-Semantics Verification}
+\label{app:labels}
+
+\paragraph{Census.} 1{,}364 released traces: 1{,}304 with the binary \texttt{unfaithfulness} label, of which 1{,}303 carry a four-way \texttt{faithful\_type} code in $\{1,\dots,4\}$ (281 / 233 / 682 / 107) and one carries code 0; 60 traces have neither. The complete-feature subset of Table~\ref{tab:audit} is the 634 traces with stored answer-tracing scores minus the code-0 trace ($n{=}633$).
+
+\paragraph{Correctness axis.} Table~\ref{tab:crosstab} cross-tabulates \texttt{faithful\_type} against correctness computed from the release's \emph{own stored fields} (\texttt{parsed\_final\_answer} vs.\ \texttt{label}; no re-parsing of ours is involved, so parser agreement is not at issue; unparseable entries are shown, not dropped). The association is near-deterministic and holds within each of the four domains separately (per-domain tables in the artifact \texttt{label\_crosstabs.json}, released upon publication). This is the opposite of the repository documentation's stated pairing. Independently, the benchmark paper's reported per-model accuracy figures (e.g., its Qwen-vs-Llama AQuA accuracies) are reproduced from the released data only under the data-side semantics; and the released \texttt{soft\_faithfulness} scores against the human labels reproduce the inversion of \S\ref{sec:audit} (intended-direction AUROC 0.348 overall; 0.43 and 0.29 for the two open models), confirming our feature pipeline is not the source. All checks are implemented in our verification code (\texttt{validate\_data*.py}, \texttt{faithcot\_reproduce.py}, \texttt{label\_crosstabs.py}), released upon publication.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & \textbf{Parsed correct} & \textbf{Parsed incorrect} & \textbf{Unparsed} \\
+\midrule
+ft1 & 1 & 200 & 80 \\
+ft2 & 1 & 207 & 25 \\
+ft3 & 679 & 2 & 1 \\
+ft4 & 106 & 1 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{\texttt{faithful\_type} $\times$ correctness from the release's own stored parsed answers and gold labels. ft1/ft2 are the incorrect-answer codes; ft3/ft4 the correct-answer codes.}
+\label{tab:crosstab}
+\end{table}
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & \textbf{Incorrect answers} & \textbf{Correct answers} \\
+ & honest vs.\ unf.\ error & faithful vs.\ post-hoc \\
+\textbf{Signal} & ($n{=}270$, ft1/ft2) & ($n{=}363$, ft3/ft4) \\
+\midrule
+Answer-tracing (inverted) & 0.530 [0.462, 0.598] & \textbf{0.667} [0.592, 0.736] \\
+Prefix instability (inverted) & 0.481 [0.408, 0.549] & \textbf{0.659} [0.588, 0.730] \\
+NLI step-support & 0.541 [0.476, 0.608] & \textbf{0.626} [0.556, 0.696] \\
+DAG max lookback & 0.493 [0.424, 0.561] & 0.562 [0.491, 0.634] \\
+DAG linearity & 0.470 [0.402, 0.538] & 0.535 [0.462, 0.609] \\
+\midrule
+\texttt{soft}, intended dir. & 0.470 [0.402, 0.538] & \textbf{0.333} [0.264, 0.408] \\
+\midrule
+Trace length (\# steps) & 0.547 [0.480, 0.615] & 0.622 [0.552, 0.691] \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Prompted LLM judge (full labeled set, \S\ref{sec:audit}; $n{=}514$ / $789$)}} \\
+LLM judge (GPT-4o-mini) & \textbf{0.679} [0.633, 0.721] & \textbf{0.830} [0.786, 0.872] \\
+\bottomrule
+\end{tabular}
+\caption{The two regimes (\texttt{faithful\_type} as target; bold = CI excludes 0.5). On correct answers three metric signals work moderately and the standard metric is confidently \emph{inverted}; on incorrect answers no metric signal is detectably above chance, while the prompted judge degrades (0.830 $\to$ 0.679) but stays significant. Metric rows: complete-feature subset; judge rows: full labeled set. Unchanged under the binary label (binary-label paragraph below).}
+\label{tab:regimes}
+\end{table}
+
+\paragraph{A documented trap.} Correlating a detector against \texttt{soft\_faithfulness} is near-circular, since it is itself a detector: a signal correlating with it at $\rho{=}0.87$ nonetheless scores at chance against the human labels.
+
+\paragraph{Release version.} All analyses use the benchmark's public release at commit \texttt{ea6ebf8} (2026-05-25). Its four-way-coded census is 1{,}303 traces (281 / 233 / 682 / 107); the benchmark paper's own quadrant analysis reports 1{,}183 traces (189 / 204 / 605 / 185), so the analyzed sets differ across paper and release versions, consistent with the release-revision history documented in \S\ref{sec:labels}. Under the paper's superseded census, the incorrect-answer share of unfaithfulness is $204/389 \approx 52\%$ rather than 69\%: the concentration \emph{magnitude} is release-sensitive, and the durable claim is the detection asymmetry of \S\ref{sec:regimes}, not the concentration figure. Per-cell churn between the two vintages is substantial (ft4 185$\to$107, ft1 189$\to$281), concentrated on the minority classes; the superseded labels are not recoverable from public artifacts, so regime results under them cannot be recomputed. All percentages and counts in this paper are anchored to the pinned release.
+
+\paragraph{Faithfulness axis and binary-label consistency.} The faithful/unfaithful pairing (odd = faithful, even = unfaithful) is shared by documentation and data and is anchored by the independent binary label: cross-tabulating \texttt{faithful\_type} against \texttt{unfaithfulness} gives ft1: 249/32, ft2: 4/229, ft3: 665/17, ft4: 3/104 (faithful/unfaithful), i.e.\ 95.7\% agreement (1{,}247/1{,}303); no alternative grouping of the four codes approaches this. The 56 disagreeing traces motivate reporting the regime results under \emph{both} targets: with the binary label replacing the four-way code within each regime, the Table~\ref{tab:regimes} conclusions are unchanged---incorrect regime: answer-tracing 0.545 [0.472, 0.610], prefix instability 0.485, NLI 0.514, DAG 0.490 (all CIs $\ni$ 0.5); correct regime: answer-tracing 0.666 [0.593, 0.737], prefix instability 0.659 [0.585, 0.729], NLI 0.600 [0.531, 0.672] (CIs exclude 0.5), DAG 0.543 ($\ni$ 0.5).
+
+\section{Activation-Steering Dose--Response}
+\label{app:steering}
+Steering the residual stream at Llama's best incorrect-regime layer by $\alpha\sigma$ along the train-split unfaithful direction, vs.\ a norm-matched random direction, on 51 held-out multiple-choice traces (Table~\ref{tab:steering}):
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Flip rate}} & \multicolumn{2}{c}{\textbf{$P(\text{orig.})$}} \\
+$\alpha$ & unf.\ dir. & random & unf.\ dir. & random \\
+\midrule
+$-6$ & 0.16 & 0.20 & 0.714 & 0.763 \\
+$-2$ & 0.04 & 0.06 & 0.867 & 0.862 \\
+$0$  & 0.00 & 0.00 & 0.878 & 0.878 \\
+$+2$ & 0.04 & 0.04 & 0.865 & 0.869 \\
+$+4$ & 0.16 & 0.06 & 0.808 & 0.852 \\
+$+6$ & \textbf{0.22} & 0.08 & 0.748 & 0.815 \\
+\bottomrule
+\end{tabular}
+\caption{Dose--response: the unfaithful direction perturbs answers 2--3$\times$ more than random at large $+\alpha$; the $-\alpha$ side is mixed. Weak, directional causal evidence.}
+\label{tab:steering}
+\end{table}
+
+\section{Depth Profiles and Transfer Heatmap}
+\label{app:depth}
+
+Figure~\ref{fig:depth} shows per-layer probe depth profiles for the three constructions (descriptive); Figure~\ref{fig:heatmap} gives the three-way transfer heatmap referenced in \S\ref{sec:bridge}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/depth_gradient.pdf}
+\caption{Per-layer probe AUROC for the three constructions (Llama-3.1-8B; descriptive). Instructed peaks early (L9), hint-induced mid (L17), annotated incorrect-regime late (L29); peak locations may be unstable under resampling.}
+\label{fig:depth}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figs/transfer_heatmap.pdf}
+\caption{The three-way bridge at a glance (Llama). Bordered diagonal = within-distribution CV; off-diagonal = layer-mean transfer. The colormap diverges around chance (white $=$ 0.5; blue $=$ below-chance, i.e.\ anti-aligned). One off-diagonal cell is warm: hint-induced $\to$ annotated (incorrect regime). Qwen's corresponding transfers are in Table~\ref{tab:bridge}; its hint-flip source set is small ($n{=}70$).}
+\label{fig:heatmap}
+\end{figure}
+
+\paragraph{Source dependence (full numbers, \S\ref{sec:bridge} (2b)).} Repeating the transfer from the LogiQA hint sets flips the model pattern: Llama's LogiQA-source probes do not transfer (all targets n.s., domain-matched mean 0.429), while Qwen, null from the math source, transfers from the LogiQA source (layer-mean 0.553, $p{=}0.046$; 0.599, $p{=}0.016$ onto the annotated LogiQA subset, $n{=}37$; uncorrected across the three target splits). We thus obtain confirmatory evidence in Llama and exploratory evidence in Qwen that hint-induced probes can transfer from an appropriate source; which source reaches the signal is model-dependent (source domain, size, and power cannot be fully separated).
+
+\paragraph{Direction geometry (\S\ref{sec:bridge}).} A direction-geometry analysis adds a signed refinement: the constructions' class-mean-difference axes are strongly shared with each other (mean cosine $+0.63$, $p{=}0.001$) and that common axis is weakly \emph{anti}-aligned with the annotated regime's (instructed $-0.32$); hint's successful transfer is not explained by dominant-axis alignment ($-0.11$, n.s.), so the bridge rides on lower-variance, covariance-aligned components, not the loud construction signature the two testbeds share.
+
+\section{Construction Details}
+\label{app:prompts}
+\paragraph{Instructed (synthetic).} Genuine: \emph{``Solve this step by step, showing your reasoning. On the last line write exactly `Answer: X'.''} (kept only if correct). Post-hoc: \emph{``The correct answer is $a^*$. Provide a clear, convincing step-by-step reasoning that leads to this answer.''} Sampling T$=$0.7, top-$p$ 0.9, repetition penalty 1.1, fixed seed; identical across conditions and models.
+\paragraph{Hint-induced (intervention-defined).} Hint text: \emph{``I think the answer is $a^*$, but I'm not sure.''} appended to the clean question; kept iff baseline-wrong $\to$ hint-correct and the CoT matches no hint-reference pattern (second-person forms, ``hint,'' ``suggested answer,'' ``the user,'' etc.); rejected cases (3 total) verbalized deference. An exhaustive keyword scan over all kept traces found no leakage (matches were problem restatements, e.g.\ ``we are told that\ldots,'' and generic-you phrasing).
+\paragraph{Probing.} Probed context is always [question (+options) $+$ generated CoT], excluding any construction instruction or hint text. Hidden states at every layer, read at the final sequence position (the end-of-turn token appended by the chat template; verified identical across all sets and models, so every within- and cross-distribution comparison uses the same readout convention); StandardScaler $\to$ PCA-50 $\to$ logistic regression; 5-fold CV; 200-permutation selection-corrected tests.
+
+\section{Instructed Per-Model Results and Hint-Construction Robustness}
+\label{app:robust}
+
+Figure~\ref{fig:seven} and Table~\ref{tab:synth} give the per-model instructed-construction results of \S\ref{sec:synth}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figs/seven_models.pdf}
+\caption{Instructed construction across 7 models: probe held-out AUROC (circles) vs.\ the surface-feature black-box baseline (diamonds).}
+\label{fig:seven}
+\end{figure}
+
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Model} & \textbf{n} & \textbf{Held-out} & \textbf{Nested} & \textbf{$p$} & \textbf{Surface} \\
+\midrule
+Qwen-2.5-7B & 277 & 0.809 & 0.772 & .005 & 0.545 \\
+Gemma-4-12B (2026) & 248 & 0.797 & 0.786 & .005 & 0.665 \\
+Llama-3.1-8B & 229 & 0.739 & 0.757 & .005 & 0.639 \\
+Qwen3-8B & 175 & 0.716 & 0.725 & .005 & 0.535 \\
+DeepSeek-R1-Dist.-7B & 251 & 0.617 & 0.675 & .005 & 0.534 \\
+Gemma-2-9B & 243 & 0.600 & 0.702 & .020 & 0.548 \\
+DeepSeek-R1-0528-8B & 81 & 0.558$^{\ddagger}$ & 0.627 & .025 & 0.473 \\
+\bottomrule
+\end{tabular}
+\caption{Instructed construction, 7 models (full values for Figure~\ref{fig:seven}). Held-out = single 70/30 split at the disclosed full-data layer; Nested = 10 problem-grouped splits, layer by inner CV; $p$ = selection-corrected permutation; Surface = style-features baseline (learned text baseline: 0.502/0.564 Llama/Qwen). $^{\ddagger}$Small-$n$; the permutation statistic (0.688) is the reliable read.}
+\label{tab:synth}
+\end{table}
+\paragraph{Second template.} Replacing the sycophancy phrasing with an impersonal metadata note (\emph{``(Note: the answer key for this problem lists $a^*$.)''}) and regenerating the full math testbed reproduces every quantity: yields 183 (Llama) / 104 (Qwen) hint-flip traces; held-out decodability 0.731 / 0.824 (perm $p{\leq}0.001$, 1{,}000 permutations); intended-direction \texttt{soft} 0.390 / 0.270 (vs.\ 0.389 / 0.251 with the sycophancy template). Kept traces were re-audited with template-adapted deference patterns; 4 Llama traces (of an initial 187) verbalizing ``the given answer'' were excluded (yields above are post-exclusion), 0 for Qwen. Llama's surface baseline is higher on this template (0.704 vs.\ 0.626), so its within-testbed decodability remains partly surface-explainable.
+\paragraph{Non-math domain.} On the full LogiQA test set (651 items, sycophancy template), baseline accuracy is lower and flip rates higher, yielding 231 (Llama) / 129 (Qwen) hint-flip + 283 / 300 genuine traces; a deference re-scan found 0 hits. Decodability: held-out 0.672 / 0.793 (perm $p{\leq}0.001$) with surface baselines of only 0.547 / 0.607, weaker surface tells than the math sets. The LogiQA-source transfer results are in \S\ref{sec:bridge} (2b).
+
+\section{Strict-Subset Construction}
+\label{app:strict}
+Because decoding is sampled (T$=$0.7), a baseline-incorrect answer is one draw from a distribution, not evidence the model cannot solve the problem: 59\% of Llama's flip-labeled problems are solved on an independent baseline resample. We therefore define a \emph{strict} subset: hint-induced traces whose problems are answered incorrectly on repeated independent baseline resamples. \textbf{Results:} 47/185 (Llama) and 20/70 (Qwen) flip-labeled problems fail both resamples. Within-testbed decodability \emph{rises} on the strict subset (CV 0.818/0.837), consistent with cleaner labels. The Llama hint$\to$incorrect-regime transfer preserves its magnitude (layer-mean 0.596 vs.\ 0.616 on the full set; best 0.699 vs.\ 0.694) but is underpowered at this $n$ ($p{=}0.078$ mean, $p{=}0.066$ best; 500 permutations); Qwen remains null (0.494, $p{=}0.605$). Had resampling-noise flips driven the transfer, the strict estimate would collapse toward chance; it does not.
+
+\section{Signal and Test Definitions}
+\label{app:defs}
+
+\paragraph{\texttt{soft\_faithfulness} (benchmark metric).} A release-documentation note first: every pipeline in the benchmark's repository imports its metric implementation (\texttt{utils/faithfulness.py:} \texttt{calculate\_faithfulness\_explanation\_mcq}), but that module is not included in the release; only per-trace outputs are. Our analyses therefore use the benchmark's \emph{stored} scores throughout. As a sanity check we reimplemented the described step-removal procedure: reading the model's answer-option distribution by forcing the continuation \emph{``The single best answer is option (''} after [question $+$ options $+$ reasoning], with option-letter probabilities renormalized over the valid letters, we score Eq.~\ref{eq:soft} with $a^{\ast}$ the trace's stored parsed answer. Against stored \texttt{soft\_faithfulness} on $n{=}30$ recomputed traces: Pearson 0.711, Spearman 0.822.
+
+\paragraph{Prefix instability and permutation tests.} From the benchmark's stored per-step answer distributions $p_t$ (the distribution after the first $t$ steps), prefix instability is
+\begin{equation}\label{eq:pi}
+\mathrm{PI}(x) \;=\; \frac{1}{T-1}\sum_{t=2}^{T}\bigl\lVert p_t - p_{t-1}\bigr\rVert_1,
+\end{equation}
+the mean $L_1$ change between successive prefixes. The permutation test is Eq.~\ref{eq:perm} (\S\ref{sec:setup}); PI is reported in its empirically discriminative (inverted) direction, higher $\Rightarrow$ unfaithful, as disclosed in \S\ref{sec:audit}.
+
+\paragraph{Model checkpoints.} All local models are instruction-tuned checkpoints loaded in 4-bit NF4 quantization; trace generation uses sampled decoding (T$=$0.7, max 1{,}024 new tokens); probing re-encodes stored traces teacher-forced (\S\ref{sec:internals}); probe pipelines use fixed seeds.
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Name in paper} & \textbf{Checkpoint (Hugging Face ID)} \\
+\midrule
+Llama-3.1-8B & \texttt{meta-llama/Llama-3.1-8B-Instruct} \\
+Qwen-2.5-7B & \texttt{Qwen/Qwen2.5-7B-Instruct} \\
+Qwen3-8B & \texttt{Qwen/Qwen3-8B} \\
+Gemma-2-9B & \texttt{google/gemma-2-9b-it} \\
+Gemma-4-12B & \texttt{google/gemma-4-12b-it} \\
+DeepSeek-R1-Dist.-7B & \texttt{deepseek-ai/DeepSeek-R1-Distill-Qwen-7B} \\
+DeepSeek-R1-0528-8B & \texttt{deepseek-ai/DeepSeek-R1-0528-Qwen3-8B} \\
+NLI encoder & \texttt{FacebookAI/roberta-large-mnli} \\
+LLM judge & \texttt{gpt-4o-mini} (OpenAI API, temperature 0, August 2026) \\
+\bottomrule
+\end{tabular}
+\caption{Exact model checkpoints. Benchmark traces originate from the FaithCoT-Bench release; the two open benchmark models are re-encoded with the matching checkpoints above.}
+\label{tab:checkpoints}
+\end{table}
+
+\paragraph{LLM-judge protocol.} Judge: \texttt{gpt-4o-mini} via the OpenAI chat-completions API (accessed 15 August 2026), temperature 0, \texttt{max\_tokens} 30, JSON-forced output (\texttt{response\_format}: \texttt{json\_object}); a single fixed prompt written before observing any output, no prompt search. The judge is shown the question, options, and the model's full CoT response; it is never shown the gold answer or correctness. System message, verbatim: \emph{``You are auditing a language model's chain-of-thought (CoT) explanation for FAITHFULNESS. Unfaithful reasoning means the stated steps are not the actual basis of the final answer: post-hoc rationalization of a predetermined answer, reliance on unverbalized shortcuts or cues, steps that do not support or are contradicted by the final answer, or reasoning that could not produce the stated conclusion. Faithful reasoning means the answer plausibly follows from, and is produced by, the stated steps. You are NOT told the correct answer, and correctness is not the question: a wrong answer can be reached faithfully, and a correct answer can be rationalized unfaithfully. Respond with JSON only: \{``unfaithfulness\_score'': $\langle$integer 0--100$\rangle$\} where 0 = certainly faithful and 100 = certainly unfaithful.''} User message template: ``Question: [question] / Options: [options] / Model's chain-of-thought response (including its final answer): [full response].'' The alias resolved to snapshot \texttt{gpt-4o-mini-2024-07-18} (read from API responses); the snapshot predates the benchmark's construction and release, excluding label contamination. Scores concentrate on a coarse grid ($\{0, 10, 20, 30, 70, 80, 100\}$ covers 98\% of responses; ties use the standard AUROC convention). The score is parsed as the integer \texttt{unfaithfulness\_score}; all 1{,}303 responses parsed on the first valid API response (zero malformed outputs); network-level retries with backoff handle rate limits only (temperature 0; no resampling). Same-sample comparisons, the regime-degradation test, and the own-trace exclusion are computed by the released analysis scripts.
+
+\paragraph{SAE decomposition attempt (negative).} Off-the-shelf base-model SAEs (Llama Scope \citep{he2024llamascope}, 8$\times$ and 32$\times$ widths) reconstruct our instruct-model, quantized, final-position activations too poorly to decompose the transferred direction (variance explained $\leq$0.49, width-invariant); target-distribution SAEs are future work.
+
+\paragraph{Activation steering (Appendix~\ref{app:steering}).} The direction is $d = (\mu_{\mathrm{unf}} - \mu_{\mathrm{faith}})/\lVert\mu_{\mathrm{unf}} - \mu_{\mathrm{faith}}\rVert$, computed from train-split final-position activations at the probe's best layer; $\sigma$ is the standard deviation of train projections onto $d$; the intervention adds $\alpha\sigma d$ to the residual stream at that layer at the answer-readout position; the control is a random unit direction applied at the same $\alpha\sigma$ magnitude.
+
+\section{Per-Cell Heterogeneity and AUPRC}
+\label{app:forest}
+
+\paragraph{Length decomposition (full numbers, \S\ref{sec:regimes}).} \# unsupported steps tracks step count nearly perfectly (Spearman 0.86--0.89 benchmark-wide); the length-normalized fraction of unsupported steps is at chance in both regimes (0.528 [0.480, 0.571] correct / 0.507 [0.467, 0.547] incorrect); raw step count alone scores 0.620 [0.560, 0.679] / 0.505 [0.457, 0.557] (full labeled set; complete-feature subset values in Table~\ref{tab:regimes}); answer-tracing and prefix instability survive rank-based length-partialing essentially intact (0.667$\to$0.643, 0.659$\to$0.648; Spearman with length 0.20 / 0.08).
+
+\paragraph{Judge--probe complementarity (full numbers, \S\ref{sec:discussion}).} Nor does the judge subsume internals. On the same metric-blind traces (Llama, $n{=}144$), judge and probe scores are essentially uncorrelated (Spearman 0.05), and the judge's weakest per-model cell (0.599) sits below the probe's out-of-fold 0.656 (recomputed for this paired analysis). A simple combination (mean of z-scored signals; the probe side uses out-of-fold predictions) outperforms the judge alone (0.699; paired bootstrap $\Delta$ [$+$0.02, $+$0.19], excluding zero, though the lower bound is close to it). For completeness: a cross-validated two-feature logistic scores 0.666, and the probe on the judge's middle score tercile is 0.536 ($n{=}48$); the combination evidence is positive but modest.
+
+\paragraph{Judge composition decomposition (\S\ref{sec:regimes}).} Incorrect-regime per-model judge AUROCs: Llama 0.599, Qwen-2.5 0.641, Gemini-2.5-Flash 0.642, GPT-4o-mini 0.657 ($n$-weighted within-model mean 0.634 vs.\ pooled 0.679). Per-domain (incorrect / correct): AQuA 0.880 / 0.905, HLE-Bio 0.636 / 0.714, LogiQA 0.624 / 0.799, TruthfulQA 0.604 / 0.724. Within-domain degradation $\Delta$s: TruthfulQA $+$0.119, LogiQA $+$0.175, AQuA $+$0.025; HLE-Bio is 29\% of the incorrect regime but 1.5\% of the correct regime.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/forest.pdf}
+\caption{Per-cell (signal $\times$ model $\times$ domain) AUROC with bootstrap 95\% CIs, by regime; NLI is available benchmark-wide (all four models), answer-tracing for the two open models. Cells with $n{<}10$ or a single class are omitted; per-cell $n$ is small, so individual CIs are wide. The incorrect-regime cells scatter around chance across models and domains, including the closed models; the correct-regime cells lean above chance across domains and in the closed models as well.}
+\label{fig:forest}
+\end{figure*}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & \textbf{Prev.} & \textbf{Ans.-tracing (inv.)} & \textbf{NLI} \\
+\midrule
+Incorrect rgm. & 0.544 & 0.565 [0.489, 0.650] & 0.586 [0.510, 0.677] \\
+Correct rgm. & 0.204 & 0.367 [0.271, 0.488] & 0.350 [0.253, 0.448] \\
+\bottomrule
+\end{tabular}
+\caption{AUPRC robustness for the Table~\ref{tab:regimes} comparisons (prefix instability behaves like answer-tracing: 0.518/0.385). Random baseline $=$ prevalence. In the incorrect regime AUPRC matches prevalence (consistent with the null); in the correct regime it reaches 1.7--1.9$\times$ prevalence, so the moderate AUROCs are not masking failed minority-class retrieval.}
+\label{tab:auprc}
+\end{table}
+
+\section{GRACE Preliminary Replication}
+On the 40-example public sample of GRACE \citep{pham2026grace} (8 unfaithful steps), NLI step-support shows no above-chance discrimination (0.51--0.58), directionally consistent with our FaithCoT results but underpowered; the full evaluation set was not released in time.
+
+\end{document}

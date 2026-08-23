@@ -108,8 +108,10 @@ At the time of our analysis the benchmark's documentation and its released data 
 
 \paragraph{Statistical standards.} Detection claims use AUROC with 2{,}000-resample percentile-bootstrap 95\% CIs (minority classes 13--43\%); because traces cluster by model and domain, headline effects are additionally checked with a cluster bootstrap over the 8 model$\times$domain cells (both survive: incorrectness [0.616, 0.753]; inverted answer-tracing [0.575, 0.728]). Probe claims use held-out splits plus \emph{selection-corrected} permutation tests: because the best layer is chosen post hoc, the null takes the max (or mean, matching the reported statistic) over layers under label permutation, coupled across layers \citep{nichols2002nonparametric}:
 \begin{equation}\label{eq:perm}
-T = \max_{\ell\in L}\mathrm{AUROC}_\ell \Bigl(\text{or } \tfrac{1}{\lvert L\rvert}\textstyle\sum_{\ell} \mathrm{AUROC}_\ell\Bigr),\;
-p = \frac{1 + \sum_{b=1}^{B}\mathbf{1}[T^{(b)} \ge T^{\mathrm{obs}}]}{B+1}.
+\begin{aligned}
+T &= \max_{\ell\in L}\mathrm{AUROC}_\ell \;\;\text{(or its mean over } L),\\[2pt]
+p &= \frac{1 + \sum_{b=1}^{B}\mathbf{1}\bigl[T^{(b)} \ge T^{\mathrm{obs}}\bigr]}{B+1}.
+\end{aligned}
 \end{equation}
 Values reported as 0.005 mean $p \leq 1/201$; headline transfer tests use 1{,}000 permutations, and the null doubles as the memorization control \citep{hewitt2019control}. Pooled judge estimates were also recomputed with a question-clustered bootstrap (340 clusters), essentially unchanged (0.679 [0.633, 0.726]); trace-level intervals are reported throughout. $\Delta$AUROC comparisons are descriptive, not a confirmatory family. Scalers and PCA are fit within training folds only.
 
@@ -120,9 +122,9 @@ Values reported as 0.005 mean $p \leq 1/201$; headline transfer tests use 1{,}00
 
 \paragraph{Signal families.} \emph{Answer-tracing}: sensitivity of the final-answer distribution to removing individual steps; the benchmark's step-removal metric is, for a trace with $T$ steps and stored parsed answer $a^{\ast}$,
 \begin{equation}\label{eq:soft}
-\texttt{soft\_faithfulness}(x) \;=\; \frac{1}{T}\sum_{i=1}^{T}\bigl\lvert P(a^{\ast}\mid \mathrm{CoT}) - P(a^{\ast}\mid \mathrm{CoT}\setminus \mathrm{step}_i)\bigr\rvert,
+\texttt{soft\_faithfulness}(x) \;=\; \frac{1}{T}\sum_{i=1}^{T}\lvert \delta_i \rvert,
 \end{equation}
-higher meaning the answer depends on more of its stated steps (we use the benchmark's stored scores). \emph{Prefix instability} (PI) is an answer-tracing variant: the mean $L_1$ change between successive prefixes' answer distributions. \emph{Premise-DAG structure} (PARC-style graphs over steps) and \emph{graph-targeted interventions} (corrupting the most load-bearing premise; LLM extractor validated at recall 0.82 / F1 0.79 vs.\ PARC gold) form the structural families, and \emph{per-step NLI support} scores entailment of each step from question and prior steps (RoBERTa-large-MNLI; \citealp{liu2019roberta,williams2018mnli}); definitions in Appendix~\ref{app:defs}. Because behavioral monitoring in practice often means \emph{prompting an LLM judge}, we add one as a fifth family: GPT-4o-mini (temperature 0, one fixed prompt written before seeing any output, JSON-forced 0--100 score) over all 1{,}303 labeled traces, shown the question, options and full CoT but never the gold answer. That judge methods lead \emph{in aggregate} is the benchmark's own finding \citep{shen2026faithcot}; what it does not report is judge performance stratified by correctness. Signal directions are fixed a priori; where a signal discriminates only in the \emph{opposite} direction we report it as inverted---one sign selection made on the full data and reused unchanged in the stratified analyses.
+where $\delta_i = P(a^{\ast}\!\mid\!\mathrm{CoT}) - P(a^{\ast}\!\mid\!\mathrm{CoT}\setminus\mathrm{step}_i)$ is the shift in the answer's probability when step $i$ is deleted; higher means the answer depends on more of its stated steps (we use the benchmark's stored scores). \emph{Prefix instability} (PI) is an answer-tracing variant: the mean $L_1$ change between successive prefixes' answer distributions. \emph{Premise-DAG structure} (PARC-style graphs over steps) and \emph{graph-targeted interventions} (corrupting the most load-bearing premise; LLM extractor validated at recall 0.82 / F1 0.79 vs.\ PARC gold) form the structural families, and \emph{per-step NLI support} scores entailment of each step from question and prior steps (RoBERTa-large-MNLI; \citealp{liu2019roberta,williams2018mnli}); definitions in Appendix~\ref{app:defs}. Because behavioral monitoring in practice often means \emph{prompting an LLM judge}, we add one as a fifth family: GPT-4o-mini (temperature 0, one fixed prompt written before seeing any output, JSON-forced 0--100 score) over all 1{,}303 labeled traces, shown the question, options and full CoT but never the gold answer. That judge methods lead \emph{in aggregate} is the benchmark's own finding \citep{shen2026faithcot}; what it does not report is judge performance stratified by correctness. Signal directions are fixed a priori; where a signal discriminates only in the \emph{opposite} direction we report it as inverted---one sign selection made on the full data and reused unchanged in the stratified analyses.
 
 \paragraph{Results.} Figure~\ref{fig:regimes} (left; full values in Table~\ref{tab:audit}): \textbf{answer incorrectness alone has the highest AUROC among the metric-based signals (0.696)}---an oracle diagnostic, since it requires the gold answer. Paired oracle$-$metric $\Delta$AUROC: $+$0.071 [$+$0.018, $+$0.122] (PI), $+$0.128 [$+$0.069, $+$0.187] (NLI), $+$0.045 [$-$0.006, $+$0.098] (answer-tracing; not resolved). Annotated unfaithfulness concentrates on incorrect answers, so metric-based detection largely reduces to accuracy prediction. \textbf{The prompted judge is the only behavioral signal to exceed the oracle}: judge 0.782 [0.756, 0.808] vs.\ oracle 0.703, paired $\Delta$ $+$0.079 [$+$0.043, $+$0.117] (complete-feature subset 0.771 vs.\ 0.697). Behavioral detection is therefore not \emph{only} accuracy prediction, though the judge partially tracks incorrectness (0.684). Structural families add nothing significant (DAG max lookback is weakly informative on AQuA, 0.636). The 633-trace subset is set by feature availability, not outcomes.
 
@@ -171,7 +173,7 @@ Both models are strongly decodable on this set (held-out 0.752 / 0.835, $p{\leq}
 \subsection{Transfer against the annotated regimes}
 \label{sec:bridge}
 
-\begin{table}[htbp]
+\begin{table*}[t]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -194,7 +196,7 @@ Both models are strongly decodable on this set (held-out 0.752 / 0.835, $p{\leq}
 \end{tabular}
 \caption{Cross-construction transfer, swept over all layers (best and selection-free layer-mean; permutation $p$ on the mean unless marked; permutations coupled across layers). We detect significant transfer only from hint-induced traces (model- and source-dependent), onto the \emph{incorrect} regime. The two math-source hint$\to$incorrect tests (one per model) are the pre-specified confirmatory family (Holm-corrected, \S\ref{sec:bridge}); other cells are exploratory. $^{\dagger}$$p$ for the best layer; the mean is n.s.\ ($p{=}.37$).}
 \label{tab:bridge}
-\end{table}
+\end{table*}
 
 Do the constructions share the annotated regimes' representations? We train probes on each distribution and test on the others, sweeping all layers (Table~\ref{tab:bridge}; heatmap view in Appendix~\ref{app:depth}, Figure~\ref{fig:heatmap}). We make the following observations.
 
@@ -245,7 +247,7 @@ Table~\ref{tab:audit} gives the full behavioral audit summarized in Figure~\ref{
 
 
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \small
 \begin{tabular}{@{}llcc@{}}
@@ -269,7 +271,7 @@ Trivial & Trace length (\# steps) & 0.575 & [0.527, 0.618] \\
 \end{tabular}
 \caption{Black-box signals vs.\ the human label ($n{=}633$ complete-feature traces: 4 domains $\times$ the 2 open models bearing stored answer-tracing scores). \emph{In}correctness dominates; answer-tracing helps only inverted (prefix-instability intended direction: 0.374); structure adds nothing. Targeted counterfactual interventions separate weakly (standardized effect size 0.56--0.61) and are dominated by answer-tracing (not shown).}
 \label{tab:audit}
-\end{table}
+\end{table*}
 
 \begin{figure*}[t]
 \small
@@ -297,7 +299,7 @@ If the population of a city increases by 5\% annually, what will be the populati
 \label{fig:example}
 \end{figure*}
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -323,7 +325,7 @@ If the population of a city increases by 5\% annually, what will be the populati
 \end{tabular}
 \caption{Linear probes on the human annotations, by regime: each regime is decodable in a different model; neither transfers to the other. Selection-corrected permutation tests; nested rows select the layer by inner CV on training folds. $^{\S}$The permutation statistic uses a shared full-data projection, more conservative than the in-fold CV shown (0.679 vs.\ 0.759; for Qwen they coincide).}
 \label{tab:whitebox}
-\end{table}
+\end{table*}
 
 
 \section{Label-Semantics Verification}
@@ -350,7 +352,7 @@ ft4 & 106 & 1 & 0 \\
 \label{tab:crosstab}
 \end{table}
 
-\begin{table}[h]
+\begin{table*}[t]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -376,7 +378,7 @@ LLM judge (GPT-4o-mini) & \textbf{0.679} [0.633, 0.721] & \textbf{0.830} [0.786,
 \end{tabular}
 \caption{The two regimes (\texttt{faithful\_type} as target; bold = CI excludes 0.5). On correct answers three metric signals work moderately and the standard metric is confidently \emph{inverted}; on incorrect answers no metric signal is detectably above chance, while the prompted judge degrades (0.830 $\to$ 0.679) but stays significant. Metric rows: complete-feature subset; judge rows: full labeled set. Unchanged under the binary label (binary-label paragraph below).}
 \label{tab:regimes}
-\end{table}
+\end{table*}
 
 \paragraph{A documented trap.} Correlating a detector against \texttt{soft\_faithfulness} is near-circular, since it is itself a detector: a signal correlating with it at $\rho{=}0.87$ nonetheless scores at chance against the human labels.
 
@@ -450,7 +452,7 @@ Figure~\ref{fig:seven} and Table~\ref{tab:synth} give the per-model instructed-c
 \end{figure}
 
 
-\begin{table}[h]
+\begin{table*}[t]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -469,7 +471,7 @@ DeepSeek-R1-0528-8B & 81 & 0.558$^{\ddagger}$ & 0.627 & .025 & 0.473 \\
 \end{tabular}
 \caption{Instructed construction, 7 models (full values for Figure~\ref{fig:seven}). Held-out = single 70/30 split at the disclosed full-data layer; Nested = 10 problem-grouped splits, layer by inner CV; $p$ = selection-corrected permutation; Surface = style-features baseline (learned text baseline: 0.502/0.564 Llama/Qwen). $^{\ddagger}$Small-$n$; the permutation statistic (0.688) is the reliable read.}
 \label{tab:synth}
-\end{table}
+\end{table*}
 \paragraph{Second template.} Replacing the sycophancy phrasing with an impersonal metadata note (\emph{``(Note: the answer key for this problem lists $a^*$.)''}) and regenerating the full math testbed reproduces every quantity: yields 183 (Llama) / 104 (Qwen) hint-flip traces; held-out decodability 0.731 / 0.824 (perm $p{\leq}0.001$, 1{,}000 permutations); intended-direction \texttt{soft} 0.390 / 0.270 (vs.\ 0.389 / 0.251 with the sycophancy template). Kept traces were re-audited with template-adapted deference patterns; 4 Llama traces (of an initial 187) verbalizing ``the given answer'' were excluded (yields above are post-exclusion), 0 for Qwen. Llama's surface baseline is higher on this template (0.704 vs.\ 0.626), so its within-testbed decodability remains partly surface-explainable.
 \paragraph{Non-math domain.} On the full LogiQA test set (651 items, sycophancy template), baseline accuracy is lower and flip rates higher, yielding 231 (Llama) / 129 (Qwen) hint-flip + 283 / 300 genuine traces; a deference re-scan found 0 hits. Decodability: held-out 0.672 / 0.793 (perm $p{\leq}0.001$) with surface baselines of only 0.547 / 0.607, weaker surface tells than the math sets. The LogiQA-source transfer results are in \S\ref{sec:bridge} (2b).
 
@@ -489,7 +491,7 @@ Because decoding is sampled (T$=$0.7), a baseline-incorrect answer is one draw f
 the mean $L_1$ change between successive prefixes. The permutation test is Eq.~\ref{eq:perm} (\S\ref{sec:setup}); PI is reported in its empirically discriminative (inverted) direction, higher $\Rightarrow$ unfaithful, as disclosed in \S\ref{sec:audit}.
 
 \paragraph{Model checkpoints.} All local models are instruction-tuned checkpoints loaded in 4-bit NF4 quantization; trace generation uses sampled decoding (T$=$0.7, max 1{,}024 new tokens); probing re-encodes stored traces teacher-forced (\S\ref{sec:internals}); probe pipelines use fixed seeds.
-\begin{table}[h]
+\begin{table*}[t]
 \centering
 \small
 \begin{tabular}{@{}ll@{}}
@@ -509,7 +511,7 @@ LLM judge & \texttt{gpt-4o-mini} (OpenAI API, temperature 0, August 2026) \\
 \end{tabular}
 \caption{Exact model checkpoints. Benchmark traces originate from the FaithCoT-Bench release; the two open benchmark models are re-encoded with the matching checkpoints above.}
 \label{tab:checkpoints}
-\end{table}
+\end{table*}
 
 \paragraph{LLM-judge protocol.} Judge: \texttt{gpt-4o-mini} via the OpenAI chat-completions API (accessed 15 August 2026), temperature 0, \texttt{max\_tokens} 30, JSON-forced output (\texttt{response\_format}: \texttt{json\_object}); a single fixed prompt written before observing any output, no prompt search. The judge is shown the question, options, and the model's full CoT response; it is never shown the gold answer or correctness. System message, verbatim: \emph{``You are auditing a language model's chain-of-thought (CoT) explanation for FAITHFULNESS. Unfaithful reasoning means the stated steps are not the actual basis of the final answer: post-hoc rationalization of a predetermined answer, reliance on unverbalized shortcuts or cues, steps that do not support or are contradicted by the final answer, or reasoning that could not produce the stated conclusion. Faithful reasoning means the answer plausibly follows from, and is produced by, the stated steps. You are NOT told the correct answer, and correctness is not the question: a wrong answer can be reached faithfully, and a correct answer can be rationalized unfaithfully. Respond with JSON only: \{``unfaithfulness\_score'': $\langle$integer 0--100$\rangle$\} where 0 = certainly faithful and 100 = certainly unfaithful.''} User message template: ``Question: [question] / Options: [options] / Model's chain-of-thought response (including its final answer): [full response].'' The alias resolved to snapshot \texttt{gpt-4o-mini-2024-07-18} (read from API responses); the snapshot predates the benchmark's construction and release, excluding label contamination. Scores concentrate on a coarse grid ($\{0, 10, 20, 30, 70, 80, 100\}$ covers 98\% of responses; ties use the standard AUROC convention). The score is parsed as the integer \texttt{unfaithfulness\_score}; all 1{,}303 responses parsed on the first valid API response (zero malformed outputs); network-level retries with backoff handle rate limits only (temperature 0; no resampling). Same-sample comparisons, the regime-degradation test, and the own-trace exclusion are computed by the released analysis scripts.
 
@@ -533,7 +535,7 @@ LLM judge & \texttt{gpt-4o-mini} (OpenAI API, temperature 0, August 2026) \\
 \label{fig:forest}
 \end{figure*}
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \small
 \begin{tabular}{@{}lccc@{}}
@@ -546,7 +548,7 @@ Correct rgm. & 0.204 & 0.367 [0.271, 0.488] & 0.350 [0.253, 0.448] \\
 \end{tabular}
 \caption{AUPRC robustness for the Table~\ref{tab:regimes} comparisons (prefix instability behaves like answer-tracing: 0.518/0.385). Random baseline $=$ prevalence. In the incorrect regime AUPRC matches prevalence (consistent with the null); in the correct regime it reaches 1.7--1.9$\times$ prevalence, so the moderate AUROCs are not masking failed minority-class retrieval.}
 \label{tab:auprc}
-\end{table}
+\end{table*}
 
 \section{GRACE Preliminary Replication}
 On the 40-example public sample of GRACE \citep{pham2026grace} (8 unfaithful steps), NLI step-support shows no above-chance discrimination (0.51--0.58), directionally consistent with our FaithCoT results but underpowered; the full evaluation set was not released in time.

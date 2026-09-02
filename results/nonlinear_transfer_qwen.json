@@ -1,0 +1,39 @@
+{
+  "model": "qwen",
+  "n_layers": 28,
+  "design": "nonlinear head chosen by source-only 5-fold CV; must match linear in-distribution to be trusted on transfer",
+  "sources": {
+    "instructed": {
+      "best_linear_layer": 10,
+      "linear_source_cv": 0.7577578229873972,
+      "nonlinear_grid_source_cv": {
+        "mlp:16:1e-1": 0.6378422760625058,
+        "mlp:32:1e-2": 0.6145003844700179,
+        "mlp:64:1e-2": 0.6637451289603671,
+        "mlp:32,16:1e-2": 0.5510041835551095,
+        "svc:1.0": 0.7135111887291636,
+        "svc:10.0": 0.6530320999882704,
+        "hgb": 0.6863376298400865
+      },
+      "best_nonlinear": "svc:1.0",
+      "best_nonlinear_source_cv": 0.7135111887291636,
+      "matches_linear_in_distribution": false
+    },
+    "hint": {
+      "best_linear_layer": 21,
+      "linear_source_cv": 0.8322660098522168,
+      "nonlinear_grid_source_cv": {
+        "mlp:16:1e-1": 0.6234913793103448,
+        "mlp:32:1e-2": 0.7520628078817734,
+        "mlp:64:1e-2": 0.6751231527093595,
+        "mlp:32,16:1e-2": 0.542826354679803,
+        "svc:1.0": 0.7904248768472906,
+        "svc:10.0": 0.7774014778325123,
+        "hgb": 0.7916871921182267
+      },
+      "best_nonlinear": "hgb",
+      "best_nonlinear_source_cv": 0.7916871921182267,
+      "matches_linear_in_distribution": false
+    }
+  }
+}

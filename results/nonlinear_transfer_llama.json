@@ -1,0 +1,59 @@
+{
+  "model": "llama",
+  "n_layers": 32,
+  "design": "nonlinear head chosen by source-only 5-fold CV; must match linear in-distribution to be trusted on transfer",
+  "sources": {
+    "instructed": {
+      "best_linear_layer": 9,
+      "linear_source_cv": 0.7698365782498426,
+      "nonlinear_grid_source_cv": {
+        "mlp:16:1e-1": 0.6495490169905228,
+        "mlp:32:1e-2": 0.6196106100188783,
+        "mlp:64:1e-2": 0.597662134589348,
+        "mlp:32,16:1e-2": 0.6075112984115483,
+        "svc:1.0": 0.764401899277283,
+        "svc:10.0": 0.692053927270647,
+        "hgb": 0.6954863560954215
+      },
+      "best_nonlinear": "svc:1.0",
+      "best_nonlinear_source_cv": 0.764401899277283,
+      "matches_linear_in_distribution": true,
+      "transfer": {
+        "incorrect": {
+          "nonlinear": 0.4741908482142857,
+          "linear": 0.43092757936507936
+        },
+        "correct": {
+          "nonlinear": 0.5834327624929815,
+          "linear": 0.5568939500280741
+        }
+      }
+    },
+    "hint": {
+      "best_linear_layer": 17,
+      "linear_source_cv": 0.7327986865370043,
+      "nonlinear_grid_source_cv": {
+        "mlp:16:1e-1": 0.6501389239706996,
+        "mlp:32:1e-2": 0.654533973225562,
+        "mlp:64:1e-2": 0.6906542056074766,
+        "mlp:32,16:1e-2": 0.6482571356403133,
+        "svc:1.0": 0.734421571103814,
+        "svc:10.0": 0.6939883809042688,
+        "hgb": 0.7025132609244759
+      },
+      "best_nonlinear": "svc:1.0",
+      "best_nonlinear_source_cv": 0.734421571103814,
+      "matches_linear_in_distribution": true,
+      "transfer": {
+        "incorrect": {
+          "nonlinear": 0.6057477678571428,
+          "linear": 0.6157242063492063
+        },
+        "correct": {
+          "nonlinear": 0.6212582467714767,
+          "linear": 0.5549112156092083
+        }
+      }
+    }
+  }
+}

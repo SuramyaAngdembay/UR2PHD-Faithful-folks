@@ -1,0 +1,39 @@
+{
+  "model": "qwen",
+  "n_target": 126,
+  "n_target_pos": 63,
+  "n_layers": 28,
+  "n_boot": 2000,
+  "statistic": "selection-free layer-mean AUROC",
+  "transfer": {
+    "instructed": {
+      "auroc": 0.5145952560918549,
+      "ci95": [
+        0.45768435724603324,
+        0.5703156910396572
+      ]
+    },
+    "hint": {
+      "auroc": 0.48350610085303963,
+      "ci95": [
+        0.4214639280038714,
+        0.5446314643505122
+      ]
+    }
+  },
+  "contrast_hint_minus_instructed": {
+    "delta": -0.031089155238815225,
+    "ci95": [
+      -0.10300953504615994,
+      0.04184319022634418
+    ],
+    "p_one_sided_delta_le_0": 0.8075
+  },
+  "equivalence_instructed": {
+    "margin": 0.55,
+    "ci95_upper": 0.5703156910396572,
+    "rejects_reaching_margin": false,
+    "note": "if true, instructed transfer is bounded below the margin rather than merely unproven"
+  },
+  "caveat": "interval reflects target-set resampling only; training sets held fixed"
+}

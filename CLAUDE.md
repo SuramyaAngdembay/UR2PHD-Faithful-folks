@@ -124,6 +124,20 @@ FRONTIER claim stays FaithCoT-anchored — hint-testbed surface baselines partia
 so do not claim black-box-at-chance there.)* The dataset/protocol is itself a contribution (RQ3 v1).
 **Perm-tested (2026-07-12): Llama layer-mean p=0.010 (best 0.694 corrected p=0.050); Qwen p=0.741 (null).** Caveats: single hint template; math-only; class imbalance.
 
+## Compute environment (Aquaman) — verified 2026-09-02
+
+- **Python:** `~/ur2phd-venv/bin/python` (numpy 2.2.6 / sklearn 1.7.2 / scipy 1.15.3). The system
+  `python3` has no numpy; conda envs live at `/data/suramya/conda-envs/`.
+- **Storage after the Sept 2026 migration:** root `/` is 916G at ~80% (179G free); `/data` is 7.2T
+  at ~29% (5.1T free). Root hit 100% on 2026-09-02 and blocked writes to `~`; the migration
+  symlinked `cert-out`, `hf_cache` and `twos_work` into `/data/suramya/insider_mi/`.
+- **Our outputs are already on /data:** `~/synth` -> `/data/suramya/ur2phd-synth`, so
+  `~/synth/results/` (all experiment JSONs) is on the large volume. No migration needed.
+- **Split input caveat:** activation caches `acts_<model>[_hint|_hintL|_hintB|_hintBc].npz` live
+  under `~/synth` (i.e. /data), but the FaithCoT white-box caches `~/wbrep_<model>.npz` are still
+  real files on root. Scripts hard-code both paths.
+- **Staging scripts:** upload to `/data/suramya/` rather than `~` when root is tight.
+
 ## Conventions
 - **Data over docs:** when a dataset's documentation and its raw contents disagree, the DATA is the
   tiebreaker — resolve by inspecting ≥3 raw examples before trusting either. Never override an

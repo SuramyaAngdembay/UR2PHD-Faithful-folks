@@ -1,0 +1,39 @@
+{
+  "model": "llama",
+  "n_target": 144,
+  "n_target_pos": 84,
+  "n_layers": 32,
+  "n_boot": 2000,
+  "statistic": "selection-free layer-mean AUROC",
+  "transfer": {
+    "instructed": {
+      "auroc": 0.43092757936507936,
+      "ci95": [
+        0.3586938031425315,
+        0.5016961216831008
+      ]
+    },
+    "hint": {
+      "auroc": 0.6157242063492063,
+      "ci95": [
+        0.5537240880043036,
+        0.6749685419547808
+      ]
+    }
+  },
+  "contrast_hint_minus_instructed": {
+    "delta": 0.18479662698412697,
+    "ci95": [
+      0.08196295605411129,
+      0.2911998875809096
+    ],
+    "p_one_sided_delta_le_0": 0.0005
+  },
+  "equivalence_instructed": {
+    "margin": 0.55,
+    "ci95_upper": 0.5016961216831008,
+    "rejects_reaching_margin": true,
+    "note": "if true, instructed transfer is bounded below the margin rather than merely unproven"
+  },
+  "caveat": "interval reflects target-set resampling only; training sets held fixed"
+}

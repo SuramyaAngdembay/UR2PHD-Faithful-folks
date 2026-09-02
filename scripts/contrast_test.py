@@ -65,7 +65,9 @@ for k, d in src.items():
         P[k][l] = pipe(len(d["y"])).fit(d["get"](l), d["y"]).predict_proba(tgt_get(l))[:, 1]
     print(f"  {k}: layer-mean AUROC {np.mean([auc(y_t, P[k][l]) for l in range(NL)]):.4f}", flush=True)
 
-point = {k: float(np.mean([auc(y_t, P[k][l]) for l in range(NL)])) for k in src}
+per_layer = {k: [float(auc(y_t, P[k][l])) for l in range(NL)] for k in src}
+point = {k: float(np.mean(per_layer[k])) for k in src}
+n_exceed = int(sum(1 for l in range(NL) if per_layer["hint"][l] > per_layer["instructed"][l]))
 delta_point = point["hint"] - point["instructed"]
 
 # ---- paired bootstrap over target examples ----
@@ -98,6 +100,9 @@ out = {
       "rejects_reaching_margin": bool(np.percentile(bs["instructed"], 97.5) < args.margin),
       "note": "if true, instructed transfer is bounded below the margin rather than merely unproven",
   },
+  "per_layer_auroc": per_layer,
+  "layers_hint_exceeds_instructed": {"count": n_exceed, "of": int(NL),
+      "note": "descriptive only; layers are highly correlated so this is not a valid significance test"},
   "caveat": "interval reflects target-set resampling only; training sets held fixed",
 }
 os.makedirs(RES, exist_ok=True)

@@ -1,0 +1,67 @@
+{
+  "model": "llama",
+  "n_layers": 32,
+  "n_boot": 2000,
+  "statistic": "selection-free layer-mean AUROC",
+  "targets": {
+    "incorrect": {
+      "n": 144,
+      "pos": 84
+    },
+    "correct": {
+      "n": 163,
+      "pos": 26
+    }
+  },
+  "design_note": "targets are different example sets; unpaired bootstrap, lower power than a paired test",
+  "sources": {
+    "instructed": {
+      "to_incorrect": {
+        "auroc": 0.43092757936507936,
+        "ci95": [
+          0.35793620053153635,
+          0.5027118467595262
+        ]
+      },
+      "to_correct": {
+        "auroc": 0.5568939500280741,
+        "ci95": [
+          0.4687562082078246,
+          0.6465848056044216
+        ]
+      },
+      "delta_incorrect_minus_correct": {
+        "delta": -0.1259663706629947,
+        "ci95": [
+          -0.24211551007323984,
+          -0.014439981649669852
+        ],
+        "p_one_sided_delta_le_0": 0.9875
+      }
+    },
+    "hint": {
+      "to_incorrect": {
+        "auroc": 0.6157242063492063,
+        "ci95": [
+          0.5526451539469945,
+          0.6769871738803989
+        ]
+      },
+      "to_correct": {
+        "auroc": 0.5549112156092083,
+        "ci95": [
+          0.4614058024930987,
+          0.6473561721275153
+        ]
+      },
+      "delta_incorrect_minus_correct": {
+        "delta": 0.06081299073999802,
+        "ci95": [
+          -0.05273897090784931,
+          0.17293755786491372
+        ],
+        "p_one_sided_delta_le_0": 0.137
+      }
+    }
+  }
+}

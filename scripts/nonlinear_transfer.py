@@ -62,7 +62,9 @@ h  = np.load(os.path.join(SYNTH, f"acts_{args.mdir}_hint.npz"), allow_pickle=Tru
 wi = np.load(os.path.expanduser(f"~/wbrep_{args.mdir}.npz"), allow_pickle=True)
 wc = np.load(os.path.expanduser(f"~/wbrep_{args.mdir}_ft34.npz"), allow_pickle=True)
 SRC = {"instructed": (lambda l, d=s: d["X"][l].astype(np.float32), np.asarray(s["y"]).astype(int), s["X"].shape[0]),
-       "hint":       (lambda l, d=h: d["X"][l].astype(np.float32), np.asarray(h["y"]).astype(int), h["X"].shape[0])}
+       "hint":       (lambda l, d=h: d["X"][l].astype(np.float32), np.asarray(h["y"]).astype(int), h["X"].shape[0]),
+       "incorrect":  (lambda l, d=wi: d["cot_end"][:, l+1, :].astype(np.float32), np.asarray(wi["y"]).astype(int), wi["cot_end"].shape[1]-1),
+       "correct":    (lambda l, d=wc: d["cot_end"][:, l+1, :].astype(np.float32), np.asarray(wc["y"]).astype(int), wc["cot_end"].shape[1]-1)}
 TGT = {"incorrect": (lambda l, d=wi: d["cot_end"][:, l+1, :].astype(np.float32), np.asarray(wi["y"]).astype(int), wi["cot_end"].shape[1]-1),
        "correct":   (lambda l, d=wc: d["cot_end"][:, l+1, :].astype(np.float32), np.asarray(wc["y"]).astype(int), wc["cot_end"].shape[1]-1)}
 NL = min(min(v[2] for v in SRC.values()), min(v[2] for v in TGT.values()))
@@ -86,6 +88,7 @@ for sk, (sget, sy, _) in SRC.items():
     if passes:
         rec["transfer"] = {}
         for tk, (tget, ty, _) in TGT.items():
+            if tk == sk: continue
             for kind, lab in ((best_k, "nonlinear"), ("linear", "linear")):
                 aucs = [auc(ty, head(len(sy), kind).fit(sget(l), sy).predict_proba(tget(l))[:, 1]) for l in range(NL)]
                 rec["transfer"].setdefault(tk, {})[lab] = float(np.nanmean(aucs))

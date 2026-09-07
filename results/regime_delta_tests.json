@@ -1,31 +1,4 @@
 {
- "paired_oracle_vs_metrics_n633": {
-  "oracle_auroc": 0.696,
-  "answer_tracing_inv": {
-   "metric_auroc": 0.651,
-   "delta": 0.045,
-   "ci95": [
-    -0.006,
-    0.098
-   ]
-  },
-  "prefix_instability_inv": {
-   "metric_auroc": 0.626,
-   "delta": 0.071,
-   "ci95": [
-    0.018,
-    0.122
-   ]
-  },
-  "nli_support": {
-   "metric_auroc": 0.569,
-   "delta": 0.128,
-   "ci95": [
-    0.069,
-    0.187
-   ]
-  }
- },
  "regime_delta_tests": {
   "answer_tracing_inv": {
    "inc": 0.53,
@@ -56,6 +29,33 @@
     0.182
    ],
    "p_le0": 0.0456
+  }
+ },
+ "paired_oracle_vs_metrics_n633": {
+  "oracle_auroc": 0.696,
+  "answer_tracing_inv": {
+   "metric_auroc": 0.651,
+   "delta": 0.045,
+   "ci95": [
+    -0.005,
+    0.098
+   ]
+  },
+  "prefix_instability_inv": {
+   "metric_auroc": 0.626,
+   "delta": 0.071,
+   "ci95": [
+    0.015,
+    0.124
+   ]
+  },
+  "nli_support": {
+   "metric_auroc": 0.569,
+   "delta": 0.128,
+   "ci95": [
+    0.07,
+    0.185
+   ]
   }
  }
 }

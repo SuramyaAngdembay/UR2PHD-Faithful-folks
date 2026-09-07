@@ -124,6 +124,19 @@ FRONTIER claim stays FaithCoT-anchored — hint-testbed surface baselines partia
 so do not claim black-box-at-chance there.)* The dataset/protocol is itself a contribution (RQ3 v1).
 **Perm-tested (2026-07-12): Llama layer-mean p=0.010 (best 0.694 corrected p=0.050); Qwen p=0.741 (null).** Caveats: single hint template; math-only; class imbalance.
 
+**Follow-up campaign (2026-09-08, commits 5e6dbfd/a0ba3eb):** the transfer grid was completed to
+**8 cells** (2 models x {math-sycophancy, math-metadata, LogiQA, TruthfulQA}): **only Llama x math x
+sycophancy transfers** (+0.185 paired contrast, p<.001, Bonferroni-over-8-surviving). **The metadata-
+template replication FAILS (0.452)** despite being MORE decodable in-distribution (CV 0.792 vs 0.733)
+=> the positive cell is template-specific, and the decodability-vs-transfer dissociation gains its
+sharpest point (same model/domain/family, only hint wording changed). **Chain positive control
+passes both models** (instructed->hint 0.627/0.582) — the instructed annotated-null is specific, not
+a weak probe. **Judge ablations validate the judge**: question-only at chance on everything incl.
+correctness (0.487/0.503), CoT-only keeps blind-regime signal (0.661 of 0.679) while correctness-
+tracking collapses (0.684->0.560). Bug sweep over all post-Sept-1 code: nothing broken (ft34 label
+direction verified at data level; hintT leakage-clean; all paper numbers match JSONs). Paper updated
+in place (body flush at ACL p8).
+
 ## Compute environment (Aquaman) — verified 2026-09-02
 
 - **Python:** `~/ur2phd-venv/bin/python` (numpy 2.2.6 / sklearn 1.7.2 / scipy 1.15.3). The system

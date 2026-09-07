@@ -34,14 +34,25 @@ bootstrap): kills the "maybe the instructed probe is just bad" objection.
 - So in Llama: instructed->hint works, hint(syc)->annotated works, instructed->annotated is
   **bounded null** (<0.55). The instructed null is specific, not estimator failure.
 
-## Experiment 3 — Judge ablations (qonly / cotonly): see results JSONs when done
+## Experiment 3 — Judge ablations (qonly / cotonly): **VALIDATES the judge**
 
 `judge_baseline.py` gained `--ablate {qonly,cotonly}` (SYSTEM prompt and message skeleton fixed;
 only the withheld block changes). qonly = difficulty-only control (no CoT shown); cotonly = no
 question/options (caveat: traces often restate the question — inherent leakage, noted in code).
-Both arms launched over all 1,303 labeled traces, gpt-4o-mini, T=0.
-Purpose: if qonly ~ full judge, the judge is largely doing difficulty/correctness prediction and
-"only behavioral signal to beat the oracle" needs qualification.
+Both arms run over all 1,303 labeled traces, gpt-4o-mini, T=0. Result: the OPPOSITE of the worry.
+- **qonly at chance on everything**: full 0.487 [0.456,0.519]; incorrect regime 0.467; correct 0.552;
+  and even score-vs-INCORRECTNESS 0.503 — the judge cannot predict difficulty/correctness from the
+  question alone. (54% of qonly scores sit at midpoint 50; the differentiated rest carries nothing.)
+- **cotonly keeps most signal**: full 0.693 [0.662,0.725]; blind regime 0.661 (of 0.679 full-judge);
+  correct 0.769; while correctness-tracking collapses 0.684 -> 0.560.
+=> The judge reads the trace, not the question. Its correctness inference requires the question;
+its unfaithfulness signal is trace-internal. The "only behavioral signal to beat the oracle" claim
+is STRENGTHENED, and the Limitations hedge is now bounded. Caveat: traces often restate the
+question, so cotonly is an upper bound on question-independence.
+
+## Second grid completion — qwen hintB: null (delta -0.002 [-0.085,+0.080], p=.537)
+Grid final: 8 cells = 2 models x (math-sycophancy, math-metadata, LogiQA, TruthfulQA); 1 significant.
+Qwen chain also run: instructed->hint 0.582 [0.529,0.633] — positive control passes in BOTH models.
 
 ## Bug sweep over unvalidated (post-Sept-1) code — NOTHING BROKEN FOUND
 
@@ -59,13 +70,13 @@ Purpose: if qonly ~ full judge, the judge is largely doing difficulty/correctnes
 | `results/regime_delta_tests.json` (was M in git) | zero numeric changes vs HEAD~1 — formatting-only rewrite | non-issue |
 | Paper transcription audit | ALL 6 tab:bridge cells + equivalence 0.502 + nonlinear 0.431->0.474 + target-contrast deltas + the three CVs (0.773/0.733/0.645) + qonly 0.646/0.413 + embed 0.476 [0.382,0.573] verified against JSONs | all match |
 
-## Paper impact (to fold in once judge arms land)
+## Paper impact — APPLIED (commit a0ba3eb)
 
-1. §7.3(2): scope to "one model, one source, **one template**"; add hintB failure with its
-   in-distribution CV (the fragility IS the thesis).
-2. §7.3(1): add the chain positive control (instructed->hint 0.627) — pre-empts "bad probe".
-3. §7.3(4): the dissociation now has a same-domain, same-family fourth point (hintB).
-4. Prescriptions/Limitations: transfer evidence is 1 of 8 cells; template-sensitivity explicit.
-5. Judge section: fold in qonly/cotonly decomposition when the arms finish.
+All folded into paper/arr/main.tex: (2) retitled "one model, one source, one template" + hintB
+sentence; (1) chain control both models; (4) four-variant version ("the two most decodable transfer
+least"); table now 8 rows, caption recounted, Bonferroni over 8 (still passes); abstract/
+contribution/discussion/limitations counts updated; judge §5 + appendix ablation cells; skeptical-
+reading paragraph moved Discussion -> Limitations (page budget + it is one). Body ends p8; 0 overfull.
 
-New results files: `contrast_llama_hintB.json`, `chain_llama_hint.json` (+ judge arms pending).
+New results files: contrast_llama_hintB.json, contrast_qwen_hintB.json, chain_llama_hint.json,
+chain_qwen_hint.json, judge_baseline_qonly.json, judge_baseline_cotonly.json (+ raw jsonl).

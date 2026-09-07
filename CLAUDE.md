@@ -133,9 +133,15 @@ so do not claim black-box-at-chance there.)* The dataset/protocol is itself a co
   symlinked `cert-out`, `hf_cache` and `twos_work` into `/data/suramya/insider_mi/`.
 - **Our outputs are already on /data:** `~/synth` -> `/data/suramya/ur2phd-synth`, so
   `~/synth/results/` (all experiment JSONs) is on the large volume. No migration needed.
-- **Split input caveat:** activation caches `acts_<model>[_hint|_hintL|_hintB|_hintBc].npz` live
-  under `~/synth` (i.e. /data), but the FaithCoT white-box caches `~/wbrep_<model>.npz` are still
-  real files on root. Scripts hard-code both paths.
+- **Everything of ours now lives on /data (resolved 2026-09-07).** `~/synth` symlinks to
+  `/data/suramya/ur2phd-synth`, and the four FaithCoT white-box caches `~/wbrep_<model>[_ft34].npz`
+  are now symlinks into the same directory. Nothing ur2phd writes to root any more. `~/p1` and
+  `~/Sea-turtles` were also migrated (194G reclaimed; root went 100% -> 80%).
+- **Rule for new work: write outputs under `~/synth` (i.e. /data, 4.9T free), never to `~`.** Root
+  filled to 0 bytes twice during Sept 2026 and blocked writes mid-run both times.
+- **Verify cross-filesystem copies with true file bytes, not `du -sb`** — `du` counts directory
+  metadata, which differs by filesystem and produces false mismatches:
+  `find DIR -type f -printf '%s\n' | awk '{s+=$1} END{print s}'`
 - **Staging scripts:** upload to `/data/suramya/` rather than `~` when root is tight.
 
 ## Conventions

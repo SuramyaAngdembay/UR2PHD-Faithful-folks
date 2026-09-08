@@ -1,0 +1,832 @@
+{
+  "n_all": 1303,
+  "n_common": 633,
+  "note": "LODO is retrospective (domains examined during development); oracle excluded from all pools; regret = best-available-on-target minus selected, under each criterion",
+  "settings": {
+    "metrics-only(common)": {
+      "within-regime|aggregate": {
+        "mean_regret": 0.0217,
+        "ci95": [
+          0.0043,
+          0.1472
+        ]
+      },
+      "within-regime|worst-regime": {
+        "mean_regret": 0.063,
+        "ci95": [
+          0.0129,
+          0.2051
+        ]
+      },
+      "within-regime|mean-regime": {
+        "mean_regret": 0.06,
+        "ci95": [
+          0.0064,
+          0.1957
+        ]
+      },
+      "within-regime|standardized": {
+        "mean_regret": 0.0217,
+        "ci95": [
+          0.0048,
+          0.1925
+        ]
+      },
+      "within-regime|fixed:soft(inv)": {
+        "mean_regret": 0.0217,
+        "ci95": [
+          0.0038,
+          0.1177
+        ]
+      },
+      "within-regime|fixed:PI(inv)": {
+        "mean_regret": 0.0455,
+        "ci95": [
+          0.0189,
+          0.1472
+        ]
+      },
+      "within-regime|fixed:NLI-unsup": {
+        "mean_regret": 0.0489,
+        "ci95": [
+          0.0155,
+          0.1742
+        ]
+      },
+      "within-regime|fixed:DAG-lin": {
+        "mean_regret": 0.0883,
+        "ci95": [
+          0.0515,
+          0.2018
+        ]
+      },
+      "within-regime|fixed:steps": {
+        "mean_regret": 0.0634,
+        "ci95": [
+          0.0281,
+          0.1761
+        ]
+      },
+      "target-composition|aggregate": {
+        "mean_regret": 0.0037,
+        "ci95": [
+          0.0,
+          0.1218
+        ]
+      },
+      "target-composition|worst-regime": {
+        "mean_regret": 0.0654,
+        "ci95": [
+          0.0091,
+          0.1717
+        ]
+      },
+      "target-composition|mean-regime": {
+        "mean_regret": 0.067,
+        "ci95": [
+          0.0,
+          0.1429
+        ]
+      },
+      "target-composition|standardized": {
+        "mean_regret": 0.0037,
+        "ci95": [
+          0.0,
+          0.1408
+        ]
+      },
+      "target-composition|fixed:soft(inv)": {
+        "mean_regret": 0.0037,
+        "ci95": [
+          0.0,
+          0.0693
+        ]
+      },
+      "target-composition|fixed:PI(inv)": {
+        "mean_regret": 0.0478,
+        "ci95": [
+          0.0256,
+          0.1166
+        ]
+      },
+      "target-composition|fixed:NLI-unsup": {
+        "mean_regret": 0.0764,
+        "ci95": [
+          0.0452,
+          0.1555
+        ]
+      },
+      "target-composition|fixed:DAG-lin": {
+        "mean_regret": 0.1516,
+        "ci95": [
+          0.1145,
+          0.2421
+        ]
+      },
+      "target-composition|fixed:steps": {
+        "mean_regret": 0.0736,
+        "ci95": [
+          0.0402,
+          0.1546
+        ]
+      },
+      "balanced|aggregate": {
+        "mean_regret": 0.0222,
+        "ci95": [
+          0.0057,
+          0.1402
+        ]
+      },
+      "balanced|worst-regime": {
+        "mean_regret": 0.0636,
+        "ci95": [
+          0.0141,
+          0.1866
+        ]
+      },
+      "balanced|mean-regime": {
+        "mean_regret": 0.0605,
+        "ci95": [
+          0.0062,
+          0.1748
+        ]
+      },
+      "balanced|standardized": {
+        "mean_regret": 0.0222,
+        "ci95": [
+          0.0057,
+          0.1743
+        ]
+      },
+      "balanced|fixed:soft(inv)": {
+        "mean_regret": 0.0222,
+        "ci95": [
+          0.0054,
+          0.11
+        ]
+      },
+      "balanced|fixed:PI(inv)": {
+        "mean_regret": 0.0472,
+        "ci95": [
+          0.0175,
+          0.149
+        ]
+      },
+      "balanced|fixed:NLI-unsup": {
+        "mean_regret": 0.0492,
+        "ci95": [
+          0.0178,
+          0.1562
+        ]
+      },
+      "balanced|fixed:DAG-lin": {
+        "mean_regret": 0.0941,
+        "ci95": [
+          0.0549,
+          0.201
+        ]
+      },
+      "balanced|fixed:steps": {
+        "mean_regret": 0.0605,
+        "ci95": [
+          0.0263,
+          0.1615
+        ]
+      },
+      "within-regime|aggregate-minus-worst-regime": {
+        "mean": -0.0382,
+        "ci95": [
+          -0.1488,
+          0.056
+        ]
+      },
+      "within-regime|aggregate-minus-mean-regime": {
+        "mean": -0.024,
+        "ci95": [
+          -0.1369,
+          0.0443
+        ]
+      },
+      "within-regime|aggregate-minus-standardized": {
+        "mean": -0.0206,
+        "ci95": [
+          -0.1347,
+          0.0421
+        ]
+      },
+      "target-composition|aggregate-minus-worst-regime": {
+        "mean": -0.0365,
+        "ci95": [
+          -0.1266,
+          0.0429
+        ]
+      },
+      "target-composition|aggregate-minus-mean-regime": {
+        "mean": -0.0196,
+        "ci95": [
+          -0.0896,
+          0.0312
+        ]
+      },
+      "target-composition|aggregate-minus-standardized": {
+        "mean": -0.016,
+        "ci95": [
+          -0.0856,
+          0.0333
+        ]
+      },
+      "balanced|aggregate-minus-worst-regime": {
+        "mean": -0.032,
+        "ci95": [
+          -0.1296,
+          0.0573
+        ]
+      },
+      "balanced|aggregate-minus-mean-regime": {
+        "mean": -0.0199,
+        "ci95": [
+          -0.1163,
+          0.0473
+        ]
+      },
+      "balanced|aggregate-minus-standardized": {
+        "mean": -0.0176,
+        "ci95": [
+          -0.1132,
+          0.0431
+        ]
+      }
+    },
+    "metrics+judges(common)": {
+      "within-regime|aggregate": {
+        "mean_regret": 0.0274,
+        "ci95": [
+          0.015,
+          0.108
+        ]
+      },
+      "within-regime|worst-regime": {
+        "mean_regret": 0.0384,
+        "ci95": [
+          0.0097,
+          0.1338
+        ]
+      },
+      "within-regime|mean-regime": {
+        "mean_regret": 0.0361,
+        "ci95": [
+          0.0102,
+          0.1222
+        ]
+      },
+      "within-regime|standardized": {
+        "mean_regret": 0.0361,
+        "ci95": [
+          0.0122,
+          0.1239
+        ]
+      },
+      "within-regime|fixed:soft(inv)": {
+        "mean_regret": 0.17,
+        "ci95": [
+          0.1189,
+          0.2795
+        ]
+      },
+      "within-regime|fixed:PI(inv)": {
+        "mean_regret": 0.1939,
+        "ci95": [
+          0.1417,
+          0.3015
+        ]
+      },
+      "within-regime|fixed:NLI-unsup": {
+        "mean_regret": 0.1972,
+        "ci95": [
+          0.1332,
+          0.3162
+        ]
+      },
+      "within-regime|fixed:DAG-lin": {
+        "mean_regret": 0.2366,
+        "ci95": [
+          0.1757,
+          0.3674
+        ]
+      },
+      "within-regime|fixed:steps": {
+        "mean_regret": 0.2118,
+        "ci95": [
+          0.1587,
+          0.3158
+        ]
+      },
+      "within-regime|fixed:judgeA": {
+        "mean_regret": 0.0239,
+        "ci95": [
+          0.0178,
+          0.1061
+        ]
+      },
+      "within-regime|fixed:judgeB": {
+        "mean_regret": 0.0275,
+        "ci95": [
+          0.0167,
+          0.1194
+        ]
+      },
+      "within-regime|fixed:judge4o": {
+        "mean_regret": 0.0274,
+        "ci95": [
+          0.015,
+          0.101
+        ]
+      },
+      "within-regime|fixed:judge_cotonly": {
+        "mean_regret": 0.023,
+        "ci95": [
+          0.0118,
+          0.0956
+        ]
+      },
+      "target-composition|aggregate": {
+        "mean_regret": 0.004,
+        "ci95": [
+          0.0,
+          0.063
+        ]
+      },
+      "target-composition|worst-regime": {
+        "mean_regret": 0.0761,
+        "ci95": [
+          0.0044,
+          0.1153
+        ]
+      },
+      "target-composition|mean-regime": {
+        "mean_regret": 0.0478,
+        "ci95": [
+          0.0001,
+          0.1013
+        ]
+      },
+      "target-composition|standardized": {
+        "mean_regret": 0.0478,
+        "ci95": [
+          0.0,
+          0.0966
+        ]
+      },
+      "target-composition|fixed:soft(inv)": {
+        "mean_regret": 0.1405,
+        "ci95": [
+          0.1057,
+          0.2011
+        ]
+      },
+      "target-composition|fixed:PI(inv)": {
+        "mean_regret": 0.1845,
+        "ci95": [
+          0.1441,
+          0.2476
+        ]
+      },
+      "target-composition|fixed:NLI-unsup": {
+        "mean_regret": 0.2131,
+        "ci95": [
+          0.1701,
+          0.283
+        ]
+      },
+      "target-composition|fixed:DAG-lin": {
+        "mean_regret": 0.2883,
+        "ci95": [
+          0.2408,
+          0.3743
+        ]
+      },
+      "target-composition|fixed:steps": {
+        "mean_regret": 0.2103,
+        "ci95": [
+          0.1677,
+          0.2802
+        ]
+      },
+      "target-composition|fixed:judgeA": {
+        "mean_regret": 0.0321,
+        "ci95": [
+          0.0177,
+          0.075
+        ]
+      },
+      "target-composition|fixed:judgeB": {
+        "mean_regret": 0.0548,
+        "ci95": [
+          0.0351,
+          0.1014
+        ]
+      },
+      "target-composition|fixed:judge4o": {
+        "mean_regret": 0.004,
+        "ci95": [
+          0.0,
+          0.0427
+        ]
+      },
+      "target-composition|fixed:judge_cotonly": {
+        "mean_regret": 0.0628,
+        "ci95": [
+          0.0425,
+          0.1141
+        ]
+      },
+      "balanced|aggregate": {
+        "mean_regret": 0.0242,
+        "ci95": [
+          0.012,
+          0.101
+        ]
+      },
+      "balanced|worst-regime": {
+        "mean_regret": 0.0439,
+        "ci95": [
+          0.0113,
+          0.1245
+        ]
+      },
+      "balanced|mean-regime": {
+        "mean_regret": 0.0394,
+        "ci95": [
+          0.0104,
+          0.1171
+        ]
+      },
+      "balanced|standardized": {
+        "mean_regret": 0.0394,
+        "ci95": [
+          0.012,
+          0.1171
+        ]
+      },
+      "balanced|fixed:soft(inv)": {
+        "mean_regret": 0.1637,
+        "ci95": [
+          0.122,
+          0.2568
+        ]
+      },
+      "balanced|fixed:PI(inv)": {
+        "mean_regret": 0.1887,
+        "ci95": [
+          0.1467,
+          0.278
+        ]
+      },
+      "balanced|fixed:NLI-unsup": {
+        "mean_regret": 0.1908,
+        "ci95": [
+          0.1276,
+          0.296
+        ]
+      },
+      "balanced|fixed:DAG-lin": {
+        "mean_regret": 0.2356,
+        "ci95": [
+          0.1759,
+          0.3605
+        ]
+      },
+      "balanced|fixed:steps": {
+        "mean_regret": 0.2021,
+        "ci95": [
+          0.1502,
+          0.2937
+        ]
+      },
+      "balanced|fixed:judgeA": {
+        "mean_regret": 0.0261,
+        "ci95": [
+          0.0161,
+          0.0992
+        ]
+      },
+      "balanced|fixed:judgeB": {
+        "mean_regret": 0.0349,
+        "ci95": [
+          0.0209,
+          0.1192
+        ]
+      },
+      "balanced|fixed:judge4o": {
+        "mean_regret": 0.0242,
+        "ci95": [
+          0.0122,
+          0.0928
+        ]
+      },
+      "balanced|fixed:judge_cotonly": {
+        "mean_regret": 0.0243,
+        "ci95": [
+          0.0139,
+          0.0921
+        ]
+      },
+      "within-regime|aggregate-minus-worst-regime": {
+        "mean": -0.0031,
+        "ci95": [
+          -0.0778,
+          0.0651
+        ]
+      },
+      "within-regime|aggregate-minus-mean-regime": {
+        "mean": -0.0053,
+        "ci95": [
+          -0.0636,
+          0.0578
+        ]
+      },
+      "within-regime|aggregate-minus-standardized": {
+        "mean": -0.0047,
+        "ci95": [
+          -0.0657,
+          0.0559
+        ]
+      },
+      "target-composition|aggregate-minus-worst-regime": {
+        "mean": -0.0387,
+        "ci95": [
+          -0.0985,
+          0.0099
+        ]
+      },
+      "target-composition|aggregate-minus-mean-regime": {
+        "mean": -0.0249,
+        "ci95": [
+          -0.0742,
+          0.0138
+        ]
+      },
+      "target-composition|aggregate-minus-standardized": {
+        "mean": -0.0233,
+        "ci95": [
+          -0.0719,
+          0.0166
+        ]
+      },
+      "balanced|aggregate-minus-worst-regime": {
+        "mean": -0.007,
+        "ci95": [
+          -0.0799,
+          0.0576
+        ]
+      },
+      "balanced|aggregate-minus-mean-regime": {
+        "mean": -0.0066,
+        "ci95": [
+          -0.0611,
+          0.0534
+        ]
+      },
+      "balanced|aggregate-minus-standardized": {
+        "mean": -0.0065,
+        "ci95": [
+          -0.0667,
+          0.0489
+        ]
+      }
+    },
+    "judges-only(all)": {
+      "within-regime|aggregate": {
+        "mean_regret": 0.0401,
+        "ci95": [
+          0.0102,
+          0.0787
+        ]
+      },
+      "within-regime|worst-regime": {
+        "mean_regret": 0.026,
+        "ci95": [
+          0.0076,
+          0.0828
+        ]
+      },
+      "within-regime|mean-regime": {
+        "mean_regret": 0.0108,
+        "ci95": [
+          0.0054,
+          0.0763
+        ]
+      },
+      "within-regime|standardized": {
+        "mean_regret": 0.0108,
+        "ci95": [
+          0.0051,
+          0.0724
+        ]
+      },
+      "within-regime|fixed:judgeA": {
+        "mean_regret": 0.0108,
+        "ci95": [
+          0.0054,
+          0.0542
+        ]
+      },
+      "within-regime|fixed:judgeB": {
+        "mean_regret": 0.028,
+        "ci95": [
+          0.0159,
+          0.08
+        ]
+      },
+      "within-regime|fixed:judge4o": {
+        "mean_regret": 0.0309,
+        "ci95": [
+          0.0146,
+          0.0707
+        ]
+      },
+      "within-regime|fixed:judge_cotonly": {
+        "mean_regret": 0.0337,
+        "ci95": [
+          0.0159,
+          0.0788
+        ]
+      },
+      "target-composition|aggregate": {
+        "mean_regret": 0.0272,
+        "ci95": [
+          0.0012,
+          0.0569
+        ]
+      },
+      "target-composition|worst-regime": {
+        "mean_regret": 0.0173,
+        "ci95": [
+          0.0045,
+          0.0768
+        ]
+      },
+      "target-composition|mean-regime": {
+        "mean_regret": 0.0167,
+        "ci95": [
+          0.0045,
+          0.0657
+        ]
+      },
+      "target-composition|standardized": {
+        "mean_regret": 0.0167,
+        "ci95": [
+          0.0045,
+          0.0637
+        ]
+      },
+      "target-composition|fixed:judgeA": {
+        "mean_regret": 0.0167,
+        "ci95": [
+          0.0046,
+          0.0451
+        ]
+      },
+      "target-composition|fixed:judgeB": {
+        "mean_regret": 0.0465,
+        "ci95": [
+          0.0287,
+          0.0775
+        ]
+      },
+      "target-composition|fixed:judge4o": {
+        "mean_regret": 0.0104,
+        "ci95": [
+          0.0012,
+          0.032
+        ]
+      },
+      "target-composition|fixed:judge_cotonly": {
+        "mean_regret": 0.0716,
+        "ci95": [
+          0.0469,
+          0.1085
+        ]
+      },
+      "balanced|aggregate": {
+        "mean_regret": 0.0438,
+        "ci95": [
+          0.0113,
+          0.0808
+        ]
+      },
+      "balanced|worst-regime": {
+        "mean_regret": 0.0281,
+        "ci95": [
+          0.0076,
+          0.0824
+        ]
+      },
+      "balanced|mean-regime": {
+        "mean_regret": 0.0126,
+        "ci95": [
+          0.0065,
+          0.0733
+        ]
+      },
+      "balanced|standardized": {
+        "mean_regret": 0.0126,
+        "ci95": [
+          0.0065,
+          0.0701
+        ]
+      },
+      "balanced|fixed:judgeA": {
+        "mean_regret": 0.0126,
+        "ci95": [
+          0.0065,
+          0.0498
+        ]
+      },
+      "balanced|fixed:judgeB": {
+        "mean_regret": 0.0302,
+        "ci95": [
+          0.0163,
+          0.0787
+        ]
+      },
+      "balanced|fixed:judge4o": {
+        "mean_regret": 0.0322,
+        "ci95": [
+          0.0157,
+          0.07
+        ]
+      },
+      "balanced|fixed:judge_cotonly": {
+        "mean_regret": 0.0327,
+        "ci95": [
+          0.0158,
+          0.0726
+        ]
+      },
+      "within-regime|aggregate-minus-worst-regime": {
+        "mean": 0.0023,
+        "ci95": [
+          -0.0371,
+          0.0375
+        ]
+      },
+      "within-regime|aggregate-minus-mean-regime": {
+        "mean": 0.0097,
+        "ci95": [
+          -0.0368,
+          0.0434
+        ]
+      },
+      "within-regime|aggregate-minus-standardized": {
+        "mean": 0.012,
+        "ci95": [
+          -0.0348,
+          0.0436
+        ]
+      },
+      "target-composition|aggregate-minus-worst-regime": {
+        "mean": -0.0093,
+        "ci95": [
+          -0.0512,
+          0.0214
+        ]
+      },
+      "target-composition|aggregate-minus-mean-regime": {
+        "mean": -0.0027,
+        "ci95": [
+          -0.0463,
+          0.0239
+        ]
+      },
+      "target-composition|aggregate-minus-standardized": {
+        "mean": -0.0013,
+        "ci95": [
+          -0.0455,
+          0.0241
+        ]
+      },
+      "balanced|aggregate-minus-worst-regime": {
+        "mean": 0.003,
+        "ci95": [
+          -0.0359,
+          0.04
+        ]
+      },
+      "balanced|aggregate-minus-mean-regime": {
+        "mean": 0.0112,
+        "ci95": [
+          -0.0369,
+          0.0454
+        ]
+      },
+      "balanced|aggregate-minus-standardized": {
+        "mean": 0.0134,
+        "ci95": [
+          -0.0349,
+          0.046
+        ]
+      }
+    }
+  }
+}

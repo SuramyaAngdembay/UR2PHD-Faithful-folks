@@ -120,3 +120,39 @@ at every layer" -> descriptive, gpt-4o scoped to tested judges, "independent bin
 **Open decision (user):** audit-led restructure/title pivot (both reviews recommend it; evidence
 now leans that way). Matched construction experiment + reader-by-generator swap queued as the next
 substantive experiments.
+
+## Composition/selection analysis (direction-1 leg 1) — CORRECTED after review round 3 [2026-09-09]
+
+v1 (composition_rankings.py, commit 38a41ee) claimed a 7x LODO selection-rule improvement.
+**External review round 3 was right on all three flaws, verified by my own corrected rerun (v2):**
+1. The correctness ORACLE was in the selection pool — it needs gold correctness, so "aggregate
+   picks it 4/4" is a diagnostic of what aggregate AUC rewards, not a practitioner failure.
+2. Judges were excluded from the pool explicitly because they'd mask the effect — pool selected
+   to make the result visible.
+3. Detectors were evaluated on different populations (633 vs 1303).
+
+**v2 (composition_rankings2.py): oracle out, judges in, common examples, fixed baselines,
+question-clustered bootstrap (341 clusters) that repeats selection per draw. Result: the
+selection-rule benefit DOES NOT EXIST in any realistic pool** — reproducing the reviewer's
+exploratory table nearly exactly:
+- metrics-only common-633: aggregate 0.022 vs worst-regime 0.063 (REVERSED)
+- metrics+judges common-633: 0.027 vs 0.038 (reversed)
+- judges-only 1303: mean-regime 0.011 beats aggregate 0.040, but equals fixed "always judgeA"
+All rule-vs-rule differences have clustered CIs crossing zero. Per the reviewer's own kill
+criterion ("the selection procedure does not improve held-out decisions"), the REMEDY leg of
+direction 1 failed its cheap test — discovered cheaply, exactly as prescribed.
+
+**What survives (audit-strengthening, not a selection method):** the exact 4-cell AUC
+decomposition (metric aggregate performance is carried by the cross cell: oracle 0.996, soft
+0.700, PI 0.684); the oracle-as-illustration (top metric detector 0.696 at benchmark composition,
+last under balanced/flipped reweighting with frozen per-pair behavior); real domain composition
+variance (HLE-Bio [.89,.95] vs AQuA [.40,.19]). These fold into the audit paper as a sharpened
+statement of the composition finding. Withdrawn: "7x", "all kill criteria cleared", "the
+prospective test passes" (retrospective LODO on extensively-examined domains).
+
+**Footgun discovered:** rigorous_features.json's `correct` field encodes PRE-correction semantics
+(correct=1 iff ft in (1,2), which post-correction means INCORRECT). audit_corrected.py already
+avoids it; composition analyses derive regimes from ft directly. Never consume that field.
+
+Matched-question qualification (accepted): the genuine cohort also changed under matching, so
+"the excluded sycophancy positives carry the signal" is not yet isolated even if the gap shrinks.

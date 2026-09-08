@@ -1,0 +1,13 @@
+{
+  "model": "qwen",
+  "hint_source": "hintL",
+  "n_target": 126,
+  "n_layers": 28,
+  "statistic": "layer-mean AUROC difference, per-layer rank-transformed scores",
+  "null": "per-example exchangeability of the two probes' score columns",
+  "nperm": 10000,
+  "observed_delta": 0.038170823885109506,
+  "n_perm_ge_obs": 936,
+  "p_one_sided_add_one": 0.09369063093690631,
+  "caveat": "conditions on fitted source probes; source-training variability not modeled"
+}

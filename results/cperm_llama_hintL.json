@@ -1,0 +1,13 @@
+{
+  "model": "llama",
+  "hint_source": "hintL",
+  "n_target": 144,
+  "n_layers": 32,
+  "statistic": "layer-mean AUROC difference, per-layer rank-transformed scores",
+  "null": "per-example exchangeability of the two probes' score columns",
+  "nperm": 10000,
+  "observed_delta": 0.03799603174603178,
+  "n_perm_ge_obs": 2167,
+  "p_one_sided_add_one": 0.21677832216778323,
+  "caveat": "conditions on fitted source probes; source-training variability not modeled"
+}

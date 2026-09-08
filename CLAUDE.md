@@ -122,7 +122,7 @@ anchor, n=70). **This is the GRACE-independent external validation** — inversi
 organic bridge replicate on an independent, causally-labeled testbed. *(Scope note: the at-chance
 FRONTIER claim stays FaithCoT-anchored — hint-testbed surface baselines partially separate, 0.63/0.70,
 so do not claim black-box-at-chance there.)* The dataset/protocol is itself a contribution (RQ3 v1).
-**Perm-tested (2026-07-12): Llama layer-mean p=0.010 (best 0.694 corrected p=0.050); Qwen p=0.741 (null).** Caveats: single hint template; math-only; class imbalance.
+**Perm-tested (2026-07-12): Llama layer-mean p=0.017 (recorded in bridge3_perm_llama.json; best 0.694 corrected p=0.049); Qwen p=0.741 (null). [p=0.010 was a transcription error propagated until 2026-09-08.]** Caveats: single hint template; math-only; class imbalance.
 
 **Follow-up campaign (2026-09-08, commits 5e6dbfd/a0ba3eb):** the transfer grid was completed to
 **8 cells** (2 models x {math-sycophancy, math-metadata, LogiQA, TruthfulQA}): **only Llama x math x

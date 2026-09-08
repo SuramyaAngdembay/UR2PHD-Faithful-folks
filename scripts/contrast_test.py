@@ -33,6 +33,8 @@ ap.add_argument("--mdir", required=True)
 ap.add_argument("--boot", type=int, default=2000)
 ap.add_argument("--margin", type=float, default=0.55)
 ap.add_argument("--hint", default="hint", help="hint activation suffix: hint (math) or hintL (LogiQA)")
+ap.add_argument("--wbfile", default="", help="override annotated-target npz (e.g. ~/wbrep_llama_raw.npz); default ~/wbrep_<mdir>.npz")
+ap.add_argument("--outtag", default="", help="suffix for the output filename")
 args = ap.parse_args()
 SYNTH = os.path.expanduser("~/synth"); RES = os.path.join(SYNTH, "results")
 
@@ -50,7 +52,7 @@ def auc(y, s):
 # ---- identical loading convention to bridge3.py ----
 s = np.load(os.path.join(SYNTH, f"acts_{args.mdir}.npz"), allow_pickle=True)
 h = np.load(os.path.join(SYNTH, f"acts_{args.mdir}_{args.hint}.npz"), allow_pickle=True)
-w = np.load(os.path.expanduser(f"~/wbrep_{args.mdir}.npz"), allow_pickle=True)
+w = np.load(os.path.expanduser(args.wbfile or f"~/wbrep_{args.mdir}.npz"), allow_pickle=True)
 src = {"instructed": dict(get=lambda l, d=s: d["X"][l].astype(np.float32), y=s["y"], NL=s["X"].shape[0]),
        "hint":       dict(get=lambda l, d=h: d["X"][l].astype(np.float32), y=h["y"], NL=h["X"].shape[0])}
 tgt_get = lambda l: w["cot_end"][:, l + 1, :].astype(np.float32)
@@ -106,6 +108,6 @@ out = {
   "caveat": "interval reflects target-set resampling only; training sets held fixed",
 }
 os.makedirs(RES, exist_ok=True)
-json.dump(out, open(os.path.join(RES, f"contrast_{args.mdir}_{args.hint}.json"), "w"), indent=2)
+json.dump(out, open(os.path.join(RES, f"contrast_{args.mdir}_{args.hint}{args.outtag}.json"), "w"), indent=2)
 print(json.dumps(out, indent=2), flush=True)
 print(f"CONTRAST DONE {args.mdir}", flush=True)

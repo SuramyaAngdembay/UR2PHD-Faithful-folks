@@ -80,3 +80,43 @@ reading paragraph moved Discussion -> Limitations (page budget + it is one). Bod
 
 New results files: contrast_llama_hintB.json, contrast_qwen_hintB.json, chain_llama_hint.json,
 chain_qwen_hint.json, judge_baseline_qonly.json, judge_baseline_cotonly.json (+ raw jsonl).
+
+## External review (Codex, 2026-09-07) — adjudication and response [added 2026-09-08]
+
+An external audit (run at commit 5e6dbfd) found real problems the "nothing broken" sweep missed.
+All five checkable factual claims verified TRUE against our own files:
+1. n_boot=500 in the four original contrast cells (caption claimed 2,000; "p<.001" unjustified at
+   that resolution — rule-of-three upper bound 0.006 vs Bonferroni-8 threshold 0.00625: undecided).
+2. The July hint->FaithCoT permutation p is 0.017 (bridge3_perm_llama.json), not the 0.010 in
+   CLAUDE.md/notes (transcription error; now corrected).
+3. Equivalence bound overscoped: only Llama-instructed->incorrect is bounded (upper 0.502);
+   Qwen upper 0.569, Llama->correct upper 0.647; lower tail 0.357 (no symmetric equivalence).
+4. "Instructed is easiest to detect" contradicted by our own held-out numbers (0.739<0.752 llama,
+   0.809<0.835 qwen). Defensible claim = breadth (all 7 models), not ease. Fixed at 4 sites.
+5. hintBc (cleaned cache, 179 ph, held-out 0.731 = the paper's July figure) existed alongside the
+   unfiltered hintB I used. Provenance failure, not wording.
+
+Their follow-up pushback also correct on all five points (provenance != wording; bootstrap tail is
+CI-inversion not a calibrated test; identical target != format-controlled probes; overlap direction
+unknown; "decisive"/"addresses causal-label weakness" overpromised).
+
+**Response experiments (13 jobs, all landed 2026-09-08):**
+- 10k-draw bootstrap reruns: headline k=2/10000 -> add-one p<=0.0003. hintBc contrast: 0.451
+  (vs unfiltered 0.452) — template failure is cache-robust.
+- NEW contrast_perm.py (null-calibrated paired exchangeability test, rank-transformed columns,
+  add-one convention per Phipson-Smyth): headline p=0.0005 (4/10000), survives Bonferroni-8;
+  all 7 other cells p>=.09. The calibrated companion the claim needed.
+- NEW wb_extract_raw.py + contrast --wbfile: matched (prefix-free) serialization target moves
+  NOTHING (instructed 0.431->0.432, hint 0.616->0.614, delta +0.182 [+0.078,+0.286]).
+  Differential-format-sensitivity alternative CLOSED empirically.
+- NEW overlap_sensitivity.py (alignment verified elementwise vs npz y+domain): overlap-excluded
+  shifts <=0.014, all conclusions unchanged; positive cell zero overlap.
+
+Paper corrected accordingly (easiest->breadth, equivalence rescoped, calibrated p added, three
+control paragraphs in appendix, hintBc lineage explicit, qonly "at chance" softened, "significant
+at every layer" -> descriptive, gpt-4o scoped to tested judges, "independent binary label" ->
+"separate binary field"). Uniform 10k table pending final 3 reruns.
+
+**Open decision (user):** audit-led restructure/title pivot (both reviews recommend it; evidence
+now leans that way). Matched construction experiment + reader-by-generator swap queued as the next
+substantive experiments.

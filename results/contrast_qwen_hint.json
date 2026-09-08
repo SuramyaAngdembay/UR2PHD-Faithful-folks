@@ -4,35 +4,35 @@
   "n_target": 126,
   "n_target_pos": 63,
   "n_layers": 28,
-  "n_boot": 500,
+  "n_boot": 10000,
   "statistic": "selection-free layer-mean AUROC",
   "transfer": {
     "instructed": {
       "auroc": 0.5145952560918549,
       "ci95": [
-        0.4567355451703729,
-        0.5693891167481472
+        0.4576011209873914,
+        0.5707163371123412
       ]
     },
     "hint": {
       "auroc": 0.48350610085303963,
       "ci95": [
-        0.42100174927531475,
-        0.5442166430781631
+        0.4224800541011834,
+        0.5443714923773543
       ]
     }
   },
   "contrast_hint_minus_instructed": {
     "delta": -0.031089155238815225,
     "ci95": [
-      -0.09874040133294694,
-      0.0372110665082566
+      -0.10275207431457438,
+      0.041653279897701984
     ],
-    "p_one_sided_delta_le_0": 0.834
+    "p_one_sided_delta_le_0": 0.8019
   },
   "equivalence_instructed": {
     "margin": 0.55,
-    "ci95_upper": 0.5693891167481472,
+    "ci95_upper": 0.5707163371123412,
     "rejects_reaching_margin": false,
     "note": "if true, instructed transfer is bounded below the margin rather than merely unproven"
   },

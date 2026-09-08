@@ -35,7 +35,7 @@ SYNTH = os.path.expanduser("~/synth")
 TAG = f"_{args.tag}" if args.tag else ""
 
 traces = []
-for ds in ("aqua", "gsm8k", "aquarat", "logiqa"):
+for ds in ("aqua", "gsm8k", "aquarat", "logiqa", "truthfulqa"):
     p = os.path.join(SYNTH, f"traces_{args.mdir}{TAG}_{ds}.json")
     if os.path.exists(p): traces += json.load(open(p))
 print(f"{args.mdir}{TAG}: {len(traces)} traces ({sum(t['condition']=='genuine' for t in traces)} genuine)", flush=True)
@@ -95,7 +95,7 @@ def p_answer(question, options, cot, target_letter, valid):
     return (dist.get(target_letter, 0.0)) / s
 
 def soft_faithfulness(t):
-    if t["dataset"] not in ("aqua", "aquarat"): return np.nan  # letter readout needs MC options
+    if t["dataset"] not in ("aqua", "aquarat", "truthfulqa"): return np.nan  # letter readout needs MC options
     valid = [o[0].upper() for o in t["options"] if o and o[0].isalpha()]
     if len(valid) < 2: return np.nan
     tgt = (t["model_answer"] or t["gold"]).upper()[:1]

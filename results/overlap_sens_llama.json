@@ -1,0 +1,44 @@
+{
+  "model": "llama",
+  "n_target": 144,
+  "sources": {
+    "instructed": {
+      "n_source_questions": 229,
+      "n_target_overlap": 5,
+      "layer_mean_full": 0.43092757936507936,
+      "layer_mean_excl_overlap": 0.41688061617458283,
+      "n_excl": 139,
+      "excl_ci95": [
+        0.3462725001248838,
+        0.488208207356124
+      ],
+      "shift": -0.01404696319049653
+    },
+    "hint": {
+      "n_source_questions": 613,
+      "n_target_overlap": 0,
+      "layer_mean_full": 0.6157242063492063,
+      "layer_mean_excl_overlap": 0.6157242063492063,
+      "note": "no overlap"
+    },
+    "hintL": {
+      "n_source_questions": 514,
+      "n_target_overlap": 0,
+      "layer_mean_full": 0.46892361111111114,
+      "layer_mean_excl_overlap": 0.46892361111111114,
+      "note": "no overlap"
+    },
+    "hintT": {
+      "n_source_questions": 498,
+      "n_target_overlap": 23,
+      "layer_mean_full": 0.4518973214285714,
+      "layer_mean_excl_overlap": 0.4432093007186291,
+      "n_excl": 121,
+      "excl_ci95": [
+        0.3865743425933746,
+        0.4993260568047917
+      ],
+      "shift": -0.008688020709942346
+    }
+  }
+}

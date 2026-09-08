@@ -1,0 +1,447 @@
+{
+  "n_feats": 1304,
+  "n_judge": 1303,
+  "detectors": {
+    "answer-tracing (soft, inv)": {
+      "n": 633,
+      "own_composition": [
+        0.665,
+        0.299
+      ],
+      "cells": {
+        "inc|cor": 0.6998,
+        "inc|inc": 0.5304,
+        "cor|cor": 0.6667,
+        "cor|inc": 0.5238
+      },
+      "mixtures": {
+        "benchmark": 0.6408,
+        "balanced": 0.6052,
+        "flipped": 0.57,
+        "all-incorrect": 0.5304,
+        "all-correct": 0.6667
+      },
+      "pooled_auc_check": 0.6408
+    },
+    "prefix-instability (inv)": {
+      "n": 633,
+      "own_composition": [
+        0.665,
+        0.299
+      ],
+      "cells": {
+        "inc|cor": 0.684,
+        "inc|inc": 0.4811,
+        "cor|cor": 0.6591,
+        "cor|inc": 0.477
+      },
+      "mixtures": {
+        "benchmark": 0.6172,
+        "balanced": 0.5753,
+        "flipped": 0.5334,
+        "all-incorrect": 0.4811,
+        "all-correct": 0.6591
+      },
+      "pooled_auc_check": 0.6172
+    },
+    "NLI unsupported steps": {
+      "n": 1303,
+      "own_composition": [
+        0.685,
+        0.292
+      ],
+      "cells": {
+        "inc|cor": 0.585,
+        "inc|inc": 0.5184,
+        "cor|cor": 0.622,
+        "cor|inc": 0.552
+      },
+      "mixtures": {
+        "benchmark": 0.5769,
+        "balanced": 0.5693,
+        "flipped": 0.5615,
+        "all-incorrect": 0.5184,
+        "all-correct": 0.622
+      },
+      "pooled_auc_check": 0.5769
+    },
+    "DAG linearity": {
+      "n": 1303,
+      "own_composition": [
+        0.685,
+        0.292
+      ],
+      "cells": {
+        "inc|cor": 0.4634,
+        "inc|inc": 0.5271,
+        "cor|cor": 0.4611,
+        "cor|inc": 0.5275
+      },
+      "mixtures": {
+        "benchmark": 0.4815,
+        "balanced": 0.4948,
+        "flipped": 0.5083,
+        "all-incorrect": 0.5271,
+        "all-correct": 0.4611
+      },
+      "pooled_auc_check": 0.4815
+    },
+    "step count": {
+      "n": 1303,
+      "own_composition": [
+        0.685,
+        0.292
+      ],
+      "cells": {
+        "inc|cor": 0.583,
+        "inc|inc": 0.5048,
+        "cor|cor": 0.6202,
+        "cor|inc": 0.5393
+      },
+      "mixtures": {
+        "benchmark": 0.5716,
+        "balanced": 0.5618,
+        "flipped": 0.5518,
+        "all-incorrect": 0.5048,
+        "all-correct": 0.6202
+      },
+      "pooled_auc_check": 0.5716
+    },
+    "correctness oracle": {
+      "n": 1303,
+      "own_composition": [
+        0.685,
+        0.292
+      ],
+      "cells": {
+        "inc|cor": 0.9957,
+        "inc|inc": 0.4996,
+        "cor|cor": 0.5025,
+        "cor|inc": 0.0065
+      },
+      "mixtures": {
+        "benchmark": 0.6957,
+        "balanced": 0.5011,
+        "flipped": 0.3064,
+        "all-incorrect": 0.4996,
+        "all-correct": 0.5025
+      },
+      "pooled_auc_check": 0.6957
+    },
+    "judgeA": {
+      "n": 1303,
+      "own_composition": [
+        0.685,
+        0.292
+      ],
+      "cells": {
+        "inc|cor": 0.8165,
+        "inc|inc": 0.6789,
+        "cor|cor": 0.8304,
+        "cor|inc": 0.7168
+      },
+      "mixtures": {
+        "benchmark": 0.7829,
+        "balanced": 0.7607,
+        "flipped": 0.7403,
+        "all-incorrect": 0.6789,
+        "all-correct": 0.8304
+      },
+      "pooled_auc_check": 0.7829
+    },
+    "judgeB": {
+      "n": 1303,
+      "own_composition": [
+        0.685,
+        0.292
+      ],
+      "cells": {
+        "inc|cor": 0.7785,
+        "inc|inc": 0.6672,
+        "cor|cor": 0.7855,
+        "cor|inc": 0.6812
+      },
+      "mixtures": {
+        "benchmark": 0.7489,
+        "balanced": 0.7281,
+        "flipped": 0.7079,
+        "all-incorrect": 0.6672,
+        "all-correct": 0.7855
+      },
+      "pooled_auc_check": 0.7489
+    },
+    "judge4o": {
+      "n": 1303,
+      "own_composition": [
+        0.685,
+        0.292
+      ],
+      "cells": {
+        "inc|cor": 0.8649,
+        "inc|inc": 0.6695,
+        "cor|cor": 0.7857,
+        "cor|inc": 0.6003
+      },
+      "mixtures": {
+        "benchmark": 0.7839,
+        "balanced": 0.7301,
+        "flipped": 0.6771,
+        "all-incorrect": 0.6695,
+        "all-correct": 0.7857
+      },
+      "pooled_auc_check": 0.7839
+    },
+    "judge_cotonly": {
+      "n": 1303,
+      "own_composition": [
+        0.685,
+        0.292
+      ],
+      "cells": {
+        "inc|cor": 0.6891,
+        "inc|inc": 0.661,
+        "cor|cor": 0.7689,
+        "cor|inc": 0.7397
+      },
+      "mixtures": {
+        "benchmark": 0.7059,
+        "balanced": 0.7147,
+        "flipped": 0.7234,
+        "all-incorrect": 0.661,
+        "all-correct": 0.7689
+      },
+      "pooled_auc_check": 0.7059
+    }
+  },
+  "benchmark_composition": {
+    "p_inc_unfaithful": 0.6853,
+    "q_inc_faithful": 0.2918
+  },
+  "rankings": {
+    "benchmark": [
+      "judge4o",
+      "judgeA",
+      "judgeB",
+      "judge_cotonly",
+      "correctness oracle",
+      "answer-tracing (soft, inv)",
+      "prefix-instability (inv)",
+      "NLI unsupported steps",
+      "step count",
+      "DAG linearity"
+    ],
+    "balanced": [
+      "judgeA",
+      "judge4o",
+      "judgeB",
+      "judge_cotonly",
+      "answer-tracing (soft, inv)",
+      "prefix-instability (inv)",
+      "NLI unsupported steps",
+      "step count",
+      "correctness oracle",
+      "DAG linearity"
+    ],
+    "flipped": [
+      "judgeA",
+      "judge_cotonly",
+      "judgeB",
+      "judge4o",
+      "answer-tracing (soft, inv)",
+      "NLI unsupported steps",
+      "step count",
+      "prefix-instability (inv)",
+      "DAG linearity",
+      "correctness oracle"
+    ],
+    "all-incorrect": [
+      "judgeA",
+      "judge4o",
+      "judgeB",
+      "judge_cotonly",
+      "answer-tracing (soft, inv)",
+      "DAG linearity",
+      "NLI unsupported steps",
+      "step count",
+      "correctness oracle",
+      "prefix-instability (inv)"
+    ],
+    "all-correct": [
+      "judgeA",
+      "judge4o",
+      "judgeB",
+      "judge_cotonly",
+      "answer-tracing (soft, inv)",
+      "prefix-instability (inv)",
+      "NLI unsupported steps",
+      "step count",
+      "correctness oracle",
+      "DAG linearity"
+    ]
+  },
+  "kendall_tau_vs_benchmark": {
+    "benchmark": 1.0,
+    "balanced": 0.778,
+    "flipped": 0.511,
+    "all-incorrect": 0.556,
+    "all-correct": 0.778
+  },
+  "oracle_rank_by_mixture": {
+    "benchmark": 5,
+    "balanced": 9,
+    "flipped": 10,
+    "all-incorrect": 9,
+    "all-correct": 9
+  },
+  "lodo": {
+    "HLE_BIO": {
+      "target_mix": [
+        0.892,
+        0.948
+      ],
+      "regret_by_rule": {
+        "within-regime": {
+          "aggregate": 0.0283,
+          "worst-regime": 0.0,
+          "mean-regime": 0.0264,
+          "standardized": 0.0264
+        },
+        "target-composition": {
+          "aggregate": 0.1119,
+          "worst-regime": 0.1336,
+          "mean-regime": 0.0349,
+          "standardized": 0.0349
+        },
+        "balanced-deployment": {
+          "aggregate": 0.041,
+          "worst-regime": 0.0,
+          "mean-regime": 0.0385,
+          "standardized": 0.0385
+        }
+      },
+      "picked": {
+        "aggregate": "correctness oracle",
+        "worst-regime": "NLI unsupported steps",
+        "mean-regime": "answer-tracing (soft, inv)",
+        "standardized": "answer-tracing (soft, inv)"
+      }
+    },
+    "aqua": {
+      "target_mix": [
+        0.395,
+        0.187
+      ],
+      "regret_by_rule": {
+        "within-regime": {
+          "aggregate": 0.1282,
+          "worst-regime": 0.0,
+          "mean-regime": 0.0021,
+          "standardized": 0.0021
+        },
+        "target-composition": {
+          "aggregate": 0.0483,
+          "worst-regime": 0.0,
+          "mean-regime": 0.0248,
+          "standardized": 0.0248
+        },
+        "balanced-deployment": {
+          "aggregate": 0.1317,
+          "worst-regime": 0.0008,
+          "mean-regime": 0.0,
+          "standardized": 0.0
+        }
+      },
+      "picked": {
+        "aggregate": "correctness oracle",
+        "worst-regime": "NLI unsupported steps",
+        "mean-regime": "answer-tracing (soft, inv)",
+        "standardized": "answer-tracing (soft, inv)"
+      }
+    },
+    "logiqa": {
+      "target_mix": [
+        0.727,
+        0.27
+      ],
+      "regret_by_rule": {
+        "within-regime": {
+          "aggregate": 0.1123,
+          "worst-regime": 0.0,
+          "mean-regime": 0.0,
+          "standardized": 0.0
+        },
+        "target-composition": {
+          "aggregate": 0.0,
+          "worst-regime": 0.0232,
+          "mean-regime": 0.0232,
+          "standardized": 0.0232
+        },
+        "balanced-deployment": {
+          "aggregate": 0.1349,
+          "worst-regime": 0.0,
+          "mean-regime": 0.0,
+          "standardized": 0.0
+        }
+      },
+      "picked": {
+        "aggregate": "correctness oracle",
+        "worst-regime": "answer-tracing (soft, inv)",
+        "mean-regime": "answer-tracing (soft, inv)",
+        "standardized": "answer-tracing (soft, inv)"
+      }
+    },
+    "truthfulqa": {
+      "target_mix": [
+        0.745,
+        0.194
+      ],
+      "regret_by_rule": {
+        "within-regime": {
+          "aggregate": 0.0909,
+          "worst-regime": 0.0521,
+          "mean-regime": 0.0521,
+          "standardized": 0.0521
+        },
+        "target-composition": {
+          "aggregate": 0.0,
+          "worst-regime": 0.0569,
+          "mean-regime": 0.0569,
+          "standardized": 0.0569
+        },
+        "balanced-deployment": {
+          "aggregate": 0.0929,
+          "worst-regime": 0.0551,
+          "mean-regime": 0.0551,
+          "standardized": 0.0551
+        }
+      },
+      "picked": {
+        "aggregate": "correctness oracle",
+        "worst-regime": "answer-tracing (soft, inv)",
+        "mean-regime": "answer-tracing (soft, inv)",
+        "standardized": "answer-tracing (soft, inv)"
+      }
+    }
+  },
+  "mean_regret_by_rule": {
+    "within-regime": {
+      "aggregate": 0.0899,
+      "worst-regime": 0.013,
+      "mean-regime": 0.0202,
+      "standardized": 0.0202
+    },
+    "target-composition": {
+      "aggregate": 0.0401,
+      "worst-regime": 0.0534,
+      "mean-regime": 0.035,
+      "standardized": 0.035
+    },
+    "balanced-deployment": {
+      "aggregate": 0.1001,
+      "worst-regime": 0.014,
+      "mean-regime": 0.0234,
+      "standardized": 0.0234
+    }
+  },
+  "lodo_note": "target criterion = mean within-regime AUC on the held-out domain (composition-free); metric detectors + oracle only -- judges excluded from selection since they dominate everywhere and would mask the composition effect; per-domain regime cells are small"
+}

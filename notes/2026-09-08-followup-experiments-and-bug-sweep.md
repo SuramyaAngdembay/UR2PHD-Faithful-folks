@@ -156,3 +156,38 @@ avoids it; composition analyses derive regimes from ft directly. Never consume t
 
 Matched-question qualification (accepted): the genuine cohort also changed under matching, so
 "the excluded sycophancy positives carry the signal" is not yet isolated even if the gap shrinks.
+
+## MATCHED-QUESTION VERDICT (llama, landed 2026-09-09): the construction advantage is largely SELECTION
+
+matched_question_llama.json (cleaned metadata cache, 54 shared positive / 361 shared genuine
+questions, fixed annotated target, 200 question-level refits, 200-draw size controls per arm):
+
+| arm | transfer |
+|---|---|
+| sycophancy FULL | 0.616 |
+| sycophancy random-54/361 subsets (size control) | 0.590 +- 0.038, q[0.507, 0.646] |
+| sycophancy SHARED questions | 0.509 (refit CI [0.456, 0.585] — includes 0.5) |
+| metadata shared | 0.445 | metadata full 0.451 |
+
+- **Not small-n**: random size-matched sycophancy subsets transfer at 0.590 — nearly the full-set
+  level. The shared-54 probe (0.509) sits at ~the 2nd percentile of that distribution (z ~ -2.1).
+- **Template contrast on identical questions: NULL** — delta +0.064, refit CI [-0.053, +0.102],
+  p(delta<=0)=0.26. On shared questions the two templates are indistinguishable, and sycophancy
+  transfer itself is not distinguishable from chance there.
+- Reviewer's dichotomy resolved toward: "the advantage disappears under matching — evidence that
+  sample selection created the apparent construction advantage." The transferable signal is
+  carried by the sycophancy-SPECIFIC question cohort (questions that flip only under that
+  template), not by hint wording.
+- Open (isolation, running as matched_isolate.py): matching changed both cohorts; genuine overlap
+  is 84% (361/428) vs positive overlap 29% (54/185), so the positive cohort is the prior suspect,
+  but the B/C/D cross (sharedP+randomG vs randomP+sharedG vs randomP+randomG) closes it properly.
+- Post-hoc HYPOTHESIS only (untested): shared questions = flip under BOTH templates = most
+  suggestible; sycophancy-only questions = flip only under stronger social pressure — possibly a
+  different, more annotated-like flip population. Testable against flip_stability resample data.
+
+Consequence: the paper's construction section gets its third and final rescoping — not
+"one template transfers" but "apparent construction transfer was substantially a question-
+selection phenomenon; on matched questions no construction reaches the annotated regime."
+This STRENGTHENS the audit-led thesis (both directions of the caution now have evidence:
+within-distribution decodability doesn't predict transfer, and apparent transfer successes
+can be selection artifacts). Qwen matched arm not rerun (n=10 shared positives).

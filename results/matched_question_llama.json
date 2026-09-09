@@ -1,0 +1,47 @@
+{
+  "model": "llama",
+  "n_layers": 32,
+  "n_target": 144,
+  "shared_posthoc_questions": 54,
+  "shared_genuine_questions": 361,
+  "metadata_cache": "cleaned (4 disclosure ids dropped)",
+  "point": {
+    "syc_matched": 0.5084821428571429,
+    "meta_matched": 0.4445560515873016,
+    "syc_full": 0.6157242063492063,
+    "meta_full": 0.4509858630952381
+  },
+  "matched_contrast_syc_minus_meta": {
+    "delta": 0.06392609126984128,
+    "refit_ci95": [
+      -0.05338766431051585,
+      0.10215130518353173
+    ],
+    "refit_p_one_sided_delta_le_0": 0.25870646766169153,
+    "n_refits": 200,
+    "syc_refit_ci95": [
+      0.45571940104166664,
+      0.5850468905009921
+    ],
+    "meta_refit_ci95": [
+      0.42207566034226185,
+      0.5401095920138889
+    ],
+    "note": "question-level resampling WITH probe refits; measures source-training uncertainty"
+  },
+  "size_controls": {
+    "syc_random_subsets": {
+      "mean": 0.5897473338293651,
+      "sd": 0.037807523919957474,
+      "q2.5": 0.5074389260912698,
+      "q97.5": 0.6455188182043652
+    },
+    "meta_random_subsets": {
+      "mean": 0.4745578962053571,
+      "sd": 0.03661618087544498,
+      "q2.5": 0.42068917410714285,
+      "q97.5": 0.5605693514384921
+    },
+    "note": "random full-set subsets at the matched class sizes; if syc_matched sits inside syc_random_subsets, question matching per se did not change the sycophancy probe"
+  }
+}

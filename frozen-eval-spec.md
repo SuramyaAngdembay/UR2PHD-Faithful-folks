@@ -93,3 +93,31 @@ unfaithful + ≥50 faithful per correctness regime, annotated blind to all detec
 FaithCoT rubric; inter-annotator agreement reported; disagreement with intervention-defined labels
 reported as data. This is the arm that can confirm the full two-regime contrast; it is a larger
 undertaking and is specified separately before collection begins.
+
+---
+
+## Amendment v1.1 (2026-09-09, committed BEFORE the stats stage has ever been run)
+
+No primary endpoint changes. H1--H3, the population, exclusions, and margin are unchanged and are
+**not gated** on anything below. This amendment pre-registers Anvil-hosted secondary arms on the
+SAME frozen population, to be reported whenever they complete:
+
+- **S1. Open-judge panel (judge diversity/scale).** Same protocol as the primary judge (prompt A
+  verbatim, clean question + CoT + final answer, no gold, no hint; temperature 0; score parsed
+  identically). Judges, fixed now: Llama-3.3-70B-Instruct, Qwen3-32B (non-thinking),
+  Qwen3-32B (thinking mode on -- same weights, the test-time-compute contrast),
+  DeepSeek-R1-Distill-Llama-70B, Gemma-3-27B-it, Olmo-3.1-32B-Instruct. Endpoint per judge:
+  incorrect-regime AUROC + CI; panel summary: does any judge's blind-regime AUROC exceed the
+  primary judge's CI upper bound? Own-trace caveat: three panel judges are BonaFide generators;
+  each is reported with and without its own traces excluded.
+- **S2. Large-generator metrics (removes H2's hardware asterisk).** The deletion/prefix metrics of
+  C2, computed on Anvil for the generators excluded from the small-model subset
+  (Qwen3-30B-A3B x2, Olmo-3.1-32B x2, R1-Distill-Llama-70B, Llama-3.3-70B). Reported under the
+  same H2 template as a supplement; the primary H2 verdict remains the pre-registered small-model
+  subset.
+- **S3. FaithCoT judge panel (robustness of the original degradation).** The S1 panel scored on
+  the 1,303 FaithCoT traces under the paper's exact protocol, reported as additional
+  prompt/model-sensitivity evidence for the regime degradation (correct vs incorrect per judge).
+
+Interpretation, fixed now: S1/S3 test whether ANY tested open judge escapes the blind-regime
+degradation; they cannot establish a general scaling law, and will not be described as one.

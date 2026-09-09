@@ -191,3 +191,47 @@ selection phenomenon; on matched questions no construction reaches the annotated
 This STRENGTHENS the audit-led thesis (both directions of the caution now have evidence:
 within-distribution decodability doesn't predict transfer, and apparent transfer successes
 can be selection artifacts). Qwen matched arm not rerun (n=10 shared positives).
+
+## Isolation cross verdict + review round 4 corrections [2026-09-09]
+
+matched_isolate_llama.json (verified against reviewer's independent read — exact match):
+| positives | clean | transfer |
+|---|---|---|
+| shared | shared | 0.5085 |
+| shared | random-361 | 0.5654 sd .024 |
+| random-54 | shared | 0.5549 sd .040 |
+| random-54 | random-361 | 0.5903 sd .037 |
+
+**BOTH cohorts matter**: clean-cohort substitution alone recovers +0.057 (positives fixed);
+positive-cohort substitution alone +0.046. My positive-only attribution ("the transferable signal
+lives in the sycophancy-specific positive questions") is DISCONFIRMED by the experiment I queued
+to test it. The clean-cohort effect is the notable part: a contrastive probe's transfer moves
+substantially through its NEGATIVE training questions.
+
+Domain-composition check (new): sharedP 15/54=27.8% aquarat vs pool 53/185=28.6%; sharedG 25.5%
+vs 29.9% — the shared cohorts are NOT domain-skewed; that mundane alternative is closed. What
+distinguishes the shared cohort remains unattributed (filtering/generation stochasticity not
+separable from intrinsic question properties on this data).
+
+Language corrections accepted (reviewer round 4, all valid):
+- "small-n is dead" -> size costs ~0.026 on average; 0.5085 sits just INSIDE the size-control
+  95% range [0.5074, 0.6455]; my "2nd percentile" was a normal approximation, not empirical.
+- "template contrast is null" -> "no detected difference"; refit CI [-0.053,+0.102] permits
+  meaningful effects; no equivalence margin was prespecified.
+- "no construction reaches the annotated regime" -> overgeneralized (two hint constructions,
+  one model; sycophancy matched CI [0.456,0.585] includes modest positive transfer; instructed
+  was not an arm of the matched comparison).
+- "best possible outcome" -> spin; honesty gains are not novelty gains.
+- matched_isolate.py limitations acknowledged: arms not paired across draws, summaries only
+  (no raw draws / per-target predictions), no target-side uncertainty. Paired rerun is the
+  conditional follow-up ONLY if the paper needs a stronger attribution claim.
+
+Adopted construction-section statement (reviewer's draft): "The observed sycophancy transfer
+advantage attenuates on shared question cohorts. Size controls and cohort substitutions indicate
+sensitivity to training-question selection in both classes. The matched comparison does not
+establish a template advantage or equivalence."
+
+Standing priority (unchanged, now unblocked): restructure around the correctness-stratified
+audit; construction sensitivity as supporting evidence with its own limitations; then ONE frozen
+independent evaluation of the central finding, specified before seeing results. Selection remedy
+preserved as an unsuccessful exploratory analysis, not a contribution.

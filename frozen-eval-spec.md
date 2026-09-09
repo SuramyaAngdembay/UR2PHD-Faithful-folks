@@ -121,3 +121,38 @@ SAME frozen population, to be reported whenever they complete:
 
 Interpretation, fixed now: S1/S3 test whether ANY tested open judge escapes the blind-regime
 degradation; they cannot establish a general scaling law, and will not be described as one.
+
+---
+
+## Correction v1.2 (2026-09-09, BEFORE any unblinding — the stats stage has never been run;
+## verified: no results file has ever existed)
+
+An external audit found a data-integrity bug in the v1 population builder, confirmed by our own
+independent recount before any performance number was computed:
+
+- **Bug 1 — wrong unit of analysis.** `question_id` is a source-question key shared across
+  models/generations (430/864 groups contain multiple distinct responses). The v1 builder kept
+  the first response per question_id and UNIONED labels across all responses sharing the id,
+  attaching other traces' labels to the kept trace.
+- **Bug 2 — fabricated faithful labels.** v1 treated absence of `UNFAITHFUL_COT` as faithful.
+  The dataset distinguishes step labels from whole-trace labels; 1,057 of 2,177 responses carry
+  no explicit whole-trace label at all and are UNLABELED, not faithful.
+
+**Corrected frozen rules** (replacing §4 "Population", all else unchanged): unit of analysis =
+response, identified by (question_id, target_model, cot); labels from a response's own rows only;
+instance label requires an explicit whole-trace label (`UNFAITHFUL_COT` → unfaithful,
+`FAITHFUL_COT` → faithful; neither or both → excluded and counted). Corrected explicit-label
+cells before other exclusions: incorrect regime 945 unfaithful / 168 faithful (still powered;
+minority-class n=168 → AUROC SE ≈ 0.025); correct regime 7 / 0 — fully degenerate, reduced from
+"descriptive secondary" to counts-only. The BonaFide coupling observation updates to: >99% of its
+explicitly-unfaithful responses are incorrect-answer responses.
+
+All artifacts computed under v1 rules (judge partials, NLI, generator-metric partials) were
+deleted before rebuild; no statistic was ever computed against labels under either population.
+
+**Amendment criterion fix (S1).** "Beats the primary judge's CI upper bound" is replaced by:
+per panel judge, the PAIRED delta (panel judge minus primary judge) on common responses,
+question-clustered bootstrap CI, Bonferroni-corrected over the six panel judges; the
+thinking-mode contrast (Qwen3-32B thinking minus non-thinking) is its own paired pre-registered
+comparison. Thinking-mode arms use the model card's recommended sampling (not temperature 0),
+with the seed count and decoding parameters fixed in the panel script before it runs.

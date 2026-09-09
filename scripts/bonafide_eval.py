@@ -60,17 +60,22 @@ def split_steps(cot):
 
 # ---------------- build ----------------
 if a.stage == "build":
-    import glob
+    import glob, hashlib
     from datasets import load_dataset
     from collections import defaultdict
     d = load_dataset("yoavgurarieh/BonaFide", "bonafide")["train"]
+    # CORRECTION v1.2: question_id is a SOURCE-QUESTION key shared across models/generations
+    # (430/864 groups hold multiple distinct responses). Unit of analysis = RESPONSE, identified
+    # by (question_id, target_model, cot); labels come from a response's OWN rows only, and the
+    # instance label requires an EXPLICIT whole-trace label: UNFAITHFUL_COT -> 1, FAITHFUL_COT
+    # -> 0, neither (step labels only) -> excluded and counted, both -> excluded and counted.
     q = {}
     for r in d:
-        k = r["question_id"]
-        e = q.setdefault(k, dict(qid=k, model=r["target_model"], question=r["question"],
-                                 cot=r["cot"], model_answer=r["model_answer"],
-                                 correct_answer=r["correct_answer"], src_type=r["src_type"],
-                                 hint_type=str(r["hint_type"]), labels=set()))
+        k = (r["question_id"], r["target_model"], hashlib.sha1(str(r["cot"]).encode()).hexdigest())
+        e = q.setdefault(k, dict(qid=r["question_id"], model=r["target_model"],
+                                 question=r["question"], cot=r["cot"],
+                                 model_answer=r["model_answer"], correct_answer=r["correct_answer"],
+                                 src_type=r["src_type"], hint_type=str(r["hint_type"]), labels=set()))
         e["labels"].add(r["label_type"])
     # exclusion sets: FaithCoT + our testbeds
     excl = set()
@@ -81,18 +86,21 @@ if a.stage == "build":
         for f in glob.glob(os.path.join(SYNTH, pat)):
             for t in json.load(open(f)): excl.add(norm(t["question"]))
     rows, counts = [], defaultdict(int)
-    for e in q.values():
-        counts["questions_total"] += 1
+    for k, e in q.items():
+        counts["responses_total"] += 1
+        has_u = "UNFAITHFUL_COT" in e["labels"]; has_f = "FAITHFUL_COT" in e["labels"]
+        if has_u == has_f:
+            counts["excluded_no_explicit_label" if not has_u else "excluded_both_labels"] += 1; continue
         ma, ca = norm_ans(e["model_answer"]), norm_ans(e["correct_answer"])
         if not ma or not ca: counts["excluded_missing_answer"] += 1; continue
         steps = split_steps(e["cot"])
         if len(steps) < 2: counts["excluded_lt2_steps"] += 1; continue
         if norm(e["question"]) in excl: counts["excluded_overlap"] += 1; continue
-        unf = int("UNFAITHFUL_COT" in e["labels"])
-        rows.append(dict(qid=e["qid"], model=e["model"], question=e["question"], cot=e["cot"],
-                         model_answer=e["model_answer"], correct=int(ma == ca), y=unf,
-                         n_steps=len(steps), src_type=e["src_type"], hint_type=e["hint_type"],
-                         cluster=norm(e["question"])))
+        rid = hashlib.sha1(("|".join(k)).encode()).hexdigest()[:16]
+        rows.append(dict(rid=rid, qid=e["qid"], model=e["model"], question=e["question"],
+                         cot=e["cot"], model_answer=e["model_answer"], correct=int(ma == ca),
+                         y=int(has_u), n_steps=len(steps), src_type=e["src_type"],
+                         hint_type=e["hint_type"], cluster=norm(e["question"])))
     for r in rows: counts[f"cell_correct{r['correct']}_unf{r['y']}"] += 1
     json.dump(dict(rows=rows, counts=dict(counts)), open(POP, "w"))
     print(json.dumps(dict(counts), indent=1)); print(f"BUILD DONE -> {POP} (n={len(rows)})", flush=True)
@@ -123,9 +131,9 @@ elif a.stage == "judge":
     done = set()
     if os.path.exists(RAW):
         for line in open(RAW):
-            try: done.add(json.loads(line)["qid"])
+            try: done.add(json.loads(line)["rid"])
             except Exception: pass
-    todo = [r for r in pop if r["qid"] not in done]
+    todo = [r for r in pop if r["rid"] not in done]
     print(f"judge {a.model} prompt {a.prompt}: {len(done)} done, {len(todo)} to run", flush=True)
     _l = threading.Lock(); _last = [0.0]
     def pace():
@@ -158,7 +166,7 @@ elif a.stage == "judge":
     def work(rec):
         s = call(rec)
         with lock:
-            with open(RAW, "a") as fh: fh.write(json.dumps({"qid": rec["qid"], "score": s, "model": a.model}) + "\n")
+            with open(RAW, "a") as fh: fh.write(json.dumps({"rid": rec["rid"], "score": s, "model": a.model}) + "\n")
     with ThreadPoolExecutor(a.workers) as ex:
         for i, _ in enumerate(ex.map(work, todo)):
             if (i + 1) % 100 == 0: print(f"  {i+1}/{len(todo)}", flush=True)
@@ -183,7 +191,7 @@ elif a.stage == "nli":
                           padding=True, return_tensors="pt").to(f"cuda:{a.gpu}")
                 p = torch.softmax(m(**enc).logits, -1)[:, ENT]
                 unsup += int((p < 0.5).sum())
-            out[r["qid"]] = dict(nli_n_unsup=unsup, n_steps=len(steps))
+            out[r["rid"]] = dict(nli_n_unsup=unsup, n_steps=len(steps))
             if (i + 1) % 50 == 0: print(f"  nli {i+1}/{len(pop)}", flush=True)
     json.dump(out, open(os.path.join(RES, "bonafide_nli.json"), "w"))
     print("NLI DONE", flush=True)
@@ -205,15 +213,15 @@ elif a.stage == "stats":
         p = os.path.join(RES, f)
         if os.path.exists(p):
             for line in open(p):
-                d = json.loads(line); jsc[k][d["qid"]] = d["score"]
+                d = json.loads(line); jsc[k][d["rid"]] = d["score"]
     preds = []
     for r in pop:
-        e = dict(qid=r["qid"], model=r["model"], correct=r["correct"], y=r["y"],
+        e = dict(rid=r["rid"], qid=r["qid"], model=r["model"], correct=r["correct"], y=r["y"],
                  cluster=r["cluster"], src_type=r["src_type"], hint_type=r["hint_type"],
-                 n_steps=nli.get(r["qid"], {}).get("n_steps"),
-                 nli_n_unsup=nli.get(r["qid"], {}).get("nli_n_unsup"))
-        for k in arms: e[k] = jsc[k].get(r["qid"])
-        e.update({k2: gm.get(r["qid"], {}).get(k2) for k2 in ("soft", "pi")})
+                 n_steps=nli.get(r["rid"], {}).get("n_steps"),
+                 nli_n_unsup=nli.get(r["rid"], {}).get("nli_n_unsup"))
+        for k in arms: e[k] = jsc[k].get(r["rid"])
+        e.update({k2: gm.get(r["rid"], {}).get(k2) for k2 in ("soft", "pi")})
         preds.append(e)
     json.dump(preds, open(os.path.join(RES, "bonafide_predictions.json"), "w"))
     def auc(y, s):
@@ -225,6 +233,9 @@ elif a.stage == "stats":
         rows = [r for r in rows if r.get(key) is not None]
         if not rows: return None
         y = np.array([r["y"] for r in rows]); s = np.array([float(r[key]) for r in rows])
+        if y.sum() == 0 or y.sum() == len(y):
+            return dict(n=len(rows), pos=int(y.sum()), auroc=None, ci95=None,
+                        note="degenerate cell: single class; counts only")
         cl = {}
         for i, r in enumerate(rows): cl.setdefault(r["cluster"], []).append(i)
         keys = list(cl); rng = np.random.default_rng(seed); bs = []

@@ -74,11 +74,11 @@ def p_ans(question, cot_text, ans):
 
 out = dict(done)
 for i, r in enumerate(rows):
-    if r["qid"] in out: continue
+    if r["rid"] in out: continue
     steps = split_steps(r["cot"]); ans = str(r["model_answer"])
     try:
         base = p_ans(r["question"], "\n".join(steps), ans)
-        if base is None: out[r["qid"]] = {"soft": None, "pi": None}; continue
+        if base is None: out[r["rid"]] = {"soft": None, "pi": None}; continue
         drops, prefs = [], []
         prev = p_ans(r["question"], steps[0], ans)
         for j in range(len(steps)):
@@ -88,10 +88,10 @@ for i, r in enumerate(rows):
                 cur = p_ans(r["question"], "\n".join(steps[:j+1]), ans)
                 if prev is not None and cur is not None: prefs.append(abs(cur - prev))
                 prev = cur
-        out[r["qid"]] = {"soft": float(np.mean(drops)) if drops else None,
+        out[r["rid"]] = {"soft": float(np.mean(drops)) if drops else None,
                          "pi": float(np.mean(prefs)) if prefs else None}
     except torch.cuda.OutOfMemoryError:
-        torch.cuda.empty_cache(); out[r["qid"]] = {"soft": None, "pi": None}
+        torch.cuda.empty_cache(); out[r["rid"]] = {"soft": None, "pi": None}
     if (i + 1) % 10 == 0:
         json.dump(out, open(OUT, "w")); print(f"  {i+1}/{len(rows)}", flush=True)
 json.dump(out, open(OUT, "w"))

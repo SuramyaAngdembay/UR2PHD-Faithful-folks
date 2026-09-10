@@ -66,3 +66,32 @@ Caveats: single independent dataset; its explicit-label subset carries the compo
 of diagnostic (1); deletion-family numbers use the free-form answer-logprob readout (C2) on the
 small-generator subset only; judges share one provider (the pre-registered Anvil S1 panel now
 answers whether open judges also invert here — it just became the most interesting arm).
+
+## Confound controls (run immediately after unblinding, on saved predictions)
+
+The post-hoc diagnostic above raised the possibility that everything here is BonaFide's
+length/model-type composition. Three controls, all on the incorrect regime:
+
+| Control | judge A | judge gpt-4o | step count |
+|---|---|---|---|
+| pooled (all generators) | 0.419 | 0.270 | 0.878 |
+| **instruct-models only** (removes model-type confound entirely; 589 unf / 168 faith) | **0.332** [0.285, 0.381] | **0.184** [0.150, 0.226] | 0.837 |
+| **per generator** (4 of 5 with both classes) | 0.385 / 0.392 / 0.195 / 0.184 / 0.513 | — | 0.79–0.91 |
+| **step-count-stratified** (instruct-only, quartile bins; n-weighted within-bin) | **0.282** | — | (is the stratifier) |
+
+**The judge inversion is not a composition artifact.** It gets *stronger* when the model-type
+confound is removed (0.419 -> 0.332), holds in 4 of 5 generators individually (the fifth is at
+chance, 0.513, n=113), and survives length stratification (within-bin 0.282). Within the same
+length band, from the same generator, prompted judges rate hint-following rationalizations as
+MORE faithful than honest errors.
+
+The step-count side is weaker as a finding: it survives model-type control (0.837) but it is
+confounded with BonaFide's labeling by construction (hint-following rationalizations are
+elaborate; the top step-count quartile is 172/172 unfaithful). We report it as a property of
+this dataset's explicit-label subset, not as a working detector.
+
+**Revised headline:** the robust, controlled result is that the best behavioral detector in the
+FaithCoT audit (a prompted LLM judge) is significantly ANTI-correlated with intervention-defined
+unfaithfulness on an independent dataset, controlling for generator identity and trace length --
+and it fails in the direction the paper's coupling account predicts: smooth rationalization reads
+as faithful, honest failure reads as unfaithful.

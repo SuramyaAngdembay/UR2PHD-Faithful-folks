@@ -1,0 +1,181 @@
+{
+  "population": {
+    "incorrect": {
+      "n": 1113,
+      "pos": 945
+    },
+    "correct_descriptive": {
+      "n": 7,
+      "pos": 7
+    }
+  },
+  "H1_H2_incorrect_regime": {
+    "judgeA": {
+      "n": 1113,
+      "pos": 945,
+      "auroc": 0.4188,
+      "ci95": [
+        0.3722,
+        0.4635
+      ]
+    },
+    "judgeB": {
+      "n": 1113,
+      "pos": 945,
+      "auroc": 0.4816,
+      "ci95": [
+        0.4367,
+        0.5295
+      ]
+    },
+    "judge4o": {
+      "n": 1113,
+      "pos": 945,
+      "auroc": 0.2695,
+      "ci95": [
+        0.2313,
+        0.3097
+      ]
+    },
+    "nli_n_unsup": {
+      "n": 1113,
+      "pos": 945,
+      "auroc": 0.8258,
+      "ci95": [
+        0.7945,
+        0.855
+      ]
+    },
+    "n_steps": {
+      "n": 1113,
+      "pos": 945,
+      "auroc": 0.878,
+      "ci95": [
+        0.8516,
+        0.9016
+      ]
+    },
+    "soft": {
+      "n": 363,
+      "pos": 329,
+      "auroc": 0.2838,
+      "ci95": [
+        0.1707,
+        0.4012
+      ]
+    },
+    "pi": {
+      "n": 363,
+      "pos": 329,
+      "auroc": 0.1721,
+      "ci95": [
+        0.1012,
+        0.2654
+      ]
+    }
+  },
+  "secondary_correct_regime_descriptive": {
+    "judgeA": {
+      "n": 7,
+      "pos": 7,
+      "auroc": null,
+      "ci95": null,
+      "note": "degenerate cell: single class; counts only"
+    },
+    "judgeB": {
+      "n": 7,
+      "pos": 7,
+      "auroc": null,
+      "ci95": null,
+      "note": "degenerate cell: single class; counts only"
+    },
+    "judge4o": {
+      "n": 7,
+      "pos": 7,
+      "auroc": null,
+      "ci95": null,
+      "note": "degenerate cell: single class; counts only"
+    },
+    "nli_n_unsup": {
+      "n": 7,
+      "pos": 7,
+      "auroc": null,
+      "ci95": null,
+      "note": "degenerate cell: single class; counts only"
+    },
+    "n_steps": {
+      "n": 7,
+      "pos": 7,
+      "auroc": null,
+      "ci95": null,
+      "note": "degenerate cell: single class; counts only"
+    },
+    "soft": {
+      "n": 3,
+      "pos": 3,
+      "auroc": null,
+      "ci95": null,
+      "note": "degenerate cell: single class; counts only"
+    },
+    "pi": {
+      "n": 3,
+      "pos": 3,
+      "auroc": null,
+      "ci95": null,
+      "note": "degenerate cell: single class; counts only"
+    }
+  },
+  "H2_margin": 0.6,
+  "H2_verdicts": {
+    "nli_n_unsup": {
+      "ci_includes_half": false,
+      "bounded_below_margin": false
+    },
+    "n_steps": {
+      "ci_includes_half": false,
+      "bounded_below_margin": false
+    },
+    "soft": {
+      "ci_includes_half": false,
+      "bounded_below_margin": true
+    },
+    "pi": {
+      "ci_includes_half": false,
+      "bounded_below_margin": true
+    }
+  },
+  "H3_paired_judgeA_minus_metric": {
+    "nli_n_unsup": {
+      "n": 1113,
+      "delta": -0.4069,
+      "ci95": [
+        -0.4583,
+        -0.3503
+      ]
+    },
+    "n_steps": {
+      "n": 1113,
+      "delta": -0.4592,
+      "ci95": [
+        -0.5085,
+        -0.4075
+      ]
+    },
+    "soft": {
+      "n": 363,
+      "delta": 0.2155,
+      "ci95": [
+        0.0584,
+        0.3692
+      ]
+    },
+    "pi": {
+      "n": 363,
+      "delta": 0.3272,
+      "ci95": [
+        0.1878,
+        0.4516
+      ]
+    }
+  }
+}

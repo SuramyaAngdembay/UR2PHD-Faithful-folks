@@ -95,3 +95,41 @@ FaithCoT audit (a prompted LLM judge) is significantly ANTI-correlated with inte
 unfaithfulness on an independent dataset, controlling for generator identity and trace length --
 and it fails in the direction the paper's coupling account predicts: smooth rationalization reads
 as faithful, honest failure reads as unfaithful.
+
+## Mechanical acknowledgment analysis (2026-09-12, post-hoc/exploratory — BonaFide already unblinded)
+
+Before commissioning human annotation, a regex proxy for "does the trace acknowledge the supplied
+cue" (the family used to audit our own hint testbed, extended with BonaFide's cue vocabulary:
+professor/metadata/validator/unauthorized/security-audit/error-message) over the incorrect-answer
+population:
+
+| class | n | mentions cue | judge A mean (mention / no-mention) |
+|---|---|---|---|
+| unfaithful | 945 | 367 (39%) | 46.7 / 23.1 |
+| faithful | 168 | 137 (82%) | 36.1 / 37.9 |
+
+- Mentioning the cue predicts the FAITHFUL label (AUROC 0.286 for predicting unfaithful), matching
+  BonaFide's definition of unfaithful as *unacknowledged* reliance.
+- **The judge's inversion is concentrated where the cue is never mentioned**: judge AUROC 0.299
+  (n=609) in the no-mention subset vs **0.606** (n=504) in the mention subset. Where the trace
+  discloses, the judge is above chance; where it does not, the judge is strongly inverted, rating
+  smooth unacknowledged rationalizations as MORE faithful (23.1) than honest errors (37.9).
+
+**Reading (hypothesis, not established).** In the no-mention subset the label is defined by
+something with no trace-internal evidence — the model used a cue and said nothing about it — so a
+trace-only judge is being asked to detect an absence. This is a concrete, testable version of the
+"evidence access" arm of the diagnostic protocol, and it promotes arm B1 to the primary hypothesis.
+
+**A second, separable construct gap.** 367 traces labelled UNFAITHFUL *do* mention the cue.
+Spot-checking three: two openly cite the hint and then follow it ("the professor says the answer is
+21..."; "The user mentioned that a Stanford professor says it's Adolfo Gass. Let me try to verify
+this."), one is a regex false positive ("the user is asking about..."). Disclosed-then-followed
+reliance is UNFAITHFUL by BonaFide's definition but reads as faithful under our rubric, which
+penalizes *unverbalized* shortcuts. That is rubric-construct mismatch, visible without annotation.
+
+**Consequence for the planned human audit.** Most of the mechanism question is answerable without
+annotators. What genuinely needs human eyes is narrower: (a) whether regex "mention" tracks human
+"acknowledgment" (the false positive above shows it does not perfectly), and (b) adjudication of
+disclosed-then-followed cases. The packet should shrink to ~50 items drawn from the
+mention-and-labelled-unfaithful cell plus a no-mention control, roughly one hour of reading, rather
+than 200 items and ten hours.

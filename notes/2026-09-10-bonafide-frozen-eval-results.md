@@ -133,3 +133,51 @@ annotators. What genuinely needs human eyes is narrower: (a) whether regex "ment
 disclosed-then-followed cases. The packet should shrink to ~50 items drawn from the
 mention-and-labelled-unfaithful cell plus a no-mention control, roughly one hour of reading, rather
 than 200 items and ten hours.
+
+## Is it "the same two regimes, inverted"? No — and here is what it is instead (2026-09-12)
+
+**1. The correctness stratification cannot be compared at all.** BonaFide has 7 correct-answer
+responses (all unfaithful). There is no correct regime there, so "do the two regimes appear in both
+datasets" is not answerable on this pair, in either direction.
+
+**2. What DOES replicate is the entanglement, not the regime structure.** FaithCoT: 69% of
+annotated unfaithfulness sits on incorrect answers. BonaFide: >99%. Two independently built
+benchmarks, same structural coupling of unfaithfulness to wrongness — stronger in the newer one.
+
+**3. Under a different stratifier (does the trace mention the cue), BonaFide does NOT show the
+FaithCoT compositional pattern.** FaithCoT's aggregate metric performance is carried by
+cross-regime pairs while within-regime cells sit near chance. On BonaFide, step count discriminates
+*within* both strata (0.752 no-mention, 0.954 mention), so its aggregate is not composition. The
+judge, by contrast, is governed by the positive class's mention status (0.606/0.588 when the
+unfaithful trace mentions the cue; 0.299/0.303 when it does not).
+
+**4. The real common theme: in both benchmarks a trivial variable beats every purpose-built
+detector.** FaithCoT: the correctness oracle (0.696) matches or beats every metric (best 0.641).
+BonaFide: raw step count (0.878) beats every metric and every judge (best judge 0.482). Different
+confound, same failure — the winning signal measures something other than faithfulness.
+
+**5. The judge is the STABLE object; the labels are what move.** Spearman with trace length:
+
+| | judge vs length | label vs length |
+|---|---|---|
+| BonaFide (incorrect) | **+0.205** | **+0.469** |
+| FaithCoT (full) | **+0.208** | +0.111 |
+| FaithCoT (incorrect only) | +0.252 | +0.008 |
+
+The judge's length association is essentially identical across datasets (+0.21). What differs by a
+factor of ~50 is the *label's* length association. So the judge does not "break" on BonaFide: it
+applies the same reading, and one benchmark's labels happen to track what it reads while the
+other's do not.
+
+Note the direction: judge and BonaFide label are BOTH positively length-associated, yet the judge
+is below chance against that label — so conditional on length the inversion is *stronger*, which
+matches the within-length-bin figure (0.282 vs 0.419 pooled). Whatever the judge is reading
+anti-predicts BonaFide's label once length is partialled out.
+
+**Hypothesis (not established).** The judge scores something like *coherence* — whether the stated
+steps hang together and reach the answer. FaithCoT's expert labels are formed by humans reading the
+trace, so they partly encode the same thing, and the judge aligns. BonaFide's labels encode causal
+dependence on a planted cue, and a fluent unacknowledged rationalization is exactly the case where
+coherence is high and causal dependence is also high — maximal divergence. Testing this is what the
+frozen 2x2's rubric arm does: it separates reliance, disclosure, and logical support instead of
+scoring a single scalar.

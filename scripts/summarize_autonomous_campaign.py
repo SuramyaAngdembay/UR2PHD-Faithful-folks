@@ -1,6 +1,7 @@
 """Assemble final results using corrected D2, with completion and hash checks."""
 from collections import Counter
 import json
+import math
 from pathlib import Path
 import random
 import autonomous_batch1 as b
@@ -51,7 +52,11 @@ def run():
     for a,c in [('B1','A1'),('A2','A1'),('B2','A2'),('B2','B1'),('D2','B1')]:
         delta=[x-y for x,y in zip(wins[a],wins[c])];rng=random.Random(20260913);draws=[]
         for _ in range(2000):draws.append(sum(delta[rng.randrange(6)] for _ in range(6))/6)
-        contrasts[a+'-'+c]={'difference':sum(delta)/6,'pair_bootstrap_95pct':[b.quantile(draws,.025),b.quantile(draws,.975)]}
+        pos=sum(x>0 for x in delta);neg=sum(x<0 for x in delta);n=pos+neg
+        sign_p=min(1,2*sum(math.comb(n,k) for k in range(min(pos,neg)+1))/2**n) if n else 1
+        contrasts[a+'-'+c]={'difference':sum(delta)/6,'pair_bootstrap_95pct':[b.quantile(draws,.025),b.quantile(draws,.975)],
+          'nonzero_pair_differences':n,'exact_two_sided_sign_p':sign_p,
+          'small_sample_note':'Post-hoc sensitivity: sign test excludes ties and tests balanced signs, not mean magnitude. Bootstrap intervals alone can be misleading with six pairs.'}
     component=[]
     for r in rows:
         if r['arm'] in ['A2','B2']:
@@ -73,4 +78,3 @@ def run():
     d.write_json(out/'corrected-results.json',summary)
     print(json.dumps({k:v for k,v in summary.items() if k!='matched_component_inspection'},indent=2))
 if __name__=='__main__':run()
-

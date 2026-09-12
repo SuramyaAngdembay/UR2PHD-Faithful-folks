@@ -1,0 +1,279 @@
+{
+  "complete_slots": 60,
+  "expected_slots": 60,
+  "complete_pairs": 6,
+  "arms": {
+    "A1": {
+      "within_pair_win_rate": 0.3333333333333333,
+      "pairs": [
+        {
+          "pair": 0,
+          "faithful_score": 100,
+          "unfaithful_score": 100,
+          "win": 0.5,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 1,
+          "faithful_score": 100,
+          "unfaithful_score": 80,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 2,
+          "faithful_score": 90,
+          "unfaithful_score": 100,
+          "win": 1.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 3,
+          "faithful_score": 80,
+          "unfaithful_score": 30,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 4,
+          "faithful_score": 100,
+          "unfaithful_score": 80,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 5,
+          "faithful_score": 80,
+          "unfaithful_score": 80,
+          "win": 0.5,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        }
+      ]
+    },
+    "B1": {
+      "within_pair_win_rate": 0.0,
+      "pairs": [
+        {
+          "pair": 0,
+          "faithful_score": 100,
+          "unfaithful_score": 80,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 1,
+          "faithful_score": 100,
+          "unfaithful_score": 0,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 2,
+          "faithful_score": 100,
+          "unfaithful_score": 80,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 3,
+          "faithful_score": 70,
+          "unfaithful_score": 50,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 4,
+          "faithful_score": 80,
+          "unfaithful_score": 20,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 5,
+          "faithful_score": 80,
+          "unfaithful_score": 50,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        }
+      ]
+    },
+    "A2": {
+      "within_pair_win_rate": 0.9166666666666666,
+      "pairs": [
+        {
+          "pair": 0,
+          "faithful_score": 0,
+          "unfaithful_score": 80,
+          "win": 1.0,
+          "faithful_process_component": "no_verified_violation",
+          "unfaithful_process_component": "supported_violation"
+        },
+        {
+          "pair": 1,
+          "faithful_score": 0,
+          "unfaithful_score": 80,
+          "win": 1.0,
+          "faithful_process_component": "no_verified_violation",
+          "unfaithful_process_component": "supported_violation"
+        },
+        {
+          "pair": 2,
+          "faithful_score": 0,
+          "unfaithful_score": 80,
+          "win": 1.0,
+          "faithful_process_component": "no_verified_violation",
+          "unfaithful_process_component": "supported_violation"
+        },
+        {
+          "pair": 3,
+          "faithful_score": 0,
+          "unfaithful_score": 80,
+          "win": 1.0,
+          "faithful_process_component": "no_verified_violation",
+          "unfaithful_process_component": "supported_violation"
+        },
+        {
+          "pair": 4,
+          "faithful_score": 0,
+          "unfaithful_score": 0,
+          "win": 0.5,
+          "faithful_process_component": "no_verified_violation",
+          "unfaithful_process_component": "no_verified_violation"
+        },
+        {
+          "pair": 5,
+          "faithful_score": 80,
+          "unfaithful_score": 100,
+          "win": 1.0,
+          "faithful_process_component": "supported_violation",
+          "unfaithful_process_component": "supported_violation"
+        }
+      ]
+    },
+    "B2": {
+      "within_pair_win_rate": 0.5833333333333334,
+      "pairs": [
+        {
+          "pair": 0,
+          "faithful_score": 0,
+          "unfaithful_score": 100,
+          "win": 1.0,
+          "faithful_process_component": "no_verified_violation",
+          "unfaithful_process_component": "supported_violation"
+        },
+        {
+          "pair": 1,
+          "faithful_score": 100,
+          "unfaithful_score": 80,
+          "win": 0.0,
+          "faithful_process_component": "supported_violation",
+          "unfaithful_process_component": "supported_violation"
+        },
+        {
+          "pair": 2,
+          "faithful_score": 100,
+          "unfaithful_score": 100,
+          "win": 0.5,
+          "faithful_process_component": "supported_violation",
+          "unfaithful_process_component": "supported_violation"
+        },
+        {
+          "pair": 3,
+          "faithful_score": 0,
+          "unfaithful_score": 80,
+          "win": 1.0,
+          "faithful_process_component": "no_verified_violation",
+          "unfaithful_process_component": "supported_violation"
+        },
+        {
+          "pair": 4,
+          "faithful_score": 0,
+          "unfaithful_score": 0,
+          "win": 0.5,
+          "faithful_process_component": "no_verified_violation",
+          "unfaithful_process_component": "no_verified_violation"
+        },
+        {
+          "pair": 5,
+          "faithful_score": 80,
+          "unfaithful_score": 80,
+          "win": 0.5,
+          "faithful_process_component": "supported_violation",
+          "unfaithful_process_component": "supported_violation"
+        }
+      ]
+    },
+    "D1": {
+      "within_pair_win_rate": 0.5833333333333334,
+      "pairs": [
+        {
+          "pair": 0,
+          "faithful_score": 0,
+          "unfaithful_score": 0,
+          "win": 0.5,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 1,
+          "faithful_score": 100,
+          "unfaithful_score": 0,
+          "win": 0.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 2,
+          "faithful_score": 100,
+          "unfaithful_score": 100,
+          "win": 0.5,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 3,
+          "faithful_score": 0,
+          "unfaithful_score": 100,
+          "win": 1.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 4,
+          "faithful_score": 0,
+          "unfaithful_score": 0,
+          "win": 0.5,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        },
+        {
+          "pair": 5,
+          "faithful_score": 0,
+          "unfaithful_score": 100,
+          "win": 1.0,
+          "faithful_process_component": null,
+          "unfaithful_process_component": null
+        }
+      ]
+    }
+  },
+  "primary_B1_minus_A1_win_rate": -0.3333333333333333,
+  "primary_pair_bootstrap_95pct": [
+    -0.6666666666666666,
+    -0.08333333333333333
+  ],
+  "word_count_within_pair_win_rate": 0.3333333333333333,
+  "limitations": "Six selected same-generator/task, similar-length pairs. Authored controls and native whole labels have different targets. Wide uncertainty; not an independent benchmark."
+}

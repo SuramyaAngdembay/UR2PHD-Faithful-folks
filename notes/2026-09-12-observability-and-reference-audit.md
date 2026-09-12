@@ -47,7 +47,9 @@ the real corpus does not prove that its labels reveal hidden computation either.
 ## Whole-label aggregation mixes different reference reasons
 
 The frozen BonaFide incorrect population contains these native whole-label
-reasons, classified from the pinned release's annotation text:
+reasons, classified by the first listed reason in the pinned release's annotation
+text. Multiple reasons can coexist; the machine-readable audit also counts their
+overlapping flags:
 
 | Released reason category | Responses |
 |---|---:|

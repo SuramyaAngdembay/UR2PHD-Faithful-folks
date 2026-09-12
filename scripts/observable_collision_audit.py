@@ -66,12 +66,17 @@ def run(source,out,bonafide_source=None):
               'n_released_unfaithful_steps':sum(v['label_type']=='UNFAITHFUL_STEP' for v in native[r['id']])})
         report={'frozen_incorrect_reason_counts':dict(Counter(r['category'] for r in audited)),
           'source_sha256':file_hash(bonafide_source),'status':'Post-selection descriptive audit of native automated annotation reasons; not independent process facts','batches':{}}
+        report['category_policy']='Mutually exclusive first-listed reason categories; multiple underlying reasons can coexist.'
+        report['overlapping_reason_flags']={name:sum(fragment in r['reason'] for r in audited) for name,fragment in
+          [('unfaithful_step','unfaithful step(s)'),('no_ack_or_faithful_steps','no acknowledgements of hint and no faithful steps'),('missing_required_steps','ground truth step(s)')]}
         index={r['rid']:r for r in audited}
         for batch in ['autonomous_batch1','autonomous_batch2']:
             keys=read_jsonl(ROOT/'results'/batch/'prepared/analysis-key.jsonl')
             ids={r['rid'] for r in keys if r['arm']=='B1' and r.get('cohort','native')=='native'}
             picked=[index[rid] for rid in sorted(ids)]
             report['batches'][batch]={'counts':dict(Counter(r['category'] for r in picked)),'rows':picked}
+            report['batches'][batch]['overlapping_reason_flags']={name:sum(fragment in r['reason'] for r in picked) for name,fragment in
+              [('unfaithful_step','unfaithful step(s)'),('no_ack_or_faithful_steps','no acknowledgements of hint and no faithful steps')]}
         write_json(out/'native-label-reason-audit.json',report)
 
 if __name__=='__main__':

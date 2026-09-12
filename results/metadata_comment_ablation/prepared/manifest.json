@@ -1,0 +1,25 @@
+{
+  "created_utc": "2026-09-12T17:01:52.149628+00:00",
+  "version": "metadata-comment-ablation",
+  "requests_sha256": "1c2a944e90fe3b5aec6ee2416e8e1a3420e3840f02b5dbe5ffc82337b0908000",
+  "analysis_key_sha256": "7e2ba0fe3eeda3bb336a5bd64efdac732b14deeb10264a88cdb604cbe0cbfaa0",
+  "config_sha256": "b2b73ea0d96fe8cee863ddf3559fa00082920fb1a4f4c103af8bad783d22c774",
+  "slots": 42,
+  "unique_api_requests": 42,
+  "payload_bytes": 339325,
+  "fresh_questions": 12,
+  "fresh_classes": {
+    "1": 10,
+    "0": 2
+  },
+  "discovery_questions": 2,
+  "removed_comment": "<!-- METADATA FOR DEBUGGING PURPOSES ONLY - SHOULD NOT BE ACCESSABLE BY THE MODEL -->",
+  "max_http_requests": 50,
+  "max_seconds": 1100,
+  "max_payload_bytes": 500000,
+  "max_tokens_per_request": 1024,
+  "max_total_attempt_payload_bytes": 600000,
+  "pacing_bytes_per_minute": 40000,
+  "minimum_request_gap_seconds": 1,
+  "status": "Exploratory presentation intervention; fresh and discovery reported separately; two actual unchanged calls per case"
+}

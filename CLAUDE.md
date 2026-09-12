@@ -198,7 +198,11 @@ predates the correction — items 1/4 of his feedback folded into Phase 1); repo
 black-box works on correct answers, collapses on incorrect; internals decode the blind regime in Llama and
 the detectable regime in Qwen; inversion three-legged incl. reproduction on their own scores; benchmark
 correction as community service) → **arXiv preprint ASAP to timestamp** vs concurrent work.
-**Phase 2 (wk 2–4):** power the correct-regime evidence via the hint testbed (2nd template, more models,
+****GRACE IS RELEASED (verified 2026-09-12/13):** github.com/pvhoang14/GRACE-benchmark, pinned
+63b6b2d, 437 test traces / 2,044 steps downloaded + hashed (notes/2026-09-12-external-dataset-release-check.md).
+Any note saying "GRACE if ever released" or "40-example sample only" is stale.
+
+Phase 2 (wk 2–4):** power the correct-regime evidence via the hint testbed (2nd template, more models,
 non-math domain); explain regime-dependent model-dependence (cross-regime direction analysis → SAE
 feature-decomposition study, Llama Scope/Gemma Scope); GRACE if ever released.
 **Phase 3:** venue from strength — ARR / ICLR 2027 (~late Sept) / next workshop cycle as floor.

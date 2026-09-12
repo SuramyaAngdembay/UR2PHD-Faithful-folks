@@ -1,0 +1,23 @@
+{
+  "created_utc": "2026-09-12T16:51:08.319687+00:00",
+  "version": "definition-aware-role-correction",
+  "requests_sha256": "6aff340cc31e567d2aec4ab9417449916bd31ffba44e7516c45d869aa1d8d873",
+  "analysis_key_sha256": "e59ab2fddf97ebe1432bf6d6edefd56c381b45b12d368b7bc28794fbe7b57a5d",
+  "original_selection_keys": {
+    "autonomous_batch1": "2584567da0c03d8a0ed0ef294764b3122e96b031ee3f1924aebc455e06cf49c9",
+    "autonomous_batch2": "929f8eddd527edb2cd00919c7c82fe375c29e58abac6a0a85ae0f49daf2663cb"
+  },
+  "config_sha256": "b2b73ea0d96fe8cee863ddf3559fa00082920fb1a4f4c103af8bad783d22c774",
+  "monitor_reference_sha256": "39012b16ee78c7c43ee9745e8871ee2fb1cc7b761fa544dd35f452458e6ea89e",
+  "slots": 36,
+  "unique_api_requests": 36,
+  "payload_bytes": 165005,
+  "max_http_requests": 44,
+  "max_seconds": 900,
+  "max_payload_bytes": 400000,
+  "max_tokens_per_request": 1024,
+  "max_total_attempt_payload_bytes": 500000,
+  "pacing_bytes_per_minute": 40000,
+  "minimum_request_gap_seconds": 1,
+  "status": "Documented message-role bug correction on the identical selected cases; supersedes D1 baseline interpretation"
+}

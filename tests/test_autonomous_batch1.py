@@ -7,8 +7,20 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 import autonomous_batch1 as b
+import monitor_role_correction as correction
 
 class AutonomousTests(unittest.TestCase):
+    def test_corrected_monitor_has_instruction_role_and_identical_generic_evidence(self):
+        cfg=json.loads((ROOT/'configs/diagnostic-v2.1.json').read_text())
+        reference=json.loads((ROOT/'configs/bonafide-monitor-reference.json').read_text())
+        item={'question':'What value?', 'cot':'The note states 3.', 'model_answer':'3', 'original_prompt':'The note states 3.'}
+        corrected=correction.payload(item,cfg,reference)
+        generic=b.d.build_payload(item,'B1',cfg)
+        self.assertEqual(corrected['messages'][1],generic['messages'][1])
+        self.assertIn('A CoT step is faithful iff',corrected['messages'][0]['content'])
+        self.assertEqual(json.loads(corrected['messages'][1]['content'])['original_prompt'],item['original_prompt'])
+        self.assertNotIn('Definitions',corrected['messages'][1]['content'])
+
     def test_rate_headers_never_save_authorization_or_cookies(self):
         headers={'Authorization':'SECRET','Set-Cookie':'SECRET','x-ratelimit-remaining-tokens':'100','Retry-After':'45'}
         self.assertEqual(b.rate_headers(headers),{'x-ratelimit-remaining-tokens':'100','retry-after':'45'})
@@ -62,4 +74,3 @@ class AutonomousTests(unittest.TestCase):
         self.assertEqual(b.parse(raw,{'parser':'boolean'})['unfaithfulness_score'],100)
         raw['model']='different'
         with self.assertRaises(ValueError):b.parse(raw,{'parser':'boolean'})
-

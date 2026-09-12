@@ -40,3 +40,10 @@ Never treat a transient empty scheduler query as proof of successful completion.
 
 Record findings and unfinished work in a dated `notes/` entry and update
 `CURRENT_STATE.md`. New evidence may change the plan; change it explicitly.
+
+The user explicitly authorized autonomous selection and execution of needed
+experiments on September 11–12. Continue bounded, documented experiments and
+adapt to results without waiting for individual prompts. Pending human review
+does not block independently checkable controls or exploratory development
+comparisons. Do not describe model-generated annotations as independent human
+gold; substantial compute still needs an available allocation within scope.

@@ -1,0 +1,69 @@
+{
+  "created_utc": "2026-09-12T16:46:25.054468+00:00",
+  "version": "autonomous-2-matched",
+  "requests_sha256": "d3ebdee1729262b71eb0a9e6df302c1e99006c593ba564c66f7b0e5557b3fa06",
+  "analysis_key_sha256": "929f8eddd527edb2cd00919c7c82fe375c29e58abac6a0a85ae0f49daf2663cb",
+  "config_sha256": "b2b73ea0d96fe8cee863ddf3559fa00082920fb1a4f4c103af8bad783d22c774",
+  "monitor_reference_sha256": "39012b16ee78c7c43ee9745e8871ee2fb1cc7b761fa544dd35f452458e6ea89e",
+  "prepared_manifest_sha256": "7422ef6f7a3b71f5fb33c986b8385b7bbc88e326edf5ec10a3be27cfe1c8173a",
+  "prior_selection_key_sha256": "2584567da0c03d8a0ed0ef294764b3122e96b031ee3f1924aebc455e06cf49c9",
+  "slots": 60,
+  "unique_api_requests": 60,
+  "payload_bytes": 249212,
+  "native_distinct_questions": 12,
+  "pairs": 6,
+  "candidate_edges": 13,
+  "matching": "greedy ascending absolute log word ratio <=1.25; exact task and generator; no repeated or previously scored question",
+  "pair_strata": [
+    {
+      "pair": 0,
+      "generator": "allenai/Olmo-3.1-32B-Instruct",
+      "task": "google_simpleqa-verified",
+      "faithful_words": 170,
+      "unfaithful_words": 166
+    },
+    {
+      "pair": 1,
+      "generator": "meta-llama/Llama-3.3-70B-Instruct",
+      "task": "google_simpleqa-verified",
+      "faithful_words": 102,
+      "unfaithful_words": 99
+    },
+    {
+      "pair": 2,
+      "generator": "meta-llama/Llama-3.3-70B-Instruct",
+      "task": "google_simpleqa-verified",
+      "faithful_words": 147,
+      "unfaithful_words": 142
+    },
+    {
+      "pair": 3,
+      "generator": "Qwen/Qwen3-4B-Instruct-2507",
+      "task": "google_simpleqa-verified",
+      "faithful_words": 194,
+      "unfaithful_words": 204
+    },
+    {
+      "pair": 4,
+      "generator": "allenai/Olmo-3.1-32B-Instruct",
+      "task": "google_simpleqa-verified",
+      "faithful_words": 119,
+      "unfaithful_words": 126
+    },
+    {
+      "pair": 5,
+      "generator": "meta-llama/Llama-3.3-70B-Instruct",
+      "task": "google_simpleqa-verified",
+      "faithful_words": 114,
+      "unfaithful_words": 94
+    }
+  ],
+  "max_http_requests": 72,
+  "max_seconds": 1500,
+  "max_payload_bytes": 500000,
+  "max_tokens_per_request": 1024,
+  "max_total_attempt_payload_bytes": 650000,
+  "pacing_bytes_per_minute": 40000,
+  "minimum_request_gap_seconds": 1,
+  "status": "exploratory six matched development pairs; no generalization estimate"
+}

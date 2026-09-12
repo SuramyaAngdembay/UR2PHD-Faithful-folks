@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-09-12T04:53:49.998037+00:00",
+  "version": "autonomous-1",
+  "requests_sha256": "263d9ca98b5838fc46d5fbfd78211d6257b88865bb697dc4430d57b7e9caa574",
+  "analysis_key_sha256": "2584567da0c03d8a0ed0ef294764b3122e96b031ee3f1924aebc455e06cf49c9",
+  "config_sha256": "b2b73ea0d96fe8cee863ddf3559fa00082920fb1a4f4c103af8bad783d22c774",
+  "monitor_reference_sha256": "39012b16ee78c7c43ee9745e8871ee2fb1cc7b761fa544dd35f452458e6ea89e",
+  "prepared_manifest_sha256": "7422ef6f7a3b71f5fb33c986b8385b7bbc88e326edf5ec10a3be27cfe1c8173a",
+  "slots": 96,
+  "unique_api_requests": 88,
+  "payload_bytes": 341074,
+  "native_distinct_questions": 24,
+  "native_classes": {
+    "0": 12,
+    "1": 12
+  },
+  "native_sources": {
+    "google_simpleqa-verified": 19,
+    "aai530-group6_ddxplus": 5
+  },
+  "native_words": [
+    84,
+    772
+  ],
+  "max_http_requests": 110,
+  "max_seconds": 1800,
+  "max_payload_bytes": 800000,
+  "max_tokens_per_request": 1024,
+  "max_total_attempt_payload_bytes": 1000000,
+  "pacing_bytes_per_minute": 40000,
+  "minimum_request_gap_seconds": 1,
+  "status": "exploratory synthetic stress tests and selected native development baseline"
+}

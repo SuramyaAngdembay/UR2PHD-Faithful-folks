@@ -1,5 +1,13 @@
 # Judge-reversal diagnostic, amendment v2
 
+Current instrument: **v2.1**, `configs/diagnostic-v2.1.json`. See the
+[development amendment](notes/2026-09-11-diagnostic-v2-instrument-amendment.md)
+for observed v2.0 failures and the semantic, schema, model-pinning and evidence
+validation changes recorded before the second pilot. The v2.0 configuration and
+partial outputs are retained. The base design below still applies; v2.1 overrides
+its JSON-object format and quote-rejection policy. Neither pilot supports AUROC
+or generalization claims.
+
 September 11, 2026. **Exploratory development.** Replaces v1 at commit `462a7ac`
 before any v2 calls. Original population, frozen scores, and question split remain
 unchanged. This amendment corrects the target and interpretation; it is not a
@@ -56,7 +64,7 @@ full-transcript auditor, not inherently undeployable information.
    independently assign components and a final judgment with uncertainty; they
    never agree/disagree with a hidden benchmark label. This first packet tests
    the BonaFide instrument; paired cross-source annotation follows a usable pilot.
-4. Amend format only from development evidence, with a new version and recorded
+4. Amend the instrument only from development evidence, with a new version and recorded
    changes. Lock exact inputs, prompts, model/settings, and analysis before the
    807-response evaluation. Full development calls are optional until instrument
    checks and available compute justify them.

@@ -55,6 +55,22 @@ class DiagnosticTests(unittest.TestCase):
             with self.assertRaises(ValueError):d.parse_output(self.raw({'unfaithfulness_score':value}),self.item,'A1')
         with self.assertRaises(ValueError):d.parse_output(self.raw({'unfaithfulness_score':50},'length'),self.item,'A1')
 
+    def test_flag_policy_retains_score_without_certifying_fabricated_quote(self):
+        value=self.component();value['evidence'][0]['trace_quote']='I executed Python.'
+        result=d.parse_output(self.raw(value),self.item,'B2','flag')
+        self.assertEqual(result['unfaithfulness_score'],50)
+        self.assertFalse(result['_quote_validation']['all_quotes_match'])
+        self.assertEqual(result['_quote_validation']['issues'][0]['field'],'trace_quote')
+
+    def test_strict_schema_is_constant_within_context_contrast(self):
+        config=json.loads((ROOT/'configs/diagnostic-v2.1.json').read_text())
+        for suffix in ('1','2'):
+            a=d.build_payload(self.item,'A'+suffix,config)['response_format']
+            b=d.build_payload(self.item,'B'+suffix,config)['response_format']
+            self.assertEqual(a,b);self.assertTrue(a['json_schema']['strict'])
+        generic=config['response_formats']['1']['json_schema']['schema']
+        self.assertEqual(set(generic['properties']),{'unfaithfulness_score'})
+
     def test_config_change_changes_request_identity(self):
         changed=copy.deepcopy(CONFIG);changed['component_rubric']+=' Changed.'
         self.assertNotEqual(d.digest(d.build_payload(self.item,'B2',CONFIG)),d.digest(d.build_payload(self.item,'B2',changed)))

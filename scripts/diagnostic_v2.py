@@ -123,7 +123,8 @@ def build_payload(item, arm, config):
     if arm.startswith('B'):record['original_prompt']=item['original_prompt']
     rubric=config['generic_rubric'] if arm.endswith('1') else config['component_rubric']
     return {'model':config['model'],'temperature':config['temperature'],
-            'max_tokens':config['max_tokens'],'response_format':config['response_format'],
+            'max_tokens':config['max_tokens'],
+            'response_format':config.get('response_formats',{}).get(arm[-1],config['response_format']),
             'messages':[{'role':'system','content':config['common_instruction']+'\n\n'+rubric},
                         {'role':'user','content':json.dumps(record,ensure_ascii=False)}]}
 
@@ -135,7 +136,7 @@ COMPONENT_VALUES={
     'logical_support':{'supported','partial','unsupported','insufficient_evidence'},
 }
 
-def parse_output(raw, item, arm):
+def parse_output(raw, item, arm, evidence_policy='reject'):
     choice=raw['choices'][0]
     if choice.get('finish_reason')!='stop':raise ValueError('Non-stop finish reason')
     result=json.loads(choice['message']['content'])
@@ -149,11 +150,18 @@ def parse_output(raw, item, arm):
         evidence=result.get('evidence')
         if not isinstance(evidence,list) or len(evidence)>2:raise ValueError('Invalid evidence list')
         allowed_context=item['question']+('\n'+item['original_prompt'] if arm.startswith('B') else '')
-        for pair in evidence:
+        quote_issues=[]
+        for index,pair in enumerate(evidence):
             for name,allowed in [('trace_quote',item['cot']),('context_quote',allowed_context)]:
                 quote=pair.get(name)
-                if not isinstance(quote,str) or len(quote)>240 or quote not in allowed:
+                if not isinstance(quote,str) or len(quote)>240:
                     raise ValueError('Unsupported or oversized evidence quote: '+name)
+                if quote not in allowed:
+                    if evidence_policy=='reject':raise ValueError('Unsupported or oversized evidence quote: '+name)
+                    quote_issues.append({'index':index,'field':name,'issue':'not_an_exact_span_in_allowed_evidence'})
+        if evidence_policy=='flag':
+            result['_quote_validation']={'all_quotes_match':not quote_issues,'issues':quote_issues,
+                'note':'Lexical span check only, not independent verification of the claim'}
         rationale=result.get('rationale')
         if not isinstance(rationale,str) or len(rationale.split())>100:raise ValueError('Invalid rationale')
     return result
@@ -240,7 +248,7 @@ def run(args):
                       headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'})
                 with urllib.request.urlopen(req,timeout=config['request_timeout_seconds']) as response:raw=json.load(response)
                 record.update(raw=raw,returned_model=raw.get('model'),duration_seconds=time.monotonic()-begin)
-                parsed=parse_output(raw,p['item'],p['arm'])
+                parsed=parse_output(raw,p['item'],p['arm'],config.get('evidence_policy','reject'))
                 if not raw.get('model'):raise ValueError('Missing returned model identity')
                 if models and raw['model'] not in models:stop=True;raise ValueError('Returned model identity changed')
                 models.add(raw['model']);record['parsed']=parsed
@@ -285,6 +293,7 @@ def inspect_run(args):
              'by_arm':dict(Counter(r['arm'] for r in rows)),
              'returned_models':sorted({r['returned_model'] for r in rows}), 'token_usage_in_recorded_responses':dict(usage),
              'component_evidence_status':dict(Counter(r['parsed'].get('evidence_status') for r in rows if r['arm'].endswith('2'))),
+             'component_exact_quote_checks':dict(Counter(str(r['parsed'].get('_quote_validation',{}).get('all_quotes_match')) for r in rows if r['arm'].endswith('2'))),
              'score_ranges_by_arm':{a:[min(z),max(z)] for a in ['A1','B1','A2','B2'] if (z:=[r['parsed']['unfaithfulness_score'] for r in rows if r['arm']==a])},
              'interpretation':'Format/evidence instrumentation only; no performance estimate for the selected smoke population.'}
     write_json(args.output/'instrument-summary.json',summary);print(json.dumps(summary,indent=2))

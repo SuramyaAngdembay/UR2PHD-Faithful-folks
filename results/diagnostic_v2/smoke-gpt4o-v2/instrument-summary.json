@@ -1,0 +1,36 @@
+{
+  "partition": "smoke",
+  "valid_responses": 4,
+  "errors": 3,
+  "by_arm": {
+    "A1": 2,
+    "B1": 1,
+    "A2": 1
+  },
+  "returned_models": [
+    "gpt-4o-2024-08-06"
+  ],
+  "token_usage_in_recorded_responses": {
+    "prompt_tokens": 6423,
+    "completion_tokens": 714,
+    "total_tokens": 7137
+  },
+  "component_evidence_status": {
+    "sufficient": 1
+  },
+  "score_ranges_by_arm": {
+    "A1": [
+      80,
+      90
+    ],
+    "B1": [
+      80,
+      80
+    ],
+    "A2": [
+      80,
+      80
+    ]
+  },
+  "interpretation": "Format/evidence instrumentation only; no performance estimate for the selected smoke population."
+}

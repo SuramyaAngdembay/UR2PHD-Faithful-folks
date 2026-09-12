@@ -1,0 +1,9 @@
+{
+  "identity": {
+    "manifest_sha256": "0ad5f41b26be2fc67cf4623dbb2236c6c3c02924212f3a355c42d8a2ae5d2db0",
+    "runner_sha256": "5b964212890a21ac00bbaa74f33805f8099d03c427a010c53e0d435319fdef6d",
+    "parser_sha256": "7802afe3125cd39d7a42551e00a3987241283fe10890e97a3f724e6fc941d93c"
+  },
+  "created_utc": "2026-09-12T17:03:20.735648+00:00",
+  "deadline_epoch": 1789233700.7356825
+}

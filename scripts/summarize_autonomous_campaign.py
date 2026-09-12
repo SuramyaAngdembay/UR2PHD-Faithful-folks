@@ -24,6 +24,8 @@ def checked(name):
 
 def run():
     first,raw1=checked('autonomous_batch1');matched,raw2=checked('autonomous_batch2');corrected,raw3=checked('monitor_role_correction')
+    _,raw4=checked('metadata_comment_ablation')
+    metadata=json.loads((ROOT/'results/metadata_comment_ablation/run/analysis-summary.json').read_text())
     native=[r for r in first if r['cohort']=='native' and r['arm']=='B1']
     d2={r['rid']:r for r in corrected if r['source_batch']=='autonomous_batch1'}
     native=sorted(native,key=lambda r:r['rid'])
@@ -62,11 +64,12 @@ def run():
         if r['arm'] in ['A2','B2']:
             component.append({k:r[k] for k in ['pair','rid','arm','y']}|{'score':r['parsed']['unfaithfulness_score'],'components':r['parsed']['components'],'rationale':r['parsed']['rationale'],'quotes_match':r['parsed'].get('_quote_validation',{}).get('all_quotes_match')})
     usage=Counter()
-    for r in raw1+raw2+raw3:
+    for r in raw1+raw2+raw3+raw4:
         for k,v in r['raw'].get('usage',{}).items():
             if type(v)is int:usage[k]+=v
-    summary={'unique_api_calls':len(raw1)+len(raw2)+len(raw3),'usage':dict(usage),
-      'all_runs_complete_without_transport_errors':all(not (ROOT/'results'/n/'run/errors.jsonl').exists() for n in ['autonomous_batch1','autonomous_batch2','monitor_role_correction']),
+    summary={'unique_api_calls':len(raw1)+len(raw2)+len(raw3)+len(raw4),'usage':dict(usage),
+      'all_runs_complete_without_transport_errors':all(not (ROOT/'results'/n/'run/errors.jsonl').exists() for n in ['autonomous_batch1','autonomous_batch2','monitor_role_correction','metadata_comment_ablation']),
+      'metadata_intervention':{group:{k:v for k,v in values.items() if k!='cases'} for group,values in metadata['groups'].items()},
       'baseline_correction':'D1 comparisons superseded due to role conflict. D2 places unchanged definition-aware instructions in the system role and identical B1 JSON evidence in the user role.',
       'native_pilot':{'n':len(y),'B1':stats(y,sg),'D2':stats(y,sd),'D2_minus_B1_balanced_accuracy':b.balanced(y,sd)-b.balanced(y,sg),
          'paired_bootstrap_95pct':[b.quantile(diffs,.025),b.quantile(diffs,.975)],'limitation':'Selected balanced development sample with disjoint generators across classes.'},

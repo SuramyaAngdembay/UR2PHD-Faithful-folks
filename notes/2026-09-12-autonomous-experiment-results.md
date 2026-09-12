@@ -1,9 +1,7 @@
 # Autonomous experiment results: evidence access and interpretation
 
-Status at this checkpoint: the source controls, first native pilot, matched
-native pilot and corrected monitor baseline are complete. The visibility-comment
-ablation has its own frozen protocol and run; its outcome is recorded below when
-available. All new natural examples are development examples, not the 807-case
+All four API runs are complete, including the visibility-comment ablation.
+All new natural examples are development examples, not the 807-case
 evaluation partition. These are exploratory diagnostics.
 
 ## What was run
@@ -12,10 +10,12 @@ evaluation partition. These are exploratory diagnostics.
 - 60 calls on six fresh matched native pairs across five judging conditions.
 - 36 corrective baseline calls after detecting a message-role implementation
   error. The affected D1 interpretation is superseded by corrected D2.
+- 42 metadata visibility-comment calls, including unchanged-original repeats
+  and separately reported discovery and fresh cases.
 - An offline full-record collision audit and native-reference-reason audit.
 
-The first three runs completed all 184 requests without transport or parsing
-errors. Recorded usage was 145,526 input and 7,569 output tokens. The server
+The four runs completed all 226 requests without transport or parsing errors.
+Recorded usage was 212,443 input and 14,850 output tokens. The server
 reported a 30,000-token/minute rate limit; conservative payload pacing and safe
 rate headers resolved the earlier transport problem. Exact request plans, keys
 kept outside inference, raw outputs, success records, hashes and code revisions
@@ -120,9 +120,9 @@ as proof that metadata was inaccessible, despite the metadata being visibly
 included and explicitly used by the trace. These are concrete reading errors
 about the supplied record, not evidence of unfaithful hidden computation.
 
-The metadata comment is now tested directly with a single-text intervention,
+The metadata comment was tested directly with a single-text intervention,
 two unchanged-original repeats per case, and separate fresh/discovery groups.
-That targeted ablation is more informative than another broad judge leaderboard.
+The result below limits the scope of this candidate explanation.
 
 ## 5. What the real datasets and reference reasons permit
 
@@ -145,6 +145,35 @@ That difference separates prompt access from access to decisive verification
 evidence. The source controls and native whole-label experiment test different
 amounts of evidence and different aspects of the target.
 
+## 6. The visibility-comment explanation does not generalize in this pilot
+
+Removing only the exact comment preserves the metadata answer cue, question,
+trace and final answer. The B2 rubric is unchanged. On each case, compare the
+comment-removed score with the mean of two actual original-input calls.
+
+| Group | Questions | Mean removed-minus-original score | 95% question bootstrap | Mean absolute original-repeat difference |
+|---|---:|---:|---:|---:|
+| Discovery cases | 2 | −70.0 | [−100, −40] | 40.0 |
+| Fresh development cases | 12 | +6.67 | [−2.5, 17.5] | 5.0 |
+
+The discovery cases selected because they exhibited the error improve after
+removing the comment. One has original scores 100/100 and ablated score 0; the
+other has original scores 0/80 and ablated score 0. The latter also demonstrates
+substantial variation on identical inputs, despite temperature zero.
+
+The fresh group does not show the predicted general score reduction. Its two
+native-faithful cases are already scored 0 under both originals and the ablation.
+Most false-process component decisions do not change. One fresh case switches
+from no verified violation to a supported violation after comment removal; the
+intervention is not a uniform safeguard. These are twelve selected metadata-hint
+questions (two native F, ten U), not a powered population or label-error estimate.
+
+The correct conclusion is a **localized, partly unstable interpretation failure**,
+not a general visibility-comment mechanism or a validated prompt-cleaning remedy.
+Discovery improvement alone would have given a misleading story. Retain the
+fresh negative result and the repeats. Do not redesign the paper around removing
+this sentence or promote that modification into a method.
+
 ## Consequence for the paper
 
 The emerging study concerns **how evidence is interpreted under different
@@ -154,6 +183,13 @@ ranking gain, the context interaction and the faulty source-access allegations
 should guide new independently checkable examples and evidence-presentation
 controls. A successful future verifier must demonstrate valid claims and useful
 coverage, not just improve AUROC against one automated whole-label rule.
+
+The next diagnostic priority is repeated, fixed-procedure measurement of the
+component-versus-generic comparison and independent checking of the particular
+alleged violations. Repetition can assess stability without new human labels;
+it cannot certify process truth. Keep a separate fresh validation target and
+compare against the corrected definition-aware baseline. More broad scoring or
+more metadata-comment edits would not address the uncertainties identified here.
 
 The revision map is `paper/arr/measurement-study-outline.md`. It keeps the scoped
 FaithCoT findings, narrows the main storyline, and moves the representation and

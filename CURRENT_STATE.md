@@ -76,13 +76,18 @@ restricted comparisons, not causal adjustment or a replacement headline.
   calls. D1 performance claims are superseded. Use
   `scripts/monitor_role_correction.py` for the corrected instruction/evidence roles.
 - The metadata-comment intervention separately tests two discovery and 12 fresh
-  questions, including two actual unchanged-original repeats per case. Its
-  frozen protocol and result directory record the current completion status.
+  questions, including two actual unchanged-original repeats per case. All 42
+  calls completed. Discovery mean score change is −70, but fresh mean is +6.67
+  (95% bootstrap −2.5 to 17.5); the simple explanation did not generalize. One
+  discovery original changes from 0 to 80 on repeat. Do not claim a cleaning remedy.
 - Exact-record audit finds no conflicting full-input twins within either target
   and no exact shared full-input cases between the datasets. The synthetic .5
   ceiling is not a real-data impossibility theorem. Native reason flags overlap.
 - Current report: [autonomous results](notes/2026-09-12-autonomous-experiment-results.md).
   Coordinated manuscript plan: `paper/arr/measurement-study-outline.md`.
+- All four API runs are complete: 226 calls, no transport/parse errors. Next
+  priority is fixed-procedure repetition of the component/generic comparison
+  and independent checking of alleged violations, retaining fresh validation.
 - Versioned new results are under `results/diagnostic_v2/`, `autonomous_batch1/`,
   `autonomous_batch2/`, `monitor_role_correction/`, `metadata_comment_ablation/`
   and `autonomous_campaign_2026-09-12/`. The original frozen evaluation stays

@@ -1,11 +1,31 @@
 {
-  "unique_api_calls": 184,
+  "unique_api_calls": 226,
   "usage": {
-    "prompt_tokens": 145526,
-    "completion_tokens": 7569,
-    "total_tokens": 153095
+    "prompt_tokens": 212443,
+    "completion_tokens": 14850,
+    "total_tokens": 227293
   },
   "all_runs_complete_without_transport_errors": true,
+  "metadata_intervention": {
+    "fresh": {
+      "n": 12,
+      "mean_comment_removed_minus_original": 6.666666666666667,
+      "question_bootstrap_95pct": [
+        -2.5,
+        17.5
+      ],
+      "mean_original_repeat_absolute_difference": 5.0
+    },
+    "discovery": {
+      "n": 2,
+      "mean_comment_removed_minus_original": -70.0,
+      "question_bootstrap_95pct": [
+        -100.0,
+        -40.0
+      ],
+      "mean_original_repeat_absolute_difference": 40.0
+    }
+  },
   "baseline_correction": "D1 comparisons superseded due to role conflict. D2 places unchanged definition-aware instructions in the system role and identical B1 JSON evidence in the user role.",
   "native_pilot": {
     "n": 24,

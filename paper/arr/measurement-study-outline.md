@@ -40,10 +40,12 @@ label for the same observable case.
 4. **Identify a concrete interpretation error.** The auditor sometimes treats
    metadata described as inaccessible as actually unavailable despite its
    presence in the input and the trace's disclosure of its use. A controlled
-   visibility-comment intervention with unchanged-input repeats tests that
-   candidate explanation. Preserve any null result or instability; do not select
-   only helpful examples. This also separates evidence availability from the
-   reader's interpretation of that evidence.
+   visibility-comment intervention with unchanged-input repeats tested that
+   candidate explanation: the effect appeared in the two discovery cases but
+   did not generalize to twelve fresh cases. Preserve this failure and the
+   unstable repeated judgment. It is a diagnostic limit and cannot anchor a
+   successful remedy claim. Evidence availability and its interpretation remain
+   distinct questions requiring a broader, independently checked test.
 5. **Validate a narrowly defined corrective procedure, if justified.** A source
    or execution-claim verifier should cite the relevant statement and admissible
    record, return uncertainty where the record is missing, and distinguish a

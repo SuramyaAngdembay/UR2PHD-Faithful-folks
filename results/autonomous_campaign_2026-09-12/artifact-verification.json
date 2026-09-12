@@ -25,5 +25,14 @@
       "attempts.jsonl": "d2166bc56f5b85c90b31f7452548ac1eb1346e8aac05ddb3522c247091dcf25f",
       "run.json": "818a05d5f94a3e57a4043abed45cb2db50f4f5b0af81ed617866b5ac19c02d17"
     }
+  },
+  {
+    "run": "metadata_comment_ablation",
+    "matching_remote_artifacts": {
+      "run.json": "a878dbe1eb623461fef0c92a433825c56f8a6a7007599d4bb2e882c5ea810ba9",
+      "completion.json": "8dd063b622d8fc5657c4dac47e05c222e45d276dba9e03c1af3ad779036bf005",
+      "attempts.jsonl": "75cd4e77639a322aaa6500adbe55f16bdffb83553a4c2c2ee44611bb83b6d74a",
+      "responses.jsonl": "3b43c435f7577c991989ee632405c06ac2ecdcebc7968ee7ac0434f43ba12ec6"
+    }
   }
 ]

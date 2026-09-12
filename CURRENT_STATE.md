@@ -1,15 +1,19 @@
 # Current research state
 
-Updated September 11, 2026. Research driver: Codex, following the user's explicit
+Updated September 12, 2026. Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
 ## Scientific direction
 
 Study when CoT faithfulness measurements transfer across evidence policies,
-reference standards and selected populations. Begin with a repaired rubric ×
-context diagnostic and independent component annotation. A new verification
-method is conditional on validated gains; a general two-regime law is not shown.
+reference standards and selected populations. Current experiments isolate
+evidence access from its interpretation. A component procedure is a development
+lead; a validated new method and a general two-regime law are not shown.
+
+The user has authorized autonomous selection and execution of needed bounded
+experiments. Do not wait for individual prompts to run an appropriate next
+diagnostic. Human annotations remain independent evidence and are not simulated.
 
 The independent comprehensive report and scripts live at
 `~/Ur2Phd-review-2026-09-07/deep-research-2026-09-11/`.
@@ -61,12 +65,29 @@ restricted comparisons, not causal adjustment or a replacement headline.
 - A 60-question, development-only independent annotation packet is ready at
   `results/diagnostic_v2/audit/reviewer/index.html`; deliver only the reviewer
   directory or its reviewer-only archive. No human annotations are complete.
-- Next: independent component review, then paired cross-source annotation and
-  a locked matched diagnostic if the instrument is usable. The evaluation
-  partition remains unopened; further prompt changes need fresh development
-  evidence. See [execution handoff](notes/2026-09-11-driver-handoff.md).
-- Keep all new results under `results/diagnostic_v2/`; the original frozen
-  evaluation stays untouched. Whole campaign remains exploratory.
+- Autonomous batch 1 completed 88 unique calls (96 slots). Full-context generic
+  and component judges separate four authored source-claim pairs perfectly;
+  restricted inputs are indistinguishable by construction. The 24-case native
+  pilot remains confounded by disjoint generators and a strong length association.
+- Autonomous batch 2 completed 60 calls on six fresh matched SimpleQA pairs.
+  Within-pair ordering: A1 .333, B1 .000, A2 .917, B2 .583. Corrected definition-
+  aware D2 gives .500. Six pairs and questionable rationales prevent a method claim.
+- A D1 baseline message-role error was found and corrected with 36 separate D2
+  calls. D1 performance claims are superseded. Use
+  `scripts/monitor_role_correction.py` for the corrected instruction/evidence roles.
+- The metadata-comment intervention separately tests two discovery and 12 fresh
+  questions, including two actual unchanged-original repeats per case. Its
+  frozen protocol and result directory record the current completion status.
+- Exact-record audit finds no conflicting full-input twins within either target
+  and no exact shared full-input cases between the datasets. The synthetic .5
+  ceiling is not a real-data impossibility theorem. Native reason flags overlap.
+- Current report: [autonomous results](notes/2026-09-12-autonomous-experiment-results.md).
+  Coordinated manuscript plan: `paper/arr/measurement-study-outline.md`.
+- Versioned new results are under `results/diagnostic_v2/`, `autonomous_batch1/`,
+  `autonomous_batch2/`, `monitor_role_correction/`, `metadata_comment_ablation/`
+  and `autonomous_campaign_2026-09-12/`. The original frozen evaluation stays
+  untouched, and the 807-response evaluation partition remains unopened. The
+  whole campaign is exploratory; exact requests are frozen before new inference.
 
 ## Compute and publication
 

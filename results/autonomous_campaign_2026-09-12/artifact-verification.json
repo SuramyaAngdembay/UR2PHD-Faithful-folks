@@ -1,0 +1,29 @@
+[
+  {
+    "run": "autonomous_batch1",
+    "matching_remote_artifacts": {
+      "run.json": "a9e07bf738c4fade03b7bc15944feb9d1887251825b7314cb1a715c457703b14",
+      "completion.json": "e5b677df6cdcbddbcefc92db10003ac0b62f4d49844e7a8681f5e0afa2e6905d",
+      "attempts.jsonl": "13b9ea266a9efa9184c29f329539da63d67bfcd85679b3a6259ee45ceaea5380",
+      "responses.jsonl": "2721a4a9ab4b66b67ffe038c6fab2f69a685a912cc7129c67f7825f9909c5bab"
+    }
+  },
+  {
+    "run": "autonomous_batch2",
+    "matching_remote_artifacts": {
+      "responses.jsonl": "cb6924eac21e790a07d1e28dfca0c4b245ced5b9b619b23681ccc90682d764d0",
+      "completion.json": "417afc8ba21475c98665410ce6d8699962cd1e0c126175a300586cfb88ff8d1f",
+      "run.json": "3217e1e5407bcd62d85f4bbc901aaff3ad71ce9cc410041955eed38302fd2d80",
+      "attempts.jsonl": "51882153eb8f0585f53d1ff579e474dbf993fcd06311ead84c6c819e9d118006"
+    }
+  },
+  {
+    "run": "monitor_role_correction",
+    "matching_remote_artifacts": {
+      "completion.json": "a760f0f06d76e93fa03c4f581c1834e73ffc6c4eb6e2fa973cdbc6ba65aa6dbc",
+      "responses.jsonl": "e306e0263fc37c1d105a98edc6930e70a7d1c3bde6054b9fcceeb19bfdaf72af",
+      "attempts.jsonl": "d2166bc56f5b85c90b31f7452548ac1eb1346e8aac05ddb3522c247091dcf25f",
+      "run.json": "818a05d5f94a3e57a4043abed45cb2db50f4f5b0af81ed617866b5ac19c02d17"
+    }
+  }
+]

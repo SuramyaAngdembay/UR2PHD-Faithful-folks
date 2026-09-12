@@ -91,6 +91,17 @@ restricted comparisons, not causal adjustment or a replacement headline.
   with prior-sample/question-overlap checks and a frozen step-level adaptation.
   FACE-Eval data/results and ProcessBench are also publicly accessible. See
   [release audit](notes/2026-09-12-external-dataset-release-check.md).
+- Literature reassessment: classifier-sensitivity work already includes ranking
+  reversals and criterion differences, so another reversal is insufficient
+  novelty. The hint-verbalization paper's ~90% result is success across multiple
+  samples, not a per-response rate established by longer outputs. It does not
+  invalidate the full BonaFide target or certify false source/process claims.
+  Prioritize common-example reason validation, the frozen GRACE cross-check,
+  and same-answer evidence pairs; targeted causal replay is complementary.
+  CausalDiagnosticity supplies useful design/code precedents, and NSF-CoT is a
+  close comparator for component verification. See the
+  [literature and experiment assessment](notes/2026-09-12-literature-and-experiment-direction.md).
+  These are research recommendations; no new inference was launched in this audit.
 - All four API runs are complete: 226 calls, no transport/parse errors. Next
   priority is fixed-procedure repetition of the component/generic comparison
   and independent checking of alleged violations, retaining fresh validation.

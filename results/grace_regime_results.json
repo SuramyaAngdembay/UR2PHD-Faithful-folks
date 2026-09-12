@@ -1,0 +1,404 @@
+{
+  "n": 437,
+  "regimes": {
+    "correct": 246,
+    "incorrect": 191
+  },
+  "primary": "Spearman rho(signal, fraction of non-faithful steps), threshold-free",
+  "disclosure": "aggregation cell counts were inspected before this analysis; primary is threshold-free and all five thresholds are reported as a band",
+  "composition": "no length confound (4.68 vs 4.65 mean steps); mild dataset/track/model imbalance",
+  "signals": {
+    "nli_frac_unsup_ctx": {
+      "primary": {
+        "pooled": {
+          "rho": 0.226,
+          "ci95": [
+            0.133,
+            0.312
+          ]
+        },
+        "correct": {
+          "rho": 0.216,
+          "ci95": [
+            0.085,
+            0.342
+          ]
+        },
+        "incorrect": {
+          "rho": 0.122,
+          "ci95": [
+            -0.022,
+            0.274
+          ]
+        },
+        "regime_diff": {
+          "delta": 0.094,
+          "ci95": [
+            -0.091,
+            0.289
+          ]
+        }
+      },
+      "auroc_band": {
+        "CORRECT": {
+          "any": "0.577",
+          ">0.25": "0.600",
+          ">=0.5": "0.580",
+          ">0.5": "0.598",
+          "all": "0.598"
+        },
+        "INCORRECT": {
+          "any": "0.485",
+          ">0.25": "0.536",
+          ">=0.5": "0.542",
+          ">0.5": "0.559",
+          "all": "0.594"
+        }
+      },
+      "conditioned_dataset_track": 0.518
+    },
+    "nli_frac_unsup_prior": {
+      "primary": {
+        "pooled": {
+          "rho": 0.093,
+          "ci95": [
+            -0.002,
+            0.187
+          ]
+        },
+        "correct": {
+          "rho": 0.076,
+          "ci95": [
+            -0.044,
+            0.204
+          ]
+        },
+        "incorrect": {
+          "rho": 0.111,
+          "ci95": [
+            -0.036,
+            0.256
+          ]
+        },
+        "regime_diff": {
+          "delta": -0.035,
+          "ci95": [
+            -0.237,
+            0.162
+          ]
+        }
+      },
+      "auroc_band": {
+        "CORRECT": {
+          "any": "0.515",
+          ">0.25": "0.574",
+          ">=0.5": "0.553",
+          ">0.5": "0.540",
+          "all": "0.552"
+        },
+        "INCORRECT": {
+          "any": "0.510",
+          ">0.25": "0.601",
+          ">=0.5": "0.560",
+          ">0.5": "0.526",
+          "all": "0.568"
+        }
+      },
+      "conditioned_dataset_track": 0.564
+    },
+    "nli_mean_ent_ctx": {
+      "primary": {
+        "pooled": {
+          "rho": 0.254,
+          "ci95": [
+            0.169,
+            0.335
+          ]
+        },
+        "correct": {
+          "rho": 0.23,
+          "ci95": [
+            0.099,
+            0.349
+          ]
+        },
+        "incorrect": {
+          "rho": 0.103,
+          "ci95": [
+            -0.04,
+            0.243
+          ]
+        },
+        "regime_diff": {
+          "delta": 0.127,
+          "ci95": [
+            -0.058,
+            0.318
+          ]
+        }
+      },
+      "auroc_band": {
+        "CORRECT": {
+          "any": "0.600",
+          ">0.25": "0.625",
+          ">=0.5": "0.602",
+          ">0.5": "0.597",
+          "all": "0.632"
+        },
+        "INCORRECT": {
+          "any": "0.545",
+          ">0.25": "0.555",
+          ">=0.5": "0.548",
+          ">0.5": "0.559",
+          "all": "0.578"
+        }
+      },
+      "conditioned_dataset_track": 0.547
+    },
+    "nli_unsup_ctx": {
+      "primary": {
+        "pooled": {
+          "rho": -0.046,
+          "ci95": [
+            -0.147,
+            0.06
+          ]
+        },
+        "correct": {
+          "rho": -0.084,
+          "ci95": [
+            -0.212,
+            0.056
+          ]
+        },
+        "incorrect": {
+          "rho": -0.105,
+          "ci95": [
+            -0.253,
+            0.059
+          ]
+        },
+        "regime_diff": {
+          "delta": 0.021,
+          "ci95": [
+            -0.179,
+            0.22
+          ]
+        }
+      },
+      "auroc_band": {
+        "CORRECT": {
+          "any": "0.542",
+          ">0.25": "0.425",
+          ">=0.5": "0.409",
+          ">0.5": "0.443",
+          "all": "0.297"
+        },
+        "INCORRECT": {
+          "any": "0.628",
+          ">0.25": "0.527",
+          ">=0.5": "0.461",
+          ">0.5": "0.470",
+          "all": "0.243"
+        }
+      },
+      "conditioned_dataset_track": 0.451
+    },
+    "nli_unsup_prior": {
+      "primary": {
+        "pooled": {
+          "rho": -0.137,
+          "ci95": [
+            -0.238,
+            -0.04
+          ]
+        },
+        "correct": {
+          "rho": -0.225,
+          "ci95": [
+            -0.344,
+            -0.094
+          ]
+        },
+        "incorrect": {
+          "rho": -0.08,
+          "ci95": [
+            -0.225,
+            0.074
+          ]
+        },
+        "regime_diff": {
+          "delta": -0.145,
+          "ci95": [
+            -0.332,
+            0.038
+          ]
+        }
+      },
+      "auroc_band": {
+        "CORRECT": {
+          "any": "0.476",
+          ">0.25": "0.378",
+          ">=0.5": "0.346",
+          ">0.5": "0.387",
+          "all": "0.224"
+        },
+        "INCORRECT": {
+          "any": "0.616",
+          ">0.25": "0.556",
+          ">=0.5": "0.488",
+          ">0.5": "0.461",
+          "all": "0.237"
+        }
+      },
+      "conditioned_dataset_track": 0.466
+    },
+    "n_steps": {
+      "primary": {
+        "pooled": {
+          "rho": -0.223,
+          "ci95": [
+            -0.316,
+            -0.129
+          ]
+        },
+        "correct": {
+          "rho": -0.314,
+          "ci95": [
+            -0.431,
+            -0.187
+          ]
+        },
+        "incorrect": {
+          "rho": -0.175,
+          "ci95": [
+            -0.317,
+            -0.019
+          ]
+        },
+        "regime_diff": {
+          "delta": -0.139,
+          "ci95": [
+            -0.328,
+            0.048
+          ]
+        }
+      },
+      "auroc_band": {
+        "CORRECT": {
+          "any": "0.470",
+          ">0.25": "0.308",
+          ">=0.5": "0.295",
+          ">0.5": "0.355",
+          "all": "0.184"
+        },
+        "INCORRECT": {
+          "any": "0.614",
+          ">0.25": "0.499",
+          ">=0.5": "0.435",
+          ">0.5": "0.436",
+          "all": "0.173"
+        }
+      },
+      "conditioned_dataset_track": 0.415
+    },
+    "words": {
+      "primary": {
+        "pooled": {
+          "rho": -0.03,
+          "ci95": [
+            -0.125,
+            0.064
+          ]
+        },
+        "correct": {
+          "rho": -0.08,
+          "ci95": [
+            -0.205,
+            0.044
+          ]
+        },
+        "incorrect": {
+          "rho": 0.04,
+          "ci95": [
+            -0.101,
+            0.183
+          ]
+        },
+        "regime_diff": {
+          "delta": -0.12,
+          "ci95": [
+            -0.311,
+            0.061
+          ]
+        }
+      },
+      "auroc_band": {
+        "CORRECT": {
+          "any": "0.523",
+          ">0.25": "0.455",
+          ">=0.5": "0.450",
+          ">0.5": "0.421",
+          "all": "0.250"
+        },
+        "INCORRECT": {
+          "any": "0.638",
+          ">0.25": "0.574",
+          ">=0.5": "0.532",
+          ">0.5": "0.527",
+          "all": "0.366"
+        }
+      },
+      "conditioned_dataset_track": 0.553
+    },
+    "frac_cited": {
+      "primary": {
+        "pooled": {
+          "rho": 0.112,
+          "ci95": [
+            0.023,
+            0.202
+          ]
+        },
+        "correct": {
+          "rho": 0.119,
+          "ci95": [
+            -0.003,
+            0.241
+          ]
+        },
+        "incorrect": {
+          "rho": 0.083,
+          "ci95": [
+            -0.063,
+            0.224
+          ]
+        },
+        "regime_diff": {
+          "delta": 0.036,
+          "ci95": [
+            -0.148,
+            0.224
+          ]
+        }
+      },
+      "auroc_band": {
+        "CORRECT": {
+          "any": "0.576",
+          ">0.25": "0.572",
+          ">=0.5": "0.544",
+          ">0.5": "0.541",
+          "all": "0.423"
+        },
+        "INCORRECT": {
+          "any": "0.649",
+          ">0.25": "0.594",
+          ">=0.5": "0.554",
+          ">0.5": "0.547",
+          "all": "0.374"
+        }
+      },
+      "conditioned_dataset_track": 0.548
+    }
+  }
+}

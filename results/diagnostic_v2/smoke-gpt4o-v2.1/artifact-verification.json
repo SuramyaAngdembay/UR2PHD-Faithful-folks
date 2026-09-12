@@ -1,0 +1,12 @@
+{
+  "verified_utc": "2026-09-12T04:47:09.526266+00:00",
+  "source_commit": "be65cf962ba37fd100cf1e2f25b232f144ddf723",
+  "remote_artifact_sha256": {
+    "attempts.jsonl": "1a9d68efa5d9ad33751fbf98a1589c58ac1c992315e99d705cb5f35795b60f90",
+    "run.json": "1753061acfb80cdc8935b3e5417a266898533d5c19bfd0db848c0227ab808679",
+    "responses.jsonl": "723709c9b82e631b9206dbb8e97dcf82eeb27671c37d71049ffdccf17c9bd29f",
+    "errors.jsonl": "b36064893b02dc658fad1ef32b60e6152c57de1fed3891c3dbb5488816d1177b"
+  },
+  "all_local_copies_match": true,
+  "status": "partial; stopped at third HTTP 429; no scientific performance estimate"
+}

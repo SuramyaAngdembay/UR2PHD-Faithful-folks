@@ -1,0 +1,25 @@
+{
+  "n": 60,
+  "distinct_question_clusters": 60,
+  "partition": "dev",
+  "seed": 20260911,
+  "native_class_counts": {
+    "1": 34,
+    "0": 26
+  },
+  "task_counts": {
+    "google_simpleqa-verified": 49,
+    "cais_hle": 8,
+    "aai530-group6_ddxplus": 3
+  },
+  "selection": "class-alternating coverage by generator/source/word bin; distinct questions; not representative",
+  "prepared_manifest_sha256": "7422ef6f7a3b71f5fb33c986b8385b7bbc88e326edf5ec10a3be27cfe1c8173a",
+  "reviewer_files": {
+    "items.jsonl": "c110eb4d562e08c87bd920ad7a4ac7d9bec21a9e2087d6004dfd1f3258ecd8bb",
+    "index.html": "273332d38e76c6985836c175a70cb97e9a9fff97813d69fdee9c434104b183e6",
+    "blank_answers.csv": "74f0d0094f48d3d14a70c740a2ea30ea7ddb9ea18cf697483063e4c0931af820",
+    "instructions.md": "21c019fba1a6a0c5c0aa689f4b0b78158af1260eafc017d5d168d175f4a470f2"
+  },
+  "human_annotations_completed": 0,
+  "delivery": "reviewer directory only; withhold the parent key"
+}

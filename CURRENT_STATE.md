@@ -48,12 +48,23 @@ restricted comparisons, not causal adjustment or a replacement headline.
 - Branch `codex/faithfulness-transfer-diagnostics`, starting at `462a7ac`.
 - The branch includes 22 inherited local commits beyond origin/main; do not
   publish them incidentally. Collaborator PR #6 remains separate.
-- Repair the v1 diagnostic's reliance-only target and overstrong mechanism
-  claims. Preserve the 306-development / 807-evaluation response split.
-- Build and verify label-blind input generation, manifest-bound resumption,
-  matched-context contrasts, component outputs, and a small format pilot.
-- Prepare a development-only independent annotation packet. Human review is
-  not yet complete and model judgments will not be represented as human gold.
+- Corrected the v1 reliance-only target; verified all 1,120 frozen labels/prompts
+  against their own upstream responses and preserved the 306/807 split.
+- Implemented and tested label-blind inputs, manifest-bound resumption, four
+  matched arms, component outputs and bounded execution. Setup: `b77c15c`.
+- v2.0 stopped with four valid outputs and three format/quote failures. Amendment
+  `be65cf9` records semantic clarification, strict schemas and model pinning.
+- v2.1 returned 18 schema-valid outputs, then stopped after three HTTP 429s.
+  Five of nine component outputs have nonmatching quotes; semantic inspection
+  still finds unsupported process allegations. No AUROC is reported. See
+  [pilot result](notes/2026-09-11-diagnostic-v2.1-pilot-result.md).
+- A 60-question, development-only independent annotation packet is ready at
+  `results/diagnostic_v2/audit/reviewer/index.html`; deliver only the reviewer
+  directory or its reviewer-only archive. No human annotations are complete.
+- Next: independent component review, then paired cross-source annotation and
+  a locked matched diagnostic if the instrument is usable. The evaluation
+  partition remains unopened; further prompt changes need fresh development
+  evidence. See [execution handoff](notes/2026-09-11-driver-handoff.md).
 - Keep all new results under `results/diagnostic_v2/`; the original frozen
   evaluation stays untouched. Whole campaign remains exploratory.
 

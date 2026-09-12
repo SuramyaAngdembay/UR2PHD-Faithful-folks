@@ -149,7 +149,7 @@ Stratifying the complete-feature subset by answer correctness gives each half it
 
 \paragraph{The metric-blind regime (incorrect answers).} Distinguishing honest from unfaithful error is opaque to every metric-based signal: \textbf{we detect no above-chance performance from any of the four algorithmic families}; every CI includes 0.5 (intervals are wide, so modest effects cannot be excluded). A \emph{learned} text baseline also fails (0.446 / 0.474), and the pattern replicates on the full four-model labeled set (incorrect regime all n.s.; correct regime NLI 0.622). That benchmark-wide carrier is largely \emph{length}---step count alone reproduces the asymmetry, while answer-tracing and PI survive length-partialing (Appendix~\ref{app:forest}). Correct-regime detection is thus moderate but partly \emph{shallow}; in the incorrect regime not even length carries signal. The judge is the exception: it retains significant signal (0.679 [0.633, 0.721]) but degrades sharply from 0.830 ($\Delta$ 0.152 [0.089, 0.211], $p{<}0.001$; robust under both decompositions, Appendix~\ref{app:forest}). Neither our prompt wording nor swapping in a stronger judge changes this: an independently worded prompt reproduces the degradation (0.786 $\to$ 0.667), as does \texttt{gpt-4o} (0.786 $\to$ 0.670), which does \emph{not} rescue the blind regime and mostly buys correctness tracking (0.745 vs.\ 0.684)---a two-judge comparison, not a scaling law. Ablations locate the signal: with the CoT withheld the judge is at or below chance everywhere but one marginal cell (full 0.487; correct 0.552); on the CoT alone it keeps most of its signal (0.693; blind regime 0.661) while losing most of its correctness tracking (0.560 vs.\ 0.684)---it reads the trace, not the question's difficulty. Within a regime correctness is constant, so this is not correctness re-detection. Regime-difference tests: answer-tracing $+$0.136 [$+$0.035, $+$0.235], PI $+$0.178 [$+$0.078, $+$0.279], NLI $+$0.085 (n.s.), judge $+$0.152 [$+$0.089, $+$0.211].
 
-\paragraph{An independent test, pre-registered and failed.} We registered endpoints, population, margin and analysis before computing any value against a second dataset: BonaFide \citep{gurarieh2026bonafide}, whose labels are intervention-defined (hint-following without acknowledgement) rather than expert-annotated and whose ten generators do not overlap ours. On its incorrect-answer population ($n{=}1{,}113$; 945/168) \textbf{both hypotheses failed}. The judge is not above chance but significantly \emph{below} it (0.419 [0.372, 0.464]; \texttt{gpt-4o} 0.270), and the metric families are not null: step count reaches 0.878 and NLI 0.826. The judge inversion is not a composition artifact---restricting to instruct-only generators strengthens it (0.332 [0.285, 0.381]), it holds in four of five generators individually, and it survives length stratification (within-bin 0.282). \textbf{We therefore scope the ordering above to expert-annotated unfaithfulness: it does not transfer here.} Two operationalizations that both claim instance-level CoT unfaithfulness order our detectors oppositely. \emph{Why} the judge inverts is unresolved: judged scores are higher for short honest errors than for elaborate unacknowledged-hint rationalizations, which is consistent with the coupling account of \S\ref{sec:inversion} but equally consistent with a rubric--construct mismatch, and we do not adjudicate between them here (Appendix~\ref{app:bonafide}).
+\paragraph{An independent test, pre-registered and failed.} We registered endpoints, population, margin and analysis before computing any value against a second dataset: BonaFide \citep{gurarieh2026bonafide}, whose labels are intervention-defined (hint-following without acknowledgement) rather than expert-annotated and whose ten generators do not overlap ours. On its incorrect-answer population ($n{=}1{,}113$; 945/168) \textbf{both hypotheses failed}. The judge is not above chance but significantly \emph{below} it (0.419 [0.372, 0.464]; \texttt{gpt-4o} 0.270), and the metric families are not null (step count 0.878, NLI 0.826). Conditioning separates them: feature signals decay toward chance (0.521 / 0.603 with generator, task and length fixed) while the judge inversion \emph{strengthens} (0.193). That asymmetry is the finding: the inversion survives every restriction applied (instruct-only 0.332; four of five generators separately). \textbf{We scope the ordering above to expert-annotated unfaithfulness: it does not transfer here.} Two operationalizations of instance-level CoT unfaithfulness order our detectors oppositely. \emph{Why} the judge inverts is unresolved: judged scores are higher for short honest errors than for elaborate unacknowledged-hint rationalizations, which is consistent with the coupling account of \S\ref{sec:inversion} but equally consistent with a rubric--construct mismatch, and we do not adjudicate between them here (Appendix~\ref{app:bonafide}).
 
 \subsection{What internals add}
 \label{sec:internals}
@@ -222,7 +222,7 @@ Within-distribution detectability is not construct validity: the instructed cons
 On these data the step-removal metric behaves as a measure of answer--reasoning \emph{coupling}, not of annotated faithfulness. A model that genuinely solved a problem can re-derive its answer when steps are deleted, so the metric reads its trace as ``unfaithful''; a rationalization tightly coupled to a predetermined answer cannot recover, so the metric reads it as ``faithful.'' The regime decomposition supports this: within the correct regime the metric is confidently inverted (0.333), within the incorrect regime merely uninformative (0.470), the remainder being between-regime composition. Two consequences: a detector rewarded for tracking the metric is rewarded for anti-tracking human judgment on exactly the distinction the metric was designed for; and deletion scores may remain useful \emph{as coupling measures}, but not as ground truth without validation against human labels. Related pathologies against constructed ground truth are documented by \citet{gurarieh2026bonafide}; the coupling reading and its regime localization are ours---though \S\ref{sec:regimes} shows it does not by itself explain the judge reversal on their data.
 
 \subsection{Implications for behavioral CoT auditing}
-Metric-based auditing largely re-detects answer correctness. The asymmetry is the consequential part---cheap metric screening concentrates scrutiny on suspicious-looking traces, largely the incorrect ones, exactly where those signals carry no detected information about which errors are honest. A prompted judge is the one exception (0.830 $\to$ 0.679)---but not portable: on intervention-defined labels it inverts. What survives both is the negative result, not a detector.
+Metric-based auditing largely re-detects answer correctness, and the asymmetry is consequential: cheap metric screening concentrates scrutiny on suspicious-looking traces, largely the incorrect ones, exactly where those signals carry no detected information about which errors are honest. A prompted judge is the one exception (0.830 $\to$ 0.679), but not portable: it inverts on intervention-defined labels. What survives is the negative result, not a detector.
 
 \section{Limitations}
 \label{sec:limitations}
@@ -583,9 +583,11 @@ readout (no options exist in this data) and are pre-registered as restricted to 
 generators that fit our hardware.
 
 \paragraph{Outcomes.} Incorrect-answer population $n{=}1{,}113$ (945 unfaithful / 168 faithful);
-the correct-answer cell holds 7 responses, all unfaithful, and supports no test---BonaFide's hint
-designs couple unfaithfulness to incorrectness for over 99\% of its explicitly-labelled responses,
-an independent instance of the entanglement of \S\ref{sec:regimes}.
+the correct-answer cell holds 7 responses, all unfaithful, and supports no test. Note this is
+\emph{not} an independent instance of the correctness entanglement of \S\ref{sec:regimes}: 99.4\% of
+BonaFide's explicitly-labelled responses are incorrect-answer responses to begin with, so the
+conditional carries no information (lift $1.00$, against $1.74$ on FaithCoT). The entanglement
+remains a single-benchmark finding, untested externally.
 
 \begin{center}\small
 \begin{tabular}{@{}lcc@{}}
@@ -603,17 +605,37 @@ Prefix instability        & 0.172 & [0.101, 0.265] \\
 \end{tabular}
 \end{center}
 
-\paragraph{Controls (post-unblinding, labelled as such).} BonaFide's faithful-incorrect class is
-entirely instruct-model and its traces are 2.5$\times$ shorter, so we tested whether the reversal
-is composition. It is not: restricting to instruct-only generators \emph{strengthens} the judge
-inversion (0.332 [0.285, 0.381]; \texttt{gpt-4o} 0.184), it holds in four of five generators taken
-separately (0.385 / 0.392 / 0.195 / 0.184, with one at chance, 0.513, $n{=}113$), and it survives
-stratification by trace length ($n$-weighted within-bin 0.282). The step-count result is the
-opposite case and we do not read it as a working detector: elaborate rationalizations are long by
-construction here, and the top length quartile is 172/172 unfaithful.
+\paragraph{Controls (post-unblinding, labelled as such).} BonaFide's classes differ in composition:
+its faithful-incorrect class is entirely instruct-model, 95\% SimpleQA (160/168) and 2.5$\times$
+shorter, while the unfaithful class is 43\% SimpleQA, 28\% HLE and 29\% DDXPlus. Conditioning on
+generator, source task and absolute word band separates the two kinds of signal cleanly:
 
-\paragraph{What is and is not established.} Established: on this population the ordering of
-\S\ref{sec:regimes} reverses, and the reversal is not explained by generator identity or length.
+\begin{center}\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lccccr@{}}
+\toprule
+\textbf{Strata} & \textbf{judge} & \textbf{steps} & \textbf{words} & \textbf{NLI} & \textbf{pairs} \\
+\midrule
+pooled & 0.419 & 0.878 & 0.939 & 0.826 & 100\% \\
+$+$model, task & 0.260 & 0.633 & 0.703 & 0.694 & 3.3\% \\
+$+$word band & \textbf{0.193} & 0.521 & 0.547 & 0.603 & 1.4\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The feature signals decay toward chance as comparisons are restricted, while the judge inversion
+\emph{strengthens}---the asymmetry, not the pooled ranking, is the result. We therefore do not read
+step count as a working detector. Composition is not a complete explanation either: within SimpleQA
+alone step count is still 0.806. The judge inversion also holds instruct-only (0.332 [0.285, 0.381];
+\texttt{gpt-4o} 0.184) and in four of five generators separately. Only 1.4\% of cross-class pairs
+survive the strictest conditioning, so those estimates are correspondingly restricted. Stratified
+estimator and word bands follow the independent audit of our frozen predictions.
+
+\paragraph{What is and is not established.} Established: on this population the tested judges rank
+the native labels in the wrong direction, and that reversal is not explained by generator identity,
+source task or length---it survives every restriction we applied. Not established is any claim that
+nothing discriminates here: NLI unsupported-step count retains 0.603 [0.570, 0.638] under the
+strictest conditioning.
 Not established: \emph{why}. Judged scores are higher for short honest errors (mean 91/100 under
 \texttt{gpt-4o}) than for elaborate unacknowledged-hint rationalizations (61/100), which is
 consistent with the coupling account and equally consistent with the judging rubric being

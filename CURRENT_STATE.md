@@ -85,6 +85,12 @@ restricted comparisons, not causal adjustment or a replacement headline.
   ceiling is not a real-data impossibility theorem. Native reason flags overlap.
 - Current report: [autonomous results](notes/2026-09-12-autonomous-experiment-results.md).
   Coordinated manuscript plan: `paper/arr/measurement-study-outline.md`.
+- GRACE full release now verified and archived: 437 human-annotated test traces,
+  2,044 steps across four tasks; historical unreleased/sample-only notes are stale.
+  No new GRACE inference yet. Use as a grounding/inference-component cross-check,
+  with prior-sample/question-overlap checks and a frozen step-level adaptation.
+  FACE-Eval data/results and ProcessBench are also publicly accessible. See
+  [release audit](notes/2026-09-12-external-dataset-release-check.md).
 - All four API runs are complete: 226 calls, no transport/parse errors. Next
   priority is fixed-procedure repetition of the component/generic comparison
   and independent checking of alleged violations, retaining fresh validation.

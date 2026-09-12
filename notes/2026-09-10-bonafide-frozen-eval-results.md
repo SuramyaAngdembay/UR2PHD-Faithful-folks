@@ -181,3 +181,62 @@ dependence on a planted cue, and a fluent unacknowledged rationalization is exac
 coherence is high and causal dependence is also high — maximal divergence. Testing this is what the
 frozen 2x2's rubric arm does: it separates reliance, disclosure, and logical support instead of
 scoring a single scalar.
+
+## CORRECTIONS (2026-09-13) — three errors in my 2026-09-12 readings
+
+External audit (Codex deep-research, `~/Ur2Phd-review-2026-09-07/deep-research-2026-09-11/`)
+identified three errors above. All three verified independently and corrected here. The frozen
+endpoint outcomes (H1/H2/H3) are unaffected; what changes is my interpretation of them.
+
+### E1. The entanglement did NOT replicate — base-rate error (retracts the claim above)
+
+I wrote that unfaithfulness concentrating on incorrect answers "replicates and strengthens
+(69% -> >99%)". That is a base-rate fallacy:
+
+| | P(incorrect) | P(incorrect \| unfaithful) | lift |
+|---|---|---|---|
+| FaithCoT | 0.394 | 0.685 | **1.74x** (genuine association) |
+| BonaFide | **0.994** | 0.993 | **1.00x** (no association) |
+
+BonaFide's explicit-label population is 99.4% incorrect-answer responses to begin with, so 99% of
+its unfaithful traces being incorrect carries zero information. **The entanglement remains a
+single-benchmark FaithCoT finding that has never been externally tested**, and the earlier
+"replication" language in this file and in commit 462a7ac is withdrawn.
+
+### E2. "A trivial variable beats every detector in both benchmarks" — overstated
+
+The pooled step-count 0.878 largely reflects composition. Under the audit's stratification
+(their definitions: task = source dataset, absolute word bands <150/300/600/1200):
+
+| stratification | judge A | steps | word count | NLI | pairs retained |
+|---|---|---|---|---|---|
+| pooled | 0.419 | 0.878 | 0.939 | 0.826 | 100% |
+| model x task | 0.260 | 0.633 | 0.703 | 0.694 | 3.33% |
+| model x task x length bin | **0.193** | **0.521** | 0.547 | **0.603** | 1.40% |
+
+(Reproduced locally to three decimals; estimator and bins are theirs.) Feature signals decay
+toward chance under conditioning; the judge inversion does the opposite and *strengthens*. That
+asymmetry is the defensible result.
+
+A contributing confound I missed when freezing the population: the faithful class is 95% SimpleQA
+(160/168) while the unfaithful class is 43% SimpleQA, 28% HLE, 29% DDXPlus. But task composition
+is **not** the whole explanation -- within SimpleQA alone, step count is still 0.806 and word
+count 0.882.
+
+### E3. "On BonaFide nothing works" — false
+
+NLI unsupported-step count under the strictest conditioning is **0.603, CI95 [0.570, 0.638]**,
+excluding 0.5. Corrected statement, adopted verbatim from the audit: *the tested judges often rank
+native labels in the wrong direction, while the strong pooled performance of simple features
+weakens substantially under restricted comparisons.* Judge inversion is a surviving empirical
+finding for these procedures, labels and populations -- not evidence that every judge fails or that
+faithfulness detection is impossible.
+
+### Methodological note on how E2 was compounded
+
+My first conditional analysis reported 0.266/0.586/0.651 at ~3% and I presented it as confirming
+the audit's numbers. It used `src_type` (hint delivery mechanism, ~95% one value, so effectively no
+task control) and step-count quartiles rather than source task and absolute word bands. Different
+estimand, presented as agreement. Reproducing the audit's exact definitions matches its table
+exactly. Rule going forward: reproduce an external analysis's definitions before claiming
+concordance with it.

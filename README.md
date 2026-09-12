@@ -1,5 +1,13 @@
 # ChainTrackers Research Notes
 
+## Current work
+
+The project now studies the limits of CoT faithfulness detection across reference
+labels, evidence policies, and dataset populations. See [CURRENT_STATE.md](CURRENT_STATE.md)
+for verified results and the active diagnostic campaign, and [AGENTS.md](AGENTS.md)
+for working instructions. The proposal below records the original premise-graph
+direction; it is historical, not a claim of a validated detection method.
+
 ## Proposed Topic
 
 **Premise-Grounded Detection of Unfaithful Chain-of-Thought Reasoning**
@@ -69,4 +77,3 @@ vs. real-error results **separately** (synthetic negatives are systematically ea
 - [Experimental plan](experimental-plan.md)
 - [Related work & positioning](related-work-and-positioning.md)
 - [Literature map](literature-map.md)
-

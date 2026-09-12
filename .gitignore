@@ -20,3 +20,10 @@
 *~
 upstream/
 .env
+
+# Reproducible prepared text and blinded annotation delivery artifacts
+__pycache__/
+*.pyc
+results/diagnostic_v2/prepared/items.jsonl
+results/diagnostic_v2/prepared/key.jsonl
+results/diagnostic_v2/audit/

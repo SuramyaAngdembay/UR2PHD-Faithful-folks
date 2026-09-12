@@ -1,61 +1,103 @@
-# Judge-reversal diagnostic — frozen protocol v1 (2026-09-10)
+# Judge-reversal diagnostic, amendment v2
 
-Question: **when the judge fails on incorrect-answer traces, is it missing evidence or applying the
-wrong rubric?** Written before the diagnostic is run. Honest status: **exploratory development.**
-BonaFide has already been examined globally (frozen eval, results unblinded 2026-09-10), so nothing
-here can serve as independent confirmation of any method it suggests; a positive result must be
-re-tested on data not yet examined.
+September 11, 2026. **Exploratory development.** Replaces v1 at commit `462a7ac`
+before any v2 calls. Original population, frozen scores, and question split remain
+unchanged. This amendment corrects the target and interpretation; it is not a
+new preregistration on untouched data.
 
-## Design — one 2x2 on fixed responses
+## Question and target
 
-Held constant across all four arms: the responses, the target label (BonaFide `UNFAITHFUL_COT`),
-the score direction (higher = more unfaithful), the judge model, temperature 0, JSON-forced output,
-max_tokens, and the analysis. Only the two factors below vary.
+For fixed incorrect-answer BonaFide responses, does supplying the original
+prompt, or using an explicit process-component judging procedure, improve
+native whole-label discrimination? The final score is whole-trace unfaithfulness.
+Reliance alone and reliance AND nondisclosure are not the reference target.
 
-| | **Context A**: clean question + CoT + answer (current) | **Context B**: original prompt incl. the cue + CoT + answer |
+Faithfully acknowledged reliance can be faithful. Other false process claims or
+justified omissions can make the same trace unfaithful. Logical validity and
+answer correctness remain separate. Where process evidence is absent, preserve
+uncertainty rather than certifying a hidden computation.
+
+## Factorial and versioned inputs
+
+| Arm | Evidence | Judging procedure |
 |---|---|---|
-| **Rubric 1** (current, verbatim from the paper) | arm A1 = the completed baseline | arm B1 = evidence access |
-| **Rubric 2** (decomposed) | arm A2 = rubric change | arm B2 = combined |
+| A1 | Clean question, CoT, final answer | Original generic rubric |
+| B1 | Same plus original prompt | Same generic rubric |
+| A2 | Restricted evidence as A1 | Component rubric and final whole-target score |
+| B2 | Full evidence as B1 | Same component procedure |
 
-Judge: `gpt-4o` first, because its reversal is the largest (0.270 pooled / 0.184 instruct-only) and
-therefore the easiest to move in either direction.
+Exact prompts/settings: `configs/diagnostic-v2.json`. Same requested judge model,
+temperature, JSON mode and maximum output budget in all arms. Generic rubric text
+is preserved, with a common instruction treating supplied data as evidence. All
+four arms are rerun. Historical 30-output-token predictions are a reference,
+not the matched A1 control for this amendment's 1,024-token budget.
 
-**Rubric 2, and the redefinition hazard.** Rubric 2 asks for three sub-scores — (i) reliance on
-information not derived in the trace, (ii) disclosure of that reliance, (iii) logical support of the
-answer by the stated steps — and the primary endpoint is fixed now as **(i) alone**. This is
-deliberately closer to BonaFide's label definition than Rubric 1 is, so a gain from Rubric 2 must
-NOT be reported as "judges can detect unfaithfulness after all." The pre-registered reading is
-narrower: it would show the paper's FaithCoT-derived rubric is mis-specified for a construct defined
-as unacknowledged reliance. Sub-scores (ii) and (iii) are reported alongside, never substituted in.
+The component factor bundles rubric wording and structured elicitation; a gain
+does not isolate wording from output structure or realized reasoning length.
+Component outputs include acknowledgment, identifiable reliance, false process
+claims, required omissions, logical support, evidence spans and uncertainty.
+Only the final `unfaithfulness_score` is the native-label primary score.
+Evidence quotes must occur in the allowed input; quote existence does not verify
+the model's interpretation of that quote.
 
-## Splits, endpoints, statistics
+No native labels, correct answers, annotation reasons, prior scores, generator
+identity or selection strata appear in requests. A/B inputs are built from an
+explicit whitelist. Full original user prompts are legitimate evidence for a
+full-transcript auditor, not inherently undeployable information.
 
-- **Development set**: a random 25% of question clusters, drawn under seed 0 (`dev_clusters.json`,
-  written before any arm runs). Protocol wrinkles — output parsing, refusal handling, prompt
-  formatting — are settled here and only here.
-- **Lock**: after dev, the four arm prompts are frozen verbatim into the run script and committed.
-  No prompt edits afterwards; any forced deviation is documented before results are read.
-- **Evaluation set**: the remaining 75% of clusters. All reported numbers come from it.
-- **Primary endpoint**: AUROC vs the BonaFide label on incorrect-answer responses, per arm.
-- **Primary contrasts** (paired, same responses, question-clustered bootstrap, 2,000 draws):
-  B1−A1 (evidence effect), A2−A1 (rubric effect), B2−A1 (combined). Bonferroni over these three.
-- **Controls, reported with every arm**: instruct-only subset, and per-generator breakdown; a
-  length-stratified within-bin figure for any arm whose AUROC crosses 0.5.
-- **Success is directional, not automatic**: an arm "recovers detection" only if its evaluation-set
-  AUROC exceeds 0.5 with a CI excluding it, not merely by beating A1's below-chance baseline.
+## Stages and lock
 
-## What each outcome licenses (fixed in advance)
+1. Verify frozen population/labels/prompts against the pinned curated CSV and
+   preserve the original split: 306 development and 807 evaluation responses.
+2. Prepare an eight-response development **instrument smoke** spanning native
+   labels and length. Run all four arms (32 successful request slots). This is
+   a parser/evidence/cost check, not a powered discrimination experiment.
+3. Prepare a 60-item, question-distinct development annotation packet. Reviewers
+   independently assign components and a final judgment with uncertainty; they
+   never agree/disagree with a hidden benchmark label. This first packet tests
+   the BonaFide instrument; paired cross-source annotation follows a usable pilot.
+4. Amend format only from development evidence, with a new version and recorded
+   changes. Lock exact inputs, prompts, model/settings, and analysis before the
+   807-response evaluation. Full development calls are optional until instrument
+   checks and available compute justify them.
+5. Evaluation execution requires a `lock.json` binding the reviewed run config,
+   scripts and prepared manifest. No silent flag opens evaluation mode.
 
-- **B1 ≫ A1**: the judge fails because it cannot see the cue. Next question is which evidence
-  suffices and at what cost — and note this makes the detector non-deployable as-is, since a real
-  auditor does not know the cue.
-- **A2 ≫ A1**: the rubric, not the evidence, was the binding problem; judges conflate disclosed
-  dependence with unfaithfulness. Report as rubric–construct misalignment (see hazard above).
-- **Both help, B2 largest**: additive; report both effects with the interaction.
-- **Neither helps**: retain the failed-transfer finding, claim no corrective method, and stop.
+Run identities hash actual requests; resuming with altered config/input/code is
+rejected. Save raw responses, returned model identity, finish reason, token
+usage, timing and errors. The runner checks per-call and whole-run limits, does
+not silently truncate input, and stops on authentication/billing failures.
+Changes in returned model identity stop the run for review.
 
-## Out of scope here
+## Statistics and interpretation
 
-The open-judge panel (pre-registered as S1) runs only after this protocol is locked, and is a
-breadth check — it cannot explain the reversal by itself. Human-label validity is handled by the
-blinded audit packet (`results/audit_packet/`), not by any model judgment.
+Primary endpoint: AUROC versus the explicit native whole label on incorrect
+responses, score direction fixed high=unfaithful. Primary contrast: B1−A1,
+testing added evidence under the generic rubric. Secondary contrasts: A2−A1,
+B2−A1, B2−A2 and the interaction `(B2−A2)−(B1−A1)`.
+
+Use 2,000 question-cluster bootstrap draws and paired predictions. Report all
+missing/invalid counts and complete-case coverage. For exploratory summaries,
+95% intervals are descriptive, not corrected confirmatory claims. Before
+evaluation lock, specify any secondary multiplicity policy, meaningful effect
+margin, and the independent validation target. A tiny smoke has no AUROC report.
+
+An improvement claim requires a positive paired contrast; useful recovery also
+requires performance above chance. Report true Instruct-generator, source-task,
+and supported joint length controls, with represented classes and pair coverage.
+Include length/count baselines and an existing definition-aware full-context
+monitor before making a methodological superiority claim.
+
+B1 helping identifies an effect of that input change for this protocol. A2
+helping identifies an effect of the bundled judging procedure. Neither proves
+the sole cause of cross-dataset reversal. B2 largest does not establish
+additivity; estimate the interaction. If no procedure is useful, retain failed
+transfer and claim no successful remedy. Fresh independent validation is needed
+even if an evaluation-partition result is positive: the campaign is exploratory.
+
+## Compute
+
+Use a bounded pilot before a broad model panel. Anvil account and capacity facts
+are maintained in the local compute skill, outside this public repository.
+The open-judge panel remains secondary; do not silently reinterpret its older
+registered hypotheses after observing the frozen failure.

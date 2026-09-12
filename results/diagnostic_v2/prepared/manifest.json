@@ -1,0 +1,27 @@
+{
+  "prepared_at_utc": "2026-09-12T04:26:28.347679+00:00",
+  "protocol_version": "2.0",
+  "source_revision": "685b904042d014950e29903c29ae4bd9086fa327",
+  "input_sha256": {
+    "bonafide_pop.json": "0577244a8ae87e902c6c9fdf78ea76100406f263fdba57624dcf12012ed18bd1",
+    "bonafide_prompts.json": "b6570bbfe2e635838c4af87850e6b4376025929f484cfcbfbfde7e658dbcb458",
+    "dev_clusters.json": "d3e0929a5f1bd3bf903ed67c5eb640a7fec1089291b3303aa6e932eb58eae2db",
+    "bonafide-upstream-2026-09-11.csv": "5833b500c378bbdcc7103340987749efda10b5944897168e10aed2be4538e13e"
+  },
+  "prepared_sha256": {
+    "items.jsonl": "775a2fa5efaa4b5b538f6d9589a2f8a345e0deaf082b13ce13b2ced71d6ae822",
+    "key.jsonl": "875ebf4295ca41d6e5389419f5b8f699f8c910ba9038ecc66452a95c4efa4910",
+    "smoke_ids.json": "3e2ce78b7881df0f983da05defb0b942a64ce3bc29c60ad207b20df727d27c75"
+  },
+  "counts": {
+    "eval_unfaithful0": 128,
+    "dev_unfaithful1": 266,
+    "eval_unfaithful1": 679,
+    "dev_unfaithful0": 40
+  },
+  "responses": 1113,
+  "question_clusters": 567,
+  "verified_frozen_labels_and_original_prompts": 1120,
+  "smoke_responses": 8,
+  "status": "exploratory; smoke selection for instrument coverage only"
+}

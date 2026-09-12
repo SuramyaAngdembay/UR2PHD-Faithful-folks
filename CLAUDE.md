@@ -1,5 +1,10 @@
 # CLAUDE.md — UR2PHD-Faithful-folks
 
+**September 11 handoff:** Read [CURRENT_STATE.md](CURRENT_STATE.md) and
+[AGENTS.md](AGENTS.md) first. The orientation and chronology below are historical
+and include superseded scientific interpretations. They do not describe the
+current evidence or next experiment. Current protocol: [diagnostic-protocol-spec.md](diagnostic-protocol-spec.md).
+
 Orientation for any agent/session working in this repo. Read this first, then the linked docs.
 
 ## What this project is

@@ -1,0 +1,307 @@
+"""Prepare and run the amended, manifest-bound BonaFide judge diagnostic.
+
+Preparation and inspection are offline. Run makes only explicitly bounded API
+requests and never reads native labels. Evaluation requires a matching lock.
+"""
+import argparse
+from collections import Counter, defaultdict
+import csv
+import datetime
+import hashlib
+import json
+import math
+from pathlib import Path
+import random
+import re
+import time
+import urllib.error
+import urllib.request
+
+ROOT = Path(__file__).resolve().parents[1]
+
+def digest(value):
+    return hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+
+def file_hash(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+def utc():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+def read_jsonl(path):
+    return [json.loads(line) for line in Path(path).read_text().splitlines() if line.strip()]
+
+def write_json(path, value):
+    Path(path).write_text(json.dumps(value,indent=2,ensure_ascii=False)+'\n')
+
+def write_jsonl(path, rows):
+    Path(path).write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in rows))
+
+def response_id(row):
+    key=(row['question_id'],row['target_model'],hashlib.sha1(row['cot'].encode()).hexdigest())
+    return hashlib.sha1('|'.join(key).encode()).hexdigest()[:16]
+
+def validate_population(population, prompts, split, released):
+    rows=population['rows'];by_rid={r['rid']:r for r in rows}
+    if len(by_rid)!=len(rows):raise ValueError('Duplicate response ID')
+    source=defaultdict(list)
+    for r in released:source[response_id(r)].append(r)
+    for rid,r in by_rid.items():
+        records=source.get(rid,[])
+        labels={x['label_type'] for x in records if x['label_type'].endswith('_COT')}
+        if labels not in ({'FAITHFUL_COT'},{'UNFAITHFUL_COT'}):raise ValueError(f'Invalid explicit whole labels: {rid}')
+        if r['y']!=int('UNFAITHFUL_COT' in labels):raise ValueError(f'Wrong attached label: {rid}')
+        for x in records:
+            if any(r[k]!=x[s] for k,s in [('question','question'),('cot','cot'),('model','target_model'),('model_answer','model_answer')]):
+                raise ValueError(f'Response text mismatch: {rid}')
+            if prompts.get(rid)!=x['prompt']:raise ValueError(f'Original prompt mismatch: {rid}')
+            normalize=lambda s: re.sub(r'\s+',' ',s).strip().lower().rstrip('.')
+            if r['correct']!=int(normalize(x['model_answer'])==normalize(x['correct_answer'])):
+                raise ValueError(f'Answer-correctness mismatch: {rid}')
+        if r['cluster']!=re.sub(r'\s+',' ',r['question']).strip().lower():
+            raise ValueError(f'Question-group mismatch: {rid}')
+    inc=[r for r in rows if r['correct']==0]
+    dev=set(split['dev_clusters']); clusters={r['cluster'] for r in inc}
+    if not dev<=clusters:raise ValueError('Unknown development cluster')
+    ndev=sum(r['cluster'] in dev for r in inc)
+    if (len(inc),len(clusters),ndev,len(inc)-ndev)!=(1113,567,306,807):
+        raise ValueError('Frozen population or split changed')
+    return source
+
+def pick_smoke(rows):
+    selected=[]; used=set()
+    for label in (0,1):
+        pool=sorted([r for r in rows if r['y']==label],key=lambda r:(len(r['cot']),r['rid']))
+        for fraction in (0,.33,.67,1):
+            pivot=round(fraction*(len(pool)-1))
+            candidates=sorted(range(len(pool)),key=lambda i:abs(i-pivot))
+            chosen=next(pool[i] for i in candidates if pool[i]['cluster'] not in used)
+            selected.append(chosen['rid']);used.add(chosen['cluster'])
+    return selected
+
+def prepare(args):
+    res=args.results; out=args.output
+    if out.exists():raise ValueError('Output already exists; preserve the prepared version')
+    pop=json.loads((res/'bonafide_pop.json').read_text())
+    prompts=json.loads((res/'bonafide_prompts.json').read_text())
+    split=json.loads((res/'dev_clusters.json').read_text())
+    csv.field_size_limit(10_000_000)
+    with args.upstream_csv.open() as f:released=list(csv.DictReader(f))
+    if file_hash(args.upstream_csv)!='5833b500c378bbdcc7103340987749efda10b5944897168e10aed2be4538e13e':
+        raise ValueError('Expected the audited pinned curated source; record an amendment for another revision')
+    source=validate_population(pop,prompts,split,released)
+    dev=set(split['dev_clusters']); items=[];key=[];devrows=[]
+    for r in pop['rows']:
+        if r['correct']!=0:continue
+        part='dev' if r['cluster'] in dev else 'eval'
+        if part=='dev':devrows.append(r)
+        items.append({k:r[k] for k in ['rid','question','cot','model_answer']} |
+                     {'original_prompt':prompts[r['rid']], 'partition':part,
+                      'cluster_id':hashlib.sha256(r['cluster'].encode()).hexdigest()})
+        raw=source[r['rid']][0]
+        key.append({'rid':r['rid'],'y':r['y'],'generator':r['model'],
+                    'task':raw['hint_dataset'] or raw['src_type'],'word_count':len(r['cot'].split()),
+                    'n_steps':r['n_steps'],'cluster_id':items[-1]['cluster_id'],'partition':part})
+    smoke=pick_smoke(devrows)
+    out.mkdir(parents=True)
+    write_jsonl(out/'items.jsonl',items);write_jsonl(out/'key.jsonl',key)
+    write_json(out/'smoke_ids.json',smoke)
+    manifest={'prepared_at_utc':utc(),'protocol_version':'2.0',
+              'source_revision':'685b904042d014950e29903c29ae4bd9086fa327',
+              'input_sha256':{p.name:file_hash(p) for p in [res/'bonafide_pop.json',res/'bonafide_prompts.json',res/'dev_clusters.json',args.upstream_csv]},
+              'prepared_sha256':{n:file_hash(out/n) for n in ['items.jsonl','key.jsonl','smoke_ids.json']},
+              'counts':dict(Counter((r['partition']+'_unfaithful'+str(r['y'])) for r in key)),
+              'responses':len(items),'question_clusters':len({r['cluster_id'] for r in items}),
+              'verified_frozen_labels_and_original_prompts':len(pop['rows']),
+              'smoke_responses':len(smoke),'status':'exploratory; smoke selection for instrument coverage only'}
+    write_json(out/'manifest.json',manifest)
+    print(json.dumps(manifest,indent=2))
+
+def build_payload(item, arm, config):
+    if arm not in config['arms']:raise ValueError('Unknown arm')
+    record={'question':item['question'],'chain_of_thought':item['cot'],'final_answer':item['model_answer']}
+    if arm.startswith('B'):record['original_prompt']=item['original_prompt']
+    rubric=config['generic_rubric'] if arm.endswith('1') else config['component_rubric']
+    return {'model':config['model'],'temperature':config['temperature'],
+            'max_tokens':config['max_tokens'],'response_format':config['response_format'],
+            'messages':[{'role':'system','content':config['common_instruction']+'\n\n'+rubric},
+                        {'role':'user','content':json.dumps(record,ensure_ascii=False)}]}
+
+COMPONENT_VALUES={
+    'acknowledgment':{'yes','no','unclear','not_applicable'},
+    'reliance':{'supported','not_established'},
+    'false_process_claim':{'supported_violation','no_verified_violation','insufficient_evidence'},
+    'required_omission':{'supported_violation','no_verified_violation','insufficient_evidence'},
+    'logical_support':{'supported','partial','unsupported','insufficient_evidence'},
+}
+
+def parse_output(raw, item, arm):
+    choice=raw['choices'][0]
+    if choice.get('finish_reason')!='stop':raise ValueError('Non-stop finish reason')
+    result=json.loads(choice['message']['content'])
+    score=result.get('unfaithfulness_score')
+    if type(score) is not int or not 0<=score<=100:raise ValueError('Score must be an integer in [0,100]')
+    if arm.endswith('2'):
+        if result.get('evidence_status') not in {'sufficient','insufficient'}:raise ValueError('Missing evidence status')
+        components=result.get('components',{})
+        for k,values in COMPONENT_VALUES.items():
+            if components.get(k) not in values:raise ValueError('Invalid component '+k)
+        evidence=result.get('evidence')
+        if not isinstance(evidence,list) or len(evidence)>2:raise ValueError('Invalid evidence list')
+        allowed_context=item['question']+('\n'+item['original_prompt'] if arm.startswith('B') else '')
+        for pair in evidence:
+            for name,allowed in [('trace_quote',item['cot']),('context_quote',allowed_context)]:
+                quote=pair.get(name)
+                if not isinstance(quote,str) or len(quote)>240 or quote not in allowed:
+                    raise ValueError('Unsupported or oversized evidence quote: '+name)
+        rationale=result.get('rationale')
+        if not isinstance(rationale,str) or len(rationale.split())>100:raise ValueError('Invalid rationale')
+    return result
+
+def run_identity(config, prepared):
+    return {'config_sha256':digest(config),'prepared_manifest_sha256':file_hash(prepared/'manifest.json'),
+            'items_sha256':file_hash(prepared/'items.jsonl'),'runner_sha256':file_hash(__file__)}
+
+def check_prepared(prepared):
+    manifest=json.loads((prepared/'manifest.json').read_text())
+    # Run does not need or open the native-label key.
+    for name in ['items.jsonl','smoke_ids.json']:
+        if file_hash(prepared/name)!=manifest['prepared_sha256'][name]:raise ValueError('Prepared data changed: '+name)
+
+def request_plan(prepared,config,partition):
+    check_prepared(prepared)
+    items=read_jsonl(prepared/'items.jsonl')
+    smoke=set(json.loads((prepared/'smoke_ids.json').read_text()))
+    items=[r for r in items if (r['rid'] in smoke if partition=='smoke' else r['partition']==partition)]
+    rng=random.Random(config['seed']); rng.shuffle(items);plan=[]
+    for item in items:
+        arms=list(config['arms']);rng.shuffle(arms)
+        for arm in arms:
+            payload=build_payload(item,arm,config)
+            plan.append({'rid':item['rid'],'arm':arm,'request_id':digest({'rid':item['rid'],'arm':arm,'payload':payload}),
+                         'payload':payload,'item':item})
+    return plan
+
+def run(args):
+    config=json.loads(args.config.read_text()); identity=run_identity(config,args.prepared)
+    if args.partition=='eval':
+        lock=args.prepared/'lock.json'
+        if not lock.exists() or json.loads(lock.read_text()).get('identity')!=identity:
+            raise ValueError('Evaluation requires a reviewed lock.json matching this exact config, inputs and runner')
+    plan=request_plan(args.prepared,config,args.partition)
+    if not plan:raise ValueError('Empty request plan')
+    input_chars=sum(sum(len(m['content']) for m in p['payload']['messages']) for p in plan)
+    if input_chars>config['max_total_input_characters']:raise ValueError('Input-character budget exceeded; document a bounded campaign config')
+    descriptor={'identity':identity,'partition':args.partition,'request_ids':[p['request_id'] for p in plan],
+                'endpoint':args.endpoint,'max_http_requests':args.max_http_requests,'max_seconds':args.max_seconds}
+    if args.dry_run:
+        print(json.dumps({'requests':len(plan),'input_characters':input_chars,'maximum_output_tokens':len(plan)*config['max_tokens'],
+                          'identity':identity,'partition':args.partition},indent=2));return
+    if args.max_http_requests<len(plan):raise ValueError('HTTP request cap is smaller than the plan')
+    args.output.mkdir(parents=True,exist_ok=True)
+    manifest_path=args.output/'run.json'
+    if manifest_path.exists():
+        old=json.loads(manifest_path.read_text())
+        if old['descriptor']!=descriptor:raise ValueError('Resume identity differs; create a new run directory')
+    else:
+        write_json(manifest_path,{'created_at_utc':utc(),'descriptor':descriptor,'config':config})
+    rawpath=args.output/'responses.jsonl'; errors=args.output/'errors.jsonl'
+    history=read_jsonl(rawpath) if rawpath.exists() else []
+    expected={p['request_id'] for p in plan};done=set()
+    for h in history:
+        if h['request_id'] not in expected or h['request_id'] in done:raise ValueError('Unknown/duplicate response in resume file')
+        done.add(h['request_id'])
+    models={r['returned_model'] for r in history}
+    if len(models)>1:raise ValueError('Mixed model identities in existing run')
+    # Key read only at execution; never written into artifacts or diagnostics.
+    key=args.api_key_file.expanduser().read_text().strip()
+    if not key:raise ValueError('Empty credential file')
+    attempts_path=args.output/'attempts.jsonl'
+    prior_attempts=read_jsonl(attempts_path) if attempts_path.exists() else []
+    if any(r['request_id'] not in expected for r in prior_attempts):raise ValueError('Unknown request in attempt ledger')
+    started=time.monotonic();calls=len(prior_attempts)
+    failures=0
+    for p in plan:
+        if p['request_id'] in done:continue
+        succeeded=False
+        for attempt in range(config['max_attempts_per_request']):
+            if calls>=args.max_http_requests or time.monotonic()-started>=args.max_seconds:
+                raise RuntimeError('Bound reached; partial results preserved')
+            if args.rpm>0:time.sleep(60/args.rpm)
+            begin=time.monotonic();calls+=1
+            record={'request_id':p['request_id'],'rid':p['rid'],'arm':p['arm'],'timestamp_utc':utc(),'attempt':attempt+1}
+            # Persist attempted calls before transport, so interrupted calls still
+            # count toward the whole-run cap when resumed.
+            with attempts_path.open('a') as f:
+                f.write(json.dumps(record)+'\n');f.flush()
+            raw=None;stop=False
+            try:
+                req=urllib.request.Request(args.endpoint,data=json.dumps(p['payload']).encode(),
+                      headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'})
+                with urllib.request.urlopen(req,timeout=config['request_timeout_seconds']) as response:raw=json.load(response)
+                record.update(raw=raw,returned_model=raw.get('model'),duration_seconds=time.monotonic()-begin)
+                parsed=parse_output(raw,p['item'],p['arm'])
+                if not raw.get('model'):raise ValueError('Missing returned model identity')
+                if models and raw['model'] not in models:stop=True;raise ValueError('Returned model identity changed')
+                models.add(raw['model']);record['parsed']=parsed
+                with rawpath.open('a') as f:f.write(json.dumps(record,ensure_ascii=False)+'\n')
+                done.add(p['request_id']);succeeded=True
+                print(json.dumps({'completed':len(done),'total':len(plan),'rid':p['rid'],'arm':p['arm'],
+                                  'returned_model':raw['model'],'usage':raw.get('usage',{})}),flush=True)
+                break
+            except urllib.error.HTTPError as error:
+                try:body=json.loads(error.read()).get('error',{})
+                except Exception:body={}
+                # Do not persist request headers or unfiltered remote error messages.
+                code=body.get('code');record.update(error_type='HTTPError',http_status=error.code,error_code=code)
+                stop=error.code in (400,401,403,404) or code in ('insufficient_quota','billing_hard_limit_reached')
+                retry=error.code==429 or 500<=error.code<600
+            except Exception as error:
+                record.update(error_type=type(error).__name__,error_message=str(error)[:200])
+                retry=isinstance(error,(TimeoutError,urllib.error.URLError))
+            with errors.open('a') as f:f.write(json.dumps(record,ensure_ascii=False)+'\n')
+            failures+=1
+            if stop or failures>=3:raise RuntimeError('Pilot stopped after substantive or repeated failures; inspect saved errors')
+            if not retry:break
+            time.sleep(min(2**attempt,8))
+        if not succeeded:
+            print(json.dumps({'failed_request':p['request_id'],'rid':p['rid'],'arm':p['arm']}),flush=True)
+    write_json(args.output/'completion.json',{'completed_at_utc':utc(),'expected':len(plan),'valid':len(done),
+               'failed_slots':len(plan)-len(done),'http_requests_recorded':calls,'returned_models':sorted(models),
+               'responses_sha256':file_hash(rawpath) if rawpath.exists() else None,
+               'purpose':'instrument smoke only' if args.partition=='smoke' else 'exploratory diagnostic'})
+    if len(done)!=len(plan):raise RuntimeError('Run has missing/invalid slots; no complete success')
+    print('DIAGNOSTIC_COMPLETE',flush=True)
+
+def inspect_run(args):
+    runmeta=json.loads((args.output/'run.json').read_text())
+    path=args.output/'responses.jsonl';rows=read_jsonl(path) if path.exists() else []
+    ep=args.output/'errors.jsonl';errors=read_jsonl(ep) if ep.exists() else []
+    usage=Counter()
+    for r in rows+errors:
+        for k,v in r.get('raw',{}).get('usage',{}).items():
+            if isinstance(v,int):usage[k]+=v
+    summary={'partition':runmeta['descriptor']['partition'],'valid_responses':len(rows),'errors':len(errors),
+             'by_arm':dict(Counter(r['arm'] for r in rows)),
+             'returned_models':sorted({r['returned_model'] for r in rows}), 'token_usage_in_recorded_responses':dict(usage),
+             'component_evidence_status':dict(Counter(r['parsed'].get('evidence_status') for r in rows if r['arm'].endswith('2'))),
+             'score_ranges_by_arm':{a:[min(z),max(z)] for a in ['A1','B1','A2','B2'] if (z:=[r['parsed']['unfaithfulness_score'] for r in rows if r['arm']==a])},
+             'interpretation':'Format/evidence instrumentation only; no performance estimate for the selected smoke population.'}
+    write_json(args.output/'instrument-summary.json',summary);print(json.dumps(summary,indent=2))
+
+def main():
+    ap=argparse.ArgumentParser(description=__doc__);sub=ap.add_subparsers(dest='command',required=True)
+    p=sub.add_parser('prepare');p.add_argument('--results',type=Path,default=ROOT/'results')
+    p.add_argument('--upstream-csv',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+    p.set_defaults(fn=prepare)
+    p=sub.add_parser('run');p.add_argument('--prepared',type=Path,required=True)
+    p.add_argument('--config',type=Path,default=ROOT/'configs/diagnostic-v2.json')
+    p.add_argument('--output',type=Path,required=True);p.add_argument('--partition',choices=['smoke','dev','eval'],default='smoke')
+    p.add_argument('--endpoint',default='https://api.openai.com/v1/chat/completions')
+    p.add_argument('--api-key-file',type=Path,default=Path('~/.openai_key'))
+    p.add_argument('--max-http-requests',type=int,default=36);p.add_argument('--max-seconds',type=int,default=900)
+    p.add_argument('--rpm',type=float,default=12);p.add_argument('--dry-run',action='store_true');p.set_defaults(fn=run)
+    p=sub.add_parser('inspect');p.add_argument('--output',type=Path,required=True);p.set_defaults(fn=inspect_run)
+    args=ap.parse_args();args.fn(args)
+
+if __name__=='__main__':main()

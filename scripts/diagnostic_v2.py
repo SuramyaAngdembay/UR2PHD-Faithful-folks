@@ -245,7 +245,8 @@ def run(args):
     prior_attempts=read_jsonl(attempts_path) if attempts_path.exists() else []
     if any(r['request_id'] not in expected for r in prior_attempts):raise ValueError('Unknown request in attempt ledger')
     started=time.monotonic();calls=len(prior_attempts)
-    failures=0
+    failures=0            # cumulative RETRYABLE failures (transient: 429 / 5xx / timeouts)
+    consecutive_failures=0  # reset on any success; guards a genuinely stuck endpoint
     for p in plan:
         if p['request_id'] in done:continue
         succeeded=False
@@ -270,7 +271,7 @@ def run(args):
                 if models and raw['model'] not in models:stop=True;raise ValueError('Returned model identity changed')
                 models.add(raw['model']);record['parsed']=parsed
                 with rawpath.open('a') as f:f.write(json.dumps(record,ensure_ascii=False)+'\n')
-                done.add(p['request_id']);succeeded=True
+                done.add(p['request_id']);succeeded=True;consecutive_failures=0
                 print(json.dumps({'completed':len(done),'total':len(plan),'rid':p['rid'],'arm':p['arm'],
                                   'returned_model':raw['model'],'usage':raw.get('usage',{})}),flush=True)
                 break
@@ -281,14 +282,28 @@ def run(args):
                 code=body.get('code');record.update(error_type='HTTPError',http_status=error.code,error_code=code)
                 stop=error.code in (400,401,403,404) or code in ('insufficient_quota','billing_hard_limit_reached')
                 retry=error.code==429 or 500<=error.code<600
+                try:retry_after=float(error.headers.get('retry-after') or 0)
+                except Exception:retry_after=0.0
             except Exception as error:
                 record.update(error_type=type(error).__name__,error_message=str(error)[:200])
                 retry=isinstance(error,(TimeoutError,urllib.error.URLError))
             with errors.open('a') as f:f.write(json.dumps(record,ensure_ascii=False)+'\n')
-            failures+=1
-            if stop or failures>=3:raise RuntimeError('Pilot stopped after substantive or repeated failures; inspect saved errors')
+            # A substantive failure (auth/quota/bad request/model change) halts immediately.
+            # Transient failures are budgeted separately: a cumulative cap catches a degraded
+            # endpoint, a consecutive cap catches a stuck one. A rate-limited endpoint can emit
+            # many isolated 429s across a long run without that run being unhealthy.
+            failures+=1 if retry else 0
+            consecutive_failures+=1
+            if stop:raise RuntimeError('Pilot stopped after a substantive failure; inspect saved errors')
+            if consecutive_failures>=config.get('max_consecutive_failures',12):
+                raise RuntimeError('Pilot stopped: endpoint failed repeatedly without success; inspect saved errors')
+            if failures>=config.get('max_retryable_failures',200):
+                raise RuntimeError('Pilot stopped: transient-failure budget exhausted; inspect saved errors')
             if not retry:break
-            time.sleep(min(2**attempt,8))
+            # 429 needs the token window to roll over; honour Retry-After when supplied.
+            wait=retry_after if (locals().get('retry_after') or 0)>0 else (
+                 min(15*(attempt+1),90) if record.get('http_status')==429 else min(2**attempt,8))
+            time.sleep(wait)
         if not succeeded:
             print(json.dumps({'failed_request':p['request_id'],'rid':p['rid'],'arm':p['arm']}),flush=True)
     write_json(args.output/'completion.json',{'completed_at_utc':utc(),'expected':len(plan),'valid':len(done),

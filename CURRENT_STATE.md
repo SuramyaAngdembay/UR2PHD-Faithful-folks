@@ -22,6 +22,18 @@ repair. The prior containment/F1 labels and saved regime JSON stay preserved,
 but are not the current correctness-stratified analysis. Reserved exposure is
 204/807 responses across 156 questions (397 responses sharing those questions).
 
+## Live pilot snapshot (September 13, 22:23 UTC)
+
+Claude is running 70 BonaFide dev responses × four arms × three repeats (840
+requests) on pinned GPT-4o. Verified live: 327 valid outputs, two rate-limit errors,
+no completion marker. All 178 carried predictions and request-plan identities
+match. This is a useful development comparison; the rubric contrast also changes
+output schema, the sample is U60/F10 with all faithful examples from SimpleQA,
+and evidence-insufficient outputs still require scores. The runner retains a
+three-cumulative-error halt despite the increased retry budget. No new inference
+was launched by this audit. See [live alignment audit](notes/2026-09-13-live-pilot-alignment.md).
+Recheck the actual process and artifacts before treating this snapshot as current.
+
 ## Scientific direction
 
 Study when CoT faithfulness measurements transfer across evidence policies,

@@ -103,11 +103,14 @@ A technical author clarification is appropriate; no message was sent. Until
 verified, keep the code inconsistency and the published-score discrepancy
 separate. Our inversion is not yet independently corroborated by their monitor.
 
-**The reserved split has new exposure.** Across the 284 distinct scored
-responses, 73 are development and 211 belong to the original 807-response
-evaluation partition. The common intersection contains 39 development and 111
-evaluation responses. The 211 evaluation responses span 161 question clusters,
-covering 404 responses in the original population. Preserve the split and attach
+**The reserved split has new exposure (count corrected September 13).** Across
+the 284 distinct scored responses, 73 are development, 204 belong to the original
+807-response evaluation partition, and seven correct-answer responses are outside
+the population defining that split. The common intersection contains 39
+development, 104 evaluation, and seven outside-split responses. The 204 evaluation
+responses span 156 question clusters, covering 397 evaluation responses. The
+earlier independent count of 211/161 incorrectly included the seven ineligible
+rows; Claude correctly identified this. Preserve the split and attach
 exposure flags; do not call the entire partition unexposed or attempt to restore
 independence by moving examined cases between splits.
 

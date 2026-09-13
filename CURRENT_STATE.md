@@ -1,15 +1,17 @@
 # Current research state
 
-Updated September 12, 2026. Research driver: Codex, following the user's explicit
+Updated September 13, 2026. Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
-Latest audit: the new GRACE correctness-stratified results and entanglement lift
-in commits `6af00b5`/`79d3ab6` are invalid pending repair. Both scripts compare
-only the first character of free-response answers (217 of 437 traces use free
-responses). Pooled NLI correlations survive; full correctness-derived claims do
-not. The reconciliation in `0080a89` also needs its common-population correction.
-See [latest-results audit](notes/2026-09-12-latest-claude-results-audit.md).
+Latest verification: GRACE repair commits `36445ad`/`512d866` produce reproducible
+new arithmetic, but the replacement labels still accept wrong dates and reference
+mentions inside refusals. Both repository scripts still run the first-character
+checker, and the saved analysis JSON is stale. Correctness-derived conclusions
+remain provisional pending validated labels and pipeline integration; pooled NLI
+correlations survive. See [repair verification](notes/2026-09-13-grace-repair-verification.md).
+The independent audit's reserved-exposure count is corrected to 204/807 responses
+across 156 question clusters; its earlier 211/161 included seven ineligible rows.
 
 ## Scientific direction
 
@@ -115,6 +117,11 @@ restricted comparisons, not causal adjustment or a replacement headline.
   external entanglement replication must be redone. "No length confound" is also
   unsupported across aggregation rules. GRACE judge inference is not established
   by these artifacts; no new inference was launched by the independent audit.
+- The September 13 saved checker repair assigns 277 correct / 160 incorrect.
+  Independent recomputation matches new differences .046/.091/.007 and lift
+  1.169–1.670 conditional on those heuristic labels. Known containment/F1 errors
+  remain; these are not validated correctness labels. The scripts and analysis
+  JSON have not been updated to consume the replacement labels.
 - Claude's reconciliation saved 584 scores on 284 distinct responses. On the
   150-response intersection, A/B/C/historical-D AUROCs are .319/.400/.367/.331;
   A=.352 uses 284 examples and is not the paired estimate. Paired intervals do
@@ -128,8 +135,8 @@ restricted comparisons, not causal adjustment or a replacement headline.
 - Versioned new results are under `results/diagnostic_v2/`, `autonomous_batch1/`,
   `autonomous_batch2/`, `monitor_role_correction/`, `metadata_comment_ablation/`
   and `autonomous_campaign_2026-09-12/`. The original frozen evaluation stays
-  untouched. The original 807-response partition now includes 211 responses
-  scored in Claude's reconciliation, spanning 161 question clusters (404
+  untouched. The original 807-response partition now includes 204 responses
+  scored in Claude's reconciliation, spanning 156 question clusters (397
   responses share those clusters). Preserve the split and record new exposure;
   do not describe the entire partition as unopened. The whole campaign remains
   exploratory; freeze exact requests before subsequent inference.

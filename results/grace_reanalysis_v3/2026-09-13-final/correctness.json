@@ -1,0 +1,3678 @@
+{
+  "schema": "grace-answer-equivalence-v3",
+  "decisions": {
+    "grace_test_logiqa_8d76d811": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "7fdecf9f82c0401618f13d37dc334264dea8486f3fdb07ced9c33d448653d9c0",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_78aaf1b6": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "c8e6861698071620769149cfa01c13a18b15a3a251e28b031d93a792536c2b88",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_92ce319a": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "30ff312cd76529cd23daf93dfe595687a088cd88635081442f6cf72b6ff75f8a",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_97451b88": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "9e51917c0d2c6870dbce10d86260114e471d1702869ccfcbc3e80f42c71cddfb",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_b158684b": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "ed03d6e0870d0be281c2158d8849dae3beefdbd5af9933ab934ab2a30e77d0c0",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_0e3dd084": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "7c52faa3d04b02060cfcde36c1b4e89749b6e576e1c5d3f6c07678907d190960",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_c1268e13": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3947fd1f808bd1cd2451273ac295a597a746d98f3b722d6f839e3d2ad8ab3b0e",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_a4435189": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "b5c80c769453ee3aa3fb8007ab0fcb71a9e3a8d592ffbbd80b3a649525507dc9",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_6d8e7dc6": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "89f87825b4f40be925fc1768a76d00d95e95d7d430358f807c910360fe7ef5c7",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Selects B and D rather than the single reference option D."
+    },
+    "grace_test_logiqa_f723e5f5": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "9ff693cc2302310502f689235af09430c7275a00a6c7d93409a1123764f51d81",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_bb8e3ab1": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3e82e6e766c9645a80b77e43867eb5369207ce1a2e5e75070c6e9e0c469315e0",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_5688961f": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "4b3e038817af15f4d436dac7c573ee9c8a317260bca890c1278b4082c9c0db47",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_b9b146de": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "2aa339d13c197696ccfd715c02b64e5703973209635eefe2aa41d5872ecf8cc4",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_816015ac": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d2ee36d558f225fe9da1443a9a8555721ce23db5d0da4464eef82bee9f4bfe0a",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_77a399f6": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "42c237dc4242e3dea4879373ecd482055ea52394762d19121ed1cb2eb420c1a2",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_0c371ddb": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "cf2ef0b4095962c6f204a0b05026cacbe59429d310d6cfd2c54122730421fca9",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_3fd9e132": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e5e244885a31b74ade55e014c0b0fc97b8ec9029c4d84784f30c121dc596e94c",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_64c003fe": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f1e064f7f578ef78462c3436f7820a2ca32c1933c34f724825e4564952955907",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_7732bd39": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "cc4c068fda7720d9771acc54ac38d71a29f6ae183529a9083d3c48e1fc78682a",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_c9e565e8": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "460db5fbd81a814d5f47cd5421e776f43c90798533bb9454826c9cf8ac3ed392",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_4bd5c132": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "43d42917c4a9f59344b8f9780aa12c21f13af60155eb40193402f425c659f642",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_6d6e1bd5": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "a555a54a9032794d2a3dc3b6c0a81385a8faaa20570c71568571346951ef32c6",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_9560ae90": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "2c87150205c8d7dab4737deb4ba9b537ef5d90b8185050547a801ab1b4e6f75a",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_9e9445ec": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "9f82724f8610921f92593bb1ed2b30d8e7c1834d567c497df342a084b8370ae5",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_0e677eda": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "6d97468446cf0c3333791265903b86486c147c97703f55e41d00173b39994cb7",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_26583454": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "de497563791493500c9540e526ddddc2512c9a10bf406c284effba4b61cbb33d",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_b31d176b": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "7edc0a01551f36a1f1481b21596004dca06cdbd02805ae8c84d1dbd7462739c2",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_7dfca66c": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "9c2622b6ba0f06c5acbbcd82082a5f35f0134eeb1c0795075fa3d0c84715809b",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Selects B and D rather than reference A."
+    },
+    "grace_test_logiqa_883f6594": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d83daab45e23b5938e87da7e90a932946bad07dfb88b11e06d5b32e2db275c0f",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_e8b40b6b": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "78fd48062c6be0f3fde8bb937120a19b9ea3897750ae0fcc41819ae418807c8b",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Explicitly selects D rather than A."
+    },
+    "grace_test_logiqa_5bda4f08": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "8e9cf3eb21e8bdd563a97f56c2941c23ccc3d8cb37eeef7931ff74036424c8fe",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Explicitly selects D rather than C."
+    },
+    "grace_test_logiqa_73d67cb6": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3332d9345fb0b77159c053d36605906ec36b5b8d7fc66c7d0072c523de538969",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_2139180c": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "089f373a654003a51be17a74f28704ae1a802b71b278c048c72087930a1c8618",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_ec78d234": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "41995f8a38c7b943188f0601d03291bc60f56579d5cf75a63b41e388bc481dcd",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Explicitly selects B; the added explanation retains that choice."
+    },
+    "grace_test_logiqa_ea8daf92": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "a35e124c7ef5bf80a3f1c19c9d816b855f51bdfbc7369b84e60dfa88d630a016",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Selects A with the reference option text; comma/period formatting differs."
+    },
+    "grace_test_logiqa_d34ef8c4": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "17715b47fdea63be9e1b15abbfac5d41b18698557d0ba37f96cc8164407b6ab1",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_ae00254c": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "b1787f0dff2cc7156f07a85fd6d6de9b2a778445c4eb32a0095af3d557d3effc",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_ad1a6ee7": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "6dde9636bd08a593a073d5b40179338f0a9170d0e5386312df9829c46b83fa05",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_66e484f6": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e11f0726cd78ba61f81f8877d48642cdb767da2c4c21883760d57237781ddd12",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_e876323e": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f0ff381338fc6db179d0742617c142b0c572d68a15b9c025d34bca78a475f8cd",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_bed53a9d": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "10ce0f1e168359bcc67bcb6b496261964f9f420e126856a706b737f87a6697fb",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_ccf3780a": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d219d62a2b7a230f098ceeb4b4ee87f459dc0af1f8d542d5c17b503fbe83d66a",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_fef6e270": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d9aa8cf480e926fbc9b206befd998bfb141c51335c2c627abf3e1f01166f4731",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_d2d3d95a": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "4c47991c737e452f6694aa7a1a76aa1a9e863137f358cedbfca1428caa741e7e",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_7e5cfd5b": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "1d35a002523e172372e862814e459b0f1849bd8feea2d93158dc8b0f597bd891",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_ae634100": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f84028c0eace83111592710f0702791636f823f27d91dafcc136870e7b2d4cf3",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_acce950f": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f6dff348460ac2b5c72d6e2098633ea8e76e57f5da7de5a30da502cda617d889",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_edd2d33a": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "45a565939939f6df9a0deee1a56fb463d2765f45a70c9e5e3ec8626e436b7d8a",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_6165f75f": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3da8042f8756caddf616244e00820a8c50e724d1fe6d9569fcca717365c74c4f",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_99844bda": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "99c3fd85101fbb2992c81ebef6132ee6af3acbb101421a7a7c007a5578734374",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_05fbcea4": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "97254f27929f0eb4c887613742c1265156fbbad0a4e9c09b367a6feeb4a16a0a",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_317bb400": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f9aceb418bd753d86f728bddf280b9b03b6357f80f5af454c79452b2083774f6",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_9095d9cf": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "58b37eb90279ddaaf477b418faf958854aa7e59816635a50cf6ec582446f1c05",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_d028ba92": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "c6576053e3310833047697188bf2954dab7d99112842f13a96a392640d08a781",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_9c4f99fa": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "188adc8226c8fe424a967412799a3d4fc9da051ddd2ddb8b5587b6049cf767e5",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_0b448700": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "795a56cb643e4a051f9a3875429b3b78dfd88012ded53d9a9295ec729c0cd258",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_fb97e33f": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "15a8f9170cf35e21f097fcc7abd603e5577fa13be0ff4dd36ab1e5480772072c",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_8a4f78e3": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "bdb82231e6d54865f0c238fc341a8b33d4db10f5a3f198ee3022d5d9e2a6262f",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_cb3b4f3b": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "eebe4bf40d3374437c8d8e188c73988ad43ab46733202329a0c6e75670cc0163",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_66126b65": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "4fc8a538ef299bdc43184b8227517d1d350bbac16a8a81a8ebfe814ae0c61893",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_d5ff1365": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "8c3dab56fe54cc4002b726f2f3d255ab4243ebd3aaf5eec7cee4b5aa63346960",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_355fc066": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "8f5649e8b0b8355be2ab01f30fde778d58a8cd5fa7962594e1ee0c1e1bb882b9",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_c2986380": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e0769bd8fe5e20759667272bc23546dba86baac70eb2171ebe7f0b240e58759f",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_eaf7ac4c": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "6b19e370ddc4f133b60cd23c56c6cacd7f454a53970cea9f0e35a63b5a8b02cc",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_3de3dfe4": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "30c1d24ab918f57388a58622a03633b5e7868f2c8f2fb0627c01bf03930a69be",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_17fa03a4": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "fca1a826688ac233f185861773a6fd3ca67a76e9381a5d50a86c62763297e1f9",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_87eaa1f1": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "654e06ba6aeb90b6b4b4484ebf437ea58acf8086f0eb374179046ac2779bf1d8",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_72c7d68d": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "428e63a6b35976e471fb87652ae43d1bcbe03ac4314be80bcf53b97becbcc038",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_19ac34c6": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "9099b77358ec106e3d26b1bfcda9f87c34ab64e6f6c0947dd17eccbca6366c2c",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_4d56afb0": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "66bdc33ca760d63a1bd64e854428f654af817bed775fa9a0877bb309666191c3",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_2c77b7f8": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "b7ebc6feabea7c9a13d99534716068c8fb5534a9db79e4db902816cf70748e6a",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_93c85c70": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "ecb16f5332ba83b79dbacc35d0176a7be505366ec474e6739cff75d63f8c5789",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_e7d9013b": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "210e42b3f09c4e4aa62db97a688d83dd7620bc4118d160c2f0e7fec80a0d767c",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_06c412f4": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "479a38e348a5e26b86f06aaf7935297fa88abf74eb8b6568ca7104879cb547b6",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_bde3f736": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "13cdcab5968125dd3833925aa74fcc573beee9d2d9180f0d47c170911a165ea4",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_629fa277": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "76f395f3541c2af9db33b56b31b44669c4a12ec367b8efdc950aabce8f86a1cf",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_e75ce3ae": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "fa93c18ddfa70a4615c9127f01bdc9c2a5ea4b393c94dc5b72efb593fe58559e",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Explicitly selects B with an explanation retaining that choice."
+    },
+    "grace_test_logiqa_7b8a57ff": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "a6dcedd17a2f3ea4170c7f92d229c70151dfc9ad8d63a368b87d30d099064b44",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_a029fe00": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "7dc7f579d49f5502f837a309a8992b009283f62449b37e19911a1c763db93c71",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_0e95e638": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "208efdd5599ee2c2def2816c6cbbc1268e38d67921166dbaf42f7d0a9ba12f34",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_9a952da8": {
+      "correct": null,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "bd8518e559ab4803dc7bb571e1fcb933bfdeba585dbb5e846996d6b72c2c007f",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Starts with A but then declares the choice indeterminate between A and C; the response ends without resolving this."
+    },
+    "grace_test_logiqa_480b8c3b": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "62f2cbb26beb37e812dc2ee00e525c66f83b93b5a4ba42d0fbc7a0169423537f",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_b94238a7": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "ad3fbe597b850fb54e31887d8dfab88d79509b46e045a5afde4db456e0ee1bd8",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Discusses alternatives but ultimately explicitly selects B."
+    },
+    "grace_test_logiqa_ad15a51a": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3fdd935b86aae5a0511e84ff42fead122e2b4337ff2cc03f5d5cefd08944fc1f",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_5c5c0679": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f8de0369e4e583ee0fb3b0ee8477aee33e62758b36cffd83dc0abd1c3bd32237",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_736bb08f": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d3d92488ec52d5cf0f6eb15944acef392dd7c42acb54367fee1e2c3448f44687",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_493eb74f": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "68afa242cb67b0f2e6f96c924df7588756438122bd28ec06fd9e9664e81c0589",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_e9a55c98": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "4b1b6fa751fe9a9e3948592874fa7896e42ed1e4fa134caa1bec751c668a4af1",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_f0a7b33d": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f290029401f05e78ace56917a8d1a09a72565bc2dcaf5b3c7294ba5e1c7a31d5",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_d322ba36": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "9e7851864193317ddc87ebdfd48467e7f3eae830fa0fe60762e8296a995f9539",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_194f68d6": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "0a6858db332a161dc1677feec814e76bb6b0a0ebaaeb6ce71023127f2cd4b5b7",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_51e30aa3": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "ced25732e2aac08b468c242df49b8d98cbb4cfa59ac54374750f4ed752f0539d",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_3d05acaf": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "61a6900292ffae6dde8cbe69a32745c7b444d3b173914c2880deb53fa0c82afe",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_9393d840": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "57c262a0209e49c29b39a1352c0f20f854fbc9b3762bf826ce8998f2086860fe",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_73deb73a": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "1f80d9ba8bc6d7175605555a3b996c067d17463495d5ebf19cc97d8412421f64",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_f1a9725f": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "182574f7ebced2ad80b42e1b840616a812ad8e422cab8d45a9c0175bc83192b6",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_f60b71cb": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "2074919d4ac7fb63693be8aa2c748eebb7a1b89b26f7a92a6acdd99cf26644b2",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_d065b86e": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "b14f57aed3c50d187c395321324aa7d990c18eb243d8667a975ea87ec750d092",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_ffd61e12": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f6be341e1865a692dc145a84c7d44be2ce42d4f7f4758491e86c97b70c2c4521",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_910ab5e9": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "a24aeff3a7c719587b55ca358cdf4c228d74bf750518a11c2868273b9a7229cb",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_15ed4018": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "593c1f60c99f88a89e02082e03b0412b3df62b630bb783aa475c5be2ae2da573",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Ultimately explicitly selects D."
+    },
+    "grace_test_logiqa_b3f1f28b": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d4fcd70b5e20f28e6be54b7f7871599658a5c8ab20ed6b13560e9224e72fada5",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_a0e872c5": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "1f6307ba619422fde74d30d7253d9f997fefe8c686c03f83a3f9e723e5c56db7",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_8f41dcd6": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "30ff1c1592675bfcd08b4fdff31139eca1a5bf42fc621b68f46257f00830f7be",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_5b6f3121": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "06df0b9c12ff90aa9bb0ab14ce0d4ee6c21b33d391c99368d620c4883379b4ec",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_logiqa_c0358444": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "6b0607d0fe1bb672b210b5c0c8253cd019590e045920ee73c22746e5783862a1",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_musique_7d1df99d": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "10900f4e903ecfa59a196f868dbdde9bce2c63e75cb13761bce0607001254e90",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_a0ce8d23": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f0b8617b06f9d686da90dc5c739db60ffa6af290646c8e33dd42422c75bb8431",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers Indian, matching the nationality requested."
+    },
+    "grace_test_musique_ca75f1f6": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "a937fba3c0e2e98f06be0bb007fdb32861237ed902f6db0d4863335dd0e31f31",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Answers 313 AD rather than 380."
+    },
+    "grace_test_musique_b00b7055": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "65ff95238bb5d41be75c1be8c892cdfba82f186b4f60963dbbf4204cd44bae49",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Denies Croatia ever won instead of giving the reference year 1998."
+    },
+    "grace_test_musique_0a6dfe00": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f292d653b467ca218f4cf6c8142f98b40e46b79831363a84a1b984209d4df6b9",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Answers Waschow and explicitly locates it within Wittendörp, the reference municipality."
+    },
+    "grace_test_musique_cb02bd71": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "8c5a06dca8946094ec468a4209d628dc82de82be8722f30a6c03e3ddc6836b83",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Answers Waschow and explicitly locates it within Wittendörp, the reference municipality."
+    },
+    "grace_test_musique_85559bbb": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "2c571297593a5e84570eaaf8f329880f4e0d64ed31532de1704e6dda16c69506",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Mentions 1915 for another country but denies the requested country's war entry; reference mention is not the answer."
+    },
+    "grace_test_musique_898aacf5": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "40c40288af059fe10cedf3f984afce11a7a51481c8261e530231d3373d3510d9",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives 332 BC to 30 BC instead of 100 BC to AD 400."
+    },
+    "grace_test_musique_ff82a54f": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "354464352a4ef1dc5c2ae6444d44694a56ea2cf4974ddb173a890503be127c8b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers Deng Pufang; the parenthetical relationship does not change the named answer."
+    },
+    "grace_test_musique_219bc505": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "8443fbfc2c5100747688e749a16e2a00ca3716c0b5f6f321f09ace17e837cb86",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_eca5b4e1": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "b2e4e7007bcf3ff378f61a0a4d2b21afcff5314db3eb6fce0e8c77f9c21fd91e",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Denies the connection and does not supply Columbia Bar."
+    },
+    "grace_test_musique_d584285f": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "913d5b49cd26be4be89a42541e5397f7470f4dc05607c7043906a7cf47dccd78",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives a generic Pacific/US outlet, omitting the specifically requested Columbia Bar."
+    },
+    "grace_test_musique_da0de10f": {
+      "correct": null,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c723a564c1cec39aa71462dfe9418c08d31c440e1d9e5f08f98757562edf56aa",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Denies the premise but offers generals of North Korea as a closest historical alternative; commitment to the requested answer is unclear."
+    },
+    "grace_test_musique_12f760e9": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "5d613dad4ea125df0736a8237eed0b3589935ce78f86c75083c0080fa25f2d90",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Answers Lenin instead of Alexandra Kim."
+    },
+    "grace_test_musique_cbe42099": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "e228ea4f36fc7555375d6a3d15d98df1b8938deec028dbe3039c9e9c2679b132",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives 1928."
+    },
+    "grace_test_musique_f834b82b": {
+      "correct": false,
+      "rule": "explicit_date",
+      "source": "deterministic",
+      "record_sha256": "d07bfe8a02c46697ce5616afcf79b8b65159e4fbf837b23b674aef9f2a99a6c6",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_date"
+    },
+    "grace_test_musique_f63070b5": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "660f3dffd6ad4bb0b9f014f8f9d569a99dadeed82a48ca32a0c7956eee73eb12",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives 1916 rather than 22 October 1995."
+    },
+    "grace_test_musique_96b04961": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6e7a176f0a8ed566a8dc729e21ae3455a29e1f6fe3ebc3c1f23b2b39fa452271",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers 600 protesters."
+    },
+    "grace_test_musique_cef708a8": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6df9e3bbce19668112c1cea5fa41eae4b0946b528f42150a8bf3dd76d3d99f78",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers Wittendörp."
+    },
+    "grace_test_musique_d2a79b98": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "c59f97f2ae4f4a263b591967127faeb374e6f2f3b762d7cb7b40b575cdef52c0",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_c5976df9": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "af69ce3ca4f54ea4ea16f34fb5d5c572be6c15b258ce639f7937d19281a19615",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify the person instead of answering Pedro II."
+    },
+    "grace_test_musique_518f820c": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "7c1df0767db7447eb04b714e447183b221a75b0b9d38092a2af920fd058ad7d8",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives 380 AD, equivalent to reference 380 in this year question."
+    },
+    "grace_test_musique_dd2a7737": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "36253520b174a3103688a32d3da6ed51bc8bb48d887b0fa4aa9d23ece9d63558",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to answer the requested army despite discussing possible context."
+    },
+    "grace_test_musique_61f376f9": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "1dcdb35caeb95adf278dcbd28e79dbbe28729bba3af0bf93f5de10e8551fa05b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "The complete response ultimately states Final Answer: Union Army, after earlier doubts; evaluate the final committed answer."
+    },
+    "grace_test_musique_e13f9668": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "5bf63f2a2b0b21a683d0aed379a82a73f71a50d3e3bbe766960b2fb576f38b37",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Answers John F. Kennedy instead of Juan Manuel Santos."
+    },
+    "grace_test_musique_fdf57c44": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "628ad7fbf1fb29d29e99074c8c363b95db4fa6207a5275e9c53d4b32d6cbd0fe",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers Mohieddin."
+    },
+    "grace_test_musique_670c8e23": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "9a315b5b511a2010173d13d8a5df7e71da82450a95a732067a71eefcc62f78a4",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_57ae0683": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "633994c19be01d58a46b6ff8f49e4f5b7fc101268a8a254e1f015cf8199b5f38",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives 735 feet instead of 1149."
+    },
+    "grace_test_musique_daa2abab": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "889452de664c359c6b6ded9e1a18db206d2cc20033fde386b7e89b20d922886b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers the Rocky Mountains."
+    },
+    "grace_test_musique_2f3ed9d2": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "b5368097d1db2a267e8293d3992a8fce3867eaab171e999ccbee515c4f6708b8",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names the University of Wisconsin rather than the requested person A. Lawrence Lowell."
+    },
+    "grace_test_musique_99e52f9f": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "47b6b0d3e8a73fff87cb42b565f27aef71229cf7b3927b676cbe718b2deaa12c",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_d1dffee6": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6a9c6eedc8168c2013f66be3b77704c0c6c96bf731f66bac20ef91e6cf7adf75",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to answer instead of giving near Salem."
+    },
+    "grace_test_musique_7e4aaa5a": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "54ea08905b22c51c1d7c6ae8a839d171abab0f432b9fd15a2e051cf8ba29346f",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_f1c66484": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "1df28dcf39fa28ab2793f4c06fc88a99f42e2333da0f93e0aabb67a7b032149f",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Off the northwestern coast of Europe expresses the reference location."
+    },
+    "grace_test_musique_80dcaadd": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "cbc951c1069f1e9c4cad2c7d1d791cf2ff6ff11d15ebd5b8f6530086dc8e1868",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_d250a775": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "a643a12cbc2f7da250c634a4a4ccf69ec5b36cac45f15a4e0003f71091f94f03",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to answer instead of December 1917."
+    },
+    "grace_test_musique_430dca1d": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "59248ad82e99591b9472ec81508d96cd47c06d64094daa57d2756ad35ba27e68",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to answer instead of Union Army."
+    },
+    "grace_test_musique_7e14e712": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "835a5467b34515d8b3e917c67dccdaa4a301e1103cffb301b5537d421d5482aa",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Answers Steve Byrnes instead of Krista Voda."
+    },
+    "grace_test_musique_314576a1": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "0cc68e5c2f9283ff02673ea9ccf21d9645ba6503e9fcf89aa7714060cf330fbb",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Says the answer is unavailable instead of giving 14/15 years."
+    },
+    "grace_test_musique_2233ae59": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "f4cb1a1307e5870c4cfd62255b9da9cc28b3248760512256633cd26a3fac466f",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_118d523b": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f73ad3bb3c2027d417d0cb2ce771f4c5d200ba98394746fc4d1df692978f9a7d",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives November 4, 1856 rather than November 7, 2017."
+    },
+    "grace_test_musique_5d3cb0b4": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "ca26985a5e4a6d77f0359dddd417b2490afa135f2faaa973627de6510620289d",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives the Legislative Assembly of the Federal District; explanatory errors do not change the selected answer."
+    },
+    "grace_test_musique_84eba36a": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f68c79be409e478ceca034d915fa830dd6d3057e610b5af652ca1b682ec04bac",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Says unavailable instead of 1980."
+    },
+    "grace_test_musique_dd0e4ecd": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "5082c70ca429855552d1729c431fc7ec110089930b7f022244572c3ee89dda2b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly says the beginning of November."
+    },
+    "grace_test_musique_6bc21bd5": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "b25994a7ac4d874a459665376b624d7b7fe245fe52e7a2902cd08410ac5e5ada",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Answers Morocco rather than the requested European Union member-state category."
+    },
+    "grace_test_musique_a32a70a5": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "884596ac05c38bc68110923bc9020bfea46fda01cbd0aac74b94ea8c5edc12bd",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Denies the event rather than naming the First Sino-Japanese War."
+    },
+    "grace_test_musique_5501a92f": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "667eec886ac26f18e206aa967097a14f54c45ad8a496918a201bc5040e7891dd",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Celtic dialects / Insular Celtic expresses the reference language group."
+    },
+    "grace_test_musique_aad26a44": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "e5a0b0e62ff705d2ad4b1f0d39fb49c1f58911408be62d0c3371360248989c64",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives 30 BC instead of 376."
+    },
+    "grace_test_musique_3926e8d5": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "d7286dab9b8ba867368d5f3b75a135399a5fb96812b829ad7c6de33c4af8a88e",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_23780666": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "aa66756c8e6a125bbe7b6b1925e2185dfc28ab9655fe2c3ff379ffebd07b82a2",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives 380."
+    },
+    "grace_test_musique_3b708af9": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "d2cba366df6afa2c5831315d99bd936b647b723afe25c1ba77371f6e73293719",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_a02eb8b3": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6902b348453ec9bb16c0d009ff70479171e5f56827373c09dc63248b8a44d0dd",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives Castel Gandolfo, Italy."
+    },
+    "grace_test_musique_dd851b2a": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "bc1de879758e7bca733d0b8425ace3adaf7a50c10cdec7f4a4482c715bcbf937",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Offers 1991/1895 rather than 1863–64."
+    },
+    "grace_test_musique_69e7f29a": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "e6926d1cc852df1b66b1166a2080b47756c141c9ce478eff8c7fe5f2f3253a77",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_2b0bf038": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "77285e59f1d0394bd7df3bf197c38189d2fb78bc266fd3d837a8e6cc04f704a1",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_f1014191": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "3f91c5004a0bc17e7633c9f7066af3caa557fbf2eb00eb77af5c924f95b18440",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_8ab17728": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "52fae8322150cad0e65e4b341abf4b42f9d1f3f51bdc1d0220ce28cf3b601843",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "22.3 percent equals reference 22.3 in a percentage question."
+    },
+    "grace_test_musique_2c9d2f9b": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "52b7fadaa0a573b7bbdf88686e9e66ee1cd277ed98cf29a775b1267a21eab095",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Denies the premise instead of giving the 1936 Summer Olympics."
+    },
+    "grace_test_musique_67fb0290": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "820669ad51a1ce63d9ae0bd6df0cd6e521a574d57d286c2dbbafb7c1cbbe0eee",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names John Jay instead of his requested position, Chief Justice."
+    },
+    "grace_test_musique_18e13920": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "8bcd14d86f0c2558f55205ecfcdb479d922603f851f14f73904ad558001af3b1",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives July 1943."
+    },
+    "grace_test_musique_3a258f18": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "e35b97dc68f703dafe73e0f0e82d875b5c45656fd941cb365571b71f09e32da7",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "United States and America name the same country in this citizenship question."
+    },
+    "grace_test_musique_0c1ae81b": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c8578bba78fecd43050d0f39e62d4ad6886147a17361cdd25f1fb51e83908f4f",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Raisa Gorbacheva identifies the reference person without her middle name."
+    },
+    "grace_test_musique_3cabc66c": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "db4eaa8849b02c54da8797f052809e508441601ec41f759b37af59f3c6c90e51",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names Crater of Diamonds State Park; added county information retains the answer."
+    },
+    "grace_test_musique_2ce92582": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f07d1dd91f9f91b54e09b666c7dd6c676c7cce19c5992081a73660fe4813a86d",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives 1994."
+    },
+    "grace_test_musique_138f30b3": {
+      "correct": false,
+      "rule": "explicit_numeric_value",
+      "source": "deterministic",
+      "record_sha256": "84a176aaee7952a2df7f0a1089e025059b4a127dbe6460a2197ec8a095d8f70e",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_numeric_value"
+    },
+    "grace_test_musique_c3bbc479": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "5098a2534b5bac2ad62d5cc2fab2cb6412ebd6ed880c8c420c5d3cd19f0b395c",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_37119c30": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "de7fbd104660b29e23585ae4e8da93127e1625881a872d121d3cb85670d13e42",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives five million instead of 25000."
+    },
+    "grace_test_musique_86553446": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f2ff5d8797b250fbe8e82bfd4de60781f028987181e86821422b3eb2c8a905a2",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers No / does not agree, opposite to the reference affirmation; mention of crucifixion does not reverse the final polarity."
+    },
+    "grace_test_musique_50edaf62": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "5cb507629b319fac28b22a4f773d3630e638d515edace4aa3a5a0587d3435895",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Yale Repertory Theatre is not the reference named venue, Yale University Theatre; no equivalence is established."
+    },
+    "grace_test_musique_18a74ba7": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "dd4e7666c8e6709bd5be514087301493a02d3a5606e81f7734e9d5ad581e20b1",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives 1458."
+    },
+    "grace_test_musique_053ecab7": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "bbbfb6675d864cbd569db420132dfa416d52bcb20c7430f36c521d69def78a13",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives diplomat/negotiator rather than the requested position Chief Justice."
+    },
+    "grace_test_musique_f65032be": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "e575a51d6bc21e2a658ab485ff4a5c51a3bf88b36da08b7a508a6ae0de132d9a",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Miroslav Lajčák identifies the reference person; nationality qualification is not required."
+    },
+    "grace_test_musique_f684fa3e": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "d29be03c5ae20dfc81fe16ea216d3caf47f571ae4541953e0e229c7fd6272aca",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_814143e2": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "f3dc88463722e36c5e9ec2c34dd8837da4db062ed58b2af04f5cd15483dd1bff",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_dff7055a": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "2a81dfd631ea60dd9002cbca75f0308d960a055cd761e5b834ca6fad7e968997",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Denies the historical assertion that the reference affirms."
+    },
+    "grace_test_musique_875ff9b4": {
+      "correct": false,
+      "rule": "explicit_date",
+      "source": "deterministic",
+      "record_sha256": "4f7632cb52cf73088c513bebbc99587577528f7f28c60bcb05d29668faf19921",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_date"
+    },
+    "grace_test_musique_d2e007f0": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "3a04c35d694a4f158e88750657a2eb321681092fcae7a0dae2d9f359831ec384",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Denies the premise and gives only Egypt, not the requested Giza/Cairo location."
+    },
+    "grace_test_musique_9eba3b97": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "3b62fbf82ae5c350cb9dfde19d1333367b96e41d6a97a086cf78a526bd3d0641",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_dfd540dc": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f6aaa1dce7b2a731ad6f1ae7432bed69f88994e387161aa57380d6ba33d59a45",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "United States and America name the same country."
+    },
+    "grace_test_musique_4d06b810": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "dde5cab520e6f9f5e91e45e17ff122ff25153b056ee4c10753162a35a501b4ae",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Cannot answer instead of giving 1625."
+    },
+    "grace_test_musique_86a6e537": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "9aa420f87bcc88c22648bba9bf36a45d2fc6645c9030498ef187af8a137850dd",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Yale Daily News is a different publication from The Yale Herald."
+    },
+    "grace_test_musique_e81665b2": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "88cad41ca1554f0fcf595303cd45dc880f6c4d86971178a6bcdfd5c04afc0bce",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Yale Daily News is a different publication from The Yale Herald."
+    },
+    "grace_test_musique_8012e58f": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "b5863bf3c431e52cc3f928334e06739f83e04a77db03971a3e69b0ef2002c25f",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "States the other languages are less popular, matching the reference's relatively small totals in this comparison question."
+    },
+    "grace_test_musique_76fce584": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "20ed59ee9bad234d192f81cfbb2a2e39aeec3dd03547b7f19c8e947b69c8009d",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Cannot determine popularity rather than making the reference comparison."
+    },
+    "grace_test_musique_c7ba42c8": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "d57444fba9741b68cc6a4efdbf235f6f64ed1b3465dd8a246e98314e5b59baf1",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives 1910 instead of 1909."
+    },
+    "grace_test_musique_c9ab2729": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "9e3a7f68544c6a067456f8da15b949d61e95cb92517d71c79fe11bcc9fa83e13",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_6cfc0655": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f0bbe756af7bc01831f5c85cd620b88d5461a0788e42deb3ef052afe0d562d47",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "The complete response ultimately answers Brazil after discussing uncertainty."
+    },
+    "grace_test_musique_0f2c1ca5": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "dcd2d8c29e6159ee704e31d206841d7f75ccc96b881f20bead0a3347405d10b0",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives an unnamed Portuguese explorer / Prince Henry instead of Piri Reis."
+    },
+    "grace_test_musique_f3405cb8": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "bd774b606f8a6f9f1e824c3ddd45c7ced8e5ddb492f84b022663fe508627a419",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_c4c6e95a": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "9f73228df5a8b3ab9cdaa630be337f90eeb4bb9e0fcfc2e82fe4cad04d10fb36",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly names the US Interior Highlands."
+    },
+    "grace_test_musique_94329467": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "25b2bbebfffc399f259b0270916d5835c8362ae634b7bf265d514c731d41bfc0",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "The complete response ultimately answers Union Army after earlier doubts."
+    },
+    "grace_test_musique_cf9a7d70": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "dca38992c60445af0b1b0d734fc5d640e51ea963c96b382e9542f46dd6d31f95",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Cannot answer instead of giving 30 percent."
+    },
+    "grace_test_musique_060e3d7f": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "49162399ff2795d8a540378486510c55b872a30c0591d866c31931f228ea7ea0",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly gives 1953."
+    },
+    "grace_test_musique_07de3ee7": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c6a8a5157e5924cc084a695b1c3c11e6ce13fe81cc1d8e3d11f3bc4b73d2569d",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers Metrobús; the trailing unfinished question does not retract that sole answer or offer another."
+    },
+    "grace_test_musique_07f22679": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "73593f3185bb5843abc3f0c7616a1ba96afa0bc496c60e082bd6700f4dbbde30",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Gives 1921 rather than December 1917."
+    },
+    "grace_test_musique_ce8b0761": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "9de92ae8120a2f4e596c3ea4bd41a0fe8c836b0bfa573c6afb6f992c55cdbf93",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "The complete response ultimately names Estêvão da Gama despite premise caveats."
+    },
+    "grace_test_musique_e383d8c3": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "2d66e49f59980121be718d86297bdabbd56d2e9c5a3af7d4cb0c17a8d3375476",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "8th century is equivalent to eighth century."
+    },
+    "grace_test_musique_71079ae7": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "8eb7a14110b5d5c21eab7391c825f15fa40fb4b4f71d1c4407609f7ebba31e2f",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_c859e794": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "304df0337947becf208958e9e3795b4f2c97a99433ccc1435c1a5f0ccb591046",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "United States / US is the reference country."
+    },
+    "grace_test_musique_0950c534": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "f8f3976accf626fd894d6514c235de5aba6bf7b2e8d94cc09e628fc44ac89309",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_2dd3a34d": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "34789f3d997a424e6acd3b8da857968dcd3afd2628ac75a2247a96bc8358b588",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "September 11 attacks and 9/11 identify the same event."
+    },
+    "grace_test_musique_044ae6b3": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c2e424b7369759ec403a6b5df26d3abdf513805564ed18a7c096d6a8a1b76b6c",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "634 matches reference in 634."
+    },
+    "grace_test_musique_e0226ae9": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "51a68023c8ffa3c948cba65bb09961449ccabec5503a8014818a49adf7e14243",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_musique_852ec444": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "4e7b7a708007149625f715165b888ca82b07a0e26631ca5fb1da5cf56f4339e0",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly names The Yale Herald."
+    },
+    "grace_test_musique_d71d58c1": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "a3ae4b43ef134f89b457fab80ba5a36000a3d9fae8f3f573a61bde2275589116",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Jazz is the completed spelling of the reference's truncated jaz in this music-genre question."
+    },
+    "grace_test_musique_ab78b248": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "8902171b3615b26e2047e84de6efceae9151f96b1c30517d461750960b3babf6",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_reclor_d857e43e": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "5b4d7fa682bd78b8023902cf6b1b14054c03cd5de040ec6fe75122ee41ace8a3",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_02d074fc": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "95141dd779a34cc9bfdf72b8e8b47e8babfc9411714194e0c8de7844ec565022",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_1cdd8d13": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "92d940c4d626f28bbac047825d8d699f6bb25a108b82bab56d27049c5515fecd",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_9e839c20": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "c229311c0f9a2887c6d8b4a677a6e7b9e09f81bd939b3184efdeb11e9e709284",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_d4c87cda": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "de540e322662dfcf9e0d30484e56f448e342dfe2702f2ce1b3b06fc504ae2781",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_f0de3dd6": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "494107ccd606b2b29271eef62d1fe2398292eed36b6226b79450b7e8209fdb56",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_f6310564": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "9331e7a97708682b86d71be6230d0a586fcc4ed38c6b571a00c796f090871672",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_ed5d16fb": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "079492865168aef19ff3781f5589b45b5d192f6e0c39274d53c95d62e661ef0c",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_903ba550": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "5d2ae7e170e310eb45c85fd31acf0d3fcef9225b9f33eca529da1057b8dc5358",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_e3ca9bde": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e0facde3e68a7da16a40f2a8490ab3247b7dcc780a86c14024e97c937a64cc74",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_ba42d606": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "c395d561b384790d85a7cc6d44748be7d4fc1c65c2000e9c309ceab1779d352e",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_140bf0f2": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "8c3e8d08f49c275702eaf51d9598b78eb15cf35ab3c3ac3205bffe9a226435b9",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_c8a83cc3": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "fd769069cb2ba357e6bcbe53cb296ff3d0b706c8e4f19caf1658d8502c5d7656",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_68528f3b": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "443dc64b3bd268f2d871663335f6d053a58b75c36fd740d9408b5f44ff3487a4",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_7ba58fd0": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "44522aa01988cec14e30aa00e586e32a0d4462018d1106acd46e8e38a76bb190",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_f32445d3": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "97efcec46636a1f647878e9ca5ccaf510afc4072788a0c63b366057ae2d79274",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_13d271ac": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e662f7affbd17be87c9efdc0ca176ca01a13307c0f9f7358b6089e42f2b88529",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_0bf26eda": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "85f09a6bcb266643920220a21655b135fc0e63d319c8854ed02c1de3dd568561",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_6c682ed5": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "102f57c525afae7b2db18b48f7d9e5db16f1336a364dd534f2e077186a95dd19",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_7358a996": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "b1c8597b9c4233be108e319d7e7cc999fe8f306fcbc718dc8aa1edd24f37f6b9",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_b4a7f724": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "4f043ef822f484c1056af99d17714d9a0800f01272ab0c20a92d6d20a4271035",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_3af94090": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "6847ea0bd757b36a41deae1ee819d3d389e9740b3e8c490deda197c9b4c3d917",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_575998f5": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "07a7c15ee842bd2c3508260bcd80972538eb077434f8ea84583b0bc29dda2aeb",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_16000c65": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "acee778b9780cb832827395d79a07e2d4dc8ff7246dfc85e33518ae4ba8e5571",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_4868ead5": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3b93e391b70e54dc4a2eb21bebbabca4c8f7140dc00976dc2f016ea55eaebb25",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_3f16be0c": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "07410b09383689ee727c610f31c741fbbfd7cbe2c8ea6c95db63f112ff6efa3b",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_78530f3d": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "ea60837e164af8e783a24fdf4010ce375c2816f8d14b8b354d7299e416541928",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_f2940a8b": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e9e60fb5a03102a0aead9928a259abfcb4fdd57759fd749d52137c0cd3971179",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_42e1c999": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f6c386b9e57686ea9dba052466d15a89e79dbb0ce888c4f1ec53571173d9bdd3",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_b2b3d03e": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "a703d1e48402b001c6d4ebf431699b40b694faf64f8ba6fa7aed141c2424b261",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_41c23445": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "472478ed2c99c66b14fa83a907059d94a33902a5cc9dfc1c019adbe31ca6577a",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_bf4ae2bf": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "ad104e9beb1f6be0bb353574c32cb34689365e64b49a37bd97e7544faaa7ed2d",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_93eaa727": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "067b199af7193adec8213b9116e5cabc8e99a7342192d1446fef350a000b6e63",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_b18dd23d": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3ba92735a6d82b4a81c63a3b2445310f4993cac57fcfa3675589770d82662982",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_f69b87b3": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f295e21121192d98efb4679dd48f5dfc0099e80c48a3a786c089103ed34e6515",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_64a436ae": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "271f440ed034a6231f37c2ec0a3de5b57e54dfd458281314a83619fbed6f40cb",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_cb93a92e": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "7fa0ca4faa0a2d8f63dabd4c505eded2c227664bf848dfa18c88a7c269c11831",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_05380850": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d57689f13e57d65fc2445d574dd596c15d604ed065c49ef623f5beda2e0f456c",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_048c8231": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d7fbc648ca87d262a61f8f5bec306011d5640f6529c73c7a7979233521ee648b",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_999fa1b6": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "48531422627de5c69ce9cf67477cf43037bc57d97a04c66ab8c65fd4e987f465",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_eff492e0": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "7763fdbb148f7faf4aa5fdd978668a7cec37b44c7c6b68e5983dcae04d387820",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_bcd36d17": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "0aaab7507ae62059aeece051b71e8f211c5abb47c76749e7db356ac98a71e4dd",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_079e7fe8": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "fd9f3de5fcd4751ed87dfed34aa624f18a3aad9e3f8136f09a65da6d0cd005f0",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_93f0f967": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e6ae9117c4799d36911345cdc18b8596a2ccc2a9aab3261975ffa2fdaca3a471",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_e1ad0f50": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "dd24ae21b5b6f3a4e9422d7adebc9924af1fe0c0f0a1cae743bb9e5c1d0dedb4",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_0723c409": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "8a074b2ce1d63638678097daca5cc613632d1e8d2e10921fa9f92a0e76db7d88",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_3989a865": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "bc0f200ae87b0cd5bc3e29128eacd762a59cbdd9ae7fa8dda6cc235d9e729af5",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_ba721799": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "53e96a023e87b80be3cc2abf6e0dd91d2a02da3bdbc4905f55d8fc67f64ad182",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_94e8f91a": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f26433258748de33af70c5ec7a27e0b954f3438ae6859ee2bc1d6be4c1a0d7aa",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_82c72a5e": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "749053012668878444e1fcd7652b2b1d366225b16cbb637a7fa57f622587db8b",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_9f983563": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "33d06032817541c00f3e4d7cfbf2160a9880aea673aa2169aad2bb990a512fa3",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_ccf3db9c": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "0016aab33eb5fdb1970b1735615f6c303f68d764250857c4a6a97eeb3956df68",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_e9529cbe": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "a08eb57df67090551a558a8352bf9492fbb2f6e0af6ad37f666b1e0d0c92e6bf",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_1e633b70": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d4efc0d63a276ac8f2dc1e5242e71bc7eaf2873f375f2bddbccb7bdc8abbe54d",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_3804d053": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "781a22529712b7a62ad0ef53ea289389a798566cdce90f8a123b142fdc632144",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_f12270dd": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "974c09b8204993481e7f21e3e5eb668a842af61785005a94e24aebe3845ec2b5",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_01792f60": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "d0034d405317e6ba4e21a4b2fbcb89b5229f60529cf2f5370f8b5150d12028ec",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_889e62e9": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "b40dc9e1d94dc7bcbc22787c096392e6fdde344a3a235fee11c03e34a4ef7d00",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_b076682d": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "35b2a5cd56bd5ee60166a8a73a8da4894fcf8be15c0a240cf83bf9d51567c24e",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_51e56e88": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3c8cc8ca921fc4ae3b6c5fa9ba140424d9b51d880384c28d747c6bfb672062a6",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_d660fac5": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "f9e6f1100cab71ce59516ad00c829ef75acd163af6c12b9e4da064cde5df2b90",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_c3f32460": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "0854223ff0879bbff3942416fbbbbd4976f24a9c27d392cebb2f65e47b135989",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_495da272": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "1e5ee60e3cfe94ad5ea32fd86e6f7c96fb9978d73f5afdf0e8cb342f0c629b4e",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_4bddc13c": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "93f2afed0f794a2d57010a99136afe33a91e2e81b288435fc2326309c62e1275",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_ba82af04": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "89b5a1302cb5a208d5e17d44c7eccbade926709b0234b3fd51b2d632921b1548",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_1bf31b50": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "89a72434e0fcf577b1093d57ef078b0e3e5a6410fea4873271339ddce85a0c83",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Selects D rather than C."
+    },
+    "grace_test_reclor_d628b27c": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "34c274fc5d19050c2e73af7742f17a62fcf2f8830145c1380cd0ec07587498ca",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_397bddcd": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "c1267349c066abb1fa32e803a7222787be1086970cf9b61fb6b5a4a1e3e5468c",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_8c102f32": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "70d27d790518e24e7e700b248c64a4aed95deb916f44922c1cbcb8aa7b61350a",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_978faed2": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "b9cd77212ffd89859b98f339a8654e26613043e28e6c9f306fca1d6024150e4a",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_8751ffe5": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "27dc01b9e3a9c6469aab5f54b09893b77188489352854e60a4dbe7c53d98015f",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_341f6e00": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e3d5134d7dcb5d5699b01502703d5f97b4d99c8383e0a2168ebcaafd96f2efbf",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_e5437aa9": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e18ddbe14199207e0d3cfb67630160611b75832a10de2c14cfbbad4731cdb98b",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_69cd36eb": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "1fc22916c0eb1d6222eb74a1e18592725ea823b7642e6a53a0271bcd5851b1b7",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_c52fca74": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6f917e342a6fb9d5c721f9af1123ad3dc193476f508edde6ad92cedfb649bd84",
+      "automatic_correct": null,
+      "automatic_rule": "unresolved_multiple_choice_response",
+      "reason": "Answers none of the options instead of selecting reference C."
+    },
+    "grace_test_reclor_316228db": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "3afaf8a7b4c9c52dc08c4fb0b298e1a5f01891ed531ddb3d8109bc320e0cc7ba",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_a5d6d896": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "55ea7e3567b216f5ffc80ec3e6e9263547ad683c24de9fa94f1fa88ad9ffaeaf",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_4583d552": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "293a1da9bcfcceeed02e393684643d9333292a2dd878f9febcd611f3e9d56411",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_b914353c": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "8ea8f2ed0908e9ce4d497d13b9b4a9065b33b1755aa9796b7bc07bfcbf67948d",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_b9c92dab": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "252348e667417e31a2ac6a01e70b518f4de84e3306c77c6b12ab2e48bf817cb9",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_cd22fa9b": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "009ca5eb25e42238c190565ab7abd231999cb005eb8529fa31cf52ddc03fcc2a",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_faed8c36": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "2a90f80cb572b0792f7859d9eaae46d02608c8b5638d8179d53a099722242b2a",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_601325bf": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "762c418c0d5f22c8048d3f5c0f03bb8a21f0a095f7e3e6b1a2ecad74da5aa6cd",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_7f564b8d": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "e43afae32b038fbc2d88c8f21140bd6019e2ebf4b46dd6b7bb03538d04e1a5d7",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_95755d64": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "28b0add871024c2a36f6c4c4a5bddac5742ad9ea73ec715aa993166796b9f2ce",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_e0ba5989": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "a2ae501ad38c540f8546cd71d0d36f58d0d4403ba7c711927dd3e7ab64616bff",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_a4714247": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "79cdf8767099dcbda3a5d2b4db4f0a2b7e09f9c9e62c2b1f2011d2e55ae1af9b",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_2db7b05d": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "510480e3dd79e9984d61ee19c19c2ca1256344ffa949c6ab3c3871cbaa0bc706",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_c21d6356": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "45ab3f0e5724bab1924abd9f1221cdc2907516553f8f8b25d9554bd53b5f6ed4",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_69cdb09e": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "af90a733db5880bd7704a967a072e8b6de1c99fc1fbe5bb9aef6f624fd6031b7",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_3260e7f7": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "9364960b8c4712a4a9d1b0654bd5ced856aad66fc706ad416d9a6023ffd9f8b1",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_39afe2c3": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "8c73c3ec010cd9c4b4d2362d4701890c7ee30b7fd718730d2820c03057b8f7c4",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_2de9f690": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "41c84d65af3ed2973b89afef210f5061f59fadff252e6ca62353d55e0d530d49",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_d449bacf": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "4603eb71440d8ebd282f61a9493e03033a2c4f09c7de6168ddea825c9d939e1b",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_c3f41215": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "0717873140544d15b4bb61ae69db28e20243ed30847fec9ce4fb061a7ad69c87",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_210e6871": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "7283c0d7dcbfc2f008637fe36862eafd2a1edf053225a79cd9f6ef752a2ef74f",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_a4b250f2": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "89d1e858453fa292e51a708839107d83ad934eee37ec1a03f40284a375a30c01",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_78def0a1": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "a34c3bfb50c74aedc009cde143b5b3b5a2ee0a87076081f68eb23c1622c53668",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_1f76ee74": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "acb6427ae1474f598289590e1f95cbc9089bd70bfcdd4d84120cd431ac83f10b",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_a8cdc657": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "865f758d0fb306f1b791ee554d026ed43eeb0dae8001de4069bd0a188e37bb2e",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Explicitly selects C with an explanation."
+    },
+    "grace_test_reclor_0b88e7e5": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "65a72836e105f408ccea060cec8e4e17b154ff63b174c0ab1ad62b38a0cf7457",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_1afb0bd8": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "18b164aea7d59d78552499ef32867b824c80762c60bab66f1ddd9ea6e92dc462",
+      "automatic_correct": null,
+      "automatic_rule": "option_with_unverified_explanation",
+      "reason": "Ultimately selects D as the least incorrect option, matching reference D despite earlier objections."
+    },
+    "grace_test_reclor_7406dabc": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "25f8a5bd349a2d4c35ae70fa6f7dca91ffe1a6574f7576bfde28674d1e641d3b",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_1ad30a82": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "8830ed3a4979f2a032de46b1166515d8fb9514fda82ad2c2a4e2e3b241aadae1",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_85061394": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "195368726a57f241b42d64ac04f03ffc2181310334e26152854af15e6b120e30",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_63c735a7": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "1907194e97d3815bc6a5ce27c73d3b3bc6941a038f302c0b4e11ae3edbbdfbae",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_3694bcb5": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "ffc91f13e3bdabd70fca6c6ac3fcfd0fa41b07bb64f29803c3c6352529b269b2",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_06930a70": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "db73e6fddd537fc07a5be381c216f678cffa535ee271964186f4e4f8372f6954",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_b6f29059": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "fdc3c374736bdbe1e79b1b9a5bc02253fd40b4c34f3319c63af514a4f52eb5da",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_f799dbcc": {
+      "correct": false,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "c20771db625cbc6c80c3aca95c50b4544e222c2d6a87d5c9897f80cf2677dd04",
+      "automatic_correct": false,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_a6676032": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "ee64b1d5179df2476e4a095a991f421247fd5cae1e3009f448917c34bc3d1531",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_bed42a25": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "93e4ed0705309525b024c6e17d03a244b2c4edd1d1e33dc370b8ecda73bab429",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_dc2baff5": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "684d36f687df6979cf628d07f24e779bbc26763fdf2a205239dd65e65b776461",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_reclor_3ddcea3f": {
+      "correct": true,
+      "rule": "explicit_option",
+      "source": "deterministic",
+      "record_sha256": "993d31fe4bdcff2d1e861e11d437c21444dbf1202b014ecfa23541956cfdbc71",
+      "automatic_correct": true,
+      "automatic_rule": "explicit_option"
+    },
+    "grace_test_wiki2multihop_8329da97": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "c028164fe7386fd0748b90ce9a6fb4ed7a3adb413169b4ddd75d5d6ed6fb2506",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_d4cd0af8": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6e31185b3ee1ca2411a97016059f6bc063bfe71e48309c1d4f8485fad5c783f4",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "England is too broad to supply the requested city London."
+    },
+    "grace_test_wiki2multihop_3a541bc7": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "99f47ebcb349b2000e5a6e129ea4292f06caabedbf988d788fa59ffc9a6a436a",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to give the birthplace."
+    },
+    "grace_test_wiki2multihop_90e15f59": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "67a1de09b33123f7f6a1466719ba8cdffff39904adf22a6681cdbbee6a8e46bf",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers yes."
+    },
+    "grace_test_wiki2multihop_8df89a2f": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "fd928effacb1406a0d797b784c66c25b31f35e9262291510d8779feea95e4c50",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects Nour El-Sherif as the later person, matching the requested comparison."
+    },
+    "grace_test_wiki2multihop_a44b81ef": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6f8a4fb4a047f58f68c69e455df82cc315a17838262c8fd0046f1e5f1d5182da",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects Mausam instead of Two Hearts Waltz."
+    },
+    "grace_test_wiki2multihop_49739720": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "8112d833779c2532d05af5abc36c34b1da81117f8cf32dd460579ed59afcfef1",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "27 January 1741 matches the reference; the New Style qualifier does not change that date."
+    },
+    "grace_test_wiki2multihop_6f8545c3": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "14258ddb446cb6acf33e52ce3d9fd403252f2d87f8696fed43ca5d7dee52a04f",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "King Frederick William III of Prussia identifies the reference person."
+    },
+    "grace_test_wiki2multihop_230124ff": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "f2a365d363ce809427ab3d8bedb29e49eb6815d6dfc89f2c6e30846dfad10021",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_2dd9f136": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "a9eb3d36d059c35f87b48f2e8bd50296037972108e046d6b7bdbbd9cf733b576",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_1698c9fb": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c41e615f6b4cf1035aa850ca50f56da1bee1f5362c2d80699fe3c833a3868256",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Says unknown instead of Hollywood."
+    },
+    "grace_test_wiki2multihop_1083582a": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "a019c1b1a1ae2d005ca918050677e9722b05f4473299a2b9391450e9e11c172e",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Patrick Lyon."
+    },
+    "grace_test_wiki2multihop_3632c968": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "d6b7ba5880caddfff3a4f362f41f74e0f1f9eadb0f56960e45fbed9869457fbe",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names Maria Christina Wrangel instead of Agathe von Leesten."
+    },
+    "grace_test_wiki2multihop_81b80661": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "c6fd5988f1f013e652974b2c335f7bd8d6ee3e96bf4bb6a061de7d4a4eed523b",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_4dce23a8": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "badafff12caf1e164d1af02abd4f63cbe116d91dc0c832092bfba89ff113542e",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Says unknown instead of naming Agathe von Leesten."
+    },
+    "grace_test_wiki2multihop_100234c5": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "a54da1a87c58306e4e3b53c0db121e01df7a098dc49b96d8f17fd30076047f7b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "An unnamed wife of Hans Christoff does not supply the requested person Agathe von Leesten."
+    },
+    "grace_test_wiki2multihop_eea75f16": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "b21a89449aa97f8ef715da368935f1f1d542f44bb5e1fe19eeb79413d2ae1df3",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_74f895f8": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "447402e012f63f659cf335e85ffa460b56ef97c79dde29c14ea7e6bfce918fe3",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify the requested person; mentioning Me Agtsom as uncertain background is not a committed answer."
+    },
+    "grace_test_wiki2multihop_2449ccce": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "b1a385828f214c35e0ca474c0b91cc8bb7cd5f145066c30d1c6217bcf2778b8a",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_727ca9af": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "51eb44c77f0a81fd29760c68931552a643a5b09e2eaeee2f2b8bb9ec691b143f",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_c2c112f9": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "1edaa9fbbf2c5d60a2156f18f2b34295b9d201dfffe629cc9b18f8e47d9e6589",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "France and French are equivalent responses to the country question."
+    },
+    "grace_test_wiki2multihop_afa59869": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "37a2e11d8580c8313ced75884e80fd0feaab4b7fcf8803322b756e2562bd38ef",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_6403d130": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "f5453e86cb364f541a3c06554267586a99e67803ca2ab9862257f4cfaa1ca7dd",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_163a24d7": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c32f44eef51c2b37f04448e9119311154c08abf26cf9bb1b3b7fec8002964127",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Austria and Austrian are equivalent responses to the nationality question."
+    },
+    "grace_test_wiki2multihop_1d4aa40a": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "2c2b64141fceee69a5b55c287cd07c80f3d3963543d54897c06b6b597ccf23dd",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Hemma."
+    },
+    "grace_test_wiki2multihop_840001a4": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "fd8b95f1d69ef118947eac7ede5dfcff42559623c5fac0219cfbd1e1c9c35187",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects We and Our Mountains as the film whose director died later."
+    },
+    "grace_test_wiki2multihop_2d0602fc": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "72cf7b611ab1131066ee3c878e123488f8b546acd340f26f4a6e2390141be6bb",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Sarolt."
+    },
+    "grace_test_wiki2multihop_408afd11": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c40e9030ad6392410c45f9172be4dab4ead814d6dfb164031c05cea9790ec5c0",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "16 December 1263 matches the reference date."
+    },
+    "grace_test_wiki2multihop_2ed775e6": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "114810a4377b3743fbe394f7b18b5ba65e8ea837cfa3ee31c69fc505a1e66a79",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_c86d6173": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "ac1d309d19ee475f51e78594f9d0ad5b3adb970d240dc44a2410fc5893528686",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_8a3d0299": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "028292a56af4e2f6be45326b7dee227428a2d73dc89da80bcd46926ab2df49ce",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_15d365e6": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "a89daebe72980dfbc5a5714e221cf7e4a8527e1d9f401d1e90ffca1bac95d0f3",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "United States and American express the same country here."
+    },
+    "grace_test_wiki2multihop_bf5415e0": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "9b05977520b7c9669b8bd4a8f6d51323542ce9ca9ffc9a5c58f143f20b30eac9",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers no."
+    },
+    "grace_test_wiki2multihop_8c81ec70": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "09f86d06f8316835beef389fd9de69720673211b17416d26ace04f8b79586fbf",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Greece is too broad to supply the requested birthplace Thessaloniki."
+    },
+    "grace_test_wiki2multihop_319a0b43": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c68bc79031ce127d2ce6472a20f9b84d1fd8b27a79e53e2c72aa99b39a71e66b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Constantine IV."
+    },
+    "grace_test_wiki2multihop_9b33cdc8": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "71476b8a4c571b0bb263c15ff9a2fd062b0122b0c746fed33a0137b6209dcff9",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Charles IX."
+    },
+    "grace_test_wiki2multihop_22dc7fad": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "46996a4078a35542eb59bb78f90c30db5b67e284c28b2ca654d529531eb5024f",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "The ultimate answer is No, contrary to reference yes."
+    },
+    "grace_test_wiki2multihop_f76a5974": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f5980141da87f6394b45f8650ce04206ac0f280ac9156792f43e3db17d17338c",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects Dizzy Detectives rather than Female on the Beach; the reference title appears on the opposite side of the comparison."
+    },
+    "grace_test_wiki2multihop_7d1438dd": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "63c81227c4b3f31609009d75d5b4738e1a33eae0a23c7913af8b0f760b755bdd",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_e56391ae": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "32926e68a857381319812c0ed36dcfc747e7f705db78899f1c00b1d0825e80ae",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers French."
+    },
+    "grace_test_wiki2multihop_80c59a36": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "4ffc6dfb143ddf313535d633c2debf9eec9f5238cd668b98ee703288cea06448",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Al Shean."
+    },
+    "grace_test_wiki2multihop_8d2ff8c5": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "cf10519bc3bf7fab12910416e7307258285e6a27b3dd88be756d6ecdee4140ca",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "USC expands to University of Southern California, the reference institution."
+    },
+    "grace_test_wiki2multihop_bcd74b02": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "670829965d5158fd7853135deb20081a9754b33dc3a97259c9342930ede94379",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names Beatrice of Saint-Pol instead of Jeanne, Countess of Guines."
+    },
+    "grace_test_wiki2multihop_b1711839": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "7ebde5b91cdaf706a234cf1e075eb7a294e6fc36e1547786a8fdc3f7b5026e46",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Pontine Paus."
+    },
+    "grace_test_wiki2multihop_7ddd1a92": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "7428cff700dc2ea6cadd6111dd816df7140194f5145cc95b72d974667f711e16",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Cannot determine is not the reference's definitive no."
+    },
+    "grace_test_wiki2multihop_ae64da08": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "0a3e07b188f2d6d25b1ca05b75c53de82dc4c463d0b603bfa4e35ec89ef8a48b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Henry III with the Margrave title identifies the reference person."
+    },
+    "grace_test_wiki2multihop_7b15fcb3": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "1a2ef00728748d73a4cfe54d1573c6f57bba6532344018de67483effaf8e3e7d",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers no."
+    },
+    "grace_test_wiki2multihop_6881015a": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "3a67f2bfaa3f17045c87560748cf4cdde1ffbe9062cb12b0f1d348c1a55b0c76",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Russia is too broad to supply the requested city Moscow."
+    },
+    "grace_test_wiki2multihop_85e1f4d7": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "40777bb694ba41bbaf4a2f23b2af12d3cb828643d59dc4ed53eec83bd1243621",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Jeanne d'Albret."
+    },
+    "grace_test_wiki2multihop_325c20c4": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "4d59876969b64ddf92ffae054806a25713730647a6069dcce64f39c1b7d258b4",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly selects El Bolero de Raquel; an unfinished trailing doubt does not retract the sole selection."
+    },
+    "grace_test_wiki2multihop_f9210731": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "25e233c34ab4d5fd5cb9dbed5558b9759e0e7f25993c2a6755e54447e58cab51",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers no."
+    },
+    "grace_test_wiki2multihop_3b878508": {
+      "correct": false,
+      "rule": "opposite_boolean",
+      "source": "deterministic",
+      "record_sha256": "929339314b0567504d3110f74150ff5ed2b9173c40ab1bd78d5a613bb3337823",
+      "automatic_correct": false,
+      "automatic_rule": "opposite_boolean"
+    },
+    "grace_test_wiki2multihop_8303a5cd": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "228d17245c8092e2483c282822980d3efb99cfa80ef2992e7d94bee93b71cbaa",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names Gaius Octavius rather than Mark Antony."
+    },
+    "grace_test_wiki2multihop_0d4784f8": {
+      "correct": null,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "ebb29eabdceeb94aac6f94d0f04043127acc0aa347e8a183394cce9932869525",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Identifies Nest ferch Rhys as the aunt, then contradicts that by saying no such aunt is mentioned; no unambiguous final answer."
+    },
+    "grace_test_wiki2multihop_ff22c640": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "96ee7e2264ef90cb1cb80c9e3a6543fe57a124050a9c9cccfdc795c7dc840001",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_842b22ec": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "679935fe819c6f77d35da833430f879df1f7145f490e9edb97ddf1549074f2f0",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers no."
+    },
+    "grace_test_wiki2multihop_5c3d050f": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "cf533298daee027314e95997d800753720348b552399615083e258726719fba9",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names Isabella Wycliffe rather than Helen Davenant."
+    },
+    "grace_test_wiki2multihop_be84fe7e": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "4869a01740fc8476537f2d9c4ced8b3a62f86092cd875be30caf3b56f367232d",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names Louis IV rather than Ernest Louis."
+    },
+    "grace_test_wiki2multihop_90777253": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "d6a4fd0e85091cea45b62dd5d6d021f84ba24e874bdfddc3202eea5d48e6ae9b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify C. L. Franklin."
+    },
+    "grace_test_wiki2multihop_1bfe606b": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "4c28e48afc34f1e431a03f42a32568abed5c245c6e22e2f7841c579280d83542",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_d14c88f6": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "9d9bdd8035bd5c4cb755e52ca572c09750405d46f66d4c073bee7e2c22a929a5",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_d19ae475": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "9c06693e3fd85118ba68194c253047cf29babb597f23d330b82ba78384afea9b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Arsinoe III."
+    },
+    "grace_test_wiki2multihop_acb2a58c": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "c7a660ca95a15434b1488a3c5b0d58a1200e3a0159c461d9d8c21e88439d2365",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_65e591af": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "d8d5f66f2ad9815fc04e7ead94e8a48c597d971b90fdae4f0356b529543cd36b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Muhammad Mahdi."
+    },
+    "grace_test_wiki2multihop_f5848509": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "8f2d4920c3d815f2d9f70bf19cb380123ae0febdc2ad5f699e203e37d7f1afc7",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Muhammad Mahdi."
+    },
+    "grace_test_wiki2multihop_70463701": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "9b1bdd4922ef93612156fe1725338206543178086e4ab633b5f1b176e4cc3e3f",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Emma Rabbe."
+    },
+    "grace_test_wiki2multihop_79dd453d": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "38b450519e53056a72de4f9d45e9bd75567be3dd469253eb8d1e4202b1336a3a",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_023796cb": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "9f218c508f1f518efa555527b4a50faa1d179629e621030241d6c42c6cddf3c5",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly identifies Friedrich Wilhelm with the ducal title."
+    },
+    "grace_test_wiki2multihop_f74499ad": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "c3d8da885ea0e0156084499dd3e26063ccd6428fb36bc436261f9d3fe6dd2cce",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Does not name the requested Christian V and instead disputes the relationship."
+    },
+    "grace_test_wiki2multihop_d699b893": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "cddaee0644dd8610b999eaa231b0b7f4caa08486ee931196b38ec37dbf9a141d",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names King Razadarit instead of Binnya U."
+    },
+    "grace_test_wiki2multihop_55c86ced": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "3e47776e9cc685a8176a7661a093faea59de24696380fc909573a5bea00d5576",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names King Razadarit instead of Binnya U."
+    },
+    "grace_test_wiki2multihop_c985f92a": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "d5a6489f7a0fe57fed2fbadc4f0624d54526d83387c3ca4edc6e28ff47533d6c",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers no."
+    },
+    "grace_test_wiki2multihop_658eb792": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "751cf6605e47fcd5d84807390a1e0401a1089e60b6436417666b8e68caa1d709",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly names Hester Rayner; parent information retains that answer."
+    },
+    "grace_test_wiki2multihop_f2fb28cd": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "13c85e88d1270ba42b8e36cd93070c7fab271dff92de0872c6aafbafa4cea904",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects The Last Trail as the earlier film, matching the reference."
+    },
+    "grace_test_wiki2multihop_0bdf7295": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6a7eba1d73709af424223cf88e0354038bbda70e7d8126b7cfec57e68cf9c946",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Offers Alf Landon as the inferred grandfather; uncertainty about support does not negate the explicit selected answer."
+    },
+    "grace_test_wiki2multihop_c5a56205": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "0405019785866c34518f96726efb8147fa01e4855bc5921a8e709b79daba728b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects Carson City Cyclone instead of Chance at Heaven."
+    },
+    "grace_test_wiki2multihop_756d451f": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "3a7cf059a7f900664c0a7043aadf09f7fd09a395fc80ba5c5de52fd27837c878",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects Chance at Heaven; errors in its lifespan explanation are not used as answer-incorrectness labels."
+    },
+    "grace_test_wiki2multihop_98efd14a": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "50bfbc145742166ccfd98bf941b917ba5a3ee55ae46171289a48537780f8d860",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_00fe5d85": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "587a65d104fb6d8df51bb7c81e7189739379863838b7510c3a511005264d2886",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Madrid, Spain includes the requested city."
+    },
+    "grace_test_wiki2multihop_8c1b0b97": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "fc1d498e99455a43812d9b9bc96b3c00c6bbdc60fdeee51b2f53884d79844a11",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "December 26, 1921 matches the reference date."
+    },
+    "grace_test_wiki2multihop_0296e838": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "d631cf5506485cbfd29c27364aef6c57dd0faffeec7036831424e9315ac753e0",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_8afa30de": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f9703c0706a5f3f81eeea641eac626114dde7a55e883cf5ad1ac6d3dfada0cad",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers no."
+    },
+    "grace_test_wiki2multihop_877a720e": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "e28492aba49ac5f39d8721b74dbb1f8de6b694bfa9ce37d7d1d7d36769ce86ea",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects Along the Sundown Trail for the requested older director."
+    },
+    "grace_test_wiki2multihop_2fc02fb6": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "38380ce068bb717c1113e339f841bf4ef0cbd7aa82e08631e9eef2502871a88c",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers yes, both India."
+    },
+    "grace_test_wiki2multihop_7f9bbac4": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "058ea273936a9043aef92bb7ba6210820b316934c82d22c3b91df39320530ff5",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects Delovak Athara for the younger director."
+    },
+    "grace_test_wiki2multihop_4a896fbf": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "14fe04ebab640bc2bce8c3ac3843e82373dda01294985a42f420b7e17f68f919",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Says unavailable instead of giving May 10, 1890."
+    },
+    "grace_test_wiki2multihop_0e1ed116": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "6bdfc39e6ff87291c979061c79a490039bdec7b606ec8629b99318bc48465907",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly selects Anna Bond."
+    },
+    "grace_test_wiki2multihop_b50c19eb": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "eb2df1a80a67d7cae41e2c260710ad58be5964eace913130841886e70f9e29bc",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly selects Prince of the Plains."
+    },
+    "grace_test_wiki2multihop_369e7ce1": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "ccc4074eab672700c3c2c1d5763397174ffda718fa3410780bfe5d412ca28f4c",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly selects Bloody Moon."
+    },
+    "grace_test_wiki2multihop_bfcba005": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "c19b8be96fd5f18ad5998be949a5a8734168010e949c6208281c7ae0b10ed2b1",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_8aba3e61": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "ad8672f30453a39c1d53bb667d18313f77f5970f52b5396cc652baa2eb47f998",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_9a415861": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "426502370b2896d8712ac5c9beb5d58b2e8c8e855d24e7ec11f9a2c2da88ab7b",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Tairrdelbach."
+    },
+    "grace_test_wiki2multihop_6cb80560": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "23d8a78b0d90dd512c2e4d793dbb6ee2d3872030fee8544faa75530a71f7edc1",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_28a1be46": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "7b1d861667f7e1e6c0b148ca3c086d7be3deb05f33c8bfd349c227a89010fb15",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "7 September 1994 matches the reference date."
+    },
+    "grace_test_wiki2multihop_889228c1": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "ac6f04501eaa8e39ce2643efd8fa704fef812e5f884440d41e337b427ada9d69",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers no."
+    },
+    "grace_test_wiki2multihop_85ed8983": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "1076b93b407be3bd440cf5d6f2cddb463cb65861059f6f617d9cbc0d0c160857",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Says not mentioned instead of giving 11 December 1922."
+    },
+    "grace_test_wiki2multihop_8648993e": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "d7a61619af3cf37901a1fbe8ec35bc10232e4e620b06575b9380622fa03480c8",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Claims there is no uncle instead of identifying Pandulf Ironhead."
+    },
+    "grace_test_wiki2multihop_442864b3": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "8788dff530ffa8548a5ebc9254eed2feeadb47d449fc245be0875822979d90cf",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly answers yes, both United States."
+    },
+    "grace_test_wiki2multihop_765e51d0": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "a1c6048a2b0576b6aecf22aa4330533dc21819debc6758c29cf165cf72869062",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_9946b604": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f713605cc258006eb223285ed9d0ae246b1aa7a42989dac7aefdb9af50a47b8f",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Selects Rise of the Planet of the Apes instead of Central Intelligence; the reference title is mentioned on the opposite side of the comparison."
+    },
+    "grace_test_wiki2multihop_f318dce3": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "bec93511a098dd8838436c094f49b67c9ff3289431ce70be9c23ce38ace48077",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Explicitly selects Know Thy Wife."
+    },
+    "grace_test_wiki2multihop_e847ee63": {
+      "correct": true,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "540aaeafe7a9b63551c6b63d2d529e377a3828976654a52095d82fbe1d2e3a00",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Simeon ben Hillel matches the reference; the multi-reference citation suffix is presentation only."
+    },
+    "grace_test_wiki2multihop_7ea07650": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "b22447a35fd50e7cbc4bbc6a1e5c61830fc3c037e4e6db66710aa0a151aabebf",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_94eec448": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "541dac7700c61451a7f90779322bbdaab3237dfdf9a931b857d6093c0d7b9775",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Mentions unnamed sisters instead of identifying Min Shin Saw."
+    },
+    "grace_test_wiki2multihop_a19cba62": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "f78d5e776a84abf7d102e8122c75dbdafa2a6808e0bbb99ee895cf47d7802e1f",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Names Sithu II instead of Min Shin Saw."
+    },
+    "grace_test_wiki2multihop_ad0e64a3": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "795562f3af865a1638dbd3d1de8ee8d28512e901060e52267d11231a99b5fcfe",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Jochi."
+    },
+    "grace_test_wiki2multihop_5afddaad": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "d287ae2950b73d5b954e124f1a47234069d5e6719a05a524fb70f3169c5ef38e",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify Hollywood."
+    },
+    "grace_test_wiki2multihop_e56bbf52": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "8546784255a9d628ccd85e7c6816453c26bcdf7ef7236a095bd16d342bcd2373",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Places the reference person in the mother relation and refuses the requested stepmother identity; the name's occurrence is not the requested answer."
+    },
+    "grace_test_wiki2multihop_6a38af19": {
+      "correct": false,
+      "rule": "recorded_equivalence_review",
+      "source": "assistant_review",
+      "record_sha256": "ea6db48ecafd84db0388a0bf454f9fe1809d4f1de9a99eb10297f582351348a0",
+      "automatic_correct": null,
+      "automatic_rule": "requires_answer_equivalence_review",
+      "reason": "Refuses to identify the grandfather and uses Ottokar in a different family relation."
+    },
+    "grace_test_wiki2multihop_7ab7dbd5": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "0142bd823dbfb9c0b70ec994336abc1dbbd9efe7d001f1476f8fa6ae3768ed7a",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    },
+    "grace_test_wiki2multihop_b75bb2db": {
+      "correct": true,
+      "rule": "exact_answer",
+      "source": "deterministic",
+      "record_sha256": "e9b024af7a28f7971eee09b784c2983419ceabdbbed79c095ec352f9ea107802",
+      "automatic_correct": true,
+      "automatic_rule": "exact_answer"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+% Rendered from versioned results; do not edit numbers by hand.
+% Source SHA256: 3440d32ab45cb45be87df80595208781e861fde654966f13339ce9244b4c86dc
+\paragraph{Correctness and coverage.}
+We use conservative exact-answer and explicit-option checks, followed by recorded assistant answer-equivalence review for unresolved responses. This is exploratory review, not independent human gold. Of 437 traces, 260 are resolved automatically; review yields 280 correct and 154 incorrect answers, leaving 3 unresolved. The checker does not accept first-character matches, answer substrings, or token-overlap scores as correctness labels. Refusals and contradictory commitments are inspected explicitly. Reference answers themselves have not been independently revalidated.
+\paragraph{Correctness-conditioned results.}
+\begin{center}\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Signal ($\rho$) & Correct & Incorrect & Difference \\
+\midrule
+Context NLI, unsup. rate & $+0.241$ & $+0.216$ & $+0.025$ \\
+Context NLI, neg. entail. & $+0.273$ & $+0.159$ & $+0.113$ \\
+Prior NLI, unsup. rate & $+0.081$ & $+0.085$ & $-0.004$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Paired question-bootstrap 95\% intervals for these differences, respectively, are $[-0.177, +0.219]$, $[-0.088, +0.312]$, $[-0.220, +0.210]$.
+These comparisons do not resolve a correctness-stratum difference for the tested NLI procedures. The intervals also allow meaningful differences; they do not establish equivalence or a mechanism unique to FaithCoT.
+On all 437 traces, independently of correctness checking, context unsupported-rate and negative mean-entailment correlations are $+0.226$, $+0.254$. These are pooled grounding associations, not evidence that every detector family transfers.
+\paragraph{Sensitivity and limits.}
+The automatic-only subset has 197 correct and 63 incorrect answers; its three regime differences are $-0.131$, $-0.141$, $-0.046$. This subset changes task and answer-form composition substantially and is not an independent replication. We also release task-specific fraction/correlation analyses and every assignment of the unresolved answers; assignment sensitivity does not bound mistakes in resolved reviews.
+The descriptive lift $P(\mathrm{incorrect}\mid\mathrm{unfaithful})/P(\mathrm{incorrect})$ ranges from $1.16$ to $1.71$ over the five rules; at at-least-half unfaithful it is $1.61$ (95\% interval $[+1.432, +1.804]$). The all-steps-unfaithful rule gives an interval $[+0.832, +1.723]$. Thus the association depends on the aggregation and selected population; evidence for it is not uniformly resolved across rules.
+Length remains associated with the fraction target (step-count $\rho=-0.223$); step-count AUROC ranges from $0.184$ to $0.491$ across aggregations. Dataset-by-track conditional pair AUROCs are provided as a separate binary endpoint with pair coverage; they are not adjusted Spearman correlations.

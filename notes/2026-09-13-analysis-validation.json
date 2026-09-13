@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "unit_tests": 32,
+  "independent_point_estimates": 14,
+  "maximum_absolute_error": 2.7755575615628914e-17,
+  "checked_input_code_artifact_hashes": 21,
+  "direct_and_wrapper_grace_outputs": "byte-identical from different working directories",
+  "existing_output_directory_rejection": "passed for both stats entry points",
+  "generated_tex": "source hashes, balanced braces/math delimiters/table environments checked; PDF not compiled",
+  "grace_run_sha256": "b7bf6263bcad71d8c94e23113022bcbd82c82f293aa2382052fb287a40f16430",
+  "bonafide_run_sha256": "6571a23568d3932c4727e6f16e4481ba0b8cc1399806b8fe0c2ef1547e59ebca"
+}

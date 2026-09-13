@@ -1,0 +1,1089 @@
+{
+  "schema": "grace-answer-equivalence-v3",
+  "reviewer_type": "assistant",
+  "review_date": "2026-09-13",
+  "status": "exploratory answer-equivalence review, not independent human gold",
+  "policy": {
+    "input_fields": [
+      "id",
+      "dataset",
+      "question",
+      "options",
+      "gold_answer",
+      "final_answer"
+    ],
+    "excluded_from_packet": [
+      "steps",
+      "native faithfulness labels",
+      "annotation rationale",
+      "NLI scores"
+    ],
+    "criterion": "Compare the ultimately committed answer with the released reference at the requested granularity. Accept explicit entity aliases and presentation changes. Do not mark an answer incorrect merely because its supporting reasoning is faulty. A refusal or a name in a negation/wrong relation is not an answer. Keep contradictory or indeterminate commitment unresolved. Reference answers themselves are not externally revalidated.",
+    "coverage": "All 177 deterministic abstentions were read in full. All 54 automatically resolved free-response records were also inspected. Multiple-choice deterministic decisions require an explicit unambiguous option or exact option text.",
+    "independence": "The reviewer knows project history and prior aggregate results. The packet excludes detector scores and native labels, but this is not an independent blinded gold set."
+  },
+  "decisions": [
+    {
+      "id": "grace_test_logiqa_6d8e7dc6",
+      "correct": false,
+      "reason": "Selects B and D rather than the single reference option D.",
+      "record_sha256": "89f87825b4f40be925fc1768a76d00d95e95d7d430358f807c910360fe7ef5c7"
+    },
+    {
+      "id": "grace_test_logiqa_7dfca66c",
+      "correct": false,
+      "reason": "Selects B and D rather than reference A.",
+      "record_sha256": "9c2622b6ba0f06c5acbbcd82082a5f35f0134eeb1c0795075fa3d0c84715809b"
+    },
+    {
+      "id": "grace_test_logiqa_e8b40b6b",
+      "correct": false,
+      "reason": "Explicitly selects D rather than A.",
+      "record_sha256": "78fd48062c6be0f3fde8bb937120a19b9ea3897750ae0fcc41819ae418807c8b"
+    },
+    {
+      "id": "grace_test_logiqa_5bda4f08",
+      "correct": false,
+      "reason": "Explicitly selects D rather than C.",
+      "record_sha256": "8e9cf3eb21e8bdd563a97f56c2941c23ccc3d8cb37eeef7931ff74036424c8fe"
+    },
+    {
+      "id": "grace_test_logiqa_ec78d234",
+      "correct": true,
+      "reason": "Explicitly selects B; the added explanation retains that choice.",
+      "record_sha256": "41995f8a38c7b943188f0601d03291bc60f56579d5cf75a63b41e388bc481dcd"
+    },
+    {
+      "id": "grace_test_logiqa_ea8daf92",
+      "correct": true,
+      "reason": "Selects A with the reference option text; comma/period formatting differs.",
+      "record_sha256": "a35e124c7ef5bf80a3f1c19c9d816b855f51bdfbc7369b84e60dfa88d630a016"
+    },
+    {
+      "id": "grace_test_logiqa_e75ce3ae",
+      "correct": true,
+      "reason": "Explicitly selects B with an explanation retaining that choice.",
+      "record_sha256": "fa93c18ddfa70a4615c9127f01bdc9c2a5ea4b393c94dc5b72efb593fe58559e"
+    },
+    {
+      "id": "grace_test_logiqa_9a952da8",
+      "correct": null,
+      "reason": "Starts with A but then declares the choice indeterminate between A and C; the response ends without resolving this.",
+      "record_sha256": "bd8518e559ab4803dc7bb571e1fcb933bfdeba585dbb5e846996d6b72c2c007f"
+    },
+    {
+      "id": "grace_test_logiqa_b94238a7",
+      "correct": true,
+      "reason": "Discusses alternatives but ultimately explicitly selects B.",
+      "record_sha256": "ad3fbe597b850fb54e31887d8dfab88d79509b46e045a5afde4db456e0ee1bd8"
+    },
+    {
+      "id": "grace_test_logiqa_15ed4018",
+      "correct": true,
+      "reason": "Ultimately explicitly selects D.",
+      "record_sha256": "593c1f60c99f88a89e02082e03b0412b3df62b630bb783aa475c5be2ae2da573"
+    },
+    {
+      "id": "grace_test_musique_a0ce8d23",
+      "correct": true,
+      "reason": "Explicitly answers Indian, matching the nationality requested.",
+      "record_sha256": "f0b8617b06f9d686da90dc5c739db60ffa6af290646c8e33dd42422c75bb8431"
+    },
+    {
+      "id": "grace_test_musique_ca75f1f6",
+      "correct": false,
+      "reason": "Answers 313 AD rather than 380.",
+      "record_sha256": "a937fba3c0e2e98f06be0bb007fdb32861237ed902f6db0d4863335dd0e31f31"
+    },
+    {
+      "id": "grace_test_musique_b00b7055",
+      "correct": false,
+      "reason": "Denies Croatia ever won instead of giving the reference year 1998.",
+      "record_sha256": "65ff95238bb5d41be75c1be8c892cdfba82f186b4f60963dbbf4204cd44bae49"
+    },
+    {
+      "id": "grace_test_musique_0a6dfe00",
+      "correct": true,
+      "reason": "Answers Waschow and explicitly locates it within Wittendörp, the reference municipality.",
+      "record_sha256": "f292d653b467ca218f4cf6c8142f98b40e46b79831363a84a1b984209d4df6b9"
+    },
+    {
+      "id": "grace_test_musique_cb02bd71",
+      "correct": true,
+      "reason": "Answers Waschow and explicitly locates it within Wittendörp, the reference municipality.",
+      "record_sha256": "8c5a06dca8946094ec468a4209d628dc82de82be8722f30a6c03e3ddc6836b83"
+    },
+    {
+      "id": "grace_test_musique_85559bbb",
+      "correct": false,
+      "reason": "Mentions 1915 for another country but denies the requested country's war entry; reference mention is not the answer.",
+      "record_sha256": "2c571297593a5e84570eaaf8f329880f4e0d64ed31532de1704e6dda16c69506"
+    },
+    {
+      "id": "grace_test_musique_898aacf5",
+      "correct": false,
+      "reason": "Gives 332 BC to 30 BC instead of 100 BC to AD 400.",
+      "record_sha256": "40c40288af059fe10cedf3f984afce11a7a51481c8261e530231d3373d3510d9"
+    },
+    {
+      "id": "grace_test_musique_ff82a54f",
+      "correct": true,
+      "reason": "Explicitly answers Deng Pufang; the parenthetical relationship does not change the named answer.",
+      "record_sha256": "354464352a4ef1dc5c2ae6444d44694a56ea2cf4974ddb173a890503be127c8b"
+    },
+    {
+      "id": "grace_test_musique_eca5b4e1",
+      "correct": false,
+      "reason": "Denies the connection and does not supply Columbia Bar.",
+      "record_sha256": "b2e4e7007bcf3ff378f61a0a4d2b21afcff5314db3eb6fce0e8c77f9c21fd91e"
+    },
+    {
+      "id": "grace_test_musique_d584285f",
+      "correct": false,
+      "reason": "Gives a generic Pacific/US outlet, omitting the specifically requested Columbia Bar.",
+      "record_sha256": "913d5b49cd26be4be89a42541e5397f7470f4dc05607c7043906a7cf47dccd78"
+    },
+    {
+      "id": "grace_test_musique_da0de10f",
+      "correct": null,
+      "reason": "Denies the premise but offers generals of North Korea as a closest historical alternative; commitment to the requested answer is unclear.",
+      "record_sha256": "c723a564c1cec39aa71462dfe9418c08d31c440e1d9e5f08f98757562edf56aa"
+    },
+    {
+      "id": "grace_test_musique_12f760e9",
+      "correct": false,
+      "reason": "Answers Lenin instead of Alexandra Kim.",
+      "record_sha256": "5d613dad4ea125df0736a8237eed0b3589935ce78f86c75083c0080fa25f2d90"
+    },
+    {
+      "id": "grace_test_musique_cbe42099",
+      "correct": true,
+      "reason": "Explicitly gives 1928.",
+      "record_sha256": "e228ea4f36fc7555375d6a3d15d98df1b8938deec028dbe3039c9e9c2679b132"
+    },
+    {
+      "id": "grace_test_musique_f63070b5",
+      "correct": false,
+      "reason": "Gives 1916 rather than 22 October 1995.",
+      "record_sha256": "660f3dffd6ad4bb0b9f014f8f9d569a99dadeed82a48ca32a0c7956eee73eb12"
+    },
+    {
+      "id": "grace_test_musique_96b04961",
+      "correct": true,
+      "reason": "Explicitly answers 600 protesters.",
+      "record_sha256": "6e7a176f0a8ed566a8dc729e21ae3455a29e1f6fe3ebc3c1f23b2b39fa452271"
+    },
+    {
+      "id": "grace_test_musique_cef708a8",
+      "correct": true,
+      "reason": "Explicitly answers Wittendörp.",
+      "record_sha256": "6df9e3bbce19668112c1cea5fa41eae4b0946b528f42150a8bf3dd76d3d99f78"
+    },
+    {
+      "id": "grace_test_musique_c5976df9",
+      "correct": false,
+      "reason": "Refuses to identify the person instead of answering Pedro II.",
+      "record_sha256": "af69ce3ca4f54ea4ea16f34fb5d5c572be6c15b258ce639f7937d19281a19615"
+    },
+    {
+      "id": "grace_test_musique_518f820c",
+      "correct": true,
+      "reason": "Explicitly gives 380 AD, equivalent to reference 380 in this year question.",
+      "record_sha256": "7c1df0767db7447eb04b714e447183b221a75b0b9d38092a2af920fd058ad7d8"
+    },
+    {
+      "id": "grace_test_musique_dd2a7737",
+      "correct": false,
+      "reason": "Refuses to answer the requested army despite discussing possible context.",
+      "record_sha256": "36253520b174a3103688a32d3da6ed51bc8bb48d887b0fa4aa9d23ece9d63558"
+    },
+    {
+      "id": "grace_test_musique_61f376f9",
+      "correct": true,
+      "reason": "The complete response ultimately states Final Answer: Union Army, after earlier doubts; evaluate the final committed answer.",
+      "record_sha256": "1dcdb35caeb95adf278dcbd28e79dbbe28729bba3af0bf93f5de10e8551fa05b"
+    },
+    {
+      "id": "grace_test_musique_e13f9668",
+      "correct": false,
+      "reason": "Answers John F. Kennedy instead of Juan Manuel Santos.",
+      "record_sha256": "5bf63f2a2b0b21a683d0aed379a82a73f71a50d3e3bbe766960b2fb576f38b37"
+    },
+    {
+      "id": "grace_test_musique_fdf57c44",
+      "correct": true,
+      "reason": "Explicitly answers Mohieddin.",
+      "record_sha256": "628ad7fbf1fb29d29e99074c8c363b95db4fa6207a5275e9c53d4b32d6cbd0fe"
+    },
+    {
+      "id": "grace_test_musique_57ae0683",
+      "correct": false,
+      "reason": "Gives 735 feet instead of 1149.",
+      "record_sha256": "633994c19be01d58a46b6ff8f49e4f5b7fc101268a8a254e1f015cf8199b5f38"
+    },
+    {
+      "id": "grace_test_musique_daa2abab",
+      "correct": true,
+      "reason": "Explicitly answers the Rocky Mountains.",
+      "record_sha256": "889452de664c359c6b6ded9e1a18db206d2cc20033fde386b7e89b20d922886b"
+    },
+    {
+      "id": "grace_test_musique_2f3ed9d2",
+      "correct": false,
+      "reason": "Names the University of Wisconsin rather than the requested person A. Lawrence Lowell.",
+      "record_sha256": "b5368097d1db2a267e8293d3992a8fce3867eaab171e999ccbee515c4f6708b8"
+    },
+    {
+      "id": "grace_test_musique_d1dffee6",
+      "correct": false,
+      "reason": "Refuses to answer instead of giving near Salem.",
+      "record_sha256": "6a9c6eedc8168c2013f66be3b77704c0c6c96bf731f66bac20ef91e6cf7adf75"
+    },
+    {
+      "id": "grace_test_musique_f1c66484",
+      "correct": true,
+      "reason": "Off the northwestern coast of Europe expresses the reference location.",
+      "record_sha256": "1df28dcf39fa28ab2793f4c06fc88a99f42e2333da0f93e0aabb67a7b032149f"
+    },
+    {
+      "id": "grace_test_musique_d250a775",
+      "correct": false,
+      "reason": "Refuses to answer instead of December 1917.",
+      "record_sha256": "a643a12cbc2f7da250c634a4a4ccf69ec5b36cac45f15a4e0003f71091f94f03"
+    },
+    {
+      "id": "grace_test_musique_430dca1d",
+      "correct": false,
+      "reason": "Refuses to answer instead of Union Army.",
+      "record_sha256": "59248ad82e99591b9472ec81508d96cd47c06d64094daa57d2756ad35ba27e68"
+    },
+    {
+      "id": "grace_test_musique_7e14e712",
+      "correct": false,
+      "reason": "Answers Steve Byrnes instead of Krista Voda.",
+      "record_sha256": "835a5467b34515d8b3e917c67dccdaa4a301e1103cffb301b5537d421d5482aa"
+    },
+    {
+      "id": "grace_test_musique_314576a1",
+      "correct": false,
+      "reason": "Says the answer is unavailable instead of giving 14/15 years.",
+      "record_sha256": "0cc68e5c2f9283ff02673ea9ccf21d9645ba6503e9fcf89aa7714060cf330fbb"
+    },
+    {
+      "id": "grace_test_musique_118d523b",
+      "correct": false,
+      "reason": "Gives November 4, 1856 rather than November 7, 2017.",
+      "record_sha256": "f73ad3bb3c2027d417d0cb2ce771f4c5d200ba98394746fc4d1df692978f9a7d"
+    },
+    {
+      "id": "grace_test_musique_5d3cb0b4",
+      "correct": true,
+      "reason": "Explicitly gives the Legislative Assembly of the Federal District; explanatory errors do not change the selected answer.",
+      "record_sha256": "ca26985a5e4a6d77f0359dddd417b2490afa135f2faaa973627de6510620289d"
+    },
+    {
+      "id": "grace_test_musique_84eba36a",
+      "correct": false,
+      "reason": "Says unavailable instead of 1980.",
+      "record_sha256": "f68c79be409e478ceca034d915fa830dd6d3057e610b5af652ca1b682ec04bac"
+    },
+    {
+      "id": "grace_test_musique_dd0e4ecd",
+      "correct": true,
+      "reason": "Explicitly says the beginning of November.",
+      "record_sha256": "5082c70ca429855552d1729c431fc7ec110089930b7f022244572c3ee89dda2b"
+    },
+    {
+      "id": "grace_test_musique_6bc21bd5",
+      "correct": false,
+      "reason": "Answers Morocco rather than the requested European Union member-state category.",
+      "record_sha256": "b25994a7ac4d874a459665376b624d7b7fe245fe52e7a2902cd08410ac5e5ada"
+    },
+    {
+      "id": "grace_test_musique_a32a70a5",
+      "correct": false,
+      "reason": "Denies the event rather than naming the First Sino-Japanese War.",
+      "record_sha256": "884596ac05c38bc68110923bc9020bfea46fda01cbd0aac74b94ea8c5edc12bd"
+    },
+    {
+      "id": "grace_test_musique_5501a92f",
+      "correct": true,
+      "reason": "Celtic dialects / Insular Celtic expresses the reference language group.",
+      "record_sha256": "667eec886ac26f18e206aa967097a14f54c45ad8a496918a201bc5040e7891dd"
+    },
+    {
+      "id": "grace_test_musique_aad26a44",
+      "correct": false,
+      "reason": "Gives 30 BC instead of 376.",
+      "record_sha256": "e5a0b0e62ff705d2ad4b1f0d39fb49c1f58911408be62d0c3371360248989c64"
+    },
+    {
+      "id": "grace_test_musique_23780666",
+      "correct": true,
+      "reason": "Explicitly gives 380.",
+      "record_sha256": "aa66756c8e6a125bbe7b6b1925e2185dfc28ab9655fe2c3ff379ffebd07b82a2"
+    },
+    {
+      "id": "grace_test_musique_a02eb8b3",
+      "correct": true,
+      "reason": "Explicitly gives Castel Gandolfo, Italy.",
+      "record_sha256": "6902b348453ec9bb16c0d009ff70479171e5f56827373c09dc63248b8a44d0dd"
+    },
+    {
+      "id": "grace_test_musique_dd851b2a",
+      "correct": false,
+      "reason": "Offers 1991/1895 rather than 1863–64.",
+      "record_sha256": "bc1de879758e7bca733d0b8425ace3adaf7a50c10cdec7f4a4482c715bcbf937"
+    },
+    {
+      "id": "grace_test_musique_8ab17728",
+      "correct": true,
+      "reason": "22.3 percent equals reference 22.3 in a percentage question.",
+      "record_sha256": "52fae8322150cad0e65e4b341abf4b42f9d1f3f51bdc1d0220ce28cf3b601843"
+    },
+    {
+      "id": "grace_test_musique_2c9d2f9b",
+      "correct": false,
+      "reason": "Denies the premise instead of giving the 1936 Summer Olympics.",
+      "record_sha256": "52b7fadaa0a573b7bbdf88686e9e66ee1cd277ed98cf29a775b1267a21eab095"
+    },
+    {
+      "id": "grace_test_musique_67fb0290",
+      "correct": false,
+      "reason": "Names John Jay instead of his requested position, Chief Justice.",
+      "record_sha256": "820669ad51a1ce63d9ae0bd6df0cd6e521a574d57d286c2dbbafb7c1cbbe0eee"
+    },
+    {
+      "id": "grace_test_musique_18e13920",
+      "correct": true,
+      "reason": "Explicitly gives July 1943.",
+      "record_sha256": "8bcd14d86f0c2558f55205ecfcdb479d922603f851f14f73904ad558001af3b1"
+    },
+    {
+      "id": "grace_test_musique_3a258f18",
+      "correct": true,
+      "reason": "United States and America name the same country in this citizenship question.",
+      "record_sha256": "e35b97dc68f703dafe73e0f0e82d875b5c45656fd941cb365571b71f09e32da7"
+    },
+    {
+      "id": "grace_test_musique_0c1ae81b",
+      "correct": true,
+      "reason": "Raisa Gorbacheva identifies the reference person without her middle name.",
+      "record_sha256": "c8578bba78fecd43050d0f39e62d4ad6886147a17361cdd25f1fb51e83908f4f"
+    },
+    {
+      "id": "grace_test_musique_3cabc66c",
+      "correct": true,
+      "reason": "Names Crater of Diamonds State Park; added county information retains the answer.",
+      "record_sha256": "db4eaa8849b02c54da8797f052809e508441601ec41f759b37af59f3c6c90e51"
+    },
+    {
+      "id": "grace_test_musique_2ce92582",
+      "correct": true,
+      "reason": "Explicitly gives 1994.",
+      "record_sha256": "f07d1dd91f9f91b54e09b666c7dd6c676c7cce19c5992081a73660fe4813a86d"
+    },
+    {
+      "id": "grace_test_musique_37119c30",
+      "correct": false,
+      "reason": "Gives five million instead of 25000.",
+      "record_sha256": "de7fbd104660b29e23585ae4e8da93127e1625881a872d121d3cb85670d13e42"
+    },
+    {
+      "id": "grace_test_musique_86553446",
+      "correct": false,
+      "reason": "Explicitly answers No / does not agree, opposite to the reference affirmation; mention of crucifixion does not reverse the final polarity.",
+      "record_sha256": "f2ff5d8797b250fbe8e82bfd4de60781f028987181e86821422b3eb2c8a905a2"
+    },
+    {
+      "id": "grace_test_musique_50edaf62",
+      "correct": false,
+      "reason": "Yale Repertory Theatre is not the reference named venue, Yale University Theatre; no equivalence is established.",
+      "record_sha256": "5cb507629b319fac28b22a4f773d3630e638d515edace4aa3a5a0587d3435895"
+    },
+    {
+      "id": "grace_test_musique_18a74ba7",
+      "correct": true,
+      "reason": "Explicitly gives 1458.",
+      "record_sha256": "dd4e7666c8e6709bd5be514087301493a02d3a5606e81f7734e9d5ad581e20b1"
+    },
+    {
+      "id": "grace_test_musique_053ecab7",
+      "correct": false,
+      "reason": "Gives diplomat/negotiator rather than the requested position Chief Justice.",
+      "record_sha256": "bbbfb6675d864cbd569db420132dfa416d52bcb20c7430f36c521d69def78a13"
+    },
+    {
+      "id": "grace_test_musique_f65032be",
+      "correct": true,
+      "reason": "Miroslav Lajčák identifies the reference person; nationality qualification is not required.",
+      "record_sha256": "e575a51d6bc21e2a658ab485ff4a5c51a3bf88b36da08b7a508a6ae0de132d9a"
+    },
+    {
+      "id": "grace_test_musique_dff7055a",
+      "correct": false,
+      "reason": "Denies the historical assertion that the reference affirms.",
+      "record_sha256": "2a81dfd631ea60dd9002cbca75f0308d960a055cd761e5b834ca6fad7e968997"
+    },
+    {
+      "id": "grace_test_musique_d2e007f0",
+      "correct": false,
+      "reason": "Denies the premise and gives only Egypt, not the requested Giza/Cairo location.",
+      "record_sha256": "3a04c35d694a4f158e88750657a2eb321681092fcae7a0dae2d9f359831ec384"
+    },
+    {
+      "id": "grace_test_musique_dfd540dc",
+      "correct": true,
+      "reason": "United States and America name the same country.",
+      "record_sha256": "f6aaa1dce7b2a731ad6f1ae7432bed69f88994e387161aa57380d6ba33d59a45"
+    },
+    {
+      "id": "grace_test_musique_4d06b810",
+      "correct": false,
+      "reason": "Cannot answer instead of giving 1625.",
+      "record_sha256": "dde5cab520e6f9f5e91e45e17ff122ff25153b056ee4c10753162a35a501b4ae"
+    },
+    {
+      "id": "grace_test_musique_86a6e537",
+      "correct": false,
+      "reason": "Yale Daily News is a different publication from The Yale Herald.",
+      "record_sha256": "9aa420f87bcc88c22648bba9bf36a45d2fc6645c9030498ef187af8a137850dd"
+    },
+    {
+      "id": "grace_test_musique_e81665b2",
+      "correct": false,
+      "reason": "Yale Daily News is a different publication from The Yale Herald.",
+      "record_sha256": "88cad41ca1554f0fcf595303cd45dc880f6c4d86971178a6bcdfd5c04afc0bce"
+    },
+    {
+      "id": "grace_test_musique_8012e58f",
+      "correct": true,
+      "reason": "States the other languages are less popular, matching the reference's relatively small totals in this comparison question.",
+      "record_sha256": "b5863bf3c431e52cc3f928334e06739f83e04a77db03971a3e69b0ef2002c25f"
+    },
+    {
+      "id": "grace_test_musique_76fce584",
+      "correct": false,
+      "reason": "Cannot determine popularity rather than making the reference comparison.",
+      "record_sha256": "20ed59ee9bad234d192f81cfbb2a2e39aeec3dd03547b7f19c8e947b69c8009d"
+    },
+    {
+      "id": "grace_test_musique_c7ba42c8",
+      "correct": false,
+      "reason": "Gives 1910 instead of 1909.",
+      "record_sha256": "d57444fba9741b68cc6a4efdbf235f6f64ed1b3465dd8a246e98314e5b59baf1"
+    },
+    {
+      "id": "grace_test_musique_6cfc0655",
+      "correct": true,
+      "reason": "The complete response ultimately answers Brazil after discussing uncertainty.",
+      "record_sha256": "f0bbe756af7bc01831f5c85cd620b88d5461a0788e42deb3ef052afe0d562d47"
+    },
+    {
+      "id": "grace_test_musique_0f2c1ca5",
+      "correct": false,
+      "reason": "Gives an unnamed Portuguese explorer / Prince Henry instead of Piri Reis.",
+      "record_sha256": "dcd2d8c29e6159ee704e31d206841d7f75ccc96b881f20bead0a3347405d10b0"
+    },
+    {
+      "id": "grace_test_musique_c4c6e95a",
+      "correct": true,
+      "reason": "Explicitly names the US Interior Highlands.",
+      "record_sha256": "9f73228df5a8b3ab9cdaa630be337f90eeb4bb9e0fcfc2e82fe4cad04d10fb36"
+    },
+    {
+      "id": "grace_test_musique_94329467",
+      "correct": true,
+      "reason": "The complete response ultimately answers Union Army after earlier doubts.",
+      "record_sha256": "25b2bbebfffc399f259b0270916d5835c8362ae634b7bf265d514c731d41bfc0"
+    },
+    {
+      "id": "grace_test_musique_cf9a7d70",
+      "correct": false,
+      "reason": "Cannot answer instead of giving 30 percent.",
+      "record_sha256": "dca38992c60445af0b1b0d734fc5d640e51ea963c96b382e9542f46dd6d31f95"
+    },
+    {
+      "id": "grace_test_musique_060e3d7f",
+      "correct": true,
+      "reason": "Explicitly gives 1953.",
+      "record_sha256": "49162399ff2795d8a540378486510c55b872a30c0591d866c31931f228ea7ea0"
+    },
+    {
+      "id": "grace_test_musique_07de3ee7",
+      "correct": true,
+      "reason": "Explicitly answers Metrobús; the trailing unfinished question does not retract that sole answer or offer another.",
+      "record_sha256": "c6a8a5157e5924cc084a695b1c3c11e6ce13fe81cc1d8e3d11f3bc4b73d2569d"
+    },
+    {
+      "id": "grace_test_musique_07f22679",
+      "correct": false,
+      "reason": "Gives 1921 rather than December 1917.",
+      "record_sha256": "73593f3185bb5843abc3f0c7616a1ba96afa0bc496c60e082bd6700f4dbbde30"
+    },
+    {
+      "id": "grace_test_musique_ce8b0761",
+      "correct": true,
+      "reason": "The complete response ultimately names Estêvão da Gama despite premise caveats.",
+      "record_sha256": "9de92ae8120a2f4e596c3ea4bd41a0fe8c836b0bfa573c6afb6f992c55cdbf93"
+    },
+    {
+      "id": "grace_test_musique_e383d8c3",
+      "correct": true,
+      "reason": "8th century is equivalent to eighth century.",
+      "record_sha256": "2d66e49f59980121be718d86297bdabbd56d2e9c5a3af7d4cb0c17a8d3375476"
+    },
+    {
+      "id": "grace_test_musique_c859e794",
+      "correct": true,
+      "reason": "United States / US is the reference country.",
+      "record_sha256": "304df0337947becf208958e9e3795b4f2c97a99433ccc1435c1a5f0ccb591046"
+    },
+    {
+      "id": "grace_test_musique_2dd3a34d",
+      "correct": true,
+      "reason": "September 11 attacks and 9/11 identify the same event.",
+      "record_sha256": "34789f3d997a424e6acd3b8da857968dcd3afd2628ac75a2247a96bc8358b588"
+    },
+    {
+      "id": "grace_test_musique_044ae6b3",
+      "correct": true,
+      "reason": "634 matches reference in 634.",
+      "record_sha256": "c2e424b7369759ec403a6b5df26d3abdf513805564ed18a7c096d6a8a1b76b6c"
+    },
+    {
+      "id": "grace_test_musique_852ec444",
+      "correct": true,
+      "reason": "Explicitly names The Yale Herald.",
+      "record_sha256": "4e7b7a708007149625f715165b888ca82b07a0e26631ca5fb1da5cf56f4339e0"
+    },
+    {
+      "id": "grace_test_musique_d71d58c1",
+      "correct": true,
+      "reason": "Jazz is the completed spelling of the reference's truncated jaz in this music-genre question.",
+      "record_sha256": "a3ae4b43ef134f89b457fab80ba5a36000a3d9fae8f3f573a61bde2275589116"
+    },
+    {
+      "id": "grace_test_reclor_1bf31b50",
+      "correct": false,
+      "reason": "Selects D rather than C.",
+      "record_sha256": "89a72434e0fcf577b1093d57ef078b0e3e5a6410fea4873271339ddce85a0c83"
+    },
+    {
+      "id": "grace_test_reclor_c52fca74",
+      "correct": false,
+      "reason": "Answers none of the options instead of selecting reference C.",
+      "record_sha256": "6f917e342a6fb9d5c721f9af1123ad3dc193476f508edde6ad92cedfb649bd84"
+    },
+    {
+      "id": "grace_test_reclor_a8cdc657",
+      "correct": true,
+      "reason": "Explicitly selects C with an explanation.",
+      "record_sha256": "865f758d0fb306f1b791ee554d026ed43eeb0dae8001de4069bd0a188e37bb2e"
+    },
+    {
+      "id": "grace_test_reclor_1afb0bd8",
+      "correct": true,
+      "reason": "Ultimately selects D as the least incorrect option, matching reference D despite earlier objections.",
+      "record_sha256": "18b164aea7d59d78552499ef32867b824c80762c60bab66f1ddd9ea6e92dc462"
+    },
+    {
+      "id": "grace_test_wiki2multihop_d4cd0af8",
+      "correct": false,
+      "reason": "England is too broad to supply the requested city London.",
+      "record_sha256": "6e31185b3ee1ca2411a97016059f6bc063bfe71e48309c1d4f8485fad5c783f4"
+    },
+    {
+      "id": "grace_test_wiki2multihop_3a541bc7",
+      "correct": false,
+      "reason": "Refuses to give the birthplace.",
+      "record_sha256": "99f47ebcb349b2000e5a6e129ea4292f06caabedbf988d788fa59ffc9a6a436a"
+    },
+    {
+      "id": "grace_test_wiki2multihop_90e15f59",
+      "correct": true,
+      "reason": "Explicitly answers yes.",
+      "record_sha256": "67a1de09b33123f7f6a1466719ba8cdffff39904adf22a6681cdbbee6a8e46bf"
+    },
+    {
+      "id": "grace_test_wiki2multihop_8df89a2f",
+      "correct": true,
+      "reason": "Selects Nour El-Sherif as the later person, matching the requested comparison.",
+      "record_sha256": "fd928effacb1406a0d797b784c66c25b31f35e9262291510d8779feea95e4c50"
+    },
+    {
+      "id": "grace_test_wiki2multihop_a44b81ef",
+      "correct": false,
+      "reason": "Selects Mausam instead of Two Hearts Waltz.",
+      "record_sha256": "6f8a4fb4a047f58f68c69e455df82cc315a17838262c8fd0046f1e5f1d5182da"
+    },
+    {
+      "id": "grace_test_wiki2multihop_49739720",
+      "correct": true,
+      "reason": "27 January 1741 matches the reference; the New Style qualifier does not change that date.",
+      "record_sha256": "8112d833779c2532d05af5abc36c34b1da81117f8cf32dd460579ed59afcfef1"
+    },
+    {
+      "id": "grace_test_wiki2multihop_6f8545c3",
+      "correct": true,
+      "reason": "King Frederick William III of Prussia identifies the reference person.",
+      "record_sha256": "14258ddb446cb6acf33e52ce3d9fd403252f2d87f8696fed43ca5d7dee52a04f"
+    },
+    {
+      "id": "grace_test_wiki2multihop_1698c9fb",
+      "correct": false,
+      "reason": "Says unknown instead of Hollywood.",
+      "record_sha256": "c41e615f6b4cf1035aa850ca50f56da1bee1f5362c2d80699fe3c833a3868256"
+    },
+    {
+      "id": "grace_test_wiki2multihop_1083582a",
+      "correct": false,
+      "reason": "Refuses to identify Patrick Lyon.",
+      "record_sha256": "a019c1b1a1ae2d005ca918050677e9722b05f4473299a2b9391450e9e11c172e"
+    },
+    {
+      "id": "grace_test_wiki2multihop_3632c968",
+      "correct": false,
+      "reason": "Names Maria Christina Wrangel instead of Agathe von Leesten.",
+      "record_sha256": "d6b7ba5880caddfff3a4f362f41f74e0f1f9eadb0f56960e45fbed9869457fbe"
+    },
+    {
+      "id": "grace_test_wiki2multihop_4dce23a8",
+      "correct": false,
+      "reason": "Says unknown instead of naming Agathe von Leesten.",
+      "record_sha256": "badafff12caf1e164d1af02abd4f63cbe116d91dc0c832092bfba89ff113542e"
+    },
+    {
+      "id": "grace_test_wiki2multihop_100234c5",
+      "correct": false,
+      "reason": "An unnamed wife of Hans Christoff does not supply the requested person Agathe von Leesten.",
+      "record_sha256": "a54da1a87c58306e4e3b53c0db121e01df7a098dc49b96d8f17fd30076047f7b"
+    },
+    {
+      "id": "grace_test_wiki2multihop_74f895f8",
+      "correct": false,
+      "reason": "Refuses to identify the requested person; mentioning Me Agtsom as uncertain background is not a committed answer.",
+      "record_sha256": "447402e012f63f659cf335e85ffa460b56ef97c79dde29c14ea7e6bfce918fe3"
+    },
+    {
+      "id": "grace_test_wiki2multihop_c2c112f9",
+      "correct": true,
+      "reason": "France and French are equivalent responses to the country question.",
+      "record_sha256": "1edaa9fbbf2c5d60a2156f18f2b34295b9d201dfffe629cc9b18f8e47d9e6589"
+    },
+    {
+      "id": "grace_test_wiki2multihop_163a24d7",
+      "correct": true,
+      "reason": "Austria and Austrian are equivalent responses to the nationality question.",
+      "record_sha256": "c32f44eef51c2b37f04448e9119311154c08abf26cf9bb1b3b7fec8002964127"
+    },
+    {
+      "id": "grace_test_wiki2multihop_1d4aa40a",
+      "correct": false,
+      "reason": "Refuses to identify Hemma.",
+      "record_sha256": "2c2b64141fceee69a5b55c287cd07c80f3d3963543d54897c06b6b597ccf23dd"
+    },
+    {
+      "id": "grace_test_wiki2multihop_840001a4",
+      "correct": true,
+      "reason": "Selects We and Our Mountains as the film whose director died later.",
+      "record_sha256": "fd8b95f1d69ef118947eac7ede5dfcff42559623c5fac0219cfbd1e1c9c35187"
+    },
+    {
+      "id": "grace_test_wiki2multihop_2d0602fc",
+      "correct": false,
+      "reason": "Refuses to identify Sarolt.",
+      "record_sha256": "72cf7b611ab1131066ee3c878e123488f8b546acd340f26f4a6e2390141be6bb"
+    },
+    {
+      "id": "grace_test_wiki2multihop_408afd11",
+      "correct": true,
+      "reason": "16 December 1263 matches the reference date.",
+      "record_sha256": "c40e9030ad6392410c45f9172be4dab4ead814d6dfb164031c05cea9790ec5c0"
+    },
+    {
+      "id": "grace_test_wiki2multihop_15d365e6",
+      "correct": true,
+      "reason": "United States and American express the same country here.",
+      "record_sha256": "a89daebe72980dfbc5a5714e221cf7e4a8527e1d9f401d1e90ffca1bac95d0f3"
+    },
+    {
+      "id": "grace_test_wiki2multihop_bf5415e0",
+      "correct": true,
+      "reason": "Explicitly answers no.",
+      "record_sha256": "9b05977520b7c9669b8bd4a8f6d51323542ce9ca9ffc9a5c58f143f20b30eac9"
+    },
+    {
+      "id": "grace_test_wiki2multihop_8c81ec70",
+      "correct": false,
+      "reason": "Greece is too broad to supply the requested birthplace Thessaloniki.",
+      "record_sha256": "09f86d06f8316835beef389fd9de69720673211b17416d26ace04f8b79586fbf"
+    },
+    {
+      "id": "grace_test_wiki2multihop_319a0b43",
+      "correct": false,
+      "reason": "Refuses to identify Constantine IV.",
+      "record_sha256": "c68bc79031ce127d2ce6472a20f9b84d1fd8b27a79e53e2c72aa99b39a71e66b"
+    },
+    {
+      "id": "grace_test_wiki2multihop_9b33cdc8",
+      "correct": false,
+      "reason": "Refuses to identify Charles IX.",
+      "record_sha256": "71476b8a4c571b0bb263c15ff9a2fd062b0122b0c746fed33a0137b6209dcff9"
+    },
+    {
+      "id": "grace_test_wiki2multihop_22dc7fad",
+      "correct": false,
+      "reason": "The ultimate answer is No, contrary to reference yes.",
+      "record_sha256": "46996a4078a35542eb59bb78f90c30db5b67e284c28b2ca654d529531eb5024f"
+    },
+    {
+      "id": "grace_test_wiki2multihop_f76a5974",
+      "correct": false,
+      "reason": "Selects Dizzy Detectives rather than Female on the Beach; the reference title appears on the opposite side of the comparison.",
+      "record_sha256": "f5980141da87f6394b45f8650ce04206ac0f280ac9156792f43e3db17d17338c"
+    },
+    {
+      "id": "grace_test_wiki2multihop_e56391ae",
+      "correct": true,
+      "reason": "Explicitly answers French.",
+      "record_sha256": "32926e68a857381319812c0ed36dcfc747e7f705db78899f1c00b1d0825e80ae"
+    },
+    {
+      "id": "grace_test_wiki2multihop_80c59a36",
+      "correct": false,
+      "reason": "Refuses to identify Al Shean.",
+      "record_sha256": "4ffc6dfb143ddf313535d633c2debf9eec9f5238cd668b98ee703288cea06448"
+    },
+    {
+      "id": "grace_test_wiki2multihop_8d2ff8c5",
+      "correct": true,
+      "reason": "USC expands to University of Southern California, the reference institution.",
+      "record_sha256": "cf10519bc3bf7fab12910416e7307258285e6a27b3dd88be756d6ecdee4140ca"
+    },
+    {
+      "id": "grace_test_wiki2multihop_bcd74b02",
+      "correct": false,
+      "reason": "Names Beatrice of Saint-Pol instead of Jeanne, Countess of Guines.",
+      "record_sha256": "670829965d5158fd7853135deb20081a9754b33dc3a97259c9342930ede94379"
+    },
+    {
+      "id": "grace_test_wiki2multihop_b1711839",
+      "correct": false,
+      "reason": "Refuses to identify Pontine Paus.",
+      "record_sha256": "7ebde5b91cdaf706a234cf1e075eb7a294e6fc36e1547786a8fdc3f7b5026e46"
+    },
+    {
+      "id": "grace_test_wiki2multihop_7ddd1a92",
+      "correct": false,
+      "reason": "Cannot determine is not the reference's definitive no.",
+      "record_sha256": "7428cff700dc2ea6cadd6111dd816df7140194f5145cc95b72d974667f711e16"
+    },
+    {
+      "id": "grace_test_wiki2multihop_ae64da08",
+      "correct": true,
+      "reason": "Henry III with the Margrave title identifies the reference person.",
+      "record_sha256": "0a3e07b188f2d6d25b1ca05b75c53de82dc4c463d0b603bfa4e35ec89ef8a48b"
+    },
+    {
+      "id": "grace_test_wiki2multihop_7b15fcb3",
+      "correct": true,
+      "reason": "Explicitly answers no.",
+      "record_sha256": "1a2ef00728748d73a4cfe54d1573c6f57bba6532344018de67483effaf8e3e7d"
+    },
+    {
+      "id": "grace_test_wiki2multihop_6881015a",
+      "correct": false,
+      "reason": "Russia is too broad to supply the requested city Moscow.",
+      "record_sha256": "3a67f2bfaa3f17045c87560748cf4cdde1ffbe9062cb12b0f1d348c1a55b0c76"
+    },
+    {
+      "id": "grace_test_wiki2multihop_85e1f4d7",
+      "correct": false,
+      "reason": "Refuses to identify Jeanne d'Albret.",
+      "record_sha256": "40777bb694ba41bbaf4a2f23b2af12d3cb828643d59dc4ed53eec83bd1243621"
+    },
+    {
+      "id": "grace_test_wiki2multihop_325c20c4",
+      "correct": true,
+      "reason": "Explicitly selects El Bolero de Raquel; an unfinished trailing doubt does not retract the sole selection.",
+      "record_sha256": "4d59876969b64ddf92ffae054806a25713730647a6069dcce64f39c1b7d258b4"
+    },
+    {
+      "id": "grace_test_wiki2multihop_f9210731",
+      "correct": true,
+      "reason": "Explicitly answers no.",
+      "record_sha256": "25e233c34ab4d5fd5cb9dbed5558b9759e0e7f25993c2a6755e54447e58cab51"
+    },
+    {
+      "id": "grace_test_wiki2multihop_8303a5cd",
+      "correct": false,
+      "reason": "Names Gaius Octavius rather than Mark Antony.",
+      "record_sha256": "228d17245c8092e2483c282822980d3efb99cfa80ef2992e7d94bee93b71cbaa"
+    },
+    {
+      "id": "grace_test_wiki2multihop_0d4784f8",
+      "correct": null,
+      "reason": "Identifies Nest ferch Rhys as the aunt, then contradicts that by saying no such aunt is mentioned; no unambiguous final answer.",
+      "record_sha256": "ebb29eabdceeb94aac6f94d0f04043127acc0aa347e8a183394cce9932869525"
+    },
+    {
+      "id": "grace_test_wiki2multihop_842b22ec",
+      "correct": true,
+      "reason": "Explicitly answers no.",
+      "record_sha256": "679935fe819c6f77d35da833430f879df1f7145f490e9edb97ddf1549074f2f0"
+    },
+    {
+      "id": "grace_test_wiki2multihop_5c3d050f",
+      "correct": false,
+      "reason": "Names Isabella Wycliffe rather than Helen Davenant.",
+      "record_sha256": "cf533298daee027314e95997d800753720348b552399615083e258726719fba9"
+    },
+    {
+      "id": "grace_test_wiki2multihop_be84fe7e",
+      "correct": false,
+      "reason": "Names Louis IV rather than Ernest Louis.",
+      "record_sha256": "4869a01740fc8476537f2d9c4ced8b3a62f86092cd875be30caf3b56f367232d"
+    },
+    {
+      "id": "grace_test_wiki2multihop_90777253",
+      "correct": false,
+      "reason": "Refuses to identify C. L. Franklin.",
+      "record_sha256": "d6a4fd0e85091cea45b62dd5d6d021f84ba24e874bdfddc3202eea5d48e6ae9b"
+    },
+    {
+      "id": "grace_test_wiki2multihop_d19ae475",
+      "correct": false,
+      "reason": "Refuses to identify Arsinoe III.",
+      "record_sha256": "9c06693e3fd85118ba68194c253047cf29babb597f23d330b82ba78384afea9b"
+    },
+    {
+      "id": "grace_test_wiki2multihop_65e591af",
+      "correct": false,
+      "reason": "Refuses to identify Muhammad Mahdi.",
+      "record_sha256": "d8d5f66f2ad9815fc04e7ead94e8a48c597d971b90fdae4f0356b529543cd36b"
+    },
+    {
+      "id": "grace_test_wiki2multihop_f5848509",
+      "correct": false,
+      "reason": "Refuses to identify Muhammad Mahdi.",
+      "record_sha256": "8f2d4920c3d815f2d9f70bf19cb380123ae0febdc2ad5f699e203e37d7f1afc7"
+    },
+    {
+      "id": "grace_test_wiki2multihop_70463701",
+      "correct": false,
+      "reason": "Refuses to identify Emma Rabbe.",
+      "record_sha256": "9b1bdd4922ef93612156fe1725338206543178086e4ab633b5f1b176e4cc3e3f"
+    },
+    {
+      "id": "grace_test_wiki2multihop_023796cb",
+      "correct": true,
+      "reason": "Explicitly identifies Friedrich Wilhelm with the ducal title.",
+      "record_sha256": "9f218c508f1f518efa555527b4a50faa1d179629e621030241d6c42c6cddf3c5"
+    },
+    {
+      "id": "grace_test_wiki2multihop_f74499ad",
+      "correct": false,
+      "reason": "Does not name the requested Christian V and instead disputes the relationship.",
+      "record_sha256": "c3d8da885ea0e0156084499dd3e26063ccd6428fb36bc436261f9d3fe6dd2cce"
+    },
+    {
+      "id": "grace_test_wiki2multihop_d699b893",
+      "correct": false,
+      "reason": "Names King Razadarit instead of Binnya U.",
+      "record_sha256": "cddaee0644dd8610b999eaa231b0b7f4caa08486ee931196b38ec37dbf9a141d"
+    },
+    {
+      "id": "grace_test_wiki2multihop_55c86ced",
+      "correct": false,
+      "reason": "Names King Razadarit instead of Binnya U.",
+      "record_sha256": "3e47776e9cc685a8176a7661a093faea59de24696380fc909573a5bea00d5576"
+    },
+    {
+      "id": "grace_test_wiki2multihop_c985f92a",
+      "correct": true,
+      "reason": "Explicitly answers no.",
+      "record_sha256": "d5a6489f7a0fe57fed2fbadc4f0624d54526d83387c3ca4edc6e28ff47533d6c"
+    },
+    {
+      "id": "grace_test_wiki2multihop_658eb792",
+      "correct": true,
+      "reason": "Explicitly names Hester Rayner; parent information retains that answer.",
+      "record_sha256": "751cf6605e47fcd5d84807390a1e0401a1089e60b6436417666b8e68caa1d709"
+    },
+    {
+      "id": "grace_test_wiki2multihop_f2fb28cd",
+      "correct": true,
+      "reason": "Selects The Last Trail as the earlier film, matching the reference.",
+      "record_sha256": "13c85e88d1270ba42b8e36cd93070c7fab271dff92de0872c6aafbafa4cea904"
+    },
+    {
+      "id": "grace_test_wiki2multihop_0bdf7295",
+      "correct": true,
+      "reason": "Offers Alf Landon as the inferred grandfather; uncertainty about support does not negate the explicit selected answer.",
+      "record_sha256": "6a7eba1d73709af424223cf88e0354038bbda70e7d8126b7cfec57e68cf9c946"
+    },
+    {
+      "id": "grace_test_wiki2multihop_c5a56205",
+      "correct": false,
+      "reason": "Selects Carson City Cyclone instead of Chance at Heaven.",
+      "record_sha256": "0405019785866c34518f96726efb8147fa01e4855bc5921a8e709b79daba728b"
+    },
+    {
+      "id": "grace_test_wiki2multihop_756d451f",
+      "correct": true,
+      "reason": "Selects Chance at Heaven; errors in its lifespan explanation are not used as answer-incorrectness labels.",
+      "record_sha256": "3a7cf059a7f900664c0a7043aadf09f7fd09a395fc80ba5c5de52fd27837c878"
+    },
+    {
+      "id": "grace_test_wiki2multihop_00fe5d85",
+      "correct": true,
+      "reason": "Madrid, Spain includes the requested city.",
+      "record_sha256": "587a65d104fb6d8df51bb7c81e7189739379863838b7510c3a511005264d2886"
+    },
+    {
+      "id": "grace_test_wiki2multihop_8c1b0b97",
+      "correct": true,
+      "reason": "December 26, 1921 matches the reference date.",
+      "record_sha256": "fc1d498e99455a43812d9b9bc96b3c00c6bbdc60fdeee51b2f53884d79844a11"
+    },
+    {
+      "id": "grace_test_wiki2multihop_8afa30de",
+      "correct": true,
+      "reason": "Explicitly answers no.",
+      "record_sha256": "f9703c0706a5f3f81eeea641eac626114dde7a55e883cf5ad1ac6d3dfada0cad"
+    },
+    {
+      "id": "grace_test_wiki2multihop_877a720e",
+      "correct": true,
+      "reason": "Selects Along the Sundown Trail for the requested older director.",
+      "record_sha256": "e28492aba49ac5f39d8721b74dbb1f8de6b694bfa9ce37d7d1d7d36769ce86ea"
+    },
+    {
+      "id": "grace_test_wiki2multihop_2fc02fb6",
+      "correct": true,
+      "reason": "Explicitly answers yes, both India.",
+      "record_sha256": "38380ce068bb717c1113e339f841bf4ef0cbd7aa82e08631e9eef2502871a88c"
+    },
+    {
+      "id": "grace_test_wiki2multihop_7f9bbac4",
+      "correct": true,
+      "reason": "Selects Delovak Athara for the younger director.",
+      "record_sha256": "058ea273936a9043aef92bb7ba6210820b316934c82d22c3b91df39320530ff5"
+    },
+    {
+      "id": "grace_test_wiki2multihop_4a896fbf",
+      "correct": false,
+      "reason": "Says unavailable instead of giving May 10, 1890.",
+      "record_sha256": "14fe04ebab640bc2bce8c3ac3843e82373dda01294985a42f420b7e17f68f919"
+    },
+    {
+      "id": "grace_test_wiki2multihop_0e1ed116",
+      "correct": true,
+      "reason": "Explicitly selects Anna Bond.",
+      "record_sha256": "6bdfc39e6ff87291c979061c79a490039bdec7b606ec8629b99318bc48465907"
+    },
+    {
+      "id": "grace_test_wiki2multihop_b50c19eb",
+      "correct": true,
+      "reason": "Explicitly selects Prince of the Plains.",
+      "record_sha256": "eb2df1a80a67d7cae41e2c260710ad58be5964eace913130841886e70f9e29bc"
+    },
+    {
+      "id": "grace_test_wiki2multihop_369e7ce1",
+      "correct": true,
+      "reason": "Explicitly selects Bloody Moon.",
+      "record_sha256": "ccc4074eab672700c3c2c1d5763397174ffda718fa3410780bfe5d412ca28f4c"
+    },
+    {
+      "id": "grace_test_wiki2multihop_9a415861",
+      "correct": false,
+      "reason": "Refuses to identify Tairrdelbach.",
+      "record_sha256": "426502370b2896d8712ac5c9beb5d58b2e8c8e855d24e7ec11f9a2c2da88ab7b"
+    },
+    {
+      "id": "grace_test_wiki2multihop_28a1be46",
+      "correct": true,
+      "reason": "7 September 1994 matches the reference date.",
+      "record_sha256": "7b1d861667f7e1e6c0b148ca3c086d7be3deb05f33c8bfd349c227a89010fb15"
+    },
+    {
+      "id": "grace_test_wiki2multihop_889228c1",
+      "correct": true,
+      "reason": "Explicitly answers no.",
+      "record_sha256": "ac6f04501eaa8e39ce2643efd8fa704fef812e5f884440d41e337b427ada9d69"
+    },
+    {
+      "id": "grace_test_wiki2multihop_85ed8983",
+      "correct": false,
+      "reason": "Says not mentioned instead of giving 11 December 1922.",
+      "record_sha256": "1076b93b407be3bd440cf5d6f2cddb463cb65861059f6f617d9cbc0d0c160857"
+    },
+    {
+      "id": "grace_test_wiki2multihop_8648993e",
+      "correct": false,
+      "reason": "Claims there is no uncle instead of identifying Pandulf Ironhead.",
+      "record_sha256": "d7a61619af3cf37901a1fbe8ec35bc10232e4e620b06575b9380622fa03480c8"
+    },
+    {
+      "id": "grace_test_wiki2multihop_442864b3",
+      "correct": true,
+      "reason": "Explicitly answers yes, both United States.",
+      "record_sha256": "8788dff530ffa8548a5ebc9254eed2feeadb47d449fc245be0875822979d90cf"
+    },
+    {
+      "id": "grace_test_wiki2multihop_9946b604",
+      "correct": false,
+      "reason": "Selects Rise of the Planet of the Apes instead of Central Intelligence; the reference title is mentioned on the opposite side of the comparison.",
+      "record_sha256": "f713605cc258006eb223285ed9d0ae246b1aa7a42989dac7aefdb9af50a47b8f"
+    },
+    {
+      "id": "grace_test_wiki2multihop_f318dce3",
+      "correct": true,
+      "reason": "Explicitly selects Know Thy Wife.",
+      "record_sha256": "bec93511a098dd8838436c094f49b67c9ff3289431ce70be9c23ce38ace48077"
+    },
+    {
+      "id": "grace_test_wiki2multihop_e847ee63",
+      "correct": true,
+      "reason": "Simeon ben Hillel matches the reference; the multi-reference citation suffix is presentation only.",
+      "record_sha256": "540aaeafe7a9b63551c6b63d2d529e377a3828976654a52095d82fbe1d2e3a00"
+    },
+    {
+      "id": "grace_test_wiki2multihop_94eec448",
+      "correct": false,
+      "reason": "Mentions unnamed sisters instead of identifying Min Shin Saw.",
+      "record_sha256": "541dac7700c61451a7f90779322bbdaab3237dfdf9a931b857d6093c0d7b9775"
+    },
+    {
+      "id": "grace_test_wiki2multihop_a19cba62",
+      "correct": false,
+      "reason": "Names Sithu II instead of Min Shin Saw.",
+      "record_sha256": "f78d5e776a84abf7d102e8122c75dbdafa2a6808e0bbb99ee895cf47d7802e1f"
+    },
+    {
+      "id": "grace_test_wiki2multihop_ad0e64a3",
+      "correct": false,
+      "reason": "Refuses to identify Jochi.",
+      "record_sha256": "795562f3af865a1638dbd3d1de8ee8d28512e901060e52267d11231a99b5fcfe"
+    },
+    {
+      "id": "grace_test_wiki2multihop_5afddaad",
+      "correct": false,
+      "reason": "Refuses to identify Hollywood.",
+      "record_sha256": "d287ae2950b73d5b954e124f1a47234069d5e6719a05a524fb70f3169c5ef38e"
+    },
+    {
+      "id": "grace_test_wiki2multihop_e56bbf52",
+      "correct": false,
+      "reason": "Places the reference person in the mother relation and refuses the requested stepmother identity; the name's occurrence is not the requested answer.",
+      "record_sha256": "8546784255a9d628ccd85e7c6816453c26bcdf7ef7236a095bd16d342bcd2373"
+    },
+    {
+      "id": "grace_test_wiki2multihop_6a38af19",
+      "correct": false,
+      "reason": "Refuses to identify the grandfather and uses Ottokar in a different family relation.",
+      "record_sha256": "ea6db48ecafd84db0388a0bf454f9fe1809d4f1de9a99eb10297f582351348a0"
+    }
+  ]
+}

@@ -4,14 +4,23 @@ Updated September 13, 2026. Research driver: Codex, following the user's explici
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
-Latest verification: GRACE repair commits `36445ad`/`512d866` produce reproducible
-new arithmetic, but the replacement labels still accept wrong dates and reference
-mentions inside refusals. Both repository scripts still run the first-character
-checker, and the saved analysis JSON is stale. Correctness-derived conclusions
-remain provisional pending validated labels and pipeline integration; pooled NLI
-correlations survive. See [repair verification](notes/2026-09-13-grace-repair-verification.md).
-The independent audit's reserved-exposure count is corrected to 204/807 responses
-across 156 question clusters; its earlier 211/161 included seven ineligible rows.
+Latest execution: the shared answer checker and both cached-data analyses are
+implemented and run. GRACE now has 280 correct / 154 incorrect / 3 unresolved
+reference-equivalence decisions (assistant-reviewed, not independent human gold).
+Primary NLI regime differences are +.025 / +.113 / -.004, all with intervals
+covering zero. Pooled NLI rho .226/.254 survives; majority-rule error lift is
+1.606 [1.432, 1.804], while the all-unfaithful rule is not resolved. BonaFide's
+four-arm common-150 AUROCs remain .319/.400/.367/.331 with direct paired intervals.
+Final outputs: `results/grace_reanalysis_v3/2026-09-13-final/` and
+`results/bonafide_reconciliation_v2/2026-09-13-final/`. Scripts reject stale reviews,
+missing/duplicate records, and overwrites; undefined bootstrap samples are explicit.
+32 tests pass. Manuscript tables are generated from these results. No new model
+inference was needed. See [executed repair](notes/2026-09-13-executed-analysis-repair.md).
+
+Earlier audit entries below are historical where superseded by that executed
+repair. The prior containment/F1 labels and saved regime JSON stay preserved,
+but are not the current correctness-stratified analysis. Reserved exposure is
+204/807 responses across 156 questions (397 responses sharing those questions).
 
 ## Scientific direction
 

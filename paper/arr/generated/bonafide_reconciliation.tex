@@ -1,0 +1,19 @@
+% Rendered from versioned results; do not edit numbers by hand.
+% Source SHA256: 60d4e5a5c5f3d3e193b210223d00f22727a10e6f05a478e183b92c1ccdc29289
+\paragraph{Exploratory reconciliation on common responses.}
+We compare cached A/B/C scores and historical GPT-4o scores D on exactly 150 common responses (123 questions; 85 unfaithful, 65 faithful). A uses a generic rubric with the full prompt; B uses that rubric with the local hint-stripping rule; C uses our rubric with the full prompt; D uses our rubric with the clean question. B is not an exact implementation of the upstream definition-aware no-hint monitor. All score directions are fixed towards unfaithfulness.
+\begin{center}\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Arm & AUROC & 95\% interval \\
+\midrule
+A & 0.319 & $[+0.229, +0.412]$ \\
+B & 0.400 & $[+0.307, +0.490]$ \\
+C & 0.367 & $[+0.278, +0.456]$ \\
+D & 0.331 & $[+0.242, +0.418]$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Direct paired differences are A-B: $-0.081$, $[-0.178, +0.015]$; A-C: $-0.048$, $[-0.128, +0.036]$; C-D: $+0.036$, $[-0.023, +0.093]$. These intervals do not establish a context or rubric remedy, nor equivalence. A on its larger, unmatched sample is descriptive only.
+On the 143 common incorrect answers, A/B/C/D AUROCs are 0.335/0.419/0.370/0.332. B minus D is $+0.087$ ($[+0.006, +0.161]$), an exploratory nominal interval among multiple contrasts involving a historical comparator; this is not independent evidence of a general correction method.
+The reconciliation exposes 204 of the original 807 evaluation responses across 156 question clusters; 397 evaluation responses share those clusters. We retain that split and flag exposure. The seven correct answers lie outside the split's incorrect-answer population. Legacy scores lack raw judge outputs and exact request provenance, so these analyses cannot validate quoted rationales or attribute differences solely to evidence access.

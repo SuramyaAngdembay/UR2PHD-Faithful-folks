@@ -1,0 +1,49 @@
+{
+  "inputs": {
+    "data/logiqa.jsonl": "de2e632c8aa1d9e8addd21d800d46b655b56c0540a2fdf3f1bc057694ee8b578",
+    "data/musique.jsonl": "63fc11a6af32f982d66548a9c0c88afc1e3e1bcb744e43016ad61cdc82377dc1",
+    "data/reclor.jsonl": "42b303ed675a75e53566d9624c574a8a8b98a783174567d94130d1a77e87c908",
+    "data/wiki2multihop.jsonl": "f195661e08733a7aa5c8c116ca2545fa67e14d5c8bd834c67234b0d0b5f73455",
+    "nli_cache": "85207d56a77478e6a796bbd22441f576bcad3920072e414a1f0a8404ebb4590d",
+    "answer_reviews": "93c8e92c896da7064353ae6399ab30e89c996e14633322defd439b57b6446fcc"
+  },
+  "code": {
+    "grace_regime_analysis.py": "18d84a60b9d3fd74f8c91537f6f6a57800fb205cfc2a480ad549786784a2f314",
+    "grace_answer_check.py": "ac4702581772df08737a5c3082362314efaf1768aec522b65c2c4bf680f24d01",
+    "reanalysis_common.py": "d02873328cfde8c28893864f749a3f92b4f20135c7e9b154fa8f42566e97334b"
+  },
+  "protocol": {
+    "analysis": "grace-cached-reanalysis-v3",
+    "correctness_checker": "grace-answer-equivalence-v3",
+    "review_provenance": "assistant equivalence review; not independent human gold",
+    "target": "fraction of native unfaithful steps; five declared binary sensitivity rules",
+    "score_direction": "higher unfaithfulness; mean context entailment and citation fraction negated once",
+    "cluster": "dataset + original_question_id; same draws for direct regime differences",
+    "nli_cache": {
+      "model_as_documented": "roberta-large-mnli",
+      "entailment_index": 2,
+      "unsupported_threshold": 0.5,
+      "premise_char_limit": 4000,
+      "pair_token_limit": 512,
+      "context_arm": "supplied passages/context",
+      "prior_arm": "question + preceding steps, omitting supplied context",
+      "provenance": "legacy cache: no original requests, model revision, or token-level truncation logs"
+    },
+    "scope": "selected verifier-disagreement GRACE test set; exploratory, prior sample exposure; no fresh judge inference",
+    "uncertainty": "percentile question bootstrap, fixed attempts, undefined replicates counted; no multiplicity adjustment"
+  },
+  "seed": 0,
+  "bootstrap": 2000,
+  "run_sha256": "b7bf6263bcad71d8c94e23113022bcbd82c82f293aa2382052fb287a40f16430",
+  "created_utc": "2026-09-13T06:46:28.032442+00:00",
+  "versions": {
+    "python": "3.9.6",
+    "numpy": "2.0.2",
+    "scipy": "1.13.1"
+  },
+  "status": "complete cached-data reanalysis; no new model inference",
+  "artifacts": {
+    "correctness.json": "4b38074e3dd95d26fe7ad9b94f0243f201ecf735337159735d8c9f66af697d7b",
+    "results.json": "3440d32ab45cb45be87df80595208781e861fde654966f13339ce9244b4c86dc"
+  }
+}

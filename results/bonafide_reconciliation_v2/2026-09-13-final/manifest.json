@@ -1,0 +1,42 @@
+{
+  "inputs": {
+    "bonafide_pop.json": "0577244a8ae87e902c6c9fdf78ea76100406f263fdba57624dcf12012ed18bd1",
+    "bonafide_predictions.json": "61fd2ffa179f1ec741da44c5af330d3b39a13d358a2d009522aef1c463c7c70b",
+    "dev_clusters.json": "d3e0929a5f1bd3bf903ed67c5eb640a7fec1089291b3303aa6e932eb58eae2db",
+    "reconcile_A.jsonl": "fd0f02f2ccd093d0a62a86995f7defad00e6c0886ebc4df78e9c54d3708aa818",
+    "reconcile_B.jsonl": "9326eea12478ff7a808823484c59553dcbf8ffaa53aa740bcffccd06c8f2cdfe",
+    "reconcile_C.jsonl": "b8c8232eba6319beda93bf401e2284879cfccc4793482b2d780cd24e62751f5d"
+  },
+  "code": {
+    "bonafide_reconcile_analysis.py": "6b2b9f42593ef66698a048810d70f45d9b070385e27e87947fdd2a59b37cec1c",
+    "reanalysis_common.py": "d02873328cfde8c28893864f749a3f92b4f20135c7e9b154fa8f42566e97334b"
+  },
+  "protocol": {
+    "analysis": "bonafide-paired-reconciliation-v2",
+    "label": "frozen explicit native whole-label y; 1=unfaithful",
+    "direction": "all scores higher unfaithfulness; no complement selected after outcomes",
+    "arms": {
+      "A": "generic rubric / full prompt",
+      "B": "generic rubric / local hint-strip rule, not upstream monitor_no_hint",
+      "C": "our rubric / full prompt",
+      "D": "historical GPT-4o / our rubric / clean question"
+    },
+    "population": "exact four-arm response intersection; incorrect-only sensitivity",
+    "bootstrap": "same question resamples in every arm and direct contrast; fixed attempts; no multiplicity adjustment",
+    "scope": "exploratory; historical D; no fresh inference; legacy score-only records lack raw outputs and exact requests"
+  },
+  "seed": 0,
+  "bootstrap": 2000,
+  "run_sha256": "6571a23568d3932c4727e6f16e4481ba0b8cc1399806b8fe0c2ef1547e59ebca",
+  "created_utc": "2026-09-13T06:46:28.025609+00:00",
+  "versions": {
+    "python": "3.9.6",
+    "numpy": "2.0.2",
+    "scipy": "1.13.1"
+  },
+  "status": "complete cached-data reanalysis; no new model inference",
+  "artifacts": {
+    "results.json": "60d4e5a5c5f3d3e193b210223d00f22727a10e6f05a478e183b92c1ccdc29289",
+    "exposure.json": "1b3208494660dcaaa20c313ed5f93bdc14718b898cfc4181174ddf02326ec9f2"
+  }
+}

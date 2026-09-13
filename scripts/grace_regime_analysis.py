@@ -1,164 +1,226 @@
-"""GRACE two-regime analysis, with the aggregation degrees-of-freedom handled explicitly.
+"""Portable GRACE reanalysis with tri-state correctness and paired uncertainty.
 
-DISCLOSURE (no pre-registration is possible here and none is claimed): before writing this
-analysis I inspected how the trace-label aggregation rule changes the 2x2 cell counts, and saw
-that "any non-faithful step" starves the faithful-incorrect cell to 9 while a majority rule gives
-112/79/55/191. Choosing a rule after seeing that is a researcher degree of freedom. Two defences
-are built in instead of a claim of blindness:
-
-  1. PRIMARY endpoint is THRESHOLD-FREE. GRACE's native annotation is graded (each step carries a
-     label), so the trace-level target is the FRACTION of non-faithful steps and the statistic is
-     Spearman rho between signal and that fraction, within each correctness regime. No aggregation
-     rule enters the primary at all.
-  2. SECONDARY endpoints are binary AUROC at EVERY threshold in {any, >0.25, >=0.5, >0.5, all},
-     reported as a band. Any conclusion that flips inside that band is reported as not a finding.
-
-Regime contrast: primary is rho(correct) - rho(incorrect); question-clustered bootstrap over
-original_question_id (questions recur across the 10 generator models).
-
-Composition controls (the audit skipped before the BonaFide freeze, run here first): GRACE shows
-NO length confound (unfaithful 4.68 vs faithful 4.65 mean steps) but does show mild dataset/track/
-model imbalance, so every headline is also reported within dataset x track cells.
-
-Signal directions are fixed a priori, higher = more unfaithful:
-  nli_unsup_ctx / nli_unsup_prior  (+)   n_steps / words (+)
-  nli_mean_ent_ctx (-)             frac_cited (-)
-Inverted signals are negated once, here, and never re-selected.
-
-Usage: python grace_regime_analysis.py
-Output: ~/synth/results/grace_regime_results.json
+Exploratory: answer reviews are assistant judgments, not independent human gold.
+Target = fraction of native unfaithful steps. Binary aggregations are sensitivity
+endpoints, not new trace annotations. Historical NLI truncation remains a limit.
 """
-import glob, json, os, re
+from __future__ import annotations
+import argparse
+from collections import Counter, defaultdict
+from pathlib import Path
 import numpy as np
-from collections import defaultdict
-from scipy.stats import rankdata, spearmanr
+from grace_answer_check import VERSION, evaluate, load_reviews, load_rows
+from reanalysis_common import (aucs, cluster_draws, interval, manifest, number,
+                               read_json, rhos, save_json, sha256)
 
-RES = os.path.expanduser("~/synth/results")
-GDIR = os.path.expanduser("~/grace/dataset/test")
-INVERTED = {"nli_mean_ent_ctx", "frac_cited"}
-# FIX: the native target is a FRACTION of non-faithful steps, so unsupported-step COUNTS are
-# mechanically confounded with trace length (a long trace accrues more unsupported steps without
-# a higher fraction). Rate versions are the like-for-like signals; counts retained for reference.
-SIG = ["nli_frac_unsup_ctx", "nli_frac_unsup_prior", "nli_mean_ent_ctx",
-       "nli_unsup_ctx", "nli_unsup_prior", "n_steps", "words", "frac_cited"]
-RULES = {"any": lambda f: f > 0, ">0.25": lambda f: f > 0.25, ">=0.5": lambda f: f >= 0.5,
-         ">0.5": lambda f: f > 0.5, "all": lambda f: f >= 1.0}
+ROOT = Path(__file__).resolve().parents[1]
+SIGNALS = ['nli_frac_unsup_ctx', 'nli_frac_unsup_prior', 'neg_nli_mean_ent_ctx',
+           'nli_unsup_ctx', 'nli_unsup_prior', 'n_steps', 'words', 'neg_frac_cited']
+RULES = {'any': lambda f: f > 0, '>0.25': lambda f: f > .25,
+         '>=0.5': lambda f: f >= .5, '>0.5': lambda f: f > .5, 'all': lambda f: f == 1}
 
-def steptext(s):
-    for k in ("text", "step", "content", "step_text"):
-        if s.get(k): return str(s[k])
-    return ""
 
-def letter(s):
-    m = re.match(r"\s*([A-E])\s*\)", str(s))
-    return m.group(1) if m else str(s).strip()[:1].upper()
+def steptext(step):
+    for key in ('text', 'step', 'content', 'step_text'):
+        if step.get(key):
+            return str(step[key])
+    raise ValueError('Step has no text')
 
-rows = []
-for f in sorted(glob.glob(os.path.join(GDIR, "*.jsonl"))):
-    for l in open(f):
-        r = json.loads(l)
-        r["correct"] = int(letter(r["gold_answer"]) == letter(r["final_answer"]))
-        r["frac"] = float(np.mean([s.get("faithfulness") != "faithful" for s in r["steps"]]))
-        r["n_steps"] = len(r["steps"])
-        txt = " ".join(steptext(s) for s in r["steps"])
-        r["words"] = len(txt.split())
-        r["frac_cited"] = sum(1 for s in r["steps"] if s.get("citations")) / max(1, len(r["steps"]))
-        r["cluster"] = r["original_question_id"]
-        rows.append(r)
-nli = json.load(open(os.path.join(RES, "grace_nli.json")))
-for r in rows:
-    r.update(nli.get(r["id"], {}))
-    for tag in ("ctx", "prior"):
-        c = r.get(f"nli_unsup_{tag}")
-        r[f"nli_frac_unsup_{tag}"] = None if c is None else c / max(1, r["n_steps"])
-for r in rows:
-    for k in INVERTED:
-        if r.get(k) is not None: r[k] = -float(r[k])   # negate once; direction now fixed
 
-cor = [r for r in rows if r["correct"] == 1]; inc = [r for r in rows if r["correct"] == 0]
-print(f"n={len(rows)}  correct={len(cor)}  incorrect={len(inc)}")
+def features(rows, cache):
+    if set(cache) != {r['id'] for r in rows}:
+        raise ValueError('NLI cache IDs must exactly match the GRACE population')
+    x, target = [], []
+    for row in rows:
+        n, sc = len(row['steps']), cache[row['id']]
+        for tag in ('ctx', 'prior'):
+            count, mean = sc.get('nli_unsup_' + tag), sc.get('nli_mean_ent_' + tag)
+            if type(count) is not int or not 0 <= count <= n:
+                raise ValueError(f"Invalid NLI count: {row['id']} {tag}")
+            if type(mean) not in (int, float) or not np.isfinite(mean) or not 0 <= mean <= 1:
+                raise ValueError(f"Invalid NLI entailment: {row['id']} {tag}")
+        target.append(sum(s['faithfulness'] == 'unfaithful' for s in row['steps']) / n)
+        text = ' '.join(steptext(s) for s in row['steps'])
+        x.append([sc['nli_unsup_ctx'] / n, sc['nli_unsup_prior'] / n,
+                  -sc['nli_mean_ent_ctx'], sc['nli_unsup_ctx'], sc['nli_unsup_prior'],
+                  n, len(text.split()), -sum(bool(s.get('citations')) for s in row['steps']) / n])
+    return np.asarray(target), np.asarray(x, dtype=float)
 
-def clus_boot(rws, stat, B=2000, seed=0):
-    cl = defaultdict(list)
-    for i, r in enumerate(rws): cl[r["cluster"]].append(i)
-    ks = list(cl); rng = np.random.default_rng(seed); out = []
-    tries = 0
-    while len(out) < B and tries < B * 20:
-        tries += 1
-        idx = [i for c in rng.choice(len(ks), len(ks), replace=True) for i in cl[ks[c]]]
-        v = stat([rws[i] for i in idx])
-        if v is not None and not np.isnan(v): out.append(v)
+
+def lift(y, correct):
+    incorrect = correct == 0
+    if not y.any() or not incorrect.any():
+        return np.nan
+    return incorrect[y].mean() / incorrect.mean()
+
+
+def binary_summary(frac, x, correct=None):
+    out = {}
+    for rule, apply in RULES.items():
+        y = apply(frac)
+        rec = {'n': len(y), 'unfaithful': int(y.sum()), 'faithful': int((~y).sum()),
+               'auroc': dict(zip(SIGNALS, map(number, aucs(y, x))))}
+        if correct is not None:
+            rec['cells'] = {c: {'faithful': int(((correct == v) & ~y).sum()),
+                               'unfaithful': int(((correct == v) & y).sum())}
+                            for c, v in [('correct', 1), ('incorrect', 0)]}
+            rec['incorrect_base_rate'] = float((correct == 0).mean())
+            rec['incorrect_given_unfaithful'] = float((correct[y] == 0).mean()) if y.any() else None
+            rec['lift'] = number(lift(y, correct))
+            rec['by_correctness_auroc'] = {
+                c: dict(zip(SIGNALS, map(number, aucs(y[correct == v], x[correct == v]))))
+                for c, v in [('correct', 1), ('incorrect', 0)]}
+        out[rule] = rec
     return out
 
-def rho(rws, k):
-    v = [(r[k], r["frac"]) for r in rws if r.get(k) is not None]
-    if len(v) < 15 or len({x[1] for x in v}) < 2: return None
-    return float(spearmanr([x[0] for x in v], [x[1] for x in v]).statistic)
 
-def auc_at(rws, k, rule):
-    v = [(float(r[k]), int(RULES[rule](r["frac"]))) for r in rws if r.get(k) is not None]
-    y = np.array([x[1] for x in v]); s = np.array([x[0] for x in v])
-    if y.sum() in (0, len(y)) or len(v) < 15: return None
-    rk = rankdata(s); n1 = y.sum(); n0 = len(y) - n1
-    return float((rk[y == 1].sum() - n1 * (n1 + 1) / 2) / (n1 * n0))
+def paired_regimes(frac, x, correct, keys, repeats, seed):
+    def estimates(ix):
+        c = correct[ix]
+        rc = rhos(frac[ix][c == 1], x[ix][c == 1])
+        ri = rhos(frac[ix][c == 0], x[ix][c == 0])
+        return np.stack([rhos(frac[ix], x[ix]), rc, ri, rc - ri])
+    point = estimates(np.arange(len(frac)))
+    draws, lifts = [], []
+    for ix in cluster_draws(keys, repeats, seed):
+        draws.append(estimates(ix))
+        lifts.append([lift(apply(frac[ix]), correct[ix]) for apply in RULES.values()])
+    draws, lifts = np.asarray(draws), np.asarray(lifts)
+    binary = binary_summary(frac, x, correct)
+    for j, rule in enumerate(RULES):
+        v = binary[rule]['lift']
+        binary[rule]['lift_interval'] = interval(v if v is not None else np.nan, lifts[:, j], 'lift')
+    return {'n': len(frac), 'questions': len(set(keys)),
+            'correct': int((correct == 1).sum()), 'incorrect': int((correct == 0).sum()),
+            'signals': {signal: {label: interval(point[j, i], draws[:, j, i],
+                                                'delta' if label == 'correct_minus_incorrect' else 'rho')
+                                 for j, label in enumerate(['pooled', 'correct', 'incorrect', 'correct_minus_incorrect'])}
+                        for i, signal in enumerate(SIGNALS)}, 'binary': binary}
 
-out = {"n": len(rows),
-       "regimes": {"correct": len(cor), "incorrect": len(inc)},
-       "primary": "Spearman rho(signal, fraction of non-faithful steps), threshold-free",
-       "disclosure": "aggregation cell counts were inspected before this analysis; primary is "
-                     "threshold-free and all five thresholds are reported as a band",
-       "composition": "no length confound (4.68 vs 4.65 mean steps); mild dataset/track/model imbalance",
-       "signals": {}}
 
-print("\n=== PRIMARY (threshold-free): Spearman rho vs fraction non-faithful ===")
-print(f"{'signal':18s} {'pooled':>20} {'CORRECT':>20} {'INCORRECT':>20} {'cor-inc':>18}")
-for k in SIG:
-    rec = {}
-    for lab, rws in (("pooled", rows), ("correct", cor), ("incorrect", inc)):
-        p = rho(rws, k)
-        if p is None: rec[lab] = None; continue
-        bs = clus_boot(rws, lambda z, kk=k: rho(z, kk))
-        rec[lab] = {"rho": round(p, 3),
-                    "ci95": [round(float(np.percentile(bs, 2.5)), 3), round(float(np.percentile(bs, 97.5)), 3)]}
-    d = clus_boot(rows, lambda z, kk=k: (lambda a, b: None if a is None or b is None else a - b)(
-        rho([r for r in z if r["correct"] == 1], kk), rho([r for r in z if r["correct"] == 0], kk)))
-    dp = (rec["correct"]["rho"] - rec["incorrect"]["rho"]) if rec.get("correct") and rec.get("incorrect") else None
-    rec["regime_diff"] = None if dp is None else {
-        "delta": round(dp, 3),
-        "ci95": [round(float(np.percentile(d, 2.5)), 3), round(float(np.percentile(d, 97.5)), 3)]}
-    f = lambda x: f"{x['rho']:+.3f} {x['ci95']}" if x else "n/a"
-    g = lambda x: f"{x['delta']:+.3f} {x['ci95']}" if x else "n/a"
-    print(f"{k:18s} {f(rec.get('pooled')):>20} {f(rec.get('correct')):>20} {f(rec.get('incorrect')):>20} {g(rec.get('regime_diff')):>18}")
-    out["signals"][k] = {"primary": rec}
+def conditional_pairs(rows, frac, x):
+    """Different estimand from rho: AUROC restricted to dataset x track pairs."""
+    groups = defaultdict(list)
+    for i, row in enumerate(rows):
+        groups[(row['dataset'], row['track'])].append(i)
+    result = {}
+    for rule, apply in RULES.items():
+        y, num, den, cells = apply(frac), np.zeros(len(SIGNALS)), 0, []
+        for key, ix in sorted(groups.items()):
+            yy = y[ix]
+            w = int(yy.sum()) * int((~yy).sum())
+            cells.append({'dataset': key[0], 'track': key[1], 'n': len(ix), 'unfaithful': int(yy.sum()), 'pairs': w})
+            if w:
+                num += w * aucs(yy, x[ix])
+                den += w
+        total = int(y.sum()) * int((~y).sum())
+        result[rule] = {'endpoint': 'pair-weighted within-dataset-and-track binary AUROC',
+                        'supported_pairs': den, 'pooled_pairs': total,
+                        'pair_coverage': den / total if total else None, 'cells': cells,
+                        'auroc': dict(zip(SIGNALS, map(number, num / den))) if den else None}
+    return result
 
-print("\n=== SECONDARY: binary AUROC across ALL five aggregation thresholds ===")
-print(f"{'signal':18s} " + " ".join(f"{r:>14}" for r in RULES))
-for reg, rws in (("CORRECT", cor), ("INCORRECT", inc)):
-    print(f"-- {reg} regime")
-    for k in SIG:
-        vals = []
-        for rule in RULES:
-            v = auc_at(rws, k, rule)
-            vals.append("n/a" if v is None else f"{v:.3f}")
-        out["signals"][k].setdefault("auroc_band", {})[reg] = dict(zip(RULES, vals))
-        span = [float(x) for x in vals if x != "n/a"]
-        flip = "  <-- crosses 0.5" if span and min(span) < 0.5 < max(span) else ""
-        print(f"   {k:18s} " + " ".join(f"{v:>14}" for v in vals) + flip)
 
-print("\n=== composition control: within dataset x track (pair-weighted AUROC, majority rule) ===")
-for k in SIG:
-    num = den = 0.0
-    for key in {(r["dataset"], r["track"]) for r in rows}:
-        sub = [r for r in rows if (r["dataset"], r["track"]) == key and r.get(k) is not None]
-        y = np.array([int(RULES[">=0.5"](r["frac"])) for r in sub])
-        if y.sum() in (0, len(y)) or len(sub) < 10: continue
-        s = np.array([float(r[k]) for r in sub]); rk = rankdata(s)
-        n1 = y.sum(); n0 = len(y) - n1
-        w = float(n1 * n0)
-        num += w * float((rk[y == 1].sum() - n1 * (n1 + 1) / 2) / (n1 * n0)); den += w
-    v = round(num / den, 3) if den else None
-    out["signals"][k]["conditioned_dataset_track"] = v
-    print(f"   {k:18s} {v}")
+def run(args):
+    out = Path(args.output_dir)
+    if out.exists():
+        raise FileExistsError(f'Choose a new versioned output directory: {out}')
+    rows = load_rows(args.data_dir)
+    decisions = evaluate(rows, load_reviews(None if args.no_reviews else args.reviews))
+    frac, x = features(rows, read_json(args.nli_cache))
+    keys = [(r['dataset'], str(r['original_question_id'])) for r in rows]
+    c = np.array([-1 if decisions[r['id']]['correct'] is None else int(decisions[r['id']]['correct']) for r in rows])
+    auto = np.array([-1 if decisions[r['id']]['automatic_correct'] is None else int(decisions[r['id']]['automatic_correct']) for r in rows])
+    inputs = {'data/' + p.name: p for p in sorted(Path(args.data_dir).glob('*.jsonl'))}
+    inputs['nli_cache'] = args.nli_cache
+    if not args.no_reviews:
+        inputs['answer_reviews'] = args.reviews
+    scripts = [Path(__file__), Path(__file__).with_name('grace_answer_check.py'),
+               Path(__file__).with_name('reanalysis_common.py')]
+    protocol = {'analysis': 'grace-cached-reanalysis-v3', 'correctness_checker': VERSION,
+                'review_provenance': 'none; deterministic decisions only' if args.no_reviews else 'assistant equivalence review; not independent human gold',
+                'target': 'fraction of native unfaithful steps; five declared binary sensitivity rules',
+                'score_direction': 'higher unfaithfulness; mean context entailment and citation fraction negated once',
+                'cluster': 'dataset + original_question_id; same draws for direct regime differences',
+                'nli_cache': {'model_as_documented': 'roberta-large-mnli', 'entailment_index': 2,
+                              'unsupported_threshold': .5, 'premise_char_limit': 4000,
+                              'pair_token_limit': 512, 'context_arm': 'supplied passages/context',
+                              'prior_arm': 'question + preceding steps, omitting supplied context',
+                              'provenance': 'legacy cache: no original requests, model revision, or token-level truncation logs'},
+                'scope': 'selected verifier-disagreement GRACE test set; exploratory, prior sample exposure; no fresh judge inference',
+                'uncertainty': 'percentile question bootstrap, fixed attempts, undefined replicates counted; no multiplicity adjustment'}
+    man = manifest(inputs, scripts, protocol, args.seed, args.bootstrap)
+    pooled_draws = np.asarray([rhos(frac[ix], x[ix]) for ix in cluster_draws(keys, args.bootstrap, args.seed)])
+    pooled = {'n': len(rows), 'questions': len(set(keys)), 'steps': sum(len(r['steps']) for r in rows),
+              'signals': {s: interval(v, pooled_draws[:, j], 'rho') for j, (s, v) in enumerate(zip(SIGNALS, rhos(frac, x)))},
+              'binary': binary_summary(frac, x), 'conditional_pairs': conditional_pairs(rows, frac, x)}
+    cohorts = {}
+    for name, labels in [('reviewed', c), ('deterministic_only', auto)]:
+        ix = np.flatnonzero(labels >= 0)
+        if not len(ix):
+            raise ValueError(f'No resolved answers in {name}')
+        cohorts[name] = paired_regimes(frac[ix], x[ix], labels[ix], [keys[i] for i in ix], args.bootstrap, args.seed)
+        cohorts[name]['rids'] = [rows[i]['id'] for i in ix]
+        cohorts[name]['by_dataset'] = {d: dict(Counter('correct' if labels[i] else 'incorrect' for i in ix if rows[i]['dataset'] == d))
+                                        for d in sorted({r['dataset'] for r in rows})}
+        # Keep the fraction/rho endpoint for task-specific comparisons. This is
+        # separate from the dataset x track binary conditional-pair diagnostic.
+        cohorts[name]['within_dataset'] = {}
+        for dataset in sorted({rows[i]['dataset'] for i in ix}):
+            sub = np.array([i for i in ix if rows[i]['dataset'] == dataset])
+            cohorts[name]['within_dataset'][dataset] = paired_regimes(
+                frac[sub], x[sub], labels[sub], [keys[i] for i in sub], args.bootstrap, args.seed)
+        print(f'{name}: {len(ix)} resolved answers', flush=True)
+    # Exhaustive point-estimate sensitivity to unresolved answers only. This is
+    # not a bound on errors in the resolved reviews or the benchmark reference.
+    unresolved = np.flatnonzero(c < 0)
+    sensitivity = {'unresolved_rids': [rows[i]['id'] for i in unresolved]}
+    if len(unresolved) <= 12:
+        deltas, ls = [], []
+        for assignment in range(2 ** len(unresolved)):
+            cc = c.copy()
+            for bit, i in enumerate(unresolved):
+                cc[i] = (assignment >> bit) & 1
+            deltas.append(rhos(frac[cc == 1], x[cc == 1]) - rhos(frac[cc == 0], x[cc == 0]))
+            ls.append([lift(apply(frac), cc) for apply in RULES.values()])
+        sensitivity.update(assignments=len(deltas),
+                           delta_ranges={s: [number(np.nanmin(np.asarray(deltas)[:, j])), number(np.nanmax(np.asarray(deltas)[:, j]))]
+                                         for j, s in enumerate(SIGNALS)},
+                           lift_ranges={s: [number(np.nanmin(np.asarray(ls)[:, j])), number(np.nanmax(np.asarray(ls)[:, j]))]
+                                        for j, s in enumerate(RULES)})
+    else:
+        sensitivity['status'] = 'exhaustive assignment omitted above 12 unresolved answers'
+    result = {'run_sha256': man['run_sha256'], 'pooled_all_traces': pooled, 'cohorts': cohorts,
+              'correctness_coverage': dict(Counter('unresolved' if v < 0 else 'correct' if v else 'incorrect' for v in c)),
+              'unresolved_sensitivity': sensitivity,
+              'limitations': ['Answer reference equivalence, not revalidation of reference truth.',
+                              'Assistant review and automatic-only selection can both introduce bias.',
+                              'Non-detection is neither equivalence nor proof of FaithCoT-specific mechanisms.',
+                              'Conditional pair AUROC is not an adjusted version of Spearman rho.']}
+    out.mkdir(parents=True)
+    save_json(out / 'correctness.json', {'schema': VERSION, 'decisions': decisions})
+    save_json(out / 'results.json', result)
+    man['artifacts'] = {name: sha256(out / name) for name in ('correctness.json', 'results.json')}
+    save_json(out / 'manifest.json', man)
+    print(f'Complete: {out}', flush=True)
+    return result
 
-json.dump(out, open(os.path.join(RES, "grace_regime_results.json"), "w"), indent=2)
-print("\nGRACE REGIME ANALYSIS DONE")
+
+def add_arguments(parser):
+    parser.add_argument('--data-dir', '--gdir', required=True)
+    parser.add_argument('--nli-cache', type=Path, default=ROOT / 'results/grace_nli.json')
+    parser.add_argument('--reviews', type=Path, default=ROOT / 'configs/grace-answer-reviews-v3.json')
+    parser.add_argument('--no-reviews', action='store_true')
+    parser.add_argument('--output-dir', required=True)
+    parser.add_argument('--bootstrap', type=int, default=2000)
+    parser.add_argument('--seed', type=int, default=0)
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    add_arguments(parser)
+    return run(parser.parse_args(argv))
+
+
+if __name__ == '__main__':
+    main()

@@ -59,3 +59,38 @@ incorrect (0.485–0.594). Under dataset x track conditioning everything falls t
    also refutes any blanket "nothing detects faithfulness" reading — but it decays to ~0.52–0.56
    under composition conditioning.
 4. Only the judge is still missing here; it is queued behind the BonaFide reconciliation.
+
+## CORRECTION (2026-09-13, same day): the answer checker was broken
+
+External audit found a serious bug in `grace_regime_analysis.py`: the correctness check fell back
+to comparing the FIRST CHARACTER when an answer lacked an "A)"-style prefix. **217 of 437 GRACE
+traces are free-response** (all of MuSiQue and 2WikiMultihop), so that fallback produced 52
+spurious matches -- `Juan Manuel Santos` vs `John F. Kennedy` scored as correct. Every
+correctness-dependent number in the section above was computed on corrupted labels. This is our
+bug, not a property of GRACE.
+
+**Repaired checker** (`results/grace_correctness_fixed.json`): letter comparison for
+multiple-choice, option-text fallback, SQuAD-style normalisation for free-response with exact
+match, yes/no first-token handling, short-answer containment, and token-F1 >= 0.6 otherwise.
+Validated by eyeballing 14 random judgments before use. Accuracy 0.563 (buggy) -> 0.634; 45 labels
+changed; corrected split is 277 correct / 160 incorrect.
+
+**Recomputed results -- both conclusions survive, with moved numbers:**
+
+| | buggy | corrected |
+|---|---|---|
+| entanglement lift (across all 5 rules) | 1.15--1.65x | **1.17--1.67x** |
+| grounding NLI regime diff | +0.094 [-0.091, +0.289] | **+0.046 [-0.145, +0.241]** |
+| mean-entailment regime diff | +0.127 [-0.058, +0.318] | **+0.091 [-0.100, +0.295]** |
+| prior-step NLI regime diff | -0.035 [-0.237, +0.162] | **+0.007 [-0.200, +0.214]** |
+
+Every regime difference still covers zero, and the entanglement lift is essentially unchanged. The
+bug was real and serious; correcting it did not change either conclusion. Both facts are reported.
+
+## Two further claims of mine that were too strong
+
+1. **"GRACE has no length confound" -- withdrawn.** Step count scores 0.491 against the "any" rule
+   but 0.391 / 0.386 / 0.416 / 0.184 under the other four, and n_steps correlates with the fraction
+   target at rho -0.34 (correct) / -0.21 (incorrect). Length is *differently* confounded than on
+   BonaFide (there it predicted unfaithfulness, here it anti-predicts the fraction), not absent.
+2. **Pooled NLI correlations are unaffected** (+0.226, +0.254) because they never used correctness.

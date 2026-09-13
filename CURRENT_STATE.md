@@ -4,6 +4,13 @@ Updated September 12, 2026. Research driver: Codex, following the user's explici
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
+Latest audit: the new GRACE correctness-stratified results and entanglement lift
+in commits `6af00b5`/`79d3ab6` are invalid pending repair. Both scripts compare
+only the first character of free-response answers (217 of 437 traces use free
+responses). Pooled NLI correlations survive; full correctness-derived claims do
+not. The reconciliation in `0080a89` also needs its common-population correction.
+See [latest-results audit](notes/2026-09-12-latest-claude-results-audit.md).
+
 ## Scientific direction
 
 Study when CoT faithfulness measurements transfer across evidence policies,
@@ -102,14 +109,30 @@ restricted comparisons, not causal adjustment or a replacement headline.
   close comparator for component verification. See the
   [literature and experiment assessment](notes/2026-09-12-literature-and-experiment-direction.md).
   These are research recommendations; no new inference was launched in this audit.
+- Claude's later GRACE NLI pass returned 437 cached results. Independent audit
+  reproduces pooled rho .226/.254, but finds an invalid first-character answer
+  checker on free-response tasks. Correctness-stratified effects and the claimed
+  external entanglement replication must be redone. "No length confound" is also
+  unsupported across aggregation rules. GRACE judge inference is not established
+  by these artifacts; no new inference was launched by the independent audit.
+- Claude's reconciliation saved 584 scores on 284 distinct responses. On the
+  150-response intersection, A/B/C/historical-D AUROCs are .319/.400/.367/.331;
+  A=.352 uses 284 examples and is not the paired estimate. Paired intervals do
+  not establish equivalence or a harmful context effect. The public generic-
+  monitor interface has a score-direction inconsistency, but its impact on the
+  published AUROC remains unverified. The paper's CoT baseline is .67, not .68
+  (the latter is step-level). The new audit records exact source and input hashes.
 - All four API runs are complete: 226 calls, no transport/parse errors. Next
   priority is fixed-procedure repetition of the component/generic comparison
   and independent checking of alleged violations, retaining fresh validation.
 - Versioned new results are under `results/diagnostic_v2/`, `autonomous_batch1/`,
   `autonomous_batch2/`, `monitor_role_correction/`, `metadata_comment_ablation/`
   and `autonomous_campaign_2026-09-12/`. The original frozen evaluation stays
-  untouched, and the 807-response evaluation partition remains unopened. The
-  whole campaign is exploratory; exact requests are frozen before new inference.
+  untouched. The original 807-response partition now includes 211 responses
+  scored in Claude's reconciliation, spanning 161 question clusters (404
+  responses share those clusters). Preserve the split and record new exposure;
+  do not describe the entire partition as unopened. The whole campaign remains
+  exploratory; freeze exact requests before subsequent inference.
 
 ## Compute and publication
 

@@ -176,18 +176,34 @@ def check_prepared(prepared):
     for name in ['items.jsonl','smoke_ids.json']:
         if file_hash(prepared/name)!=manifest['prepared_sha256'][name]:raise ValueError('Prepared data changed: '+name)
 
-def request_plan(prepared,config,partition):
+def request_plan(prepared,config,partition,repeats=1,max_items=None):
+    """Build the request plan.
+
+    `repeats` issues the SAME request `repeats` times so within-request
+    instability can be measured (identical payload, temperature 0). Repeat 0
+    keeps the historical request_id digest so existing runs still resume; later
+    repeats add the index to the digest. Repeats are replicate measurements of
+    one response, never additional independent examples.
+    """
+    if repeats<1:raise ValueError('repeats must be >=1')
     check_prepared(prepared)
     items=read_jsonl(prepared/'items.jsonl')
     smoke=set(json.loads((prepared/'smoke_ids.json').read_text()))
     items=[r for r in items if (r['rid'] in smoke if partition=='smoke' else r['partition']==partition)]
-    rng=random.Random(config['seed']); rng.shuffle(items);plan=[]
+    rng=random.Random(config['seed']); rng.shuffle(items)
+    if max_items is not None:
+        if max_items<1:raise ValueError('max_items must be >=1')
+        items=items[:max_items]          # deterministic subset of the seeded shuffle
+    plan=[]
     for item in items:
         arms=list(config['arms']);rng.shuffle(arms)
         for arm in arms:
             payload=build_payload(item,arm,config)
-            plan.append({'rid':item['rid'],'arm':arm,'request_id':digest({'rid':item['rid'],'arm':arm,'payload':payload}),
-                         'payload':payload,'item':item})
+            base={'rid':item['rid'],'arm':arm,'payload':payload}
+            for rep in range(repeats):
+                key=base if rep==0 else dict(base,repeat=rep)
+                plan.append({'rid':item['rid'],'arm':arm,'repeat':rep,'request_id':digest(key),
+                             'payload':payload,'item':item})
     return plan
 
 def run(args):
@@ -196,12 +212,13 @@ def run(args):
         lock=args.prepared/'lock.json'
         if not lock.exists() or json.loads(lock.read_text()).get('identity')!=identity:
             raise ValueError('Evaluation requires a reviewed lock.json matching this exact config, inputs and runner')
-    plan=request_plan(args.prepared,config,args.partition)
+    plan=request_plan(args.prepared,config,args.partition,getattr(args,'repeats',1),getattr(args,'max_items',None))
     if not plan:raise ValueError('Empty request plan')
     input_chars=sum(sum(len(m['content']) for m in p['payload']['messages']) for p in plan)
     if input_chars>config['max_total_input_characters']:raise ValueError('Input-character budget exceeded; document a bounded campaign config')
     descriptor={'identity':identity,'partition':args.partition,'request_ids':[p['request_id'] for p in plan],
-                'endpoint':args.endpoint,'max_http_requests':args.max_http_requests,'max_seconds':args.max_seconds}
+                'endpoint':args.endpoint,'max_http_requests':args.max_http_requests,'max_seconds':args.max_seconds,
+                'repeats':getattr(args,'repeats',1),'max_items':getattr(args,'max_items',None)}
     if args.dry_run:
         print(json.dumps({'requests':len(plan),'input_characters':input_chars,'maximum_output_tokens':len(plan)*config['max_tokens'],
                           'identity':identity,'partition':args.partition},indent=2));return
@@ -304,6 +321,8 @@ def main():
     p.add_argument('--upstream-csv',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
     p.set_defaults(fn=prepare)
     p=sub.add_parser('run');p.add_argument('--prepared',type=Path,required=True)
+    p.add_argument('--repeats',type=int,default=1,help='identical repeats per (response,arm) for instability measurement')
+    p.add_argument('--max-items',type=int,default=None,dest='max_items',help='cap responses (deterministic subset of the seeded shuffle)')
     p.add_argument('--config',type=Path,default=ROOT/'configs/diagnostic-v2.json')
     p.add_argument('--output',type=Path,required=True);p.add_argument('--partition',choices=['smoke','dev','eval'],default='smoke')
     p.add_argument('--endpoint',default='https://api.openai.com/v1/chat/completions')

@@ -94,3 +94,24 @@ class DiagnosticTests(unittest.TestCase):
             with self.assertRaises(ValueError):d.check_prepared(p)
 
 if __name__=='__main__':unittest.main()
+
+
+class RepeatPlanTests(unittest.TestCase):
+    """Repeats must replicate identical requests without colliding or renaming repeat 0."""
+
+    def _plan(self, repeats):
+        import scripts.diagnostic_v2 as d
+        prepared = Path(PREPARED_FIXTURE) if 'PREPARED_FIXTURE' in globals() else None
+        return d, prepared, repeats
+
+    def test_repeat_zero_preserves_historical_digest(self):
+        import scripts.diagnostic_v2 as d
+        base = {'rid': 'r1', 'arm': 'A1', 'payload': {'messages': [{'content': 'x'}]}}
+        self.assertEqual(d.digest(base), d.digest(dict(base)))
+        self.assertNotEqual(d.digest(base), d.digest(dict(base, repeat=1)))
+
+    def test_repeat_indices_are_distinct(self):
+        import scripts.diagnostic_v2 as d
+        base = {'rid': 'r1', 'arm': 'A1', 'payload': {'messages': [{'content': 'x'}]}}
+        ids = {d.digest(base if r == 0 else dict(base, repeat=r)) for r in range(4)}
+        self.assertEqual(len(ids), 4)

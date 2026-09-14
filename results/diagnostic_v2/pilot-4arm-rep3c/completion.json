@@ -1,0 +1,12 @@
+{
+  "completed_at_utc": "2026-09-14T01:13:39.708317+00:00",
+  "expected": 840,
+  "valid": 840,
+  "failed_slots": 0,
+  "http_requests_recorded": 450,
+  "returned_models": [
+    "gpt-4o-2024-08-06"
+  ],
+  "responses_sha256": "2ee1c1042990b97853deb9bd20812e14e7592e235060c8ca8908a0dbe9d1bc6f",
+  "purpose": "exploratory diagnostic"
+}

@@ -1,0 +1,12 @@
+{
+  "completed_at_utc": "2026-09-14T20:23:03.086237+00:00",
+  "expected": 8,
+  "valid": 8,
+  "failed_slots": 0,
+  "http_requests_recorded": 8,
+  "returned_models": [
+    "gpt-4o-2024-08-06"
+  ],
+  "responses_sha256": "71c79817ba3e3955ef5a9ad3b3f8e108c79993b38eca0f3209a3763ec0dacc1d",
+  "purpose": "instrument smoke only"
+}

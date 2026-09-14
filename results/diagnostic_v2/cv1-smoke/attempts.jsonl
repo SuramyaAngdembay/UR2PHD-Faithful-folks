@@ -1,0 +1,8 @@
+{"request_id": "bccc970525838afc48e7da39cac136da2e505b562eaec456b02d5a2efbea1984", "rid": "smoke-01", "arm": "A1", "timestamp_utc": "2026-09-14T20:21:33.198632+00:00", "attempt": 1}
+{"request_id": "4c5f73640da288cbe1f3c078a916dec6a2fee311f0389909e483e9cc87156b84", "rid": "smoke-01", "arm": "B1", "timestamp_utc": "2026-09-14T20:21:47.406617+00:00", "attempt": 1}
+{"request_id": "6353acdcb3a96aa61d9e15f75251b6d28323242e8b2b6a1893512e5affb10239", "rid": "smoke-01", "arm": "A2", "timestamp_utc": "2026-09-14T20:21:58.721622+00:00", "attempt": 1}
+{"request_id": "774cbf7c74c550d80f20b0404df927f59be8196c949fa2f86c8fcd1b251fd74e", "rid": "smoke-01", "arm": "B2", "timestamp_utc": "2026-09-14T20:22:10.932626+00:00", "attempt": 1}
+{"request_id": "dd86729d184ea4d608cb0005f5c365355ca6a4df63ec5282ee7a0442d19a26e6", "rid": "smoke-02", "arm": "B2", "timestamp_utc": "2026-09-14T20:22:22.711621+00:00", "attempt": 1}
+{"request_id": "3e5aa1513ca03572ac1d929fb2fa482b16b89d650415cb79383a6e4b9d37d6ab", "rid": "smoke-02", "arm": "B1", "timestamp_utc": "2026-09-14T20:22:34.940630+00:00", "attempt": 1}
+{"request_id": "a0306c47d831f0d9e5c68fc6646b015dca768f0813dc5c4d790e0c2c6119c343", "rid": "smoke-02", "arm": "A2", "timestamp_utc": "2026-09-14T20:22:47.102617+00:00", "attempt": 1}
+{"request_id": "bb442e6086ef3aff256f2dd1d85d3a0ac84452a0e55a0242191900b863bd3ab8", "rid": "smoke-02", "arm": "A1", "timestamp_utc": "2026-09-14T20:22:58.743614+00:00", "attempt": 1}

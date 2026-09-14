@@ -1,0 +1,47 @@
+{
+  "n_accusation_records": 473,
+  "n_unique_responses": 70,
+  "by_arm": {
+    "B2": 237,
+    "A2": 236
+  },
+  "repeat_multiplicity": {
+    "1": 446,
+    "2": 22,
+    "3": 5
+  },
+  "trace_quote_location": {
+    "A2": {
+      "ellipsis_joined_excerpts": 3,
+      "exact": 217,
+      "whitespace_only": 6,
+      "not_located": 6,
+      "presentation_only": 4
+    },
+    "B2": {
+      "exact": 218,
+      "ellipsis_joined_excerpts": 1,
+      "not_located": 8,
+      "presentation_only": 7,
+      "whitespace_only": 3
+    }
+  },
+  "context_quote_location": {
+    "A2": {
+      "other_supplied_field:question": 176,
+      "exact": 37,
+      "absent": 9,
+      "whitespace_only": 1,
+      "not_located": 12,
+      "presentation_only": 1
+    },
+    "B2": {
+      "not_located": 150,
+      "other_supplied_field:question": 63,
+      "exact": 16,
+      "whitespace_only": 1,
+      "presentation_only": 7
+    }
+  },
+  "note": "Location classes are lexical only. exact/whitespace_only/presentation_only/ellipsis_joined_excerpts are benign presentation differences. other_supplied_field indicates wrong-field attribution. not_located requires semantic inspection and is NOT a fabrication count. None of these classes establishes whether the accusation follows from the cited text."
+}

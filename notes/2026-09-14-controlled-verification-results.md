@@ -131,3 +131,48 @@ instability, not independent evidence; inputs reviewed by the assistant only (sh
 the shown note is the complete source (the rubric states the prompt is complete); the H1
 accusation-level rate is uninformative by construction in this design; off-target accusations on
 visible slips are arguably correct and are only reported.
+
+## Inspection of the under-accusation failure (§6 "inspect the specific failure") — no inference
+
+Read the verification procedure's rationales for the 17 *unresolved* absent-member records under
+full evidence (`cv1-eval/responses.jsonl`, arm B2). They say, verbatim, **"The original prompt is
+not supplied"** / "the original_prompt is not provided" / "unresolved due to lack of evidence" —
+in the arm where the frozen payload check proved `original_prompt` present for every pair. attr-06
+even quotes the absent note in `evidence_quote` and still declares the prompt missing; attr-01 and
+attr-12 cite the original prompt as *supporting* the question's own facts in the same rationale.
+Instruction rule (6) ("if original_prompt is not supplied, attribution claims are unresolved") is
+being applied to a prompt that is supplied.
+
+Cross-tab of 'contradicted' on absent members under full evidence (3 repeats per pair), by the
+pre-balanced covariate **note position in the original prompt**:
+
+| note position | pairs | generic | verification |
+|---|---|---:|---:|
+| after the question | 02, 04, 05, 07, 09, 11 | 15/18 | 15/18 |
+| before the question | 01, 03, 06, 08, 10, 12 | 3/18 | 3/18 |
+
+The pattern is **identical across procedures, pair by pair**: the same five "after" pairs are
+detected 3/3 by both, the same five "before" pairs are missed 0/3 by both; the two exceptions
+(attr-03 before → detected 3/3; attr-04 after → missed 0/3) are shared too. The generic rationales
+for the missed pairs say the same thing in their own words ("The conversion factor is not
+explicitly provided in the evidence"; "the original prompt does not specify this rule") and give
+low scores (0–25) with no contradicted claim.
+
+Reading: the detection ceiling is an **evidence-reading failure tied to where the note sits in the
+prompt**, shared by both instruction sets; the instruction contrast never touched it. The
+verification procedure's "abstention on true violations" and the generic's silence are two
+expressions of one failure — the judge does not register a source note that precedes the question.
+With 12 pairs this is a post-hoc association on a balanced covariate (pair-level 5/6 vs 1/6), not a
+confirmed mechanism, and the "excerpt vs complete source" explanation proposed above is **not**
+what the rationales say — they say the prompt is absent.
+
+Consequence for the advancement conditions above: condition (i) is discharged and yields a
+concrete, cheap, checkable next step **that has not been run**: a within-pair note-position
+manipulation (same absent note, before vs after the question) on the same 12 pairs, full evidence
+only, both procedures, 3 repeats — 12 × 2 × 2 × 3 = 144 calls — which requires a protocol amendment
+(v1.3) with its own frozen inputs and payload check before any request. If position explains
+detection, the fix is in how evidence is presented to the judge (or a required "quote the
+original_prompt first" step), not in the assessment rubric; that would also be a hypothesis to
+carry to the native BonaFide inputs, where the hint's position in `original_prompt` is fixed by the
+benchmark. No native test should be launched before this is resolved, because a position-dependent
+reader will produce position-dependent "detection" on any native set.

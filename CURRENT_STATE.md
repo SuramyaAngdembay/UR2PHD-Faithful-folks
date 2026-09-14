@@ -81,11 +81,17 @@ only where they existed (restricted attribution 11→5 of 72, item-level −.083
 [−.250, .000]); the "fabricated verification" accusation never occurred for either
 procedure on constructed controls. H4 leak check passed (12/12 exact ties).
 §6 branch: semantic decisions improved → freeze the procedure and test on fresh
-native examples + a second judge family, conditional on (i) inspecting the six
-deterministic under-accusation pairs first (no inference) and (ii) the native test
-measuring detection of adjudicated violations, which needs the pending human
-adjudication of the repaired 392-item packet. 57 tests pass. Constructed-control
-results are never pooled with native AUROC.
+native examples + a second judge family — but the inspection of the six
+under-accusation pairs (no inference) found that **the 50% detection ceiling is a
+prompt-position effect shared by both procedures**: note after the question → false
+attribution detected 15/18 by both; note before → 3/18 by both, pair-by-pair
+identical, with rationales saying "the original prompt is not supplied" in the arm
+where it was. The instruction contrast never touched this. Next bounded step
+(NOT run; needs amendment v1.3 and a fresh freeze): within-pair note-position
+manipulation on the same 12 pairs, full evidence, 144 calls. No native test before
+that is resolved. The native follow-on also needs the pending human adjudication of
+the repaired 392-item packet to measure detection of real violations. 57 tests pass.
+Constructed-control results are never pooled with native AUROC.
 
 ## Completed repeated pilot (September 14, 01:13 UTC)
 

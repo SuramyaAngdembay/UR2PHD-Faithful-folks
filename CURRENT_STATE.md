@@ -156,9 +156,12 @@ restricted comparisons, not causal adjustment or a replacement headline.
 ## Active work
 
 - Branch `codex/faithfulness-transfer-diagnostics`, starting at `462a7ac`.
-- The branch was pushed to origin on September 14 at the user's explicit request
-  (`git push -u origin codex/faithfulness-transfer-diagnostics`, head `e8b5573`;
-  secret scan clean; main untouched). Collaborator PR #6 remains separate. The
+- On September 14, at the user's request, the branch was pushed to origin and
+  `main` was fast-forwarded to it (`f1598d8`; main had no unique commits; secret
+  scan clean). `main` and `codex/faithfulness-transfer-diagnostics` are now the
+  same commit; commit on either and keep them in sync, or retire the branch.
+  Collaborator PR #6 (`dikshant/dr-rahimi-feedback` → main) remains open and now
+  targets the moved main. The
   repaired reviewer packet and its local HTML review form are on GitHub under
   `results/accusation_audit_repair/2026-09-14-final/reviewer/`.
 - Corrected the v1 reliance-only target; verified all 1,120 frozen labels/prompts

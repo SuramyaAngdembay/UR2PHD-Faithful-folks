@@ -57,3 +57,38 @@ which turned out to be **chess board squares** ("pawns on A2, B2, C2..."), not p
 Replaced with a structural check: allowed keys, and no value exactly equal to a procedure name or
 label class. Same recurring error as the GRACE answer checker and the `_quote_validation`
 truthiness bug — a crude string test standing in for a structural one.
+
+## CORRECTIONS — this audit's headline was an audit-code artefact (2026-09-14, later the same day)
+
+Independent repair: `notes/2026-09-14-accusation-audit-independent-repair.md`, commit 527be55.
+I verified every claim in it against the data; all reproduce.
+
+1. **Wrong prompt key.** My `visible()` read `prompt`/`full_prompt`; the data stores
+   `original_prompt`. Every one of the 237 full-evidence records was audited against an **empty**
+   prompt. Corrected B2 context-quote location: 229 literal, 6 whitespace-only, **2 unlocated
+   (0.8%)** — not 150 (63%).
+2. **Wrong reference field.** I checked context quotes against the *trace*. The rubric says
+   `context_quote` is an exact span from **question/original_prompt**, and the harness validates
+   exactly that. Quoting the question under restricted evidence was the *instructed* behaviour.
+   "Wrong-field attribution" (75%) and "no legitimate referent" are withdrawn.
+3. **"5 of 473 repeat" measured wording recurrence, not judgment.** Keyed on rationale text +
+   quotes, it cannot say whether the judge repeats its accusation. Decision-code agreement across
+   the three identical repeats: false-process code **60/70 (A2), 63/70 (B2)**; full five-component
+   vector 39/70 / 51/70; identical rationale text 0/70 / 4/70. Textual recurrence, decision
+   stability and semantic agreement must be reported separately.
+4. **Units.** 192/473 of my "accusation records" allege no violation at all. They are
+   quote-linked assessment records, not atomic accusations. "473 accusations" is withdrawn.
+
+**Discarded:** "full context increases unlocatable paraphrasing"; "restricted judges have no
+valid context to quote"; "accusations almost never repeat". **Retained:** generic inversion;
+paired component gain without established detection; inspectable cases where the judge quotes
+evidence correctly and then accuses contrary to it.
+
+One check the repair did not make, which I add: of the 37 restricted-arm context quotes that do
+not locate in the question, **0 land in the withheld `original_prompt`** (25 are in the trace, 12
+nowhere) — no leak of withheld evidence into the restricted arm.
+
+This is the third instance of the same error class in this project (GRACE answer checker,
+`_quote_validation` truthiness, now field names): using a field without inspecting the data or
+reusing the harness's existing definition. The fix that generalises is the one the repair applied —
+reuse the frozen parser's `allowed_context` rather than re-deriving evidence boundaries.

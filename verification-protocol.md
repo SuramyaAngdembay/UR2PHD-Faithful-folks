@@ -100,3 +100,42 @@ separately from native benchmark AUROC.
   failure, do not expand.
 - No large benchmark sweep, no tuning on the evaluation partition, no manuscript restructuring on
   the strength of this experiment.
+
+---
+
+## Amendment v1.1 (2026-09-14) — clarifications from the independent audit repair, before inference
+
+Adopted verbatim in substance from `notes/2026-09-14-accusation-audit-independent-repair.md`.
+
+**A1. Scope of H4 (indistinguishability).** H4 applies **only where the actual judge payloads are
+identical**: source-attribution pairs under restricted evidence, where the changed prompt is
+withheld. **Verification-language pairs change the visible trace and are never subject to H4.**
+Identical inputs imply the same input-conditioned distribution, not identical finite-sample scores
+from a stochastic service; a chance difference among three calls is not, by itself, evidence of
+leakage. H4 is evaluated as a distributional check across all 12 attribution pairs, not per pair.
+
+**A2. Two claim types, two evidential standards.** A claimed *source attribution* is checkable
+against the visible prompt: present → supported; absent from the complete supplied prompt →
+contradicted. A claimed *execution event* (a verification was performed) has no execution record
+in this design: **missing records leave it unresolved**, never contradicted. Gold labels encode
+this distinction per item.
+
+**A3. Denominators and an anti-abstention criterion.** The unsupported-accusation rate (H1) is
+defined per procedure × evidence condition as
+`(# accusations whose gold support-status is contradicted or unresolved and which the judge marked supported) / (# accusations the judge marked supported)`,
+with the count of accusations made reported alongside. A procedure that improves H1 by simply
+accusing less must **also** meet the claim-made accuracy (H2) and support-status accuracy (H3)
+endpoints; **blanket abstention or blanket "unresolved" cannot count as a successful correction.**
+
+**A4. Operational freeze checklist — all items complete before the first request.**
+  (i) the exact 48 inputs with a manifest hash; (ii) gold labels for every observable claim-made
+  and support-status question, each with a written reason; (iii) both instruction texts, frozen in
+  config; (iv) the shared output schema and token cap; (v) analysis definitions for every endpoint
+  in §5 and A3; (vi) a request-plan manifest binding inputs × evidence condition × procedure ×
+  repeat to request ids, with a payload check confirming that restricted-arm attribution pairs are
+  byte-identical and that full-arm payloads contain the intended prompt.
+Section 4 above was a high-level design; inference is authorised only once (i)–(vi) exist.
+
+**A5. What this experiment does not re-open.** The withdrawn audit readings (paraphrase under full
+context; no valid restricted context; non-repeating accusations) must not inform the design. The
+manuscript is not reinterpreted on the strength of this experiment either way.

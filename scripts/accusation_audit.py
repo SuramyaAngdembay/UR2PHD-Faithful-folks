@@ -1,5 +1,17 @@
 """Accusation audit of cached component-procedure outputs (protocol §3). No new inference.
 
+SUPERSEDED FOR PACKET GENERATION by scripts/repair_accusation_audit.py (commit 527be55). Kept as
+an independent cross-check of the automatic location counts only. Two bugs in the original version
+(found by the independent repair, notes/2026-09-14-accusation-audit-independent-repair.md) are
+fixed below so this script's counts now reproduce the corrected figures:
+  1. prepared items store `original_prompt`, not `prompt`/`full_prompt`; the original read the
+     wrong key and audited every full-evidence record against an EMPTY prompt.
+  2. context quotes were checked against the trace; the rubric permits them from
+     question/original_prompt, exactly as the harness's `allowed_context` does.
+Its earlier "schema-misuse" / "63% unlocatable paraphrase" / "5 of 473 repeat" readings are
+withdrawn. Records include assessments with no supported violation (192/473) -- they are
+quote-linked assessment records, not atomic accusations.
+
 Separates four questions that the earlier analysis ran together:
   (a) does the quoted text occur in the evidence available to THAT judge?   automatic
   (b) does the trace actually make the alleged claim?                        semantic -> packet
@@ -75,11 +87,14 @@ items = {json.loads(l)['rid']: json.loads(l)
 
 # Evidence visible to each arm. A* = restricted (question, trace, answer); B* = also full prompt.
 def visible(item, arm):
-    f = {'_primary': item.get('cot', ''),
-         'question': item.get('question', ''),
-         'model_answer': str(item.get('model_answer', ''))}
+    f = {'_primary': item['cot'],
+         'question': item['question'],
+         'model_answer': str(item['model_answer'])}
     if arm.startswith('B'):
-        f['full_prompt'] = item.get('prompt', '') or item.get('full_prompt', '')
+        f['original_prompt'] = item['original_prompt']      # the key the data actually uses
+    # Mirrors scripts/diagnostic_v2.py: context quotes may come from question (+ original_prompt
+    # under full evidence). Checked against THIS, never against the trace.
+    f['_allowed_context'] = item['question'] + ('\n' + item['original_prompt'] if arm.startswith('B') else '')
     return f
 
 accusations = {}
@@ -105,13 +120,17 @@ for r in runs:
             'alleged_components': alleged, 'rationale': claim,
             'trace_quote': tq, 'context_quote': cq,
             'trace_quote_location': locate(tq, fields) if tq else 'absent',
-            'context_quote_location': locate(cq, fields) if cq else 'absent',
+            'context_quote_location': locate(cq, {**{k: v for k, v in fields.items() if k not in ('_primary', '_allowed_context')},
+                                                  '_primary': fields['_allowed_context'],
+                                                  'trace': fields['_primary']}) if cq else 'absent',
             'request_ids': [], 'n_repeats_present': 0})
         rec['request_ids'].append(r['request_id'])
         rec['n_repeats_present'] += 1
 
 recs = list(accusations.values())
-a.out.mkdir(parents=True, exist_ok=True)
+if a.out.exists():
+    raise FileExistsError(f'{a.out} exists; choose a new directory -- prior audit outputs are never overwritten')
+a.out.mkdir(parents=True)
 
 # ---- (a) automatic, reproducible counts ----
 summary = {'n_accusation_records': len(recs),
@@ -138,7 +157,7 @@ for i, r in enumerate(sorted(recs, key=lambda x: x['accusation_id']), 1):
     packet.append({
         'packet_item': i,
         'accusation_id': r['accusation_id'],
-        'evidence_shown_to_judge': {k: v for k, v in fields.items() if k != '_primary'} |
+        'evidence_shown_to_judge': {k: v for k, v in fields.items() if not k.startswith('_')} |
                                    {'reasoning_trace': fields['_primary']},
         'allegation_text': r['rationale'],
         'cited_trace_quote': r['trace_quote'],

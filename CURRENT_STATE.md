@@ -14,9 +14,10 @@ component calls. Deliver only `results/accusation_audit_repair/2026-09-14-final/
 192/473 legacy records allege no supported violation; textual recurrence is not
 semantic accusation agreement. All 45 tests pass. No new inference or human
 adjudication occurred. See the [independent repair](notes/2026-09-14-accusation-audit-independent-repair.md).
-The 24 constructed pairs and 576-call experiment have not started as of the latest
-September 14 session/artifact check. `verification-protocol.md` gives the intended
-design; exact controls, labels, schemas and request plan still need freezing.
+The 24 constructed pairs and the 576-call experiment were frozen and launched later
+on September 14 (see the next section); the repair above was accepted in full
+(`fb99b0e`), the legacy packet is marked SUPERSEDED, and the protocol carries the
+repair's clarifications as amendments v1.1 and v1.2.
 
 Earlier audit: Claude's 840-call repeated four-arm development pilot is complete
 and independently verified. On 70 responses (58 questions; U60/F10), mean-score
@@ -48,6 +49,28 @@ Earlier audit entries below are historical where superseded by that executed
 repair. The prior containment/F1 labels and saved regime JSON stay preserved,
 but are not the current correctness-stratified analysis. Reserved exposure is
 204/807 responses across 156 questions (397 responses sharing those questions).
+
+## Controlled verification experiment: frozen and launched (September 14, ~20:30 UTC)
+
+Frozen before any inference at `d43e435`; log in
+[the experiment note](notes/2026-09-14-controlled-verification-experiment.md).
+24 matched pairs / 48 constructed inputs (`data/constructed_controls/v1/`): 12
+source-attribution pairs whose restricted payloads are byte-identical (H4) and 12
+verification-language pairs (proposal vs execution claim; claims are *unresolved*
+by design). Balance asserted (internal correctness 6/6 per family with visible
+slips, position 4/4/4, note position 6/6, first-person 4/4, 12 sources, 12 verbs).
+All 24 pairs were manually reviewed by the assistant; independent human review is
+pending and does not gate the run. Two procedures (generic assessment vs explicit
+claim-by-claim verification) share one strict schema, token cap and pinned
+`gpt-4o-2024-08-06`; the harness's `freeze` wrote `lock.json` only after the
+checklist and payload checks (24/24/48) passed. Analysis endpoints are frozen and
+hashed in `scripts/controlled_verification_analysis.py` (H1 unsupported-accusation
+rate with the A3 denominator and an anti-abstention criterion; H2 claim-made; H3
+status incl. unresolved coverage; pair ordering; repeat stability; pair-clustered
+paired bootstrap). An 8-request smoke on two smoke-only items passed. The 576-call
+run is in progress on Aquaman (`~/synth/cv1/`, pid 4136061); 57 tests pass.
+Constructed-control results are never pooled with native AUROC. Advancement is
+fixed by protocol §6 in advance of the result.
 
 ## Completed repeated pilot (September 14, 01:13 UTC)
 

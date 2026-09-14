@@ -1,10 +1,23 @@
 # Current research state
 
-Updated September 13, 2026. Research driver: Codex, following the user's explicit
+Updated September 14, 2026 UTC. Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
-Latest execution: the shared answer checker and both cached-data analyses are
+Latest audit: Claude's 840-call repeated four-arm development pilot is complete
+and independently verified. On 70 responses (58 questions; U60/F10), mean-score
+AUROCs A1/B1/A2/B2 are .2175/.2592/.5108/.4450. The restricted component procedure
+improves over the generic procedure by +.293 [.093,.502] in the paired exploratory
+analysis, but above-chance detection is not established. Full-evidence effects
+remain unresolved. Exact quote failures are not semantic error rates: inspected
+full-context outputs repeatedly deny source evidence they themselves quote
+correctly. Next: independent allegation validation, matched output-schema controls,
+source/process counterfactual pairs, and frozen cross-model/data validation.
+39 tests pass. No new inference was launched by this audit. See the
+[completed pilot audit](notes/2026-09-14-repeated-pilot-independent-audit.md) and
+`results/repeated_pilot_audit/2026-09-14-final/`.
+
+Earlier execution: the shared answer checker and both cached-data analyses are
 implemented and run. GRACE now has 280 correct / 154 incorrect / 3 unresolved
 reference-equivalence decisions (assistant-reviewed, not independent human gold).
 Primary NLI regime differences are +.025 / +.113 / -.004, all with intervals
@@ -22,17 +35,21 @@ repair. The prior containment/F1 labels and saved regime JSON stay preserved,
 but are not the current correctness-stratified analysis. Reserved exposure is
 204/807 responses across 156 questions (397 responses sharing those questions).
 
-## Live pilot snapshot (September 13, 22:23 UTC)
+## Completed repeated pilot (September 14, 01:13 UTC)
 
-Claude is running 70 BonaFide dev responses × four arms × three repeats (840
-requests) on pinned GPT-4o. Verified live: 327 valid outputs, two rate-limit errors,
-no completion marker. All 178 carried predictions and request-plan identities
-match. This is a useful development comparison; the rubric contrast also changes
-output schema, the sample is U60/F10 with all faithful examples from SimpleQA,
-and evidence-insufficient outputs still require scores. The runner retains a
-three-cumulative-error halt despite the increased retry budget. No new inference
-was launched by this audit. See [live alignment audit](notes/2026-09-13-live-pilot-alignment.md).
-Recheck the actual process and artifacts before treating this snapshot as current.
+Claude completed 70 BonaFide dev responses × four arms × three repeats (840
+requests) on pinned GPT-4o. All raw outputs, carried predictions and request-plan
+identities match. The retry guard was fixed before completion; reconstructed
+lineage has 857 recorded attempts and 17 transient 429 errors, eight in the final
+continuation. Results: `results/diagnostic_v2/pilot-4arm-rep3c/`.
+
+The rubric contrast also changes output schema; all ten faithful examples are
+SimpleQA, and evidence-insufficient outputs still require scores. SimpleQA-only
+A2 AUROC is .631 [.382,.869], a post-hoc sensitivity, not replication. The earlier
+six-pair ordering statistic is not directly comparable to pooled 70-response
+AUROC. This pilot adds no evaluation-partition exposure. Preserve the
+[historical live audit](notes/2026-09-13-live-pilot-alignment.md); use the completed
+audit above for current conclusions.
 
 ## Scientific direction
 

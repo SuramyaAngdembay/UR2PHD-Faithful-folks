@@ -1,0 +1,75 @@
+{
+  "inputs": {
+    "run/run.json": "7bdb55cb46f142ee0ab4d670d924c0d9e89008d15a2892648b63d2479d5b7b00",
+    "run/completion.json": "eac220fbee4762f9debbbe54e812a8459a4649bbf560476e4bd6dc04542912db",
+    "run/responses.jsonl": "2ee1c1042990b97853deb9bd20812e14e7592e235060c8ca8908a0dbe9d1bc6f",
+    "run/attempts.jsonl": "cf38a58ada2f3beb57654f5086393d78426fcb5e1dae5e6928ded99973ca9b5e",
+    "run/errors.jsonl": "e3b561ea48a222a8367db9ab14f1db6ecee1e94106adbca03f2d326ff7d1913e",
+    "prepared/key.jsonl": "875ebf4295ca41d6e5389419f5b8f699f8c910ba9038ecc66452a95c4efa4910",
+    "prepared/items.jsonl": "775a2fa5efaa4b5b538f6d9589a2f8a345e0deaf082b13ce13b2ced71d6ae822",
+    "prepared/manifest.json": "7422ef6f7a3b71f5fb33c986b8385b7bbc88e326edf5ec10a3be27cfe1c8173a",
+    "prepared/smoke_ids.json": "3e2ce78b7881df0f983da05defb0b942a64ce3bc29c60ad207b20df727d27c75",
+    "prior_matched_key": "929f8eddd527edb2cd00919c7c82fe375c29e58abac6a0a85ae0f49daf2663cb"
+  },
+  "code": {
+    "analyze_repeated_pilot.py": "a3c73ab624652ea0ac8e41f348df3a4f1dd7de511a96f872c26bb1dbc3c2e03a",
+    "diagnostic_v2.py": "9d3718a50cfad491beaeb82512ebdaede197b2a0e52e56abde7743b763603628",
+    "reanalysis_common.py": "d02873328cfde8c28893864f749a3f92b4f20135c7e9b154fa8f42566e97334b"
+  },
+  "protocol": {
+    "name": "completed-repeated-pilot-audit-v1",
+    "unit": "response, grouped by source question",
+    "primary_score": "mean of three deliberate repeats",
+    "positive_label": "native unfaithful, higher score",
+    "contrasts": {
+      "A2-A1": [
+        -1,
+        0,
+        1,
+        0
+      ],
+      "B2-B1": [
+        0,
+        -1,
+        0,
+        1
+      ],
+      "B1-A1": [
+        -1,
+        1,
+        0,
+        0
+      ],
+      "B2-A2": [
+        0,
+        0,
+        -1,
+        1
+      ],
+      "interaction": [
+        1,
+        -1,
+        -1,
+        1
+      ]
+    },
+    "uncertainty": "paired question bootstrap; nominal percentile intervals, no multiple-comparison correction",
+    "simpleqa": "post-hoc task-restricted sensitivity, not fresh replication",
+    "quote_categories": "descriptive only; original strict quote flags preserved",
+    "scope": "exploratory selected development pilot; one judge, U60/F10; procedure and output format change together"
+  },
+  "seed": 0,
+  "bootstrap": 2000,
+  "run_sha256": "41098b2673eb3f328cad1c89e5dd6707885a5c3258fbe6961019c66fb3cf1c08",
+  "created_utc": "2026-09-14T04:31:08.715429+00:00",
+  "versions": {
+    "python": "3.9.6",
+    "numpy": "2.0.2",
+    "scipy": "1.13.1"
+  },
+  "status": "complete cached-data reanalysis; no new model inference",
+  "artifacts": {
+    "results.json": "dc3eca54583cc2370341c7bc3e2d98614d0a1047e5a20d3730cb6dee1eec8090",
+    "quote-location-diagnostics.json": "65d8cfdf083ec4ea9316f023dc624134b0be3d062ba38bb2bfab56c49a7fee5f"
+  }
+}

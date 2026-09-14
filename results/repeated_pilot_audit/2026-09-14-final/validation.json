@@ -1,0 +1,23 @@
+{
+  "test_count": 39,
+  "independent_pair_enumerations": 8,
+  "maximum_absolute_auroc_difference": 0,
+  "response_counts": 840,
+  "question_groups": 58,
+  "failed_slots": 0,
+  "unique_api_responses": 840,
+  "lineage_checked_on_server": {
+    "phase_responses": [
+      178,
+      398,
+      840
+    ],
+    "distinct_recorded_attempts": 857,
+    "distinct_recorded_429_errors": 17,
+    "final_phase_attempts": 450,
+    "final_phase_errors": 8,
+    "all_398_carried_responses_byte_equivalent": true
+  },
+  "raw_response_sha256_local_remote_match": "2ee1c1042990b97853deb9bd20812e14e7592e235060c8ca8908a0dbe9d1bc6f",
+  "illustrative_cases_sha256": "b07e9063c03a9f8b60d610f4207929cfb3743dc61e23041302bb31f90ba17792"
+}

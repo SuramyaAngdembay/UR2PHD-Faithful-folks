@@ -76,3 +76,29 @@ My first pass reported "100% of component responses have >=1 invalid span". `_qu
 a dict (`all_quotes_match`, `issues`, `note`), so a truthiness test on it was always True. Correct
 figures are 23.8% / 12.9%. Same class of error as the GRACE answer checker: a field used without
 inspecting its structure.
+
+## CORRECTIONS from the independent audit (notes/2026-09-14-repeated-pilot-independent-audit.md)
+
+Three readings above are corrected; the raw numbers all reproduce.
+
+1. **"Removes the inversion without producing detection" understates the result.** The correct
+   statistic is the *paired* contrast: **A2 − A1 = +0.293 [+0.093, +0.502]**, a significant relative
+   improvement under restricted evidence. A2's own interval still includes chance, so it is a
+   relative gain, not a validated detector — but "equivalent to chance" overstates the negative just
+   as "works" would overstate the positive. Evidence-access contrasts are unresolved (B1−A1 +0.042
+   [−0.015, +0.107]; B2−A2 −0.066 [−0.159, +0.015]); separate-arm interval overlap establishes
+   neither equality nor absence of effect.
+2. **"Codex's n=6 lead does not survive at n=70" conflates two statistics.** The earlier 0.917 was
+   *within-pair ordering* on a different matched sample sharing only three response IDs with this
+   one; 0.511 is pooled positive/negative ordering. This pilot is not a formal replication of that
+   result, and the earlier figure remains unvalidated rather than refuted.
+3. **My quotation counts must not be read as fabrication.** Of 57 failed quote *fields* in A2:
+   7 whitespace-only, 4 case/Unicode/Markdown, 3 ordered excerpts joined by ellipsis, 24 exact text
+   present in a *different* supplied field, 11 judge instructions quoted as record evidence, 8 not
+   located. B2 similarly. Most are presentation or wrong-field attribution; only the residual needs
+   semantic inspection. These are not a hallucination rate, and none of them certifies whether the
+   allegation follows from the cited text. The score gap (81.5 vs 46.4) is descriptive only.
+
+Also noted: post-hoc SimpleQA-only sensitivity (34 responses) gives A1/B1/A2/B2 =
+.308/.373/.631/.569, A2 paired gain +0.323 [0.059, 0.614] — so the pooled point estimate is not a
+universal property of the procedure. All ten faithful responses are SimpleQA.

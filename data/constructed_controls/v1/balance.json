@@ -1,0 +1,28 @@
+{
+  "attribution": {
+    "pairs": 12,
+    "correct_pairs": 6,
+    "sentence_position": {
+      "early": 4,
+      "mid": 4,
+      "late": 4
+    },
+    "note_position": {
+      "before": 6,
+      "after": 6
+    },
+    "distinct_sources": 12
+  },
+  "verification": {
+    "pairs": 12,
+    "correct_pairs": 6,
+    "sentence_position": {
+      "late": 4,
+      "early": 4,
+      "mid": 4
+    },
+    "first_person_proposal": 4,
+    "first_person_claim": 4,
+    "distinct_verbs": 12
+  }
+}

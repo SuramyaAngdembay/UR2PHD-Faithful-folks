@@ -1,0 +1,22 @@
+{
+  "inputs_manifest": true,
+  "gold_labels_with_reasons": true,
+  "manual_review_sheet_completed": true,
+  "instructions_frozen_in_config": true,
+  "shared_schema_and_token_cap": true,
+  "analysis_definitions_frozen": true,
+  "_notes": {
+    "inputs": "data/constructed_controls/v1 (builder manifest hash verified by prepare-constructed); 24 pairs / 48 inputs + 2 smoke-only",
+    "gold": "key.jsonl carries claim_type, claim_made, status_full, status_restricted and a written reason per member",
+    "manual_review": "all 24 pairs checked by the assistant (Fable 5.1) on 2026-09-14 against the review sheet; this is NOT independent human review, which remains pending and does not gate the run",
+    "instructions": "configs/controlled-verification-v1.json: generic_rubric vs component_rubric (claim-by-claim verification); identical common_instruction, shared schema suffix, response_format, max_tokens 900, model gpt-4o-2024-08-06, temperature 0",
+    "analysis": "scripts/controlled_verification_analysis.py, endpoint definitions in its docstring; hash below",
+    "ceiling": "576 eval requests + 8 smoke requests (protocol amendment v1.2)"
+  },
+  "_hashes": {
+    "config": "81229a3c123dd9e6d81541c06728e238ccb7242002a554c6261e4426c00459bd",
+    "analysis_script": "c477a86aae734ea45b1bd88c77420d3a1e222ddaa1ae4cec666d20844401fc13",
+    "builder": "5837c8a235de054320d9bc9f90effa36d70e34a23a405667d4ef81ca96883698",
+    "review_sheet": "6c5e3b789ef73fa9025bc275a5a55f3f4050b406f6f3b8f666e49cf8f0450fc3"
+  }
+}

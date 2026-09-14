@@ -1,0 +1,12 @@
+{
+  "builder_sha256": "5837c8a235de054320d9bc9f90effa36d70e34a23a405667d4ef81ca96883698",
+  "files": {
+    "items.jsonl": "2acdb6c8625ae821c9532154d6503e38bb7c5bee52759871585698885e7d04d2",
+    "key.jsonl": "916d6f20898df15855718a8d4eb3bcea240affdb07c28656fcc8c8452462ffa5",
+    "balance.json": "a672cc942cc6e4879f4dfe41f20256e28bbf68c0edf143374a07eff60892c271"
+  },
+  "n_items": 50,
+  "n_analysed": 48,
+  "n_smoke": 2,
+  "status": "constructed controls; not benchmark data; manual review sheet must be completed before freeze"
+}

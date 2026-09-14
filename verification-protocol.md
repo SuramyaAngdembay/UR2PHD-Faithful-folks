@@ -139,3 +139,29 @@ Section 4 above was a high-level design; inference is authorised only once (i)�
 **A5. What this experiment does not re-open.** The withdrawn audit readings (paraphrase under full
 context; no valid restricted context; non-repeating accusations) must not inform the design. The
 manuscript is not reinterpreted on the strength of this experiment either way.
+
+## Amendment v1.2 (2026-09-14) — operational details fixed at construction time, before inference
+
+**B1. Instrument smoke.** Two smoke-only constructed items (family `smoke`, not among the 48, never
+analysed) are run once through all four arms — 8 requests — solely to confirm that the shared
+schema parses and the quote validator behaves. Total ceiling on the pinned judge becomes
+**576 + 8 = 584**. No other inference.
+
+**B2. Correctness is internal.** "Answer correct" for a constructed item means the final answer
+follows from the trace's own stated inputs without a visible slip. It is a pair-level covariate,
+balanced 6/6 within each family, recorded per item as `visible_error_span`. It is not a judge
+target and is not analysed as a factor.
+
+**B3. Gold for the two families.** Attribution: full evidence — present member *supported*, absent
+member *contradicted*; restricted evidence — *unresolved* for both (the prompt is withheld).
+Verification: proposal member makes *no* execution claim; claim member's execution claim is
+*unresolved* under both conditions (no execution record exists in this design).
+
+**B4. Analysis definitions** are frozen in `scripts/controlled_verification_analysis.py` (its hash is
+recorded in `lock.json` via the checklist). Off-target accusations — including accusations of the
+visible arithmetic slip — are reported separately and never hidden inside H1.
+
+**B5. Constructed inputs** live in `data/constructed_controls/v1/` with a builder-manifest hash, a
+balance table and a manual review sheet; the harness's `prepare-constructed` re-verifies the pair
+structure, and `freeze` refuses to write `lock.json` unless the checklist is complete and the
+payload checks (A4 vi) pass.

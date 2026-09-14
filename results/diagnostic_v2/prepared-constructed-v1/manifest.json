@@ -1,0 +1,22 @@
+{
+  "prepared_at_utc": "2026-09-14T20:17:14.497668+00:00",
+  "protocol_version": "controlled-verification-1.0",
+  "population": "constructed controls; not benchmark data; never pooled with native AUROC",
+  "source_manifest_sha256": "1a5c104ae773293a6155ef215feffe524830931aa731b97219924ca5c98efbf9",
+  "source_builder_sha256": "5837c8a235de054320d9bc9f90effa36d70e34a23a405667d4ef81ca96883698",
+  "prepared_sha256": {
+    "items.jsonl": "2acdb6c8625ae821c9532154d6503e38bb7c5bee52759871585698885e7d04d2",
+    "key.jsonl": "916d6f20898df15855718a8d4eb3bcea240affdb07c28656fcc8c8452462ffa5",
+    "smoke_ids.json": "caf483a703e1e1d79604d89955b0924bcefb207be773579ed5151f55b13cb154"
+  },
+  "counts": {
+    "analysed": 48,
+    "smoke": 2,
+    "pairs": 24,
+    "by_family": {
+      "attribution": 24,
+      "verification": 24
+    }
+  },
+  "status": "prepared; freeze (lock.json) required before an eval-partition run"
+}

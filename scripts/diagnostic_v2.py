@@ -136,7 +136,44 @@ COMPONENT_VALUES={
     'logical_support':{'supported','partial','unsupported','insufficient_evidence'},
 }
 
-def parse_output(raw, item, arm, evidence_policy='reject'):
+CLAIM_TYPES={'attribution','execution','other'}
+SUPPORT_STATUSES={'supported','contradicted','unresolved'}
+
+def parse_claims_output(raw, item, arm, evidence_policy='reject'):
+    """Shared-schema claims family (controlled verification experiment). BOTH procedures use it,
+    so output structure is constant across the procedure contrast. Evidence boundaries reuse the
+    same allowed_context rule as the component family; never re-derive them elsewhere."""
+    choice=raw['choices'][0]
+    if choice.get('finish_reason')!='stop':raise ValueError('Non-stop finish reason')
+    result=json.loads(choice['message']['content'])
+    score=result.get('unfaithfulness_score')
+    if type(score) is not int or not 0<=score<=100:raise ValueError('Score must be an integer in [0,100]')
+    claims=result.get('claims')
+    if not isinstance(claims,list):raise ValueError('Missing claims list')
+    if not isinstance(result.get('rationale'),str):raise ValueError('Missing rationale')
+    allowed_context=item['question']+('\n'+item['original_prompt'] if arm.startswith('B') else '')
+    issues=[]
+    for index,c in enumerate(claims):
+        if not isinstance(c,dict):raise ValueError('Claim must be an object')
+        if c.get('claim_type') not in CLAIM_TYPES:raise ValueError('Invalid claim_type')
+        if c.get('support_status') not in SUPPORT_STATUSES:raise ValueError('Invalid support_status')
+        if not isinstance(c.get('claim'),str):raise ValueError('Claim text must be a string')
+        for name,allowed in [('trace_quote',item['cot']),('evidence_quote',allowed_context)]:
+            quote=c.get(name)
+            if not isinstance(quote,str) or len(quote)>240:raise ValueError('Unsupported or oversized evidence quote: '+name)
+            if quote and quote not in allowed:
+                if evidence_policy=='reject':raise ValueError('Unsupported or oversized evidence quote: '+name)
+                issues.append({'index':index,'field':name,'issue':'not_an_exact_span_in_allowed_evidence'})
+        if not c.get('trace_quote'):
+            if evidence_policy=='reject':raise ValueError('Claim without a trace quote')
+            issues.append({'index':index,'field':'trace_quote','issue':'empty'})
+    result['_quote_validation']={'all_quotes_match':not issues,'issues':issues,
+        'note':'Lexical span check only, not independent verification of the claim'}
+    return result
+
+def parse_output(raw, item, arm, evidence_policy='reject', schema_family='component'):
+    if schema_family=='claims':return parse_claims_output(raw,item,arm,evidence_policy)
+    if schema_family!='component':raise ValueError('Unknown schema family')
     choice=raw['choices'][0]
     if choice.get('finish_reason')!='stop':raise ValueError('Non-stop finish reason')
     result=json.loads(choice['message']['content'])
@@ -266,7 +303,7 @@ def run(args):
                       headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'})
                 with urllib.request.urlopen(req,timeout=config['request_timeout_seconds']) as response:raw=json.load(response)
                 record.update(raw=raw,returned_model=raw.get('model'),duration_seconds=time.monotonic()-begin)
-                parsed=parse_output(raw,p['item'],p['arm'],config.get('evidence_policy','reject'))
+                parsed=parse_output(raw,p['item'],p['arm'],config.get('evidence_policy','reject'),config.get('schema_family','component'))
                 if not raw.get('model'):raise ValueError('Missing returned model identity')
                 if models and raw['model'] not in models:stop=True;raise ValueError('Returned model identity changed')
                 models.add(raw['model']);record['parsed']=parsed
@@ -313,6 +350,94 @@ def run(args):
     if len(done)!=len(plan):raise RuntimeError('Run has missing/invalid slots; no complete success')
     print('DIAGNOSTIC_COMPLETE',flush=True)
 
+def prepare_constructed(args):
+    """Prepare the constructed-control population (verification-protocol.md §4). Verifies the
+    builder manifest, the item schema, and the pair structure each family promises."""
+    src=args.source;out=args.output
+    if out.exists():raise ValueError('Output already exists; preserve the prepared version')
+    man=json.loads((src/'manifest.json').read_text())
+    for n,h in man['files'].items():
+        if file_hash(src/n)!=h:raise ValueError('Constructed-control source changed since it was built: '+n)
+    items=read_jsonl(src/'items.jsonl');key=read_jsonl(src/'key.jsonl')
+    need={'rid','question','cot','model_answer','original_prompt','partition','cluster_id'}
+    for it in items:
+        if set(it)!=need:raise ValueError('Constructed item has unexpected fields: '+str(it.get('rid')))
+    smoke=[it['rid'] for it in items if it['partition']=='smoke']
+    analysed=[it for it in items if it['partition']=='eval']
+    if len(analysed)!=48 or not smoke:raise ValueError('Expected 48 analysed constructed items plus smoke items')
+    if {k['rid'] for k in key}!={it['rid'] for it in analysed}:raise ValueError('Key/items mismatch')
+    byc=defaultdict(list)
+    for it in analysed:byc[it['cluster_id']].append(it)
+    for k in key:
+        pair=byc[k['cluster_id']]
+        if len(pair)!=2:raise ValueError('Pair must have exactly two members: '+k['pair_id'])
+        a,b=pair
+        if k['family']=='attribution':
+            if any(a[f]!=b[f] for f in ('question','cot','model_answer')) or a['original_prompt']==b['original_prompt']:
+                raise ValueError('Attribution pair must be restricted-identical and full-different: '+k['pair_id'])
+        elif k['family']=='verification':
+            if a['original_prompt']!=b['original_prompt'] or a['question']!=b['question'] or a['model_answer']!=b['model_answer'] or a['cot']==b['cot']:
+                raise ValueError('Verification pair must share prompt/question/answer and differ in trace: '+k['pair_id'])
+        else:raise ValueError('Unknown family')
+    out.mkdir(parents=True)
+    write_jsonl(out/'items.jsonl',items);write_jsonl(out/'key.jsonl',key);write_json(out/'smoke_ids.json',smoke)
+    manifest={'prepared_at_utc':utc(),'protocol_version':'controlled-verification-1.0',
+              'population':'constructed controls; not benchmark data; never pooled with native AUROC',
+              'source_manifest_sha256':file_hash(src/'manifest.json'),'source_builder_sha256':man['builder_sha256'],
+              'prepared_sha256':{n:file_hash(out/n) for n in ['items.jsonl','key.jsonl','smoke_ids.json']},
+              'counts':{'analysed':len(analysed),'smoke':len(smoke),'pairs':len({k['pair_id'] for k in key}),
+                        'by_family':dict(Counter(k['family'] for k in key))},
+              'status':'prepared; freeze (lock.json) required before an eval-partition run'}
+    write_json(out/'manifest.json',manifest);print(json.dumps(manifest,indent=2))
+
+def payload_checks(plan, key, config):
+    """Amendment v1.1 A4(vi): the request plan must realise the intended evidence conditions."""
+    if config['response_formats']['1']!=config['response_formats']['2']:raise ValueError('Procedures must share one output schema')
+    if config['generic_rubric']==config['component_rubric']:raise ValueError('Procedures must differ in instructions')
+    byreq={(p['rid'],p['arm'],p['repeat']):p['payload'] for p in plan}
+    pairs=defaultdict(list)
+    for rid,k in key.items():pairs[k['pair_id']].append(rid)
+    checked=Counter()
+    for pid,rids in pairs.items():
+        a,b=sorted(rids);fam=key[a]['family']
+        for arm in config['arms']:
+            pa,pb=byreq[(a,arm,0)],byreq[(b,arm,0)]
+            ra,rb=(json.loads(p['messages'][1]['content']) for p in (pa,pb))
+            if pa['messages'][0]!=pb['messages'][0] or pa['response_format']!=pb['response_format']:raise ValueError(pid+': arm system/schema differs within pair')
+            if arm.startswith('A'):
+                if 'original_prompt' in ra or 'original_prompt' in rb:raise ValueError(pid+': restricted payload carries original_prompt')
+            else:
+                for rid,rec in ((a,ra),(b,rb)):
+                    if 'original_prompt' not in rec:raise ValueError(pid+': full payload lacks original_prompt')
+                    if fam=='attribution':
+                        c=key[rid]['construction']['attributed_content']
+                        if (c in rec['original_prompt'])!=(key[rid]['member']=='present'):raise ValueError(rid+': attributed content presence wrong')
+            if fam=='attribution':
+                if arm.startswith('A') and pa!=pb:raise ValueError(pid+': restricted payloads must be byte-identical (H4)')
+                if arm.startswith('B') and pa==pb:raise ValueError(pid+': full payloads must differ')
+                checked['attribution_'+('restricted_identical' if arm.startswith('A') else 'full_different')]+=1
+            else:
+                diff={f for f in set(ra)|set(rb) if ra.get(f)!=rb.get(f)}
+                if diff!={'chain_of_thought'}:raise ValueError(pid+'/'+arm+': verification pair differs in '+str(sorted(diff)))
+                checked['verification_trace_only_difference']+=1
+    return dict(checked)
+
+def freeze(args):
+    """Write lock.json only when the operational freeze checklist is complete and the payload
+    checks pass. run --partition eval refuses without a matching lock."""
+    config=json.loads(args.config.read_text());prepared=args.prepared;lock=prepared/'lock.json'
+    if lock.exists():raise ValueError('lock.json exists; a frozen plan is never re-frozen in place')
+    checklist=json.loads(args.checklist.read_text())
+    missing=[k for k,v in checklist.items() if not k.startswith('_') and v is not True]   # '_'-prefixed keys carry notes
+    if missing:raise ValueError('Freeze checklist incomplete: '+', '.join(missing))
+    key={k['rid']:k for k in read_jsonl(prepared/'key.jsonl')}
+    plan=request_plan(prepared,config,'eval',args.repeats)
+    checks=payload_checks(plan,key,config)
+    write_json(lock,{'frozen_at_utc':utc(),'identity':run_identity(config,prepared),'checklist':checklist,
+                     'checklist_sha256':file_hash(args.checklist),'repeats':args.repeats,'requests':len(plan),
+                     'request_ids_sha256':digest([p['request_id'] for p in plan]),'payload_checks':checks})
+    print(json.dumps(json.loads(lock.read_text()),indent=2))
+
 def inspect_run(args):
     runmeta=json.loads((args.output/'run.json').read_text())
     path=args.output/'responses.jsonl';rows=read_jsonl(path) if path.exists() else []
@@ -344,6 +469,10 @@ def main():
     p.add_argument('--api-key-file',type=Path,default=Path('~/.openai_key'))
     p.add_argument('--max-http-requests',type=int,default=36);p.add_argument('--max-seconds',type=int,default=900)
     p.add_argument('--rpm',type=float,default=12);p.add_argument('--dry-run',action='store_true');p.set_defaults(fn=run)
+    p=sub.add_parser('prepare-constructed');p.add_argument('--source',type=Path,required=True)
+    p.add_argument('--output',type=Path,required=True);p.set_defaults(fn=prepare_constructed)
+    p=sub.add_parser('freeze');p.add_argument('--prepared',type=Path,required=True);p.add_argument('--config',type=Path,required=True)
+    p.add_argument('--checklist',type=Path,required=True);p.add_argument('--repeats',type=int,default=3);p.set_defaults(fn=freeze)
     p=sub.add_parser('inspect');p.add_argument('--output',type=Path,required=True);p.set_defaults(fn=inspect_run)
     args=ap.parse_args();args.fn(args)
 

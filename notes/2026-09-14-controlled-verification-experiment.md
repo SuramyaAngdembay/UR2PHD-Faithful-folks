@@ -56,3 +56,19 @@ Log: `~/synth/cv1/results/diagnostic_v2/cv1-eval.log`.
 Advancement rule (protocol §6) is fixed: improve semantic decisions → freeze, fresh native
 examples, second judge family, then GRACE; scores move without validity improving → record the
 negative and inspect. No sweep, no eval-partition tuning, no manuscript restructuring either way.
+
+## Halt 1 — account credit exhausted (2026-09-14 ~20:59 UTC), 135/576 complete
+
+`errors.jsonl`: 10 × HTTP 429 `credit_balance_exhausted` (an account-balance condition, not rate
+limiting) and 2 × `URLError` DNS resolution failures on Aquaman; the harness's
+consecutive-failure cap (12) halted the process. No parse failures, no model-identity change,
+returned model `gpt-4o-2024-08-06` on all 135. Partial run archived locally as
+`results/diagnostic_v2/cv1-eval-partial-halt1/` (responses, attempts, errors, run.json, log).
+
+Decision: **resume in place with the identical descriptor** once credit is restored
+(`--partition eval --repeats 3 --max-http-requests 800 --max-seconds 10800 --rpm 10`, same
+endpoint). The runner is not modified: adding `credit_balance_exhausted` to the immediate-halt list
+would be correct but would change `runner_sha256`, invalidate the frozen lock, and force a new run
+directory; the cost of leaving it is ≤12 wasted retries on any future billing exhaustion. Completed
+request_ids carry over; no request is re-issued. Recorded here so the halt is part of the
+experiment's provenance, as in the repeated pilot.

@@ -67,10 +67,25 @@ checklist and payload checks (24/24/48) passed. Analysis endpoints are frozen an
 hashed in `scripts/controlled_verification_analysis.py` (H1 unsupported-accusation
 rate with the A3 denominator and an anti-abstention criterion; H2 claim-made; H3
 status incl. unresolved coverage; pair ordering; repeat stability; pair-clustered
-paired bootstrap). An 8-request smoke on two smoke-only items passed. The 576-call
-run is in progress on Aquaman (`~/synth/cv1/`, pid 4136061); 57 tests pass.
-Constructed-control results are never pooled with native AUROC. Advancement is
-fixed by protocol §6 in advance of the result.
+paired bootstrap). An 8-request smoke on two smoke-only items passed. **The 576-call
+run completed** (one credit-exhaustion halt at 135, resumed in place; integrity
+verified against the lock; analysis run unchanged). Result
+([note](notes/2026-09-14-controlled-verification-results.md)): the verification
+procedure is better calibrated and near-deterministic — unresolved when evidence is
+withheld (.931 vs .611), proposals separated from execution claims (H2 +.19 [+.07,+.32]
+restricted, +.11 [+.03,+.21] full), never endorses a false attribution, repeat
+agreement .958 everywhere — but **detects real false attributions no better than the
+generic procedure (18/36 both under full evidence)**; it abstains (unresolved 17/36)
+where the generic is silent or wrongly says supported. Unsupported accusations fell
+only where they existed (restricted attribution 11→5 of 72, item-level −.083
+[−.250, .000]); the "fabricated verification" accusation never occurred for either
+procedure on constructed controls. H4 leak check passed (12/12 exact ties).
+§6 branch: semantic decisions improved → freeze the procedure and test on fresh
+native examples + a second judge family, conditional on (i) inspecting the six
+deterministic under-accusation pairs first (no inference) and (ii) the native test
+measuring detection of adjudicated violations, which needs the pending human
+adjudication of the repaired 392-item packet. 57 tests pass. Constructed-control
+results are never pooled with native AUROC.
 
 ## Completed repeated pilot (September 14, 01:13 UTC)
 

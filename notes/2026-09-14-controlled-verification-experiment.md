@@ -72,3 +72,12 @@ would be correct but would change `runner_sha256`, invalidate the frozen lock, a
 directory; the cost of leaving it is ≤12 wasted retries on any future billing exhaustion. Completed
 request_ids carry over; no request is re-issued. Recorded here so the halt is part of the
 experiment's provenance, as in the repeated pilot.
+
+## Result
+
+Resumed after the credit halt and completed 576/576 with no further errors. Integrity verified
+against the lock. Frozen analysis run unchanged. Full results and the §6 decision:
+`notes/2026-09-14-controlled-verification-results.md`. One-line summary: the verification
+procedure is better calibrated and near-deterministic (says *unresolved* when evidence is withheld,
+separates proposals from execution claims, never endorses false attributions) but detects real false
+attributions no more often than the generic procedure (18/36 both) — it abstains on the rest.

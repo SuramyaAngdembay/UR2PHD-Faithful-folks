@@ -156,8 +156,11 @@ restricted comparisons, not causal adjustment or a replacement headline.
 ## Active work
 
 - Branch `codex/faithfulness-transfer-diagnostics`, starting at `462a7ac`.
-- The branch includes 22 inherited local commits beyond origin/main; do not
-  publish them incidentally. Collaborator PR #6 remains separate.
+- The branch was pushed to origin on September 14 at the user's explicit request
+  (`git push -u origin codex/faithfulness-transfer-diagnostics`, head `e8b5573`;
+  secret scan clean; main untouched). Collaborator PR #6 remains separate. The
+  repaired reviewer packet and its local HTML review form are on GitHub under
+  `results/accusation_audit_repair/2026-09-14-final/reviewer/`.
 - Corrected the v1 reliance-only target; verified all 1,120 frozen labels/prompts
   against their own upstream responses and preserved the 306/807 split.
 - Implemented and tested label-blind inputs, manifest-bound resumption, four

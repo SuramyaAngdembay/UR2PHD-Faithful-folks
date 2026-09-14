@@ -1,0 +1,791 @@
+{
+  "analysis_version": "controlled-verification-analysis-1.0",
+  "analysis_sha256": "c477a86aae734ea45b1bd88c77420d3a1e222ddaa1ae4cec666d20844401fc13",
+  "run_complete": true,
+  "completion": {
+    "completed_at_utc": "2026-09-14T22:40:36.717635+00:00",
+    "expected": 576,
+    "valid": 576,
+    "failed_slots": 0,
+    "http_requests_recorded": 588,
+    "returned_models": [
+      "gpt-4o-2024-08-06"
+    ],
+    "responses_sha256": "794663acca489bc8774b5afe57a9344aa657c7bcce8d8c05c780836b3a7b6456",
+    "purpose": "exploratory diagnostic"
+  },
+  "records_analysed": 576,
+  "inputs_sha256": {
+    "responses.jsonl": "794663acca489bc8774b5afe57a9344aa657c7bcce8d8c05c780836b3a7b6456",
+    "key.jsonl": "916d6f20898df15855718a8d4eb3bcea240affdb07c28656fcc8c8452462ffa5"
+  },
+  "bootstrap": {
+    "draws": 2000,
+    "seed": 0,
+    "cluster": "pair_id",
+    "interval": "percentile 95%"
+  },
+  "point": {
+    "attribution": {
+      "generic": {
+        "restricted": {
+          "records": 72,
+          "h1_unsupported_rate_accusation_level": 1.0,
+          "target_accusations": 11,
+          "unsupported_target_accusations": 11,
+          "h1_item_level_rate": 0.1527777777777778,
+          "off_target_accusations": 2,
+          "off_target_on_visible_error": 1,
+          "h2_claim_made_accuracy": 0.8194444444444444,
+          "h3_status_accuracy": 0.6111111111111112,
+          "h3_n": 72,
+          "unresolved_coverage_by_gold_status": {
+            "unresolved": 0.7457627118644068
+          },
+          "surfaced_rate": 0.8194444444444444,
+          "mean_claims_per_record": 3.5972222222222223,
+          "mean_score": 48.958333333333336
+        },
+        "full": {
+          "records": 72,
+          "h1_unsupported_rate_accusation_level": 0.0,
+          "target_accusations": 18,
+          "unsupported_target_accusations": 0,
+          "h1_item_level_rate": 0.0,
+          "off_target_accusations": 2,
+          "off_target_on_visible_error": 0,
+          "h2_claim_made_accuracy": 0.7916666666666666,
+          "h3_status_accuracy": 0.6666666666666666,
+          "h3_n": 72,
+          "unresolved_coverage_by_gold_status": {
+            "contradicted": 0.18518518518518517,
+            "supported": 0.0
+          },
+          "surfaced_rate": 0.7916666666666666,
+          "mean_claims_per_record": 3.5972222222222223,
+          "mean_score": 26.11111111111111
+        }
+      },
+      "verification": {
+        "restricted": {
+          "records": 72,
+          "h1_unsupported_rate_accusation_level": 1.0,
+          "target_accusations": 5,
+          "unsupported_target_accusations": 5,
+          "h1_item_level_rate": 0.06944444444444445,
+          "off_target_accusations": 0,
+          "off_target_on_visible_error": 0,
+          "h2_claim_made_accuracy": 1.0,
+          "h3_status_accuracy": 0.9305555555555556,
+          "h3_n": 72,
+          "unresolved_coverage_by_gold_status": {
+            "unresolved": 0.9305555555555556
+          },
+          "surfaced_rate": 1.0,
+          "mean_claims_per_record": 4.277777777777778,
+          "mean_score": 38.888888888888886
+        },
+        "full": {
+          "records": 72,
+          "h1_unsupported_rate_accusation_level": 0.0,
+          "target_accusations": 18,
+          "unsupported_target_accusations": 0,
+          "h1_item_level_rate": 0.0,
+          "off_target_accusations": 0,
+          "off_target_on_visible_error": 0,
+          "h2_claim_made_accuracy": 1.0,
+          "h3_status_accuracy": 0.75,
+          "h3_n": 72,
+          "unresolved_coverage_by_gold_status": {
+            "contradicted": 0.4722222222222222,
+            "supported": 0.0
+          },
+          "surfaced_rate": 1.0,
+          "mean_claims_per_record": 4.208333333333333,
+          "mean_score": 25.0
+        }
+      }
+    },
+    "verification": {
+      "generic": {
+        "restricted": {
+          "records": 72,
+          "h1_unsupported_rate_accusation_level": null,
+          "target_accusations": 0,
+          "unsupported_target_accusations": 0,
+          "h1_item_level_rate": 0.0,
+          "off_target_accusations": 18,
+          "off_target_on_visible_error": 12,
+          "h2_claim_made_accuracy": 0.7916666666666666,
+          "h3_status_accuracy": 0.8055555555555556,
+          "h3_n": 36,
+          "unresolved_coverage_by_gold_status": {
+            "unresolved": 0.90625
+          },
+          "surfaced_rate": 0.5972222222222222,
+          "mean_claims_per_record": 3.75,
+          "mean_score": 19.791666666666668
+        },
+        "full": {
+          "records": 72,
+          "h1_unsupported_rate_accusation_level": null,
+          "target_accusations": 0,
+          "unsupported_target_accusations": 0,
+          "h1_item_level_rate": 0.0,
+          "off_target_accusations": 14,
+          "off_target_on_visible_error": 8,
+          "h2_claim_made_accuracy": 0.8333333333333334,
+          "h3_status_accuracy": 0.9444444444444444,
+          "h3_n": 36,
+          "unresolved_coverage_by_gold_status": {
+            "unresolved": 0.9714285714285714
+          },
+          "surfaced_rate": 0.6388888888888888,
+          "mean_claims_per_record": 3.9166666666666665,
+          "mean_score": 20.0
+        }
+      },
+      "verification": {
+        "restricted": {
+          "records": 72,
+          "h1_unsupported_rate_accusation_level": null,
+          "target_accusations": 0,
+          "unsupported_target_accusations": 0,
+          "h1_item_level_rate": 0.0,
+          "off_target_accusations": 11,
+          "off_target_on_visible_error": 6,
+          "h2_claim_made_accuracy": 0.9861111111111112,
+          "h3_status_accuracy": 1.0,
+          "h3_n": 36,
+          "unresolved_coverage_by_gold_status": {
+            "unresolved": 1.0
+          },
+          "surfaced_rate": 0.5138888888888888,
+          "mean_claims_per_record": 4.333333333333333,
+          "mean_score": 8.333333333333334
+        },
+        "full": {
+          "records": 72,
+          "h1_unsupported_rate_accusation_level": null,
+          "target_accusations": 0,
+          "unsupported_target_accusations": 0,
+          "h1_item_level_rate": 0.0,
+          "off_target_accusations": 5,
+          "off_target_on_visible_error": 2,
+          "h2_claim_made_accuracy": 0.9444444444444444,
+          "h3_status_accuracy": 1.0,
+          "h3_n": 36,
+          "unresolved_coverage_by_gold_status": {
+            "unresolved": 1.0
+          },
+          "surfaced_rate": 0.5555555555555556,
+          "mean_claims_per_record": 4.625,
+          "mean_score": 8.333333333333334
+        }
+      }
+    }
+  },
+  "contrasts": {
+    "attribution": {
+      "h1_unsupported_rate_accusation_level": {
+        "verification-generic": {
+          "restricted": 0.0,
+          "full": 0.0
+        },
+        "full-restricted": {
+          "generic": -1.0,
+          "verification": -1.0
+        }
+      },
+      "h1_item_level_rate": {
+        "verification-generic": {
+          "restricted": -0.08333333333333334,
+          "full": 0.0
+        },
+        "full-restricted": {
+          "generic": -0.1527777777777778,
+          "verification": -0.06944444444444445
+        }
+      },
+      "h2_claim_made_accuracy": {
+        "verification-generic": {
+          "restricted": 0.18055555555555558,
+          "full": 0.20833333333333337
+        },
+        "full-restricted": {
+          "generic": -0.02777777777777779,
+          "verification": 0.0
+        }
+      },
+      "h3_status_accuracy": {
+        "verification-generic": {
+          "restricted": 0.3194444444444444,
+          "full": 0.08333333333333337
+        },
+        "full-restricted": {
+          "generic": 0.05555555555555547,
+          "verification": -0.18055555555555558
+        }
+      },
+      "mean_score": {
+        "verification-generic": {
+          "restricted": -10.06944444444445,
+          "full": -1.1111111111111107
+        },
+        "full-restricted": {
+          "generic": -22.847222222222225,
+          "verification": -13.888888888888886
+        }
+      }
+    },
+    "verification": {
+      "h1_unsupported_rate_accusation_level": {
+        "verification-generic": {
+          "restricted": null,
+          "full": null
+        },
+        "full-restricted": {
+          "generic": null,
+          "verification": null
+        }
+      },
+      "h1_item_level_rate": {
+        "verification-generic": {
+          "restricted": 0.0,
+          "full": 0.0
+        },
+        "full-restricted": {
+          "generic": 0.0,
+          "verification": 0.0
+        }
+      },
+      "h2_claim_made_accuracy": {
+        "verification-generic": {
+          "restricted": 0.19444444444444453,
+          "full": 0.11111111111111105
+        },
+        "full-restricted": {
+          "generic": 0.04166666666666674,
+          "verification": -0.04166666666666674
+        }
+      },
+      "h3_status_accuracy": {
+        "verification-generic": {
+          "restricted": 0.19444444444444442,
+          "full": 0.05555555555555558
+        },
+        "full-restricted": {
+          "generic": 0.13888888888888884,
+          "verification": 0.0
+        }
+      },
+      "mean_score": {
+        "verification-generic": {
+          "restricted": -11.458333333333334,
+          "full": -11.666666666666666
+        },
+        "full-restricted": {
+          "generic": 0.20833333333333215,
+          "verification": 0.0
+        }
+      }
+    }
+  },
+  "intervals": {
+    "attribution": {
+      "h1_unsupported_rate_accusation_level": {
+        "generic": {
+          "restricted": [
+            1.0,
+            1.0
+          ],
+          "full": [
+            0.0,
+            0.0
+          ],
+          "full-restricted": [
+            -1.0,
+            -1.0
+          ]
+        },
+        "verification": {
+          "restricted": [
+            1.0,
+            1.0
+          ],
+          "full": [
+            0.0,
+            0.0
+          ],
+          "full-restricted": [
+            -1.0,
+            -1.0
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            0.0,
+            0.0
+          ],
+          "full": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "h1_item_level_rate": {
+        "generic": {
+          "restricted": [
+            0.0,
+            0.375
+          ],
+          "full": [
+            0.0,
+            0.0
+          ],
+          "full-restricted": [
+            -0.375,
+            0.0
+          ]
+        },
+        "verification": {
+          "restricted": [
+            0.0,
+            0.20833333333333334
+          ],
+          "full": [
+            0.0,
+            0.0
+          ],
+          "full-restricted": [
+            -0.20833333333333334,
+            0.0
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            -0.25,
+            0.0
+          ],
+          "full": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "h2_claim_made_accuracy": {
+        "generic": {
+          "restricted": [
+            0.6388888888888888,
+            1.0
+          ],
+          "full": [
+            0.5972222222222222,
+            0.9444444444444444
+          ],
+          "full-restricted": [
+            -0.11111111111111116,
+            0.05555555555555558
+          ]
+        },
+        "verification": {
+          "restricted": [
+            1.0,
+            1.0
+          ],
+          "full": [
+            1.0,
+            1.0
+          ],
+          "full-restricted": [
+            0.0,
+            0.0
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            0.0,
+            0.36111111111111116
+          ],
+          "full": [
+            0.05555555555555558,
+            0.4027777777777778
+          ]
+        }
+      },
+      "h3_status_accuracy": {
+        "generic": {
+          "restricted": [
+            0.375,
+            0.8333333333333334
+          ],
+          "full": [
+            0.4861111111111111,
+            0.8472222222222222
+          ],
+          "full-restricted": [
+            -0.18055555555555558,
+            0.2916666666666667
+          ]
+        },
+        "verification": {
+          "restricted": [
+            0.7916666666666666,
+            1.0
+          ],
+          "full": [
+            0.625,
+            0.875
+          ],
+          "full-restricted": [
+            -0.375,
+            0.05555555555555547
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            0.09722222222222232,
+            0.5555555555555556
+          ],
+          "full": [
+            0.0,
+            0.18055555555555558
+          ]
+        }
+      },
+      "mean_score": {
+        "generic": {
+          "restricted": [
+            26.734375,
+            71.32118055555554
+          ],
+          "full": [
+            13.609375,
+            38.7517361111111
+          ],
+          "full-restricted": [
+            -37.013888888888886,
+            -5.555555555555557
+          ]
+        },
+        "verification": {
+          "restricted": [
+            13.88888888888889,
+            66.66666666666667
+          ],
+          "full": [
+            12.5,
+            37.5
+          ],
+          "full-restricted": [
+            -31.944444444444436,
+            4.166666666666666
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            -21.319444444444443,
+            0.2152777777777421
+          ],
+          "full": [
+            -4.027777777777779,
+            1.6666666666666643
+          ]
+        }
+      },
+      "ordering_mean_diff": {
+        "generic": {
+          "restricted": [
+            -7.225694444444446,
+            0.6944444444444445
+          ],
+          "full": [
+            27.218749999999996,
+            77.5034722222222
+          ]
+        },
+        "verification": {
+          "restricted": [
+            0.0,
+            0.0
+          ],
+          "full": [
+            25.0,
+            75.0
+          ]
+        }
+      }
+    },
+    "verification": {
+      "h1_unsupported_rate_accusation_level": {
+        "generic": {
+          "restricted": null,
+          "full": null,
+          "full-restricted": null
+        },
+        "verification": {
+          "restricted": null,
+          "full": null,
+          "full-restricted": null
+        },
+        "verification-generic": {
+          "restricted": null,
+          "full": null
+        }
+      },
+      "h1_item_level_rate": {
+        "generic": {
+          "restricted": [
+            0.0,
+            0.0
+          ],
+          "full": [
+            0.0,
+            0.0
+          ],
+          "full-restricted": [
+            0.0,
+            0.0
+          ]
+        },
+        "verification": {
+          "restricted": [
+            0.0,
+            0.0
+          ],
+          "full": [
+            0.0,
+            0.0
+          ],
+          "full-restricted": [
+            0.0,
+            0.0
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            0.0,
+            0.0
+          ],
+          "full": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "h2_claim_made_accuracy": {
+        "generic": {
+          "restricted": [
+            0.6666666666666666,
+            0.9027777777777778
+          ],
+          "full": [
+            0.7083333333333334,
+            0.9305555555555556
+          ],
+          "full-restricted": [
+            -0.05555555555555558,
+            0.13888888888888895
+          ]
+        },
+        "verification": {
+          "restricted": [
+            0.9583333333333334,
+            1.0
+          ],
+          "full": [
+            0.8472222222222222,
+            1.0
+          ],
+          "full-restricted": [
+            -0.125,
+            0.0
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            0.06944444444444442,
+            0.31944444444444453
+          ],
+          "full": [
+            0.02777777777777779,
+            0.20833333333333326
+          ]
+        }
+      },
+      "h3_status_accuracy": {
+        "generic": {
+          "restricted": [
+            0.6111111111111112,
+            0.9722222222222222
+          ],
+          "full": [
+            0.8611111111111112,
+            1.0
+          ],
+          "full-restricted": [
+            0.0,
+            0.30555555555555547
+          ]
+        },
+        "verification": {
+          "restricted": [
+            1.0,
+            1.0
+          ],
+          "full": [
+            1.0,
+            1.0
+          ],
+          "full-restricted": [
+            0.0,
+            0.0
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            0.02777777777777779,
+            0.38888888888888884
+          ],
+          "full": [
+            0.0,
+            0.13888888888888884
+          ]
+        }
+      },
+      "mean_score": {
+        "generic": {
+          "restricted": [
+            4.652777777777778,
+            38.1267361111111
+          ],
+          "full": [
+            6.388888888888889,
+            37.638888888888886
+          ],
+          "full-restricted": [
+            -3.8194444444444446,
+            3.7517361111111014
+          ]
+        },
+        "verification": {
+          "restricted": [
+            0.0,
+            25.0
+          ],
+          "full": [
+            0.0,
+            25.0
+          ],
+          "full-restricted": [
+            0.0,
+            0.0
+          ]
+        },
+        "verification-generic": {
+          "restricted": [
+            -23.611111111111107,
+            -2.1527777777777777
+          ],
+          "full": [
+            -21.25,
+            -3.333333333333332
+          ]
+        }
+      }
+    }
+  },
+  "ordering": {
+    "generic": {
+      "restricted": {
+        "p_absent_gt_present": 0.4166666666666667,
+        "mean_score_difference": -2.9166666666666665,
+        "n_pairs": 12,
+        "exact_ties": 8
+      },
+      "full": {
+        "p_absent_gt_present": 0.875,
+        "mean_score_difference": 52.22222222222222,
+        "n_pairs": 12,
+        "exact_ties": 3
+      }
+    },
+    "verification": {
+      "restricted": {
+        "p_absent_gt_present": 0.5,
+        "mean_score_difference": 0.0,
+        "n_pairs": 12,
+        "exact_ties": 12
+      },
+      "full": {
+        "p_absent_gt_present": 0.75,
+        "mean_score_difference": 50.0,
+        "n_pairs": 12,
+        "exact_ties": 6
+      }
+    }
+  },
+  "stability": {
+    "attribution": {
+      "generic": {
+        "restricted": {
+          "cells": 24,
+          "judged_status_all_repeats_agree": 0.75,
+          "mean_score_spread": 12.291666666666666,
+          "max_score_spread": 100
+        },
+        "full": {
+          "cells": 24,
+          "judged_status_all_repeats_agree": 0.875,
+          "mean_score_spread": 1.875,
+          "max_score_spread": 25
+        }
+      },
+      "verification": {
+        "restricted": {
+          "cells": 24,
+          "judged_status_all_repeats_agree": 0.9583333333333334,
+          "mean_score_spread": 16.666666666666668,
+          "max_score_spread": 100
+        },
+        "full": {
+          "cells": 24,
+          "judged_status_all_repeats_agree": 0.9583333333333334,
+          "mean_score_spread": 0.0,
+          "max_score_spread": 0
+        }
+      }
+    },
+    "verification": {
+      "generic": {
+        "restricted": {
+          "cells": 24,
+          "judged_status_all_repeats_agree": 0.75,
+          "mean_score_spread": 11.458333333333334,
+          "max_score_spread": 75
+        },
+        "full": {
+          "cells": 24,
+          "judged_status_all_repeats_agree": 0.7916666666666666,
+          "mean_score_spread": 10.625,
+          "max_score_spread": 50
+        }
+      },
+      "verification": {
+        "restricted": {
+          "cells": 24,
+          "judged_status_all_repeats_agree": 0.9583333333333334,
+          "mean_score_spread": 0.0,
+          "max_score_spread": 0
+        },
+        "full": {
+          "cells": 24,
+          "judged_status_all_repeats_agree": 0.9583333333333334,
+          "mean_score_spread": 0.0,
+          "max_score_spread": 0
+        }
+      }
+    }
+  },
+  "scope": "constructed controls only; not pooled with native benchmark AUROC; 12 pairs per family"
+}

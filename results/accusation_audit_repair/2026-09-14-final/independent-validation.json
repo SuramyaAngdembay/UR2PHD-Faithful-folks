@@ -1,0 +1,14 @@
+{
+  "tests_passed": 45,
+  "reviewer_assessments": 392,
+  "full_context_assessments_restored": 191,
+  "component_requests_covered_exactly_once": 420,
+  "all_review_evidence_equals_original_input": true,
+  "all_qualitative_outputs_preserved_without_truncation": true,
+  "all_semantic_annotation_fields_blank": true,
+  "independent_literal_checks": {
+    "A2_context_exact_nonempty": 189,
+    "B2_context_exact": 229
+  },
+  "all_manifest_hashes_match": true
+}

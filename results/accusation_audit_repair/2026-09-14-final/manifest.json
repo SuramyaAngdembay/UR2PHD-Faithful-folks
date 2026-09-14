@@ -1,0 +1,28 @@
+{
+  "inputs": {
+    "results/diagnostic_v2/pilot-4arm-rep3c/run.json": "7bdb55cb46f142ee0ab4d670d924c0d9e89008d15a2892648b63d2479d5b7b00",
+    "results/diagnostic_v2/pilot-4arm-rep3c/responses.jsonl": "2ee1c1042990b97853deb9bd20812e14e7592e235060c8ca8908a0dbe9d1bc6f",
+    "results/diagnostic_v2/pilot-4arm-rep3c/completion.json": "eac220fbee4762f9debbbe54e812a8459a4649bbf560476e4bd6dc04542912db",
+    "results/diagnostic_v2/prepared/items.jsonl": "775a2fa5efaa4b5b538f6d9589a2f8a345e0deaf082b13ce13b2ced71d6ae822",
+    "results/diagnostic_v2/prepared/manifest.json": "7422ef6f7a3b71f5fb33c986b8385b7bbc88e326edf5ec10a3be27cfe1c8173a",
+    "results/diagnostic_v2/prepared/smoke_ids.json": "3e2ce78b7881df0f983da05defb0b942a64ce3bc29c60ad207b20df727d27c75",
+    "results/accusation_audit/audit_key.jsonl": "c6e6f94467aa55e8abb5dec2ab024b650253743bf7077ecd2c22ae1e04ece9e1",
+    "results/accusation_audit/reviewer_packet.jsonl": "0ea76e8ff3fb531c97a24e894178005dd787c051b215da1474bdeca2b5b6fefc",
+    "results/accusation_audit/automatic_counts.json": "4aeaf1d36031b9906f8fc7125eca2ee0f1d85cd0d13bee6b3b189c513e60c4b8"
+  },
+  "code": {
+    "repair_accusation_audit.py": "bf4090f8df04dd61f58323a769c3c79580f924ac59330a88ad726841a00bfbff",
+    "diagnostic_v2.py": "9d3718a50cfad491beaeb82512ebdaede197b2a0e52e56abde7743b763603628",
+    "analyze_repeated_pilot.py": "a3c73ab624652ea0ac8e41f348df3a4f1dd7de511a96f872c26bb1dbc3c2e03a",
+    "reanalysis_common.py": "d02873328cfde8c28893864f749a3f92b4f20135c7e9b154fa8f42566e97334b"
+  },
+  "artifacts": {
+    "summary.json": "c4756d1372445fd74f50f9b45a6cf786071bcf4b7c3799ba8524f07d70e6bcc4",
+    "legacy-location-corrections.jsonl": "8fc059a569cedf6d0a2364007654696a44b3a7dec09d0ede3362ad67ba4389c7",
+    "assessment-key.jsonl": "2d0ff080a6b2f3d7a70daddb666edd4adf8d4d55222fb4f424398f30a60b1a3a",
+    "reviewer/README.md": "96ba5da55ebf8074131e5ae13f65c776b2997e32c341ce563b5ddd8188d6890b",
+    "reviewer/packet.jsonl": "3c26c6e1259ae8569388964d792bb5a233416b3f84d9175e08edcc0d8e48b8ee"
+  },
+  "protocol": "Preserve frozen original audit; restore actual request evidence, compare identical legacy units, supply full non-truncated assessments for review.",
+  "status": "Complete cached-data repair; no new inference or human adjudication"
+}

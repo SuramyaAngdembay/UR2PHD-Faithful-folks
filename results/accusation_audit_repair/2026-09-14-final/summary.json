@@ -1,0 +1,85 @@
+{
+  "status": "Complete cached-data repair; no new inference or human adjudication",
+  "validated_raw_outputs": 840,
+  "component_outputs": 420,
+  "distinct_responses": 70,
+  "legacy_same_record_comparison": {
+    "records": 473,
+    "by_arm": {
+      "B2": 237,
+      "A2": 236
+    },
+    "corrected_quote_locations": {
+      "A2": {
+        "trace_quote": {
+          "ordered_excerpt_with_ellipsis": 3,
+          "exact": 217,
+          "whitespace_only": 6,
+          "not_located_by_these_checks": 6,
+          "case_unicode_or_markdown_only": 4
+        },
+        "context_quote": {
+          "exact": 189,
+          "exact_text_in_other_supplied_field": 24,
+          "empty_quote": 9,
+          "whitespace_only": 1,
+          "judge_instruction_instead_of_record_evidence": 11,
+          "not_located_by_these_checks": 2
+        }
+      },
+      "B2": {
+        "trace_quote": {
+          "exact": 218,
+          "ordered_excerpt_with_ellipsis": 1,
+          "not_located_by_these_checks": 8,
+          "case_unicode_or_markdown_only": 7,
+          "whitespace_only": 3
+        },
+        "context_quote": {
+          "exact": 229,
+          "whitespace_only": 6,
+          "not_located_by_these_checks": 2
+        }
+      }
+    },
+    "records_without_supported_violation": {
+      "B2": 101,
+      "A2": 91
+    },
+    "full_context_packet_records_with_empty_prompt": 237,
+    "source_outputs_with_rationale_over_400_characters": 4
+  },
+  "repaired_assessments": {
+    "unit": "complete exact qualitative output, deduplicated within response/arm across repeats; not atomic accusations",
+    "records": 392,
+    "by_arm": {
+      "A2": 201,
+      "B2": 191
+    },
+    "request_coverage": 420,
+    "repeat_multiplicity": {
+      "1": 368,
+      "2": 20,
+      "3": 4
+    },
+    "without_supported_violation": {
+      "A2": 79,
+      "B2": 74
+    }
+  },
+  "structured_repeat_agreement": {
+    "A2": {
+      "triplets": 70,
+      "all_component_codes_identical": 39,
+      "false_process_claim_code_identical": 60,
+      "all_rationales_exactly_identical": 0
+    },
+    "B2": {
+      "triplets": 70,
+      "all_component_codes_identical": 51,
+      "false_process_claim_code_identical": 63,
+      "all_rationales_exactly_identical": 4
+    }
+  },
+  "interpretation": "Text location does not establish allegation validity. Exact-output or component-code agreement is not semantic agreement of accusations. No native label enters reviewer evidence; judge assertions are retained as review targets."
+}

@@ -4,7 +4,21 @@ Updated September 14, 2026 UTC. Research driver: Codex, following the user's exp
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
-Latest audit: Claude's 840-call repeated four-arm development pilot is complete
+Latest repair: Claude's subsequent accusation audit (`b135d3c`) reads the wrong
+prompt field and checks context quotations against the trace. Its full-context
+63% unlocated finding is invalid: corrected on the same records, only 2/237 (0.8%)
+remain unlocated. All 237 legacy full-context reviewer records lost the original
+prompt. Do not use that packet. The repaired packet preserves exact judge evidence
+and full qualitative outputs: 392 deduplicated assessments covering all 420
+component calls. Deliver only `results/accusation_audit_repair/2026-09-14-final/reviewer/`.
+192/473 legacy records allege no supported violation; textual recurrence is not
+semantic accusation agreement. All 45 tests pass. No new inference or human
+adjudication occurred. See the [independent repair](notes/2026-09-14-accusation-audit-independent-repair.md).
+The 24 constructed pairs and 576-call experiment have not started as of the latest
+September 14 session/artifact check. `verification-protocol.md` gives the intended
+design; exact controls, labels, schemas and request plan still need freezing.
+
+Earlier audit: Claude's 840-call repeated four-arm development pilot is complete
 and independently verified. On 70 responses (58 questions; U60/F10), mean-score
 AUROCs A1/B1/A2/B2 are .2175/.2592/.5108/.4450. The restricted component procedure
 improves over the generic procedure by +.293 [.093,.502] in the paired exploratory
@@ -54,8 +68,9 @@ audit above for current conclusions.
 ## Scientific direction
 
 Study when CoT faithfulness measurements transfer across evidence policies,
-reference standards and selected populations. Current experiments isolate
-evidence access from its interpretation. A component procedure is a development
+reference standards and selected populations. Current experiments compare
+evidence access and its interpretation; rubric and output structure still change
+together in the completed pilot. A component procedure is a development
 lead; a validated new method and a general two-regime law are not shown.
 
 The user has authorized autonomous selection and execution of needed bounded

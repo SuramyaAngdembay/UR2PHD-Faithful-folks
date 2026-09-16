@@ -1,0 +1,7 @@
+{
+  "rule": "40 accusation-bearing assessments, 40 distinct responses, 20 per arm, one per response at random",
+  "seed": 0,
+  "source_packet_sha256": "3c26c6e1259ae8569388964d792bb5a233416b3f84d9175e08edcc0d8e48b8ee",
+  "packet_sha256": "dbda42e7c2d4612b3a1c3777566092536418a5ce25a58d85c2eeb2a88f2c8284",
+  "n": 40
+}

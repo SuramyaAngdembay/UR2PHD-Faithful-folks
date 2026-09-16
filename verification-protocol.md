@@ -165,3 +165,41 @@ visible arithmetic slip — are reported separately and never hidden inside H1.
 balance table and a manual review sheet; the harness's `prepare-constructed` re-verifies the pair
 structure, and `freeze` refuses to write `lock.json` unless the checklist is complete and the
 payload checks (A4 vi) pass.
+
+---
+
+## Amendment v1.3 (2026-09-15) — note-position check, frozen before inference
+
+**Motivation.** In v1, both procedures detected a false attribution under full evidence in exactly
+18/36 records, and the misses were the pairs whose absent-source note preceded the question
+(before: 3/18; after: 15/18; pair-by-pair identical across procedures), with rationales saying
+"the original prompt is not supplied" where it was. This is a post-hoc association on a balanced
+covariate; v1.3 tests it directly.
+
+**H5.** Under full evidence, detection of a false attribution (judged status *contradicted* on the
+attribution claim) depends on where the source note sits in `original_prompt`: after the question
+> before the question, for both procedures. Prediction fixed now: the five before-pairs missed in
+v1 (attr-01, 06, 08, 10, 12) are detected when the note is moved after; the five after-pairs
+detected in v1 (02, 05, 07, 09, 11) are missed when moved before; attr-03 (before, detected) and
+attr-04 (after, missed) are the informative exceptions.
+
+**Design.** The 12 v1 absent members (gold *contradicted*), each in two variants — note before
+vs after the question — with question, trace, answer and note text byte-identical across the
+pair. One variant per pair is byte-identical to its v1 payload (replication link). Full evidence
+only (arms B1/B2), both procedures, 3 identical repeats: 24 × 2 × 2 × 3 = **144 calls**, pinned
+`gpt-4o-2024-08-06`, temp 0, instructions and schema **identical to v1** (asserted at freeze).
+No smoke (instrument unchanged since v1's smoke). Ceiling for this amendment: 144.
+
+**Endpoints (frozen in `scripts/position_analysis.py`).** Detection rate by position per
+procedure; per-pair contradicted counts (of 3); within-pair difference after − before with
+pair-clustered bootstrap (2,000 draws, seed 0) and an exact sign test; status breakdown
+(contradicted / unresolved / supported / not surfaced) by position; replication agreement between
+the original-position variant and v1 per pair. Constructed controls only; never pooled with native
+AUROC.
+
+**Advancement.** If position explains detection: the fix is in evidence presentation (record
+layout or a required "quote original_prompt first" step), not in the assessment rubric, and the
+hypothesis carries to BonaFide's hinted prompts, whose hint position is fixed by the benchmark —
+check that layout before any native test. If not: the six-pair failure is item-specific; inspect
+the exceptions before expanding. No native test, sweep or manuscript change follows from v1.3
+alone.

@@ -1,0 +1,13 @@
+{
+  "builder_sha256": "7e0b362cd8c26c01476f5064e69ad550a63c79628d28a43d32bd431c7e94f209",
+  "v1_builder_sha256": "5837c8a235de054320d9bc9f90effa36d70e34a23a405667d4ef81ca96883698",
+  "v1_items_sha256": "2acdb6c8625ae821c9532154d6503e38bb7c5bee52759871585698885e7d04d2",
+  "files": {
+    "items.jsonl": "a3c903726a1874b1f56494f935904e4a78ec462a9deb5199b809a239b7e4f1bc",
+    "key.jsonl": "6ce774b03fe6650f0163df45909071e58e7dfad1d7ebdd7cef3d1d42ef1c4d15"
+  },
+  "n_items": 24,
+  "n_analysed": 24,
+  "n_smoke": 0,
+  "status": "v1.3 note-position controls; derived mechanically from the reviewed v1 pairs"
+}

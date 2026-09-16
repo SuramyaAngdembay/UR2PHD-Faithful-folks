@@ -364,7 +364,9 @@ def prepare_constructed(args):
         if set(it)!=need:raise ValueError('Constructed item has unexpected fields: '+str(it.get('rid')))
     smoke=[it['rid'] for it in items if it['partition']=='smoke']
     analysed=[it for it in items if it['partition']=='eval']
-    if len(analysed)!=48 or not smoke:raise ValueError('Expected 48 analysed constructed items plus smoke items')
+    expected=getattr(args,'expected_analysed',48)
+    if len(analysed)!=expected:raise ValueError(f'Expected {expected} analysed constructed items')
+    if not smoke and not getattr(args,'no_smoke',False):raise ValueError('Expected smoke items (or pass --no-smoke)')
     if {k['rid'] for k in key}!={it['rid'] for it in analysed}:raise ValueError('Key/items mismatch')
     byc=defaultdict(list)
     for it in analysed:byc[it['cluster_id']].append(it)
@@ -470,7 +472,8 @@ def main():
     p.add_argument('--max-http-requests',type=int,default=36);p.add_argument('--max-seconds',type=int,default=900)
     p.add_argument('--rpm',type=float,default=12);p.add_argument('--dry-run',action='store_true');p.set_defaults(fn=run)
     p=sub.add_parser('prepare-constructed');p.add_argument('--source',type=Path,required=True)
-    p.add_argument('--output',type=Path,required=True);p.set_defaults(fn=prepare_constructed)
+    p.add_argument('--output',type=Path,required=True);p.add_argument('--expected-analysed',type=int,default=48,dest='expected_analysed')
+    p.add_argument('--no-smoke',action='store_true',dest='no_smoke');p.set_defaults(fn=prepare_constructed)
     p=sub.add_parser('freeze');p.add_argument('--prepared',type=Path,required=True);p.add_argument('--config',type=Path,required=True)
     p.add_argument('--checklist',type=Path,required=True);p.add_argument('--repeats',type=int,default=3);p.set_defaults(fn=freeze)
     p=sub.add_parser('inspect');p.add_argument('--output',type=Path,required=True);p.set_defaults(fn=inspect_run)

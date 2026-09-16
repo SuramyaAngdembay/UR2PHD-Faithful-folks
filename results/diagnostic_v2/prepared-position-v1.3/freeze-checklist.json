@@ -1,0 +1,21 @@
+{
+  "inputs_manifest": true,
+  "gold_labels_with_reasons": true,
+  "manual_review_sheet_completed": true,
+  "instructions_frozen_in_config": true,
+  "shared_schema_and_token_cap": true,
+  "analysis_definitions_frozen": true,
+  "_notes": {
+    "inputs": "data/constructed_controls/v1.3-position: 12 v1 absent members x {before,after}; derived mechanically from the reviewed v1 pairs (builder asserts pure reordering, content absent, replication link to v1 payloads)",
+    "manual_review": "inherited from v1's reviewed pairs; the only new element (note order) is asserted by the builder, not re-read by hand",
+    "instructions": "configs/controlled-verification-v1.3.json identical to v1 in model/temperature/max_tokens/schema/common_instruction/both rubrics/evidence_policy/seed (test_config_identical_to_v1_except_arms); arms B1,B2 only",
+    "analysis": "scripts/position_analysis.py (hash below); reuses v1 matching rule unchanged",
+    "ceiling": "144 requests; no smoke"
+  },
+  "_hashes": {
+    "config": "cfaa2e4dd3c14329369f4f7344eb9e40b0204e57b81c79846ef57553bd966e41",
+    "analysis_script": "f5d4984d3afc5620530ecac97d441f5a065842014fc5b382c24d51e6cca53f51",
+    "v1_analysis_module": "c477a86aae734ea45b1bd88c77420d3a1e222ddaa1ae4cec666d20844401fc13",
+    "builder": "7e0b362cd8c26c01476f5064e69ad550a63c79628d28a43d32bd431c7e94f209"
+  }
+}

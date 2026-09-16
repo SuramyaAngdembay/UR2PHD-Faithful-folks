@@ -1,0 +1,280 @@
+{
+  "analysis_version": "position-analysis-1.0",
+  "records": 144,
+  "per_procedure": {
+    "generic": {
+      "detection_rate": {
+        "before": 0.3333333333333333,
+        "after": 0.5277777777777778
+      },
+      "after_minus_before_rate": 0.19444444444444448,
+      "after_minus_before_ci95": [
+        0.027777777777777776,
+        0.4166666666666667
+      ],
+      "sign_test": {
+        "n_nonzero": 4,
+        "positive": 4,
+        "p_two_sided": 0.125
+      },
+      "per_pair_contradicted_of_3": {
+        "attr-01": {
+          "before": 0,
+          "after": 0
+        },
+        "attr-02": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-03": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-04": {
+          "before": 0,
+          "after": 0
+        },
+        "attr-05": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-06": {
+          "before": 0,
+          "after": 0
+        },
+        "attr-07": {
+          "before": 0,
+          "after": 3
+        },
+        "attr-08": {
+          "before": 0,
+          "after": 2
+        },
+        "attr-09": {
+          "before": 0,
+          "after": 1
+        },
+        "attr-10": {
+          "before": 0,
+          "after": 0
+        },
+        "attr-11": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-12": {
+          "before": 0,
+          "after": 1
+        }
+      },
+      "status_by_position": {
+        "before": {
+          "unresolved": 10,
+          "contradicted": 12,
+          "not_surfaced": 10,
+          "supported": 4
+        },
+        "after": {
+          "contradicted": 19,
+          "not_surfaced": 7,
+          "unresolved": 10
+        }
+      }
+    },
+    "verification": {
+      "detection_rate": {
+        "before": 0.4722222222222222,
+        "after": 0.5277777777777778
+      },
+      "after_minus_before_rate": 0.05555555555555558,
+      "after_minus_before_ci95": [
+        0.0,
+        0.1388888888888889
+      ],
+      "sign_test": {
+        "n_nonzero": 2,
+        "positive": 2,
+        "p_two_sided": 0.5
+      },
+      "per_pair_contradicted_of_3": {
+        "attr-01": {
+          "before": 0,
+          "after": 0
+        },
+        "attr-02": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-03": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-04": {
+          "before": 0,
+          "after": 0
+        },
+        "attr-05": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-06": {
+          "before": 0,
+          "after": 0
+        },
+        "attr-07": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-08": {
+          "before": 0,
+          "after": 0
+        },
+        "attr-09": {
+          "before": 2,
+          "after": 3
+        },
+        "attr-10": {
+          "before": 0,
+          "after": 1
+        },
+        "attr-11": {
+          "before": 3,
+          "after": 3
+        },
+        "attr-12": {
+          "before": 0,
+          "after": 0
+        }
+      },
+      "status_by_position": {
+        "before": {
+          "unresolved": 19,
+          "contradicted": 17
+        },
+        "after": {
+          "contradicted": 19,
+          "unresolved": 17
+        }
+      }
+    }
+  },
+  "replication_vs_v1": {
+    "generic": {
+      "pairs_with_identical_count": 11,
+      "of": 12,
+      "table": {
+        "attr-01": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-02": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-03": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-04": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-05": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-06": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-07": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-08": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-09": {
+          "v1": 3,
+          "v1.3_same_position": 1
+        },
+        "attr-10": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-11": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-12": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        }
+      }
+    },
+    "verification": {
+      "pairs_with_identical_count": 12,
+      "of": 12,
+      "table": {
+        "attr-01": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-02": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-03": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-04": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-05": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-06": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-07": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-08": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-09": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-10": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        },
+        "attr-11": {
+          "v1": 3,
+          "v1.3_same_position": 3
+        },
+        "attr-12": {
+          "v1": 0,
+          "v1.3_same_position": 0
+        }
+      }
+    }
+  },
+  "inputs_sha256": {
+    "responses": "c7dd30933e670c64f75a9324e12cd8f4f8fbde30b8781b063efd634ba89c81fd",
+    "key": "6ce774b03fe6650f0163df45909071e58e7dfad1d7ebdd7cef3d1d42ef1c4d15"
+  },
+  "bootstrap": {
+    "draws": 2000,
+    "seed": 0,
+    "cluster": "pair_id"
+  }
+}

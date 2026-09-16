@@ -176,3 +176,16 @@ original_prompt first" step), not in the assessment rubric; that would also be a
 carry to the native BonaFide inputs, where the hint's position in `original_prompt` is fixed by the
 benchmark. No native test should be launched before this is resolved, because a position-dependent
 reader will produce position-dependent "detection" on any native set.
+
+## CORRECTION (2026-09-15, after amendment v1.3)
+
+The inspection section's conclusion — "the 50% detection ceiling is a prompt-position effect shared
+by both procedures" — is **withdrawn**. The direct within-pair test (`notes/2026-09-15-note-position-v1.3-results.md`)
+moved each absent note before/after the question: for the verification procedure detection is
+unchanged by position (+.056 [.000, +.139]; the same six pairs detected in both positions, the same
+six missed), and per-pair counts replicate v1 in 12/12 pairs. The v1 association was a coincidence
+of which pairs had the note before. Position contributes modestly to the generic procedure only
+(+.194 [+.028, +.417], four pairs). The pre-registered H5 prediction failed and is recorded as such.
+The current post-hoc candidate is the *style* of the absent note (procedural instruction vs
+data-bearing sibling), an unbalanced construction variable — a hypothesis for a within-pair v1.4
+test, not a finding.

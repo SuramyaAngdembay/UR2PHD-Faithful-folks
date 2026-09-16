@@ -81,17 +81,20 @@ only where they existed (restricted attribution 11→5 of 72, item-level −.083
 [−.250, .000]); the "fabricated verification" accusation never occurred for either
 procedure on constructed controls. H4 leak check passed (12/12 exact ties).
 §6 branch: semantic decisions improved → freeze the procedure and test on fresh
-native examples + a second judge family — but the inspection of the six
-under-accusation pairs (no inference) found that **the 50% detection ceiling is a
-prompt-position effect shared by both procedures**: note after the question → false
-attribution detected 15/18 by both; note before → 3/18 by both, pair-by-pair
-identical, with rationales saying "the original prompt is not supplied" in the arm
-where it was. The instruction contrast never touched this. Next bounded step
-(NOT run; needs amendment v1.3 and a fresh freeze): within-pair note-position
-manipulation on the same 12 pairs, full evidence, 144 calls. No native test before
-that is resolved. The native follow-on also needs the pending human adjudication of
-the repaired 392-item packet to measure detection of real violations. 57 tests pass.
-Constructed-control results are never pooled with native AUROC.
+native examples + a second judge family. **Amendment v1.3 (September 15) tested the
+prompt-position explanation of the 50% detection ceiling and refuted it** for the
+verification procedure (after − before +.056 [.000, +.139]; the same six pairs
+detected and the same six missed in both positions; per-pair counts replicate v1 in
+12/12 pairs); position contributes modestly to the generic procedure only (+.194
+[+.028, +.417], four pairs). The pre-registered prediction failed and is recorded as
+such ([results](notes/2026-09-15-note-position-v1.3-results.md)). Post-hoc candidate,
+not a finding: the six missed pairs are those whose absent note is a procedural
+instruction rather than a data-bearing sibling of the cited source — an unbalanced
+construction variable; a within-pair v1.4 (144 calls) would test it, only needed if
+the paper claims anything about the procedure's detection. Calibration gains stand.
+A 40-accusation calibration subset for two-annotator agreement is published
+(`reviewer/calibration-40/`, GitHub Pages); κ decides whether full adjudication is
+worthwhile. 61 tests pass. Constructed-control results are never pooled with native AUROC.
 
 ## Completed repeated pilot (September 14, 01:13 UTC)
 

@@ -1,0 +1,82 @@
+{
+  "scope": "Cached integrity and endpoint recomputation; not a new experiment or human adjudication",
+  "runs": {
+    "cv1-eval": {
+      "valid_unique_calls": 576,
+      "raw_hash": "794663acca489bc8774b5afe57a9344aa657c7bcce8d8c05c780836b3a7b6456",
+      "analysis_script_hash": "c477a86aae734ea45b1bd88c77420d3a1e222ddaa1ae4cec666d20844401fc13",
+      "all_saved_endpoints_recomputed": true,
+      "source_hashes": {
+        "run": "69f30b498ff9105aef85028588ab3bb7bc0039a70d545a8d2edf6afae7303c3f",
+        "key": "916d6f20898df15855718a8d4eb3bcea240affdb07c28656fcc8c8452462ffa5",
+        "results": "16df47a8e62f3f4fc670ea3bbaf50b6dac5c21d615d514944ce2ff6b5d7152a1"
+      }
+    },
+    "cv13-eval": {
+      "valid_unique_calls": 144,
+      "raw_hash": "c7dd30933e670c64f75a9324e12cd8f4f8fbde30b8781b063efd634ba89c81fd",
+      "analysis_script_hash": "f5d4984d3afc5620530ecac97d441f5a065842014fc5b382c24d51e6cca53f51",
+      "all_saved_endpoints_recomputed": true,
+      "source_hashes": {
+        "run": "3ed0e946e45e90dec7d45670d69e87ff7458df224efe00860361d18407f6f67d",
+        "key": "6ce774b03fe6650f0163df45909071e58e7dfad1d7ebdd7cef3d1d42ef1c4d15",
+        "results": "d724622ccc475e0daccbfc2d1bae185b84bed2b6786b91dcb28e60f00816ea02"
+      }
+    }
+  },
+  "v1_full_absent_attributions": {
+    "B1": {
+      "contradicted": 18,
+      "supported": 4,
+      "not_surfaced": 9,
+      "unresolved": 5
+    },
+    "B2": {
+      "contradicted": 18,
+      "unresolved": 17,
+      "supported": 1
+    }
+  },
+  "position_contrasts": {
+    "generic": {
+      "detection_rate": {
+        "before": 0.3333333333333333,
+        "after": 0.5277777777777778
+      },
+      "after_minus_before_rate": 0.19444444444444448,
+      "after_minus_before_ci95": [
+        0.027777777777777776,
+        0.4166666666666667
+      ],
+      "sign_test": {
+        "n_nonzero": 4,
+        "positive": 4,
+        "p_two_sided": 0.125
+      }
+    },
+    "verification": {
+      "detection_rate": {
+        "before": 0.4722222222222222,
+        "after": 0.5277777777777778
+      },
+      "after_minus_before_rate": 0.05555555555555558,
+      "after_minus_before_ci95": [
+        0.0,
+        0.1388888888888889
+      ],
+      "sign_test": {
+        "n_nonzero": 2,
+        "positive": 2,
+        "p_two_sided": 0.5
+      }
+    }
+  },
+  "review_selection": {
+    "assessments": 40,
+    "distinct_responses": 40,
+    "distinct_questions": 32,
+    "all_allege_supported_violation": true,
+    "packet_sha256": "dbda42e7c2d4612b3a1c3777566092536418a5ce25a58d85c2eeb2a88f2c8284",
+    "selection_script_sha256": "fc3c6c6b00fa0dce481a1718d934f0a19247073ac9e0778ebb12879cf0bb1d0c"
+  }
+}

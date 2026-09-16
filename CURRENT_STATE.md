@@ -1,8 +1,25 @@
 # Current research state
 
-Updated September 14, 2026 UTC. Research driver: Codex, following the user's explicit
+Updated September 16, 2026 UTC. Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
+
+Latest direction assessment: v1's 576 calls and v1.3's 144 calls are complete;
+raw parsing, request identity, hashes and all saved endpoints independently
+recompute. Gains concern claim/status coding and insufficient-evidence handling
+on authored controls, not established probability calibration, native detector
+improvement or generator causality. Both procedures detect 18/36 absent-source
+attributions in v1; verification still endorses one. The strong position prediction
+failed, but zero position effect/determinism and a note-style mechanism are not
+established. The 40-item review subset is optional annotation development:
+accusation-bearing assessments only, 40 responses/32 questions, from the older
+component pilot. It cannot estimate missed violations or causal CoT faithfulness;
+κ measures agreement, not truth, and must not gate all further work. Prioritize
+explicit source-predicate controls and fresh common-reference transfer tests;
+full human packet completion does not block these. See the
+[direction and review assessment](notes/2026-09-16-direction-and-review-packet-assessment.md)
+and its `2026-09-16-direction-audit-validation.json` companion. The later dated
+assessment supersedes stronger interpretations in historical entries below.
 
 Latest repair: Claude's subsequent accusation audit (`b135d3c`) reads the wrong
 prompt field and checks context quotations against the trace. Its full-context

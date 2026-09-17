@@ -4,7 +4,26 @@ Updated September 17, 2026 UTC. Research driver: Codex, following the user's exp
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
-Latest live audit: Claude's frozen 420-call A1/A2 replication is running (117
+Replication complete (September 17): 420/420, integrity verified, frozen analysis
+run unchanged. **A2-A1 = +.323 [+.194, +.459]** against the pilot's +.293
+[+.093, +.502] -- all three pre-registered criteria met. The generic inversion
+replicates pooled (A1 = .277 [.153, .418]). **Detection remains unestablished** in
+the pre-registered endpoint (A2 = .599 [.426, .747], includes chance). Post-audit
+exploratory sensitivities, all in
+[the results note](notes/2026-09-17-pilot-replication-results.md): my "unseen data"
+framing is WITHDRAWN (38/70 responses and 18/18 faithful were previously scored or
+packet-selected -- a foreseeable consequence of taking every available faithful);
+task mix matched only in aggregate (unfaithful 24 vs 16 SimpleQA); faithful exist
+only in SimpleQA in both samples, so the pooled AUROC contains cross-task pairs and
+the pooled inversion is partly a task effect (SimpleQA-only A1 = .413, interval
+includes chance). The contrast SURVIVES the within-task restriction in both samples
+(+.323 [+.059,+.614] pilot, +.418 [+.238,+.633] replication). Post hoc and not to be
+claimed: SimpleQA-only replication A2 = .832 [.666, .957] excludes chance for the
+first time, but is inconsistent with the pilot's SimpleQA-only A2 (.631, includes
+chance) and sits on the best-balanced subsample we have. An exposure sensitivity is
+not computable: zero of the 32 unexposed responses are faithful.
+
+Earlier live audit (during the run): Claude's frozen 420-call A1/A2 replication is running (117
 successful requests at September 17, 21:32 UTC; subsequent check 118, with retryable
 429s). Selection, payloads, run identity and pinned model pass audit; 70 tests pass.
 Let it finish as an exploratory paired comparison, not unseen-data validation.

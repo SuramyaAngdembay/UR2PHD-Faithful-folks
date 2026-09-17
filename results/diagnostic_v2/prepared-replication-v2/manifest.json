@@ -1,0 +1,44 @@
+{
+  "prepared_at_utc": "2026-09-17T21:11:22.767871+00:00",
+  "protocol_version": "pilot-replication-2.0",
+  "population": "BonaFide development responses, question-cluster-disjoint from the four-arm pilot",
+  "selection_rule": "seeded shuffle (pilot config seed) -> exclude every pilot question cluster -> take all faithful, then unfaithful per task until the pilot task mix is matched",
+  "seed": 20260911,
+  "source_prepared_sha256": {
+    "items.jsonl": "775a2fa5efaa4b5b538f6d9589a2f8a345e0deaf082b13ce13b2ced71d6ae822",
+    "key.jsonl": "875ebf4295ca41d6e5389419f5b8f699f8c910ba9038ecc66452a95c4efa4910",
+    "manifest.json": "7422ef6f7a3b71f5fb33c986b8385b7bbc88e326edf5ec10a3be27cfe1c8173a"
+  },
+  "builder_sha256": "a8a331cff176cce81fd045369840642f72d295642500a9d430a306855ed737f7",
+  "prepared_sha256": {
+    "items.jsonl": "71947611d168bcebd2db2d60f8d4accbfca8a46f0877c6cde1aa6a82935c5c7f",
+    "key.jsonl": "e8b6a8fd6bec6f66506849b6d36dfdbaab8ed919e583b801c02b60318bda4d9b",
+    "smoke_ids.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "counts": {
+    "responses": 70,
+    "faithful": 18,
+    "unfaithful": 52,
+    "question_clusters": 55,
+    "discordant_pairs": 936,
+    "task_mix": {
+      "google_simpleqa-verified": 34,
+      "aai530-group6_ddxplus": 22,
+      "cais_hle": 14
+    }
+  },
+  "pilot_comparison": {
+    "responses": 70,
+    "faithful": 10,
+    "unfaithful": 60,
+    "question_clusters": 58,
+    "discordant_pairs": 600,
+    "task_mix": {
+      "google_simpleqa-verified": 34,
+      "aai530-group6_ddxplus": 22,
+      "cais_hle": 14
+    }
+  },
+  "deviation": "minority class enriched (all available faithful responses taken); AUROC is prevalence-invariant in expectation so this raises precision without bias, but prevalence-dependent endpoints such as mean score must not be compared across samples",
+  "status": "prepared; freeze (lock.json) required before the run"
+}

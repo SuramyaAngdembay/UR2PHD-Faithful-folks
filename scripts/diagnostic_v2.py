@@ -245,10 +245,12 @@ def request_plan(prepared,config,partition,repeats=1,max_items=None):
 
 def run(args):
     config=json.loads(args.config.read_text()); identity=run_identity(config,args.prepared)
-    if args.partition=='eval':
-        lock=args.prepared/'lock.json'
+    lock=args.prepared/'lock.json'
+    if args.partition=='eval' or lock.exists():
+        # eval always needs a reviewed lock; any partition that HAS one must match it, so a frozen
+        # plan cannot be sidestepped by running it under a different partition name.
         if not lock.exists() or json.loads(lock.read_text()).get('identity')!=identity:
-            raise ValueError('Evaluation requires a reviewed lock.json matching this exact config, inputs and runner')
+            raise ValueError('This run requires a reviewed lock.json matching this exact config, inputs and runner')
     plan=request_plan(args.prepared,config,args.partition,getattr(args,'repeats',1),getattr(args,'max_items',None))
     if not plan:raise ValueError('Empty request plan')
     input_chars=sum(sum(len(m['content']) for m in p['payload']['messages']) for p in plan)
@@ -424,6 +426,28 @@ def payload_checks(plan, key, config):
                 checked['verification_trace_only_difference']+=1
     return dict(checked)
 
+def replication_payload_checks(plan, key, config, reference_config, excluded_clusters):
+    """Checks for a native replication sample: the procedures must be byte-identical to the
+    reference (pilot) config, the sample must not touch the reference run's question clusters, and
+    restricted arms must carry no original_prompt."""
+    for field in ['model','temperature','max_tokens','response_format','response_formats',
+                  'common_instruction','generic_rubric','component_rubric','evidence_policy','seed']:
+        if config.get(field)!=reference_config.get(field):
+            raise ValueError('Replication config differs from the reference in a payload-affecting field: '+field)
+    counts=Counter()
+    for p in plan:
+        if p['repeat']:continue
+        if p['payload']!=build_payload(p['item'],p['arm'],reference_config):
+            raise ValueError('Payload differs from the reference procedure: '+p['rid']+'/'+p['arm'])
+        if p['arm'].startswith('A') and 'original_prompt' in json.loads(p['payload']['messages'][1]['content']):
+            raise ValueError('Restricted payload carries original_prompt: '+p['rid'])
+        if key[p['rid']]['cluster_id'] in excluded_clusters:
+            raise ValueError('Sample touches an excluded question cluster: '+p['rid'])
+        counts['payload_identical_to_reference_procedure']+=1
+    counts['question_clusters']=len({key[p['rid']]['cluster_id'] for p in plan})
+    counts['excluded_clusters_honoured']=len(excluded_clusters)
+    return dict(counts)
+
 def freeze(args):
     """Write lock.json only when the operational freeze checklist is complete and the payload
     checks pass. run --partition eval refuses without a matching lock."""
@@ -433,10 +457,19 @@ def freeze(args):
     missing=[k for k,v in checklist.items() if not k.startswith('_') and v is not True]   # '_'-prefixed keys carry notes
     if missing:raise ValueError('Freeze checklist incomplete: '+', '.join(missing))
     key={k['rid']:k for k in read_jsonl(prepared/'key.jsonl')}
-    plan=request_plan(prepared,config,'eval',args.repeats)
-    checks=payload_checks(plan,key,config)
+    partition=getattr(args,'partition','eval')
+    plan=request_plan(prepared,config,partition,args.repeats)
+    if any('family' in k for k in key.values()):
+        checks=payload_checks(plan,key,config)
+    else:
+        if not getattr(args,'reference_config',None) or not getattr(args,'exclude_clusters_from',None):
+            raise ValueError('A native replication freeze requires --reference-config and --exclude-clusters-from')
+        ref=json.loads(args.reference_config.read_text())
+        excluded={r['cluster_id'] for r in read_jsonl(args.exclude_clusters_from)}
+        checks=replication_payload_checks(plan,key,config,ref,excluded)
     write_json(lock,{'frozen_at_utc':utc(),'identity':run_identity(config,prepared),'checklist':checklist,
                      'checklist_sha256':file_hash(args.checklist),'repeats':args.repeats,'requests':len(plan),
+                     'partition':partition,
                      'request_ids_sha256':digest([p['request_id'] for p in plan]),'payload_checks':checks})
     print(json.dumps(json.loads(lock.read_text()),indent=2))
 
@@ -475,7 +508,11 @@ def main():
     p.add_argument('--output',type=Path,required=True);p.add_argument('--expected-analysed',type=int,default=48,dest='expected_analysed')
     p.add_argument('--no-smoke',action='store_true',dest='no_smoke');p.set_defaults(fn=prepare_constructed)
     p=sub.add_parser('freeze');p.add_argument('--prepared',type=Path,required=True);p.add_argument('--config',type=Path,required=True)
-    p.add_argument('--checklist',type=Path,required=True);p.add_argument('--repeats',type=int,default=3);p.set_defaults(fn=freeze)
+    p.add_argument('--checklist',type=Path,required=True);p.add_argument('--repeats',type=int,default=3)
+    p.add_argument('--partition',choices=['smoke','dev','eval'],default='eval')
+    p.add_argument('--reference-config',type=Path,dest='reference_config',help='native replication: config whose payloads must be reproduced exactly')
+    p.add_argument('--exclude-clusters-from',type=Path,dest='exclude_clusters_from',help='native replication: key.jsonl whose question clusters must not appear')
+    p.set_defaults(fn=freeze)
     p=sub.add_parser('inspect');p.add_argument('--output',type=Path,required=True);p.set_defaults(fn=inspect_run)
     args=ap.parse_args();args.fn(args)
 

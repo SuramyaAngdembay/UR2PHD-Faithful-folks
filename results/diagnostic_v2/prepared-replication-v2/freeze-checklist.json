@@ -1,0 +1,24 @@
+{
+  "inputs_manifest": true,
+  "native_labels_frozen": true,
+  "selection_rule_prespecified": true,
+  "procedures_identical_to_pilot": true,
+  "analysis_definitions_frozen": true,
+  "preregistered_criteria_fixed": true,
+  "_notes": {
+    "inputs": "results/diagnostic_v2/prepared-replication-v2: 70 dev responses, 18 faithful / 52 unfaithful, 55 clusters, task mix 34/22/14 identical to the pilot, zero response and zero question-cluster overlap with the pilot",
+    "labels": "native BonaFide y from the verified frozen prepared key; no authored labels in this experiment",
+    "selection": "scripts/build_pilot_replication.py, deterministic: pilot-seed shuffle -> drop pilot clusters -> all faithful, then unfaithful per task to match the pilot mix; the script asserts the shuffle reproduces the pilot's own 70 rids",
+    "procedures": "configs/pilot-replication-v2.json identical to diagnostic-v2.1-pilot-r2 in every payload-affecting field; freeze re-derives all 140 payloads from the pilot config and requires byte equality",
+    "analysis": "scripts/replication_analysis.py; aborts unless it first reproduces the pilot's published A1 .2175 / A2 .5108 / contrast +.2933 (verified: exact, including the interval)",
+    "criteria": "R1 sign and interval; R2 replication point inside the pilot interval; R3 pilot point inside the replication interval -- fixed in pilot-replication-spec.md before any request",
+    "deviations": "minority class enriched (AUROC is prevalence-invariant in expectation; mean-score endpoints not comparable across samples); B arms dropped",
+    "ceiling": "420 requests; no smoke"
+  },
+  "_hashes": {
+    "config": "cb7581af7210a897695e48d11e742c202b2126039cfc90b48b810a641e1102ca",
+    "analysis_script": "cd26ad5caacfe345fd1e49ac307497fe56a0e6126d58484eb7e04426158bb8d8",
+    "builder": "a8a331cff176cce81fd045369840642f72d295642500a9d430a306855ed737f7",
+    "spec": "c20971c21aa7a116f48abf6e311615a4c5739e8d89488bd4cefa600b59b87978"
+  }
+}

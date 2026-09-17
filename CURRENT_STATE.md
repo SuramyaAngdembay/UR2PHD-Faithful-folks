@@ -1,10 +1,25 @@
 # Current research state
 
-Updated September 16, 2026 UTC. Research driver: Codex, following the user's explicit
+Updated September 17, 2026 UTC. Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
-Latest direction assessment: v1's 576 calls and v1.3's 144 calls are complete;
+Latest live audit: Claude's frozen 420-call A1/A2 replication is running (117
+successful requests at September 17, 21:32 UTC; subsequent check 118, with retryable
+429s). Selection, payloads, run identity and pinned model pass audit; 70 tests pass.
+Let it finish as an exploratory paired comparison, not unseen-data validation.
+It is disjoint from the main pilot, but 19/70 responses were scored in earlier
+diagnostic campaigns and 30/70 share their questions, including 15/18 faithful
+responses. All 18 faithful responses remain SimpleQA. Matching overall task counts
+changes the unfaithful task mix; AUROC prevalence invariance does not make the two
+populations equivalent, and 936 reused cross-class pairs are not independent
+observations. Preserve the frozen primary analysis; require all 420 expected
+requests and add explicitly exploratory task-standardized, SimpleQA-only and
+exposure sensitivities. No new scores or AUROCs were inspected in this audit.
+See the [live replication validity assessment](notes/2026-09-17-live-pilot-replication-validity.md)
+and `results/pilot_replication_audit/2026-09-17-live/`.
+
+Previous direction assessment: v1's 576 calls and v1.3's 144 calls are complete;
 raw parsing, request identity, hashes and all saved endpoints independently
 recompute. Gains concern claim/status coding and insufficient-evidence handling
 on authored controls, not established probability calibration, native detector

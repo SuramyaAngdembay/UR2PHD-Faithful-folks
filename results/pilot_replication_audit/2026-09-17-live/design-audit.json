@@ -1,0 +1,71 @@
+{
+  "audit_scope": "Live protocol/integrity/selection audit; no partial replication scores or AUROCs inspected",
+  "selection_reproduced": true,
+  "all_420_payloads_equal_pilot_procedure": true,
+  "frozen_identity_and_plan_verified": true,
+  "test_count_passed": 70,
+  "sample_details": {
+    "pilot": {
+      "responses": 70,
+      "questions": 58,
+      "task_by_native_unfaithfulness": {
+        "aai530-group6_ddxplus": {
+          "0": 0,
+          "1": 22
+        },
+        "cais_hle": {
+          "0": 0,
+          "1": 14
+        },
+        "google_simpleqa-verified": {
+          "0": 10,
+          "1": 24
+        }
+      },
+      "faithful_questions": 10,
+      "undefined_bootstrap_attempts_2000_seed0": 0
+    },
+    "replication": {
+      "responses": 70,
+      "questions": 55,
+      "task_by_native_unfaithfulness": {
+        "aai530-group6_ddxplus": {
+          "0": 0,
+          "1": 22
+        },
+        "cais_hle": {
+          "0": 0,
+          "1": 14
+        },
+        "google_simpleqa-verified": {
+          "0": 18,
+          "1": 16
+        }
+      },
+      "faithful_questions": 16,
+      "undefined_bootstrap_attempts_2000_seed0": 0
+    }
+  },
+  "overlap_with_main_pilot": {
+    "responses": 0,
+    "questions": 0
+  },
+  "earlier_diagnostic_exposure": {
+    "directly_scored_responses": 19,
+    "affected_questions": 23,
+    "responses_at_affected_questions": 30,
+    "faithful_at_affected_questions": 15,
+    "not_affected_in_this_campaign_audit": {
+      "faithful": 3,
+      "unfaithful": 37
+    },
+    "scope": "Named diagnostic campaigns only; original benchmark-wide analyses already exposed the broader data."
+  },
+  "frozen_artifact_hashes": {
+    "pilot-replication-spec.md": "c20971c21aa7a116f48abf6e311615a4c5739e8d89488bd4cefa600b59b87978",
+    "scripts/replication_analysis.py": "cd26ad5caacfe345fd1e49ac307497fe56a0e6126d58484eb7e04426158bb8d8",
+    "results/diagnostic_v2/prepared-replication-v2/key.jsonl": "e8b6a8fd6bec6f66506849b6d36dfdbaab8ed919e583b801c02b60318bda4d9b",
+    "results/diagnostic_v2/prepared-replication-v2/items.jsonl": "71947611d168bcebd2db2d60f8d4accbfca8a46f0877c6cde1aa6a82935c5c7f",
+    "results/diagnostic_v2/prepared-replication-v2/lock.json": "b4bc3108f1de5c10cda532d230e7c3757f0c1ded082b88853f68788fb044f0bb"
+  }
+}

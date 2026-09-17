@@ -1,0 +1,25 @@
+{
+  "checked_at_utc": "2026-09-17T21:32:40.245919+00:00",
+  "completed_requests": 117,
+  "expected_requests": 420,
+  "errors": 6,
+  "completion_marker_present": false,
+  "unique_expected_request_ids": true,
+  "run_identity_matches_freeze": true,
+  "returned_model_pinned": true,
+  "freeze_time_utc": "2026-09-17T21:14:39.240375+00:00",
+  "first_call_utc": "2026-09-17T21:15:10.189735+00:00",
+  "last_completed_call_utc": "2026-09-17T21:32:17.270141+00:00",
+  "scope": "Execution metadata only; partial scores and AUROCs not inspected",
+  "key_sha256": "e8b6a8fd6bec6f66506849b6d36dfdbaab8ed919e583b801c02b60318bda4d9b",
+  "runner_sha256": "50b6f52701c0530102a1f150e2bcf529a11aec8a4035e47e876b9f259f5a540a",
+  "error_followup": {
+    "error_types": {
+      "('HTTPError', 429, 'rate_limit_exceeded')": 7
+    },
+    "failed_requests_later_completed": 6,
+    "latest_error_utc": "2026-09-17T21:32:49.032839+00:00",
+    "process_alive": true,
+    "completed_requests_at_error_check": 118
+  }
+}

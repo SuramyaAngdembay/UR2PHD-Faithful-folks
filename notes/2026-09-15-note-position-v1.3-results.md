@@ -32,7 +32,7 @@ Per pair (contradicted of 3, before → after):
 | attr-11 | 3 → 3 | 3 → 3 |
 | attr-12 | 0 → 0 | 0 → 1 |
 
-**For the verification procedure, position does not matter.** The six pairs it detects, it
+**For the verification procedure, position does not matter detectably** (see correction below). The six pairs it detects, it
 detects in both positions; the six it misses, it misses in both (one stray 1/3). Detection is a
 deterministic property of the *pair*, reproduced across days: the same-position variants give
 per-pair counts identical to v1 in **12/12 pairs** (generic 11/12). The v1 association with note
@@ -76,3 +76,14 @@ within-pair test (same pair, procedural vs data-bearing absent note), not a find
   run, unless that claim is wanted.
 - Lesson for construction: balance the *style* of distractor content, not only its position and
   length. Pre-registration did its job — a wrong prediction was recorded as wrong.
+
+
+## CORRECTION (2026-09-17)
+
+"Position does not matter" / "deterministic property of the pair" overstates what 144 calls show.
+The interval is [.000, +.139] — a modest effect is not excluded — and two verification pairs did
+change counts between positions. Per-pair counts matching v1 across days is repeatability evidence,
+not determinism. The note-style account remains explicitly a post-hoc hypothesis; the useful
+version of a follow-up (per `notes/2026-09-16-direction-and-review-packet-assessment.md`) is to fix
+an explicit *source predicate* ("the supplied snippet states X") with true / false / withheld cases
+and manipulate note style **within** each question, rather than re-labelling pairs that were missed.

@@ -1,0 +1,90 @@
+{
+  "analysis_version": "pilot-replication-analysis-1.0",
+  "analysis_sha256": "cd26ad5caacfe345fd1e49ac307497fe56a0e6126d58484eb7e04426158bb8d8",
+  "estimator": "per-response mean of 3 identical repeats; rank AUROC; question-cluster bootstrap, same draws for both arms",
+  "bootstrap": {
+    "draws": 2000,
+    "seed": 0
+  },
+  "pilot_self_check": "passed",
+  "pilot": {
+    "label": "pilot",
+    "n_responses": 70,
+    "n_clusters": 58,
+    "faithful": 10,
+    "unfaithful": 60,
+    "discordant_pairs": 600,
+    "task_mix": {
+      "google_simpleqa-verified": 34,
+      "aai530-group6_ddxplus": 22,
+      "cais_hle": 14
+    },
+    "auroc": {
+      "A1": 0.2175,
+      "A2": 0.5108333333333334
+    },
+    "auroc_ci": {
+      "A1": [
+        0.10713573706994758,
+        0.34492179144385027
+      ],
+      "A2": [
+        0.32009886425834705,
+        0.6935913739558792
+      ]
+    },
+    "contrast_A2_minus_A1": 0.29333333333333333,
+    "contrast_ci": [
+      0.09317866161616163,
+      0.5020132337526199
+    ],
+    "mean_score_prevalence_dependent_do_not_compare_across_samples": {
+      "A1": 67.23809523809524,
+      "A2": 54.76190476190476
+    }
+  },
+  "replication": {
+    "label": "replication",
+    "n_responses": 70,
+    "n_clusters": 55,
+    "faithful": 18,
+    "unfaithful": 52,
+    "discordant_pairs": 936,
+    "task_mix": {
+      "google_simpleqa-verified": 34,
+      "aai530-group6_ddxplus": 22,
+      "cais_hle": 14
+    },
+    "auroc": {
+      "A1": 0.2767094017094017,
+      "A2": 0.5993589743589743
+    },
+    "auroc_ci": {
+      "A1": [
+        0.15283599213286714,
+        0.41805389150943395
+      ],
+      "A2": [
+        0.4261849695073129,
+        0.7472873882820257
+      ]
+    },
+    "contrast_A2_minus_A1": 0.3226495726495726,
+    "contrast_ci": [
+      0.19373081140350876,
+      0.4594223484848483
+    ],
+    "mean_score_prevalence_dependent_do_not_compare_across_samples": {
+      "A1": 67.76190476190476,
+      "A2": 50.261904761904766
+    }
+  },
+  "preregistered_criteria": {
+    "R1_sign": "positive",
+    "R1_interval_excludes_zero": true,
+    "R2_replication_point_inside_pilot_interval": true,
+    "R3_pilot_point_inside_replication_interval": true,
+    "intervals_overlap": true
+  },
+  "scope": "native BonaFide development responses; the replication sample is question-cluster-disjoint from the pilot and enriches the minority class"
+}

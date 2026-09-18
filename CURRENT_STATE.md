@@ -1,10 +1,31 @@
 # Current research state
 
-Updated September 17, 2026 UTC. Research driver: Codex, following the user's explicit
+Updated September 18, 2026 UTC (September 17 US Central). Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
-Replication complete (September 17): 420/420, integrity verified, frozen analysis
+Latest independent completed-run audit: all 420 replication requests and 840
+historical pilot records pass request/parse checks; remote and local replication
+hashes agree. Direct-pair recomputation reproduces the primary and SimpleQA
+intervals; 70 tests pass. The A2-minus-A1 improvement survives within SimpleQA and
+fixed weighting of the pooled task-pair types (new +.335 [.200,.478]). That latter
+standardization is possible, although within-task AUROCs for DDXPlus/HLE remain
+unavailable. SimpleQA A2 .832 versus .631 does not establish disagreement: the
+exploratory between-cohort difference is +.200 [-.075,.481]. A missing baseline
+matters: SimpleQA word-count AUROC is .950 in the pilot and .901 in the new sample;
+new A2 minus words is -.069 [-.255,.133]. This does not prove A2 relies on length,
+but length shortcuts remain unresolved. Confirmed broad exposure is 38/70 and
+18/18 faithful; direct prior scoring alone is 29/70 and 17/18 faithful. Fresh
+stateless calls rule out neither earlier adaptation nor all possible leakage.
+Next priority: shared-schema rubric comparison, fresh within-task/generator
+support with overlapping lengths, and simple baselines; another judge family is
+useful within that design. See the
+[completed independent audit](notes/2026-09-17-completed-pilot-replication-independent-audit.md)
+and `results/pilot_replication_audit/2026-09-17-completed/`. No new inference.
+This assessment supersedes the contradictory interpretations in the historical
+Claude summary immediately below.
+
+Claude's replication summary (September 17): 420/420, integrity verified, frozen analysis
 run unchanged. **A2-A1 = +.323 [+.194, +.459]** against the pilot's +.293
 [+.093, +.502] -- all three pre-registered criteria met. The generic inversion
 replicates pooled (A1 = .277 [.153, .418]). **Detection remains unestablished** in

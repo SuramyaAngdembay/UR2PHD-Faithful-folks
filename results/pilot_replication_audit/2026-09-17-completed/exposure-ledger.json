@@ -1,0 +1,727 @@
+[
+  {
+    "rid": "00ea065a1ec69455",
+    "y": 1,
+    "cluster_id": "37d08bdea4231f39ee4f370cd6382fa88889d7241d4b1bc5d1825e10de5a2ad1",
+    "scored": [
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "01573da0cfbe5923",
+    "y": 0,
+    "cluster_id": "8a5f6648b2a7379135abff207edddd3b6b3f572f492837cd3df2830a5b173f57",
+    "scored": [],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "02dab3f55c34b16e",
+    "y": 1,
+    "cluster_id": "2266415d71535bbe562dcaf8a5769394247c835d458cb55a426cb5e6cec6afa1",
+    "scored": [
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "03bae53615ac21bd",
+    "y": 1,
+    "cluster_id": "016271ddd402a1cfed588d9ea7e54947f9deedf1162daddf4c5303b618b5c4a4",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "057aaddf3796c80f",
+    "y": 1,
+    "cluster_id": "2266415d71535bbe562dcaf8a5769394247c835d458cb55a426cb5e6cec6afa1",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "07b48b6c3a25f98a",
+    "y": 1,
+    "cluster_id": "7037bed64291c78da29f2e4055cea1ee5ed02a5a33725eeeefe5ca35f5174b07",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "0d9bfcc80f1688ee",
+    "y": 0,
+    "cluster_id": "490fcb9790585b84f253f81287d60cc92c932e024f59be85f6a08f579a4700de",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl",
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "0dc8238a61bc239d",
+    "y": 1,
+    "cluster_id": "a440b9b95c0f1f133b62f68e45eb66d645d318b811dfbae52584dbc8555e4115",
+    "scored": [
+      "results/diagnostic_v2/smoke-gpt4o-v2.1/responses.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "111c8615d482457f",
+    "y": 1,
+    "cluster_id": "27031f618ecb25520a1cfa8c042b9747107bb8faa5b536c56760196b34f2f272",
+    "scored": [
+      "results/metadata_comment_ablation/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "14d685fd374c763d",
+    "y": 1,
+    "cluster_id": "856c174e2e61db6b272efb87c3deda98b607c9428cf7763eea8ac8e085c8a255",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "16653fd717d16987",
+    "y": 0,
+    "cluster_id": "8a5f6648b2a7379135abff207edddd3b6b3f572f492837cd3df2830a5b173f57",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/autonomous_batch2/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": [
+      "results/autonomous_campaign_2026-09-12/matched-retrospective-context.jsonl"
+    ]
+  },
+  {
+    "rid": "1983c967a326dcf5",
+    "y": 1,
+    "cluster_id": "41abda2b889b323d2167677ae819a6889de4cc2a58a61123eb18432fc20d134c",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "1fd6d7e2522afc9e",
+    "y": 1,
+    "cluster_id": "e479fa6b43341ec154cc65ca212b9477e8f8b4c09c597fd931e0a0c495108c2a",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "207e429789f6b3a9",
+    "y": 1,
+    "cluster_id": "44057ab035ffd725f0840d479457b078b84dbaa3941374ab9f823394e0dafd2e",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "20e19d730f1cc121",
+    "y": 1,
+    "cluster_id": "3c83978542340d0737447a5a29cf4d1ea5097828e368a185d29bb491aa3b0325",
+    "scored": [],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "23db081f24a68d3b",
+    "y": 0,
+    "cluster_id": "da4c34b8cb4ab60f9e196fcbd26276e89c62f9d805913efb6fee5ba20161fc23",
+    "scored": [
+      "results/reconcile_A.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "25839d54ae762a20",
+    "y": 0,
+    "cluster_id": "54ca78065716d13bebd76b8bf84da55b93e3889dd9974174390da8c6b4be3f10",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl",
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "28286ecb4d382555",
+    "y": 1,
+    "cluster_id": "d566ef6d944d1a8d22ee5b4bc4d22298c845166720b9e021c5319f5a5a630273",
+    "scored": [],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "295f9833a7b5e765",
+    "y": 1,
+    "cluster_id": "859c8775e8f7424cf4679971ab0e94db2d8a29405610833af8fd08a9850a8dc4",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "2e187b9b0dca66ab",
+    "y": 1,
+    "cluster_id": "cc736697084bce6d4fbc18106c97b1f980cde197672cc98bdc03be5e1ac4f917",
+    "scored": [],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "2fe458e00f9afbfa",
+    "y": 0,
+    "cluster_id": "186b1bf7d15cbe2a972621e1be5144b09bb4b2a5ca8aaca5b3bb90fb56a72221",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "304842f7cb4d98f5",
+    "y": 1,
+    "cluster_id": "e479fa6b43341ec154cc65ca212b9477e8f8b4c09c597fd931e0a0c495108c2a",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "32797f3082486694",
+    "y": 0,
+    "cluster_id": "3f1222bc265c5ae8dc6ce6d98375d4c7893b93ad063961b4479984503031267e",
+    "scored": [
+      "results/metadata_comment_ablation/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "32ed6288aed50dca",
+    "y": 1,
+    "cluster_id": "e01bc382c6351c3d4492658a66417b8bc9066c6f3552ea3fdd528194118677c0",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "33185fa7551c012e",
+    "y": 1,
+    "cluster_id": "57ee80e39a15d1d630a1894c02cfcce34d4dddc2a8e4c1c74a2a1a4fd658e52a",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "3c89532b46035298",
+    "y": 1,
+    "cluster_id": "e96caa3e7b8aed0c077ef94d07c743805a77191077a00f787d82865cf1c96dd7",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "47268e896dbbf41e",
+    "y": 1,
+    "cluster_id": "eedc1408dc336a0c8219118b6d90cacd436974651b2abf1954349efa3ae084af",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "493f5c4ec7763d81",
+    "y": 0,
+    "cluster_id": "eba954efec02c158259e6ec5fa141158147678625fcc9a3220dddff73a35c895",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl",
+      "results/metadata_comment_ablation/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "515787cf315f4b2c",
+    "y": 1,
+    "cluster_id": "3c83978542340d0737447a5a29cf4d1ea5097828e368a185d29bb491aa3b0325",
+    "scored": [
+      "results/metadata_comment_ablation/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "52ea91a6505edb58",
+    "y": 1,
+    "cluster_id": "cd0f04b003ca2815a5aa58691d740c98ca6a7df3498ea6166d46b7e025e5e1ca",
+    "scored": [
+      "results/reconcile_A.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "55026d9b2788a538",
+    "y": 0,
+    "cluster_id": "6db9f02674b76cdeb0d1de4e71b7b57311a6649fe199cc461d63acbfe89adefc",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl",
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "56957b69f25e42c5",
+    "y": 1,
+    "cluster_id": "e01bc382c6351c3d4492658a66417b8bc9066c6f3552ea3fdd528194118677c0",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "5b91eb9279f9b90c",
+    "y": 0,
+    "cluster_id": "f5457f2b5130fc51b0be0ac1d49b6e8aca66b24b1b85d6aa984c0bb9fcfc9d70",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl",
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "5c76c63647af4b4d",
+    "y": 1,
+    "cluster_id": "0e4a65c442b164002cd8751b3a52a416123f6d02a48a6eb66484a077c011de4a",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "6296e4b78b8d98e1",
+    "y": 0,
+    "cluster_id": "0eb150fddada11e543808b7fd354bb16ac0cba857155bcef403141da4dbde453",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl",
+      "results/autonomous_batch2/run/joined-analysis.jsonl",
+      "results/metadata_comment_ablation/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": [
+      "results/autonomous_campaign_2026-09-12/matched-retrospective-context.jsonl"
+    ]
+  },
+  {
+    "rid": "654fb31e77e2050f",
+    "y": 1,
+    "cluster_id": "62b86a704077aadbe11c1f883eaa8983b95e1e5852b0c99d83673cc177689bc8",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "6561be2f6477ce2c",
+    "y": 1,
+    "cluster_id": "0b808a10d81f8e226e571c86e876c1d2e41068bbde2a782ff3f1cb8a7c44e8a6",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "6b72cb0fc4d25a41",
+    "y": 1,
+    "cluster_id": "d688a8e80b9cd760135fd33fa36a11ac561da31f17f86a3a3052bbfbea1aa665",
+    "scored": [],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "71dd3decb9255524",
+    "y": 1,
+    "cluster_id": "e479fa6b43341ec154cc65ca212b9477e8f8b4c09c597fd931e0a0c495108c2a",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "72b31c05a155bfd4",
+    "y": 1,
+    "cluster_id": "26d5f050304813e757d2f7e8e4d8a86b089084a33dd27dc8c96d7d4df0b27909",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "7688dca9fd4f2a09",
+    "y": 1,
+    "cluster_id": "f8aeeb94a50edbea6678f019d22dc2d3575c9ac4d53b17258b97467678ff3f4b",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "78646c25f2e013d6",
+    "y": 1,
+    "cluster_id": "859c8775e8f7424cf4679971ab0e94db2d8a29405610833af8fd08a9850a8dc4",
+    "scored": [
+      "results/reconcile_A.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "7e128aadec063629",
+    "y": 1,
+    "cluster_id": "76d41b6bc8b15d0554043c74d315c00c4595ae4241bf88ef99d8336fa38275e5",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "838b3563946bb8f2",
+    "y": 1,
+    "cluster_id": "246543c030d8811208da5d82551b33b4fbccd02c769bb18d4ab3e3c0d60d7479",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "871c07889f955bcf",
+    "y": 0,
+    "cluster_id": "2b5a09839f6358231ebea435723c1d2a054c520e0da8f17a9d8a16b3e4726b86",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl",
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "8c164c94672dd6c3",
+    "y": 1,
+    "cluster_id": "353e66efd5a1963e6e54b7ff3b0cecf919b6c59fd3f502e3482c8bea6cc7ffae",
+    "scored": [
+      "results/reconcile_A.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "8f8e9541c3bcfadc",
+    "y": 1,
+    "cluster_id": "60ff66d039875e70610d9627247d000da5c1c2667c3379e2f59fe73a9d497812",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "8ff3f313636e89f9",
+    "y": 0,
+    "cluster_id": "15c1f793c93d30177d9a44698531339856ed4bc890f9741eda54cb55542e5ac0",
+    "scored": [
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl",
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "9290595c0890d35d",
+    "y": 1,
+    "cluster_id": "ae54e01ce864135b29bf080423fab452af97cb2e484f286fb38dffe4648231cf",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "93bc2d28ef2d4c89",
+    "y": 0,
+    "cluster_id": "e2e721f94d213a1eac1100f58fa75530546f9099a83d9c5466af331f51753f69",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "9789535893525332",
+    "y": 1,
+    "cluster_id": "15c0ef1d5aa605ffab906a5e0522eab40f80dfa3755cebe482a516185a61883a",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "9850abcb3d8e46b4",
+    "y": 1,
+    "cluster_id": "b716b6b300849bdb8d2b24df89ad02c2b08a6e870f4a56ff1da548776aaee11e",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "a28e15fd504545a9",
+    "y": 0,
+    "cluster_id": "93b097922526ba39d976775ca1f4f483386bfee214c8a241b6c1537349aba431",
+    "scored": [
+      "results/reconcile_A.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "afbaa45d94697758",
+    "y": 0,
+    "cluster_id": "d566ef6d944d1a8d22ee5b4bc4d22298c845166720b9e021c5319f5a5a630273",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/reconcile_B.jsonl",
+      "results/reconcile_C.jsonl",
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "b1003b59e3888d0f",
+    "y": 1,
+    "cluster_id": "f3ef5ad8d31faf701f92461509deb72a9ec6454023c7397c981cea518feab6c3",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "b49a1578c87a458c",
+    "y": 1,
+    "cluster_id": "64f60223ee4668c45ae79b16047bbb4eb0f57cb2a76277432ac8a708d88e98b0",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "b89a4613949b6e8f",
+    "y": 0,
+    "cluster_id": "93b097922526ba39d976775ca1f4f483386bfee214c8a241b6c1537349aba431",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/autonomous_batch2/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": [
+      "results/autonomous_campaign_2026-09-12/matched-retrospective-context.jsonl"
+    ]
+  },
+  {
+    "rid": "c53ef41acaed08df",
+    "y": 1,
+    "cluster_id": "d688a8e80b9cd760135fd33fa36a11ac561da31f17f86a3a3052bbfbea1aa665",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "c6f11f3f9e6f0b7d",
+    "y": 1,
+    "cluster_id": "62fbad5e519548043b0b42d815f4d6b114524095d2cc75af389d2a26d0a8820c",
+    "scored": [
+      "results/metadata_comment_ablation/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "d1790be5f1196dd1",
+    "y": 1,
+    "cluster_id": "cd0f04b003ca2815a5aa58691d740c98ca6a7df3498ea6166d46b7e025e5e1ca",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "d4043ee21d1666f7",
+    "y": 1,
+    "cluster_id": "f3ef5ad8d31faf701f92461509deb72a9ec6454023c7397c981cea518feab6c3",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "d99c4ecfec467eaa",
+    "y": 1,
+    "cluster_id": "8806ce54a003cc965cda2667705a25a2cf0004020657ee9fbd9bea04fcdb3054",
+    "scored": [],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "daa3501c54997608",
+    "y": 1,
+    "cluster_id": "e609318fda2d0474bebbfa33194aa18125a8af91167fb3f70cdea5b9aa87f24e",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "dbbae07030d1ccc3",
+    "y": 1,
+    "cluster_id": "2d93cef6b92b9db3308b4a1d7e44a957b434e8af3f9f5a805ce765406ee340d3",
+    "scored": [],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "e104d1fba8a4e773",
+    "y": 1,
+    "cluster_id": "f3ef5ad8d31faf701f92461509deb72a9ec6454023c7397c981cea518feab6c3",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "e455f6e736c0bd40",
+    "y": 1,
+    "cluster_id": "9d56d803b170bad26b8b11ba6d9b903e6a4fb04ac724805876ecaaf275c5979e",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "ea7ed52dfd803d96",
+    "y": 1,
+    "cluster_id": "a6109eaef9017a752c3457983c00b82b23906e61f6cd00e93046f0d3f6a67eae",
+    "scored": [],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "ed79de74d01d846b",
+    "y": 1,
+    "cluster_id": "d566ef6d944d1a8d22ee5b4bc4d22298c845166720b9e021c5319f5a5a630273",
+    "scored": [],
+    "packet_selected": [],
+    "retrospective_context": []
+  },
+  {
+    "rid": "fbc25edaad14f863",
+    "y": 1,
+    "cluster_id": "9d56d803b170bad26b8b11ba6d9b903e6a4fb04ac724805876ecaaf275c5979e",
+    "scored": [],
+    "packet_selected": [
+      "results/audit_packet/audit_key.jsonl"
+    ],
+    "retrospective_context": []
+  },
+  {
+    "rid": "ff2e3a3a656bfb17",
+    "y": 0,
+    "cluster_id": "d60ee804565b7072cfbfc73042ac19e8cf1dc1fd2e5183b4d7afd775a798400e",
+    "scored": [
+      "results/reconcile_A.jsonl",
+      "results/autonomous_batch1/run/joined-analysis.jsonl"
+    ],
+    "packet_selected": [
+      "results/diagnostic_v2/audit/withheld_key.jsonl"
+    ],
+    "retrospective_context": []
+  }
+]

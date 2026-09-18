@@ -1,0 +1,486 @@
+{
+  "created_at_utc": "2026-09-18T00:28:44.344220+00:00",
+  "status": "Offline completed-run audit; no new inference",
+  "integrity": {
+    "requests": 420,
+    "raw_parse_matches": true,
+    "plan_matches": true,
+    "completion": {
+      "completed_at_utc": "2026-09-17T22:14:11.625070+00:00",
+      "expected": 420,
+      "valid": 420,
+      "failed_slots": 0,
+      "http_requests_recorded": 439,
+      "returned_models": [
+        "gpt-4o-2024-08-06"
+      ],
+      "responses_sha256": "638937d3ac4813eb756c36cef45d0ac3341ab28d861e43019f07d1effcb30b3f",
+      "purpose": "exploratory diagnostic"
+    }
+  },
+  "pilot_integrity": {
+    "requests": 840,
+    "raw_parse_matches": true,
+    "plan_matches": true,
+    "completion": {
+      "completed_at_utc": "2026-09-14T01:13:39.708317+00:00",
+      "expected": 840,
+      "valid": 840,
+      "failed_slots": 0,
+      "http_requests_recorded": 450,
+      "returned_models": [
+        "gpt-4o-2024-08-06"
+      ],
+      "responses_sha256": "2ee1c1042990b97853deb9bd20812e14e7592e235060c8ca8908a0dbe9d1bc6f",
+      "purpose": "exploratory diagnostic"
+    }
+  },
+  "original_primary_results_reproduced": true,
+  "results": {
+    "pilot": {
+      "primary_reproduced": {
+        "responses": 70,
+        "questions": 58,
+        "faithful": 10,
+        "attempts": 2000,
+        "seed": 0,
+        "metrics": {
+          "A1": {
+            "point": 0.2175,
+            "ci": [
+              0.10713573706994758,
+              0.34492179144385027
+            ],
+            "undefined_draws": 0
+          },
+          "A2": {
+            "point": 0.5108333333333334,
+            "ci": [
+              0.32009886425834705,
+              0.6935913739558792
+            ],
+            "undefined_draws": 0
+          },
+          "word_count": {
+            "point": 0.97,
+            "ci": [
+              0.92415737461192,
+              1.0
+            ],
+            "undefined_draws": 0
+          },
+          "n_steps": {
+            "point": 0.8891666666666667,
+            "ci": [
+              0.797614468864469,
+              0.9603735334713592
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_A1": {
+            "point": 0.29333333333333333,
+            "ci": [
+              0.09317866161616163,
+              0.5020132337526199
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_reversed_A1": {
+            "point": -0.2716666666666666,
+            "ci": [
+              -0.5257448968393329,
+              -0.033618421052631686
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_word_count": {
+            "point": -0.4591666666666666,
+            "ci": [
+              -0.6582777297747057,
+              -0.2614424421561151
+            ],
+            "undefined_draws": 0
+          }
+        }
+      },
+      "simpleqa_exploratory": {
+        "responses": 34,
+        "questions": 26,
+        "faithful": 10,
+        "attempts": 2000,
+        "seed": 0,
+        "metrics": {
+          "A1": {
+            "point": 0.30833333333333335,
+            "ci": [
+              0.13491300366300366,
+              0.4865997665229885
+            ],
+            "undefined_draws": 0
+          },
+          "A2": {
+            "point": 0.63125,
+            "ci": [
+              0.38248106060606063,
+              0.8688974358974358
+            ],
+            "undefined_draws": 0
+          },
+          "word_count": {
+            "point": 0.95,
+            "ci": [
+              0.8712121212121212,
+              1.0
+            ],
+            "undefined_draws": 0
+          },
+          "n_steps": {
+            "point": 0.8104166666666667,
+            "ci": [
+              0.6721329246411484,
+              0.9267704216073781
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_A1": {
+            "point": 0.32291666666666663,
+            "ci": [
+              0.05911056568489943,
+              0.6137870299635003
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_reversed_A1": {
+            "point": -0.060416666666666674,
+            "ci": [
+              -0.384625,
+              0.25854355576222526
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_word_count": {
+            "point": -0.31875,
+            "ci": [
+              -0.5878561776061777,
+              -0.06879004329004383
+            ],
+            "undefined_draws": 0
+          }
+        }
+      },
+      "fixed_task_weight_exploratory": {
+        "responses": 70,
+        "questions": 58,
+        "faithful": 10,
+        "attempts": 2000,
+        "seed": 0,
+        "metrics": {
+          "A1": {
+            "point": 0.21750000000000003,
+            "ci": [
+              0.11024570655848547,
+              0.3398647578443893
+            ],
+            "undefined_draws": 0
+          },
+          "A2": {
+            "point": 0.5108333333333334,
+            "ci": [
+              0.31590846944838546,
+              0.6962645268474215
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_A1": {
+            "point": 0.29333333333333333,
+            "ci": [
+              0.09447853151883287,
+              0.5058115079365076
+            ],
+            "undefined_draws": 0
+          }
+        }
+      },
+      "task_components_against_faithful_SimpleQA": {
+        "google_simpleqa-verified": {
+          "A1": 0.30833333333333335,
+          "A2": 0.63125,
+          "word_count": 0.95,
+          "n_steps": 0.8104166666666667,
+          "A2_minus_A1": 0.32291666666666663,
+          "A2_minus_reversed_A1": -0.060416666666666674,
+          "A2_minus_word_count": -0.31875
+        },
+        "aai530-group6_ddxplus": {
+          "A1": 0.03636363636363636,
+          "A2": 0.29545454545454547,
+          "word_count": 0.9954545454545455,
+          "n_steps": 0.9454545454545454,
+          "A2_minus_A1": 0.2590909090909091,
+          "A2_minus_reversed_A1": -0.6681818181818182,
+          "A2_minus_word_count": -0.7
+        },
+        "cais_hle": {
+          "A1": 0.3464285714285714,
+          "A2": 0.6428571428571429,
+          "word_count": 0.9642857142857143,
+          "n_steps": 0.9357142857142857,
+          "A2_minus_A1": 0.2964285714285715,
+          "A2_minus_reversed_A1": -0.010714285714285676,
+          "A2_minus_word_count": -0.3214285714285714
+        }
+      }
+    },
+    "replication": {
+      "primary_reproduced": {
+        "responses": 70,
+        "questions": 55,
+        "faithful": 18,
+        "attempts": 2000,
+        "seed": 0,
+        "metrics": {
+          "A1": {
+            "point": 0.2767094017094017,
+            "ci": [
+              0.15283599213286714,
+              0.41805389150943395
+            ],
+            "undefined_draws": 0
+          },
+          "A2": {
+            "point": 0.5993589743589743,
+            "ci": [
+              0.4261849695073129,
+              0.7472873882820257
+            ],
+            "undefined_draws": 0
+          },
+          "word_count": {
+            "point": 0.9535256410256411,
+            "ci": [
+              0.9011040148224496,
+              0.9916178554150251
+            ],
+            "undefined_draws": 0
+          },
+          "n_steps": {
+            "point": 0.8899572649572649,
+            "ci": [
+              0.8018874549819928,
+              0.9612342855802607
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_A1": {
+            "point": 0.3226495726495726,
+            "ci": [
+              0.19373081140350876,
+              0.4594223484848483
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_reversed_A1": {
+            "point": -0.12393162393162394,
+            "ci": [
+              -0.3899140211640212,
+              0.1259837562353659
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_word_count": {
+            "point": -0.35416666666666674,
+            "ci": [
+              -0.5330296130660921,
+              -0.19360013380909916
+            ],
+            "undefined_draws": 0
+          }
+        }
+      },
+      "simpleqa_exploratory": {
+        "responses": 34,
+        "questions": 27,
+        "faithful": 18,
+        "attempts": 2000,
+        "seed": 0,
+        "metrics": {
+          "A1": {
+            "point": 0.4131944444444444,
+            "ci": [
+              0.19640916149068322,
+              0.6127302714646464
+            ],
+            "undefined_draws": 0
+          },
+          "A2": {
+            "point": 0.8315972222222222,
+            "ci": [
+              0.6660678475935828,
+              0.9574305555555555
+            ],
+            "undefined_draws": 0
+          },
+          "word_count": {
+            "point": 0.9010416666666666,
+            "ci": [
+              0.7424183238636364,
+              0.9944599780701754
+            ],
+            "undefined_draws": 0
+          },
+          "n_steps": {
+            "point": 0.8229166666666666,
+            "ci": [
+              0.6517789502164503,
+              0.9444444444444444
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_A1": {
+            "point": 0.4184027777777778,
+            "ci": [
+              0.23807171089779783,
+              0.6329501993104933
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_reversed_A1": {
+            "point": 0.24479166666666663,
+            "ci": [
+              -0.06913148757309949,
+              0.5225733901515152
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_word_count": {
+            "point": -0.06944444444444442,
+            "ci": [
+              -0.25547603854955114,
+              0.13334008097165986
+            ],
+            "undefined_draws": 0
+          }
+        }
+      },
+      "fixed_task_weight_exploratory": {
+        "responses": 70,
+        "questions": 55,
+        "faithful": 18,
+        "attempts": 2000,
+        "seed": 0,
+        "metrics": {
+          "A1": {
+            "point": 0.2949074074074074,
+            "ci": [
+              0.17425901515151518,
+              0.42435874673999036
+            ],
+            "undefined_draws": 0
+          },
+          "A2": {
+            "point": 0.6303240740740741,
+            "ci": [
+              0.4896573620431988,
+              0.7488512153920707
+            ],
+            "undefined_draws": 0
+          },
+          "A2_minus_A1": {
+            "point": 0.3354166666666667,
+            "ci": [
+              0.199947472011133,
+              0.4781892409741673
+            ],
+            "undefined_draws": 0
+          }
+        }
+      },
+      "task_components_against_faithful_SimpleQA": {
+        "google_simpleqa-verified": {
+          "A1": 0.4131944444444444,
+          "A2": 0.8315972222222222,
+          "word_count": 0.9010416666666666,
+          "n_steps": 0.8229166666666666,
+          "A2_minus_A1": 0.4184027777777778,
+          "A2_minus_reversed_A1": 0.24479166666666663,
+          "A2_minus_word_count": -0.06944444444444442
+        },
+        "aai530-group6_ddxplus": {
+          "A1": 0.06313131313131314,
+          "A2": 0.2828282828282828,
+          "word_count": 0.9772727272727273,
+          "n_steps": 0.9406565656565656,
+          "A2_minus_A1": 0.21969696969696967,
+          "A2_minus_reversed_A1": -0.654040404040404,
+          "A2_minus_word_count": -0.6944444444444444
+        },
+        "cais_hle": {
+          "A1": 0.45634920634920634,
+          "A2": 0.8313492063492064,
+          "word_count": 0.9761904761904762,
+          "n_steps": 0.8869047619047619,
+          "A2_minus_A1": 0.37500000000000006,
+          "A2_minus_reversed_A1": 0.2876984126984127,
+          "A2_minus_word_count": -0.14484126984126977
+        }
+      }
+    }
+  },
+  "simpleqa_A2_new_minus_pilot_exploratory": {
+    "point": 0.20034722222222223,
+    "ci": [
+      -0.07461933819167825,
+      0.48067791005290944
+    ],
+    "undefined_draws": 0,
+    "seeds": [
+      20260917,
+      20260918
+    ],
+    "attempts": 2000,
+    "scope": "Exploratory independent-cluster bootstrap; cohorts differ in composition/exposure."
+  },
+  "prior_exposure": {
+    "direct_scoring_exposure": 29,
+    "faithful_directly_scored": 17,
+    "scored_or_selected_or_context": 38,
+    "faithful_scored_or_selected_or_context": 18,
+    "responses_at_prior_questions": 50,
+    "scope": "Explicit named development artifacts; broader benchmark analyses predate these."
+  },
+  "fixed_unfaithful_task_weights": {
+    "google_simpleqa-verified": 0.4,
+    "aai530-group6_ddxplus": 0.36666666666666664,
+    "cais_hle": 0.23333333333333334
+  },
+  "ci_policy": "2000 fixed attempts, question-cluster paired; withhold CI if any draw undefined; nominal exploratory intervals, no multiplicity adjustment",
+  "input_sha256": {
+    "results/reconcile_A.jsonl": "fd0f02f2ccd093d0a62a86995f7defad00e6c0886ebc4df78e9c54d3708aa818",
+    "results/reconcile_B.jsonl": "9326eea12478ff7a808823484c59553dcbf8ffaa53aa740bcffccd06c8f2cdfe",
+    "results/reconcile_C.jsonl": "b8c8232eba6319beda93bf401e2284879cfccc4793482b2d780cd24e62751f5d",
+    "results/autonomous_batch1/run/joined-analysis.jsonl": "c6b03676defa78fa161cbe46b231f3a67a7caaea35b817012d59ea0c9498b4da",
+    "results/autonomous_batch2/run/joined-analysis.jsonl": "55b59fdac23b094a98bea56920d1ad92814330532b418f2df6cdd711c0fcefe5",
+    "results/metadata_comment_ablation/run/joined-analysis.jsonl": "e9721c2247ae042dc75a16e9747304423bdbf00f6d6d245ce0c7c827bb2e1864",
+    "results/diagnostic_v2/smoke-gpt4o-v2.1/responses.jsonl": "723709c9b82e631b9206dbb8e97dcf82eeb27671c37d71049ffdccf17c9bd29f",
+    "results/diagnostic_v2/audit/withheld_key.jsonl": "b465229b225907c1be361be6eabf9bfe9f3b7b4e6081031d1113b0ac6449bed4",
+    "results/audit_packet/audit_key.jsonl": "b76585d33700525dd0611527aebd540ab6207d187f25b35c42f881939a55579c",
+    "results/autonomous_campaign_2026-09-12/matched-retrospective-context.jsonl": "e1c5f2b6ae2351de06329915b0cb77d474c59cc7d71d82c8f372f2e46b478eb6",
+    "scripts/audit_completed_pilot_replication.py": "c53e326943642fec568b3b201f6b5f9e8c5a3d633132c3cab7c02ee8e1412eb3",
+    "scripts/diagnostic_v2.py": "50b6f52701c0530102a1f150e2bcf529a11aec8a4035e47e876b9f259f5a540a",
+    "scripts/replication_analysis.py": "cd26ad5caacfe345fd1e49ac307497fe56a0e6126d58484eb7e04426158bb8d8",
+    "results/controlled_verification/replication-analysis/results.json": "6a617dabf73e4a63fbe412bf333febf18f01e85e2c4cd501fa516a8f44a68518",
+    "results/diagnostic_v2/rep-eval/run.json": "4dc10336a90c1061f1e3dee95ec19a5e3a7d9dca5345417832b94224e34162d2",
+    "results/diagnostic_v2/rep-eval/responses.jsonl": "638937d3ac4813eb756c36cef45d0ac3341ab28d861e43019f07d1effcb30b3f",
+    "results/diagnostic_v2/rep-eval/completion.json": "91589b13fa361688b68190a37c4c1b501928d81a394de7ec7d1ce781972d3561",
+    "results/diagnostic_v2/pilot-4arm-rep3c/run.json": "7bdb55cb46f142ee0ab4d670d924c0d9e89008d15a2892648b63d2479d5b7b00",
+    "results/diagnostic_v2/pilot-4arm-rep3c/responses.jsonl": "2ee1c1042990b97853deb9bd20812e14e7592e235060c8ca8908a0dbe9d1bc6f",
+    "results/diagnostic_v2/pilot-4arm-rep3c/completion.json": "eac220fbee4762f9debbbe54e812a8459a4649bbf560476e4bd6dc04542912db",
+    "results/diagnostic_v2/prepared/key.jsonl": "875ebf4295ca41d6e5389419f5b8f699f8c910ba9038ecc66452a95c4efa4910",
+    "results/diagnostic_v2/prepared/items.jsonl": "775a2fa5efaa4b5b538f6d9589a2f8a345e0deaf082b13ce13b2ced71d6ae822",
+    "results/diagnostic_v2/prepared/manifest.json": "7422ef6f7a3b71f5fb33c986b8385b7bbc88e326edf5ec10a3be27cfe1c8173a",
+    "results/diagnostic_v2/prepared-replication-v2/key.jsonl": "e8b6a8fd6bec6f66506849b6d36dfdbaab8ed919e583b801c02b60318bda4d9b",
+    "results/diagnostic_v2/prepared-replication-v2/items.jsonl": "71947611d168bcebd2db2d60f8d4accbfca8a46f0877c6cde1aa6a82935c5c7f",
+    "results/diagnostic_v2/prepared-replication-v2/manifest.json": "518215e1027354706d5ecd6f6671c8a1e3ae5bde7d60144a61679cf511fdf8e8",
+    "results/diagnostic_v2/prepared-replication-v2/lock.json": "b4bc3108f1de5c10cda532d230e7c3757f0c1ded082b88853f68788fb044f0bb"
+  }
+}

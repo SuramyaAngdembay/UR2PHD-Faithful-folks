@@ -1,0 +1,11 @@
+{
+  "verified_at_utc": "2026-09-18T00:31:28.321598+00:00",
+  "remote_local_match": true,
+  "sha256": {
+    "responses.jsonl": "638937d3ac4813eb756c36cef45d0ac3341ab28d861e43019f07d1effcb30b3f",
+    "attempts.jsonl": "185bbe9c177f4333e036f60178c20e01d8517b7311b6121d53e3602abb636d3a",
+    "errors.jsonl": "37ecb4fc8a6e9b67f7787cc21e6f09cf8e5aa20af8881e28d434afb2cc577550",
+    "run.json": "4dc10336a90c1061f1e3dee95ec19a5e3a7d9dca5345417832b94224e34162d2",
+    "completion.json": "91589b13fa361688b68190a37c4c1b501928d81a394de7ec7d1ce781972d3561"
+  }
+}

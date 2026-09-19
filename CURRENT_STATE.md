@@ -314,8 +314,12 @@ restricted comparisons, not causal adjustment or a replacement headline.
   `autonomous_batch2/`, `monitor_role_correction/`, `metadata_comment_ablation/`
   and `autonomous_campaign_2026-09-12/`. The original frozen evaluation stays
   untouched. The original 807-response partition now includes 204 responses
-  scored in Claude's reconciliation, spanning 156 question clusters (397
-  responses share those clusters). Preserve the split and record new exposure;
+  scored in Claude's reconciliation, spanning 156 question clusters. A
+  2026-09-19 sweep of every artefact found a further 80 eval responses touched
+  by audit-packet selection: **284/807 (35%) touched across 203 clusters, and
+  483 eval responses (60%) share a cluster with a touched one** -- larger than
+  the 397 recorded here previously. See
+  [the AI-scientist-pitfalls self-audit](notes/2026-09-19-ai-scientist-pitfalls-self-audit.md). Preserve the split and record new exposure;
   do not describe the entire partition as unopened. The whole campaign remains
   exploratory; freeze exact requests before subsequent inference.
 

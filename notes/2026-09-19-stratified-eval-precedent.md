@@ -191,3 +191,67 @@ live entirely in the correct-answer regime and never report the incorrect one.
 - **Do not harvest citations from `PKU-PILLAR-Group/CoT-Faithfulness-Survey`** — six of its §2 arXiv
   IDs resolve to unrelated papers (cosmology, battery prognostics, lattice theory, elliptic-curve
   cryptography). Lead-generation only, per our own citation-verification rule.
+
+---
+
+# CORRECTIONS (2026-09-19, later) — five errors in my synthesis above
+
+An independent audit challenged six claims. I verified each; **it is right on all of them.**
+
+**1. "There is no F1 analogue of the identity" — WRONG.** F1 *is* a weighted average of subgroup
+F1s: `F1_pooled = Σ_g w_g F1_g` with `w_g = (2TP_g+FP_g+FN_g) / Σ_h(2TP_h+FP_h+FN_h)`. Verified
+numerically to 1e-9 on the two correctness strata. So there is a decomposition; it is a weighted
+average over groups rather than a partition of a pair space. **The sharper consequence, which is
+better than what I had:** those weights are *detector-dependent*, so two detectors compared on the
+same pooled population are effectively weighting the strata differently. That is a precise mechanism
+for ranking reversal — stronger than my prevalence argument, not weaker. My "AUROC moves but F1
+doesn't" diagnostic was also stated too crisply; it is a heuristic needing uncertainty estimates,
+not a proof of mechanism.
+
+**2. The 0.726 figure uses a selected population — CONCEDED.** I flagged the caveat but understated
+its force: the 106 dropped records are **not random** — 80 are annotated *faithful mistakes*, whose
+removal systematically inflates the correctness–unfaithfulness association. Corrected values on all
+1,303 valid records: **0.704** (native correctness) and **0.697** (four-way-derived) — the latter
+matching our own paper's 0.6965. **Use ~0.70, not 0.726.** I also overstated in calling φ
+"categorically the wrong statistic." Narrowed claim I still hold: φ is a fine correlation; the
+unjustified step is inferring from φ=0.286 that the confound is negligible *for detector
+evaluation*, which is a different question in different units.
+
+**3. "BonaFide lives entirely in the correct-answer regime" — FLATLY WRONG, and the worst of these.**
+Our own frozen evaluation says the opposite: `population.incorrect.n = 1113`, `correct = 7`, and
+`bonafide_predictions.json` confirms 1,113 incorrect / 7 correct. BonaFide is almost entirely the
+**incorrect** regime. It cannot support the two-regime comparison because its class support is
+overwhelmingly on one side — **not** because it excludes that side. I printed `incorrect: 1113`
+myself earlier in the same session and then relayed a subagent claim that inverted it.
+
+**4. "Correctness is constitutive of the construct" — WRONG, and I had recommended pivoting the
+paper around it.** Crossing correctness with faithfulness in a 2×2 explicitly *allows* faithful
+errors and unfaithful correct answers; a factorial taxonomy is evidence the dimensions are treated
+as **separable**, not that one defines the other. The real and narrower concern — annotators
+plausibly saw correctness — is about annotation practice, requires evidence about the rules, and is
+**already stated in our manuscript**. Do not pivot on this.
+
+**5. "Self-plagiarism" — WRONG and alarmist.** Extending one's own arXiv preprint into a conference
+submission is the standard workflow and ARR explicitly accommodates non-anonymous preprints. The
+real question is what is new *relative to the field*, which is what the sweeps answered.
+Relatedly: a finite sweep supports "we found no direct external study," not "nobody has done this."
+
+**6. "The reorder demonstration needs nothing from them" — WRONG.** Domain-level exceptions in their
+Table 1 show their *universal-ordering* claim is overstated. They do **not** show that correctness
+composition explains the ordering. Attributing reversal to correctness requires the per-response
+data. Two different claims.
+
+## The pattern
+
+Five of six errors came from relaying subagent output without checking it against data already in
+this repo — most starkly the BonaFide inversion, which contradicts a number I had printed myself
+hours earlier. Same failure mode as the 35%→100% exposure error and the `prompt`/`original_prompt`
+field bug: **a check was skipped because the source sounded authoritative.**
+
+## What survives
+
+The Kallus & Zhou / Matos citation gap (the audit agrees this is the strongest valid finding); the
+F1-vs-AUROC distinction as a design constraint; the bib gaps generally; and RFEval as
+counter-evidence the paper must meet. The recommended sequence stands: recover the exact comparison,
+reproduce published F1, separate composition effects, then test against the *strongest current*
+baselines — auditing eleven historical detectors does not by itself establish present-day headroom.

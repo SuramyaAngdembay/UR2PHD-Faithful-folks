@@ -190,3 +190,108 @@ discordant-pair counting rather than `rankdata`, run against raw `responses.json
 5. One trivial drift found: Qwen bridge p stored `0.7402597` (= 741/1001) but reported as
    **0.741** in `CLAUDE.md:130` and `notes/2026-07-11-hint-organic-bridge.md:66,89`. Null either
    way; corrected for hygiene given this project's prior p-value transcription incident.
+
+---
+
+## 5. AUDIT AGAINST THE P-HACKING LITERATURE CHECKLIST
+
+Literature synthesis in `notes/2026-09-19-phacking-literature.md`. Items below are numbered per that
+checklist. Only items I could settle with evidence are listed; the rest stay open.
+
+### NEW FINDING — item 27: the interaction fallacy (Gelman & Stern 2006)
+
+**Status: real gap, currently undetermined, computable.**
+
+Our headline transfer claim is *"only Llama × math × sycophancy transfers; the metadata-template
+replication FAILS"* — and `CLAUDE.md` draws a strong conclusion from it: *"the positive cell is
+template-specific, and the decodability-vs-transfer dissociation gains its sharpest point."*
+
+That compares a significant cell against non-significant cells **without testing whether they
+differ**. Gelman & Stern: the difference between "significant" and "not significant" is not itself
+statistically significant. The stored artifacts contain only per-cell `delta`, `ci95` and a
+one-sided p — **no difference-of-differences anywhere.**
+
+| Llama cell | delta | 95% CI |
+|---|---:|---|
+| sycophancy | +0.1848 | [0.0810, 0.2885] |
+| metadata | +0.0206 | [−0.0458, 0.0853] |
+| LogiQA | +0.0380 | [−0.0546, 0.1325] |
+| TruthfulQA | +0.0210 | [−0.0480, 0.0902] |
+
+The sycophancy and metadata intervals **overlap by 0.004** — barely. Non-overlap would have been
+sufficient for a difference; marginal overlap is genuinely inconclusive, because the standard error
+of a difference is not the sum of the parts. So the template-specificity claim is **not currently
+supported and not currently refuted.**
+
+Remedy, and it is cheap: sycophancy and metadata share the **same 144 Llama targets**, so a
+**paired** difference-of-differences with the existing cluster bootstrap is well-powered and
+directly answers it. The inputs (`wbrep_llama*.npz`, `acts_llama*`) are on Aquaman. Until it is
+run, the claim must be narrowed to "the sycophancy cell is significant and the others are not,"
+which is a statement about each cell, not about a difference between them.
+
+### CLEAN — item 39: judge self-preference (Panickssery et al. 2024)
+
+**Verified.** BonaFide's generators are Olmo-3/3.1 (AI2), Qwen3 (Alibaba), DeepSeek-R1-Distill-Llama
+and Llama-3.3 (Meta). Our judges are GPT-4o / GPT-4o-mini (OpenAI). **No family overlap**, so the
+self-preference confound — an evaluator scoring its own family's generations higher — does not
+apply. Worth stating explicitly in the paper; it is a confound reviewers will ask about.
+
+### CLEAN — item 33: cross-partition duplicates (Kapoor & Narayanan L1.4)
+
+**Verified.** Zero exact-duplicate chain-of-thought texts spanning dev and eval, and **zero of the
+567 distinct questions appear in both partitions**. The cluster-based split does what it claims.
+
+### CLEAN — item 41: shortcut ablations
+
+**Verified** from the September campaign: the judge is at chance question-only (0.487 / 0.503,
+including on correctness), while CoT-only retains the blind-regime signal (0.661 of 0.679). The
+instrument is using the trace, not the question.
+
+### REFRAMED — item 30: rounds of adaptivity (Dwork et al. 2015, Theorem 3)
+
+Sample complexity for adaptive analysis scales with **rounds of adaptivity**, not the number of
+queries. The eval partition has seen **three** rounds:
+
+1. 2026-09-09 `2687226` — frozen eval: full scoring + H1/H2/H3 on n=1113
+2. 2026-09-09 `9592772` — audit-packet construction (selection used judge scores)
+3. 2026-09-12 `0080a89` — reconciliation arms A/B/C
+
+So "100% scored" and "heavily mined" are different claims, and only the first is established.
+Three rounds on n=807 is a modest adaptivity budget. **Caveat:** Dwork's guarantee attaches to a
+mechanism (Thresholdout) we did not use, so this gives the correct conceptual unit, not a bound.
+
+### PASSED — item 37: the rank test (Recht et al. 2019)
+
+Adaptive overfitting predicts that a fresh sample **scrambles the ordering** of conditions. Ours did
+not: A2 > A1 in the pilot (.5108 vs .2175) and again in the disjoint replication (.5994 vs .2767),
+with the contrast stable (+.293 → +.323). Under the Recht diagnostic this is positive evidence
+*against* adaptive overfitting of the dev partition — the strongest such evidence the project has.
+
+### OPEN — item 35/36: benchmark contamination in the judge's pretraining
+
+**Never checked, and unfixable by us.** BonaFide, FaithCoT-Bench and GRACE are public; GPT-4o may
+have seen them. Magar & Schwartz's distinction matters — contamination is necessary but *not
+sufficient* for score inflation ("memorize but do not exploit"). Feasible tests exist (Oren et al.'s
+exchangeability/ordering test needs only black-box access). Currently a disclosed unknown.
+
+### OPEN — item 7: we are in Gelman & Loken's procedure #3
+
+Their taxonomy: #2 is a pre-chosen test from a pre-registered set; **#3 is a single test computed on
+the data in an environment where a different test would have been run given different data**; #4 is
+fishing. We are plainly at #3 across the project's history — the premise-DAG thesis was buried on
+results, the two-regime split was found in the data, the frontier was chosen after seeing where
+signals failed. That is legitimate exploratory science; it is not confirmatory, and the write-up
+must not read as if it were. Recent work (v1, v1.3, replication) genuinely reaches #2 within its own
+scope, because the specs are hashed before inference.
+
+### OPEN — item 29: no power analysis, and Type-M exposure
+
+No prospective power analysis exists. Per Gelman & Carlin, conditional on significance in a
+low-power design the effect magnitude is systematically **overestimated** and the sign can be wrong.
+With 10-18 minority-class responses in the judge work, every significant contrast here should be
+assumed magnitude-inflated. This compounds item 27.
+
+### OPEN — item 26: replicability analysis for the grid (Dror et al. 2017)
+
+For "significant in k of m datasets", per-cell p-values with Bonferroni are not the right object;
+Dror et al.'s replicability analysis is. Our grid is exactly that shape. Not applied.

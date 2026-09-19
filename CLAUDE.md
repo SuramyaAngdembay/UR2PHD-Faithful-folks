@@ -40,7 +40,7 @@ reported in FaithCoT-BENCH GitHub issue #3, where we commented with the systemat
 **data coding = ft1 faithful-INCORRECT · ft2 unfaithful-INCORRECT · ft3 faithful-CORRECT · ft4
 unfaithful-CORRECT (post-hoc-on-correct).** All entries below written before 2026-07-16 use the README's
 (wrong) pairing: wherever they say "correct-answer regime / post-hoc-on-correct (ft1v2)", read
-**"incorrect-answer regime"**. All *numbers* remain valid; only regime names flip. Corrected two-regime
+**"incorrect-answer regime"**. All *numbers* remain valid; only regime names flip. **EXCEPTION (found 2026-09-19): the two 2026-06-25 intervention notes (`-v1-null`, `-v2-bury`) assign the regime names CROSSWISE to each other over the same 188-trace pool, so this blanket rule yields opposite conclusions for the same subset and must not be applied to them — see the banners in those files.** Corrected two-regime
 results: `results/audit_corrected.json` (incorrect regime ft1v2: ALL black-box at chance = the true
 frontier; correct regime ft3v4: soft 0.667/interv 0.659/NLI 0.626 sig, inversion strongest +0.176);
 `results/faithcot_reproduce.json` (inversion reproduces on THEIR released scores, intended-dir 0.29–0.43);

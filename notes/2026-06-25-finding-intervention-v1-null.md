@@ -54,3 +54,27 @@ If it shows signal → that is the paper.
 ## Caveats
 Heuristic target selection (known weak); binary metric; 2 random controls; n=91 in the key
 incorrect subset (noisy); LLaMA traces only (Qwen pass pending).
+
+
+> ## ⚠️ REGIME LABELS IN THIS FILE CONTRADICT ITS SIBLING (flagged 2026-09-19)
+> This file and `2026-06-25-finding-intervention-v2-bury.md` report the **same 188-trace pool**
+> (POOLED n=188, 45% unfaithful, soft 0.672) but assign the regime names **crosswise**:
+>
+> | subset composition | this file calls it | the sibling calls it |
+> |---|---|---|
+> | ~71% unfaithful, soft ≈ 0.58 | INCORRECT (Type 3v4) | CORRECT (ft 1v2) |
+> | ~20% unfaithful, soft ≈ 0.71 | CORRECT (Type 1v2) | INCORRECT (ft 3v4) |
+>
+> Both predate the 2026-07-16 label-semantics correction, so both use the README's inverted
+> ft pairing. **`CLAUDE.md`'s blanket rule — "wherever they say correct-answer regime, read
+> incorrect-answer regime" — is therefore UNSAFE for these two files**, because applying it
+> yields opposite conclusions for the same subset. Under the verified data-side coding
+> (ft1/ft2 = incorrect-answer regime), the **~71%-unfaithful subset is the true INCORRECT
+> regime**, consistent with unfaithfulness concentrating in wrong answers.
+>
+> Scope of the damage: the *nulls* are unaffected — intervention g is weak in both subsets on
+> either labelling (0.505/0.580 here, 0.606/0.554 in the sibling), so the "interventions are
+> null/weak" conclusion stands. Any **regime-stratified** reading of these two tables is not
+> reliable. The manuscript does not draw on them: its regime-stratified intervention figures
+> come from `results/audit_corrected.json` (correct regime 0.6591, incorrect 0.4811), which
+> postdates and supersedes the correction. See `notes/2026-09-19-holdout-and-phacking-audit.md`.

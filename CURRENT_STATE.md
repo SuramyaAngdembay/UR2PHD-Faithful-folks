@@ -4,6 +4,17 @@ Updated September 19, 2026. Research driver: Codex, following the user's explici
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
+Latest methodology assessment: there is a plausible training direction based on
+faithful/unfaithful comparisons matched on correctness, but neither a successful
+method nor a SOTA advantage is established. CIE-Scorer and GeoFaith are relevant
+published FaithCoT competitors; their accuracy/F1 results are not comparable to
+our stratified AUROCs without matching populations and access. First establish
+those baselines, then compare ordinary training, balancing, group DRO, and
+within-correctness pair training with question-grouped selection and fresh
+confirmation. Gold correctness must not enter a deployed judge/router. See the
+[methodology and headroom assessment](notes/2026-09-19-methodology-headroom-and-baselines.md).
+No new inference, training, or manuscript edits were made for this assessment.
+
 Latest novelty assessment: the pasted comparison with BonaFide is mostly accurate
 about which exact experiments differ, but this is not a general novelty clearance
 or grounds to restore a universal two-regime claim. The composition identity is

@@ -1,0 +1,11 @@
+{
+  "completed_utc": "2026-09-19T23:38:23.452026+00:00",
+  "archive_sha256": "9ef674e33cae2654b2fe00ee2a00610f595eedb4ae649c4ed6a277b4a7eb6eba",
+  "archive_commit": "5112797173f3ff7573f030bca28411a596fd52e8",
+  "archive_url": "https://raw.githubusercontent.com/se7esx/FaithCoT-BENCH/5112797173f3ff7573f030bca28411a596fd52e8/faithcot.zip",
+  "script_sha256": "521889e64b99151876f0ec198aa29b1a8285c2d0e5ac3bd48aacd33857f37ade",
+  "results_sha256": "0ed1b9c8e5776eec25e62a057e3db27b88e5465778e53c375f66ea5ccae8e942",
+  "python_version": "3.9.6",
+  "new_inference": false,
+  "interpretation": "Census and mathematical checks, not a detector leaderboard reproduction or independent correctness adjudication."
+}

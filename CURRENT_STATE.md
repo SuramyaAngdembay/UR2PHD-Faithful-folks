@@ -4,6 +4,20 @@ Updated September 19, 2026. Research driver: Codex, following the user's explici
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
+Latest novelty-sweep audit: the published-detector reanalysis remains a useful
+empirical next step, but the historical sweep contains material errors. Kallus-Zhou
+is direct AUC-decomposition precedent; Matos explicitly gives an F1 decomposition
+with detector-dependent weights. F1 collapsibility does not imply ranking stability.
+The sweep's .726 incorrectness AUROC reproduces only on a selected 1,198-response
+subset dropping 106 labels, including 80 faithful mistakes. On all 1,303 valid
+native-correctness records it is .704 with the binary target or .697 with the
+four-way-derived target. These are not comparable to published F1. BonaFide is
+mostly incorrect in our audited population, contradicting the sweep's opposite
+claim. A 2x2 taxonomy does not prove correctness constitutes faithfulness.
+See the [independent corrections](notes/2026-09-19-stratified-novelty-independent-audit.md)
+and `results/stratified_novelty_audit/2026-09-19/`. Census and mathematical checks
+completed with a hash-verified archive; no inference or manuscript changes.
+
 Latest methodology assessment: there is a plausible training direction based on
 faithful/unfaithful comparisons matched on correctness, but neither a successful
 method nor a SOTA advantage is established. CIE-Scorer and GeoFaith are relevant

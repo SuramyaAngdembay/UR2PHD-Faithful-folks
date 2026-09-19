@@ -1,5 +1,12 @@
 # Novelty sweep: the correctness-stratification methodology is NOT novel (2026-09-19)
 
+**Historical assessment: material claims below are superseded by the
+[independent audit](2026-09-19-stratified-novelty-independent-audit.md).** In
+particular, do not reuse the interpretations of F1 collapsibility, the selected
+.726 AUROC as a full-population result or comparison to F1, BonaFide as entirely
+correct, correctness as constitutive from a 2x2 taxonomy, or extension of our
+own preprint as self-plagiarism. Original text is preserved for provenance.
+
 Prompted by my own proposal that restratifying FaithCoT-Bench's detector ranking would be "a
 measurement standard that changes published conclusions." **That framing was wrong.** Every element
 of the methodology is established prior art in three separate literatures, and **none of it is cited

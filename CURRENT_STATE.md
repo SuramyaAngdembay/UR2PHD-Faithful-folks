@@ -1,8 +1,18 @@
 # Current research state
 
-Updated September 18, 2026 UTC (September 17 US Central). Research driver: Codex, following the user's explicit
+Updated September 19, 2026. Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
+
+Latest novelty assessment: the pasted comparison with BonaFide is mostly accurate
+about which exact experiments differ, but this is not a general novelty clearance
+or grounds to restore a universal two-regime claim. The composition identity is
+evaluation analysis, not a new statistical method or proof of an internal mechanism.
+The specific FaithCoT audit and construction-transfer tests remain contributions
+with restricted scope; Young's classifier-sensitivity study and causal-diagnosticity
+prior work also constrain broader claims. See the
+[BonaFide novelty assessment](notes/2026-09-19-bonafide-novelty-assessment.md).
+No inference or manuscript edits were made for this assessment.
 
 Latest independent completed-run audit: all 420 replication requests and 840
 historical pilot records pass request/parse checks; remote and local replication

@@ -40,14 +40,20 @@ every run; request identities are payload digests.
 
 But the held-out set is not held out. Measured today across every artefact:
 
+> **CORRECTED 2026-09-19, same day — the figures below were WRONG and far too low.**
+> The true exposure is **807/807 (100%)**: `bonafide_predictions.json` carries `judge4o`,
+> `judgeA`, `judgeB`, `nli_n_unsup` and `pi` for the entire population, and the frozen eval
+> ran its hypothesis tests on n=1113 — dev and eval together — **three hours before the
+> dev/eval split was created**. My sweep missed it because it parsed `.jsonl` files and
+> `dict['rows']` only, and that file is a top-level JSON *list*. Full analysis:
+> [holdout and p-hacking audit](2026-09-19-holdout-and-phacking-audit.md). The superseded
+> figures are left below for provenance.
+
 | | scored by a judge | + packet-selected | total touched |
 |---|---:|---:|---:|
-| eval responses (of 807) | 204 (25%) | +80 | **284 (35%)** |
-| question clusters | 156 | — | **203** |
-| eval responses sharing a touched cluster | 397 | — | **483 (60%)** |
-
-`CURRENT_STATE.md` records 204 / 156 / 397 — correct for *scoring*, but it omits the 80 additional
-responses touched by audit-packet selection, so the true cluster contamination is **60%, not 49%**.
+| eval responses (of 807) | 204 (25%) | +80 | ~~284 (35%)~~ → **807 (100%)** |
+| question clusters | 156 | — | ~~203~~ → **425 (all)** |
+| eval responses sharing a touched cluster | 397 | — | ~~483 (60%)~~ → **807 (100%)** |
 Corrected in that file today.
 
 Also: the replication sample's **18/18 faithful responses had been previously scored or selected**
@@ -121,8 +127,8 @@ is that only the second half is visible to reviewers, and only if the artifacts 
 
 ## Actions
 
-1. **Done today:** corrected the eval-exposure figures in `CURRENT_STATE.md` (284 / 203 / 483).
-2. **Before any eval-partition use:** decide whether a 60%-cluster-contaminated set can still serve
+1. **Superseded:** the eval-exposure figures were corrected again the same day to 807/807 (100%) — see the holdout audit. The 284/203/483 figures were an artefact of a sweep that skipped JSON lists.
+2. **Before any eval-partition use:** the set is 100% scored, so decide whether it can still serve
    as held-out, and if so define the cluster-clean subset *now*, in advance.
 3. **Build a multiplicity ledger** — enumerate every contrast the project has reported, with its
    correction status — before any of them enters the manuscript.

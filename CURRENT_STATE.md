@@ -315,11 +315,17 @@ restricted comparisons, not causal adjustment or a replacement headline.
   and `autonomous_campaign_2026-09-12/`. The original frozen evaluation stays
   untouched. The original 807-response partition now includes 204 responses
   scored in Claude's reconciliation, spanning 156 question clusters. A
-  2026-09-19 sweep of every artefact found a further 80 eval responses touched
-  by audit-packet selection: **284/807 (35%) touched across 203 clusters, and
-  483 eval responses (60%) share a cluster with a touched one** -- larger than
-  the 397 recorded here previously. See
-  [the AI-scientist-pitfalls self-audit](notes/2026-09-19-ai-scientist-pitfalls-self-audit.md). Preserve the split and record new exposure;
+  2026-09-19 audit established that **the eval partition was never held out at
+  all**: `bonafide_predictions.json` carries judge4o/judgeA/judgeB/NLI/PI scores
+  for all 1,120 responses, and the frozen eval tested H1/H2/H3 on n=1113 -- dev
+  and eval together -- at 20:38 on 2026-09-09, **three hours before
+  `dev_clusters.json` created the split at 23:45**. Exposure is **807/807
+  (100%)**, not the 204 or the later 284 previously recorded. The partition is a
+  **procedure-specific holdout only**: every diagnostic_v2 run (pilot,
+  replication, v1, v1.3) is dev-only, so it is unexposed to the component and
+  verification procedures, but it is fully exposed for judge4o/judgeA/judgeB/NLI/PI.
+  Never call it held out without naming the procedure. See
+  [the holdout and p-hacking audit](notes/2026-09-19-holdout-and-phacking-audit.md). Preserve the split and record new exposure;
   do not describe the entire partition as unopened. The whole campaign remains
   exploratory; freeze exact requests before subsequent inference.
 

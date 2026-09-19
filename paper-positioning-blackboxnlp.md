@@ -126,7 +126,7 @@ motivate mechanistic (white-box) methods for the residual frontier.
      C1–C4, limitations, 3 tables). Remaining: fold in the hint-testbed results (new C4 statement + external
      validation), polish, advisor review, port to the official BlackboxNLP/ACL template + fit page limit
      once the 2026 CFP is verified.
-  2. ~~Label-permutation p~~ **DONE (2026-07-12, PR #4): Llama hint→FC layer-mean p=0.010; best-of-layers
+  2. ~~Label-permutation p~~ **DONE (2026-07-12, PR #4): Llama hint→FC layer-mean p=0.017; best-of-layers
      corrected p=0.050; Qwen p=0.741 (null).** Remaining rigor add-ons: a second hint template
      (metadata-style) for template-robustness; (optional) extend hint testbed to more models.
   3. GRACE full set — now optional extension, not load-bearing (email sent / await release).
@@ -151,3 +151,10 @@ small. BlackboxNLP is selective for a workshop, so execution on the remaining it
 - *"Small n in the key regime."* → ft1v2 now n=270 with CIs.
 - *"Extraction was weak."* → heuristic F1 0.57 reported; v2 uses LLM extraction, **validated at
   0.82 recall / 0.79 F1 vs PERL gold** — so the intervention null is a fair test, not an artifact.
+
+
+> **Correction (2026-09-19):** the layer-mean permutation p in this file was written as
+> 0.010; the stored value in `results/bridge3_perm_llama.json` is `p_layer_mean` = 0.016983
+> (**p=0.017**). The 0.010 figure was a transcription error corrected in `CLAUDE.md` on
+> 2026-09-08 but never propagated here, so anyone re-deriving from this file reproduced it.
+> The selection-corrected best-layer p is 0.04895 (**0.049**), written here as 0.050.

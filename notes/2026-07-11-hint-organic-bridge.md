@@ -62,7 +62,7 @@ layer-selection optimism, computed on the same target set. Spontaneous (hint-eli
 shares representation with human-annotated organic post-hoc; instructed answer-first does not.
 
 **Permutation-tested (2026-07-12, `bridge3_perm.py`, PR #4 + fixes):** null = probes retrained on
-permuted hint labels, permutations coupled across layers. Llama layer-mean **p=0.010**; best-of-layers
+permuted hint labels, permutations coupled across layers. Llama layer-mean **p=0.017**; best-of-layers
 0.694 with max-over-layers (selection-corrected) null **p=0.050**. Qwen layer-mean 0.484 **p=0.741**
 (confirms inconclusive/null). The organic bridge in Llama is statistically significant.
 
@@ -84,7 +84,14 @@ measure transfer onto a signal that barely exists in the target.
    field lacks (and RQ3's pilot, already done in v1 form).
 
 ## Caveats (report all)
-Hint→FC best-of-layers has selection optimism (mean is the primary claim: 0.616, p=0.010; best 0.694
+Hint→FC best-of-layers has selection optimism (mean is the primary claim: 0.616, p=0.017; best 0.694
 corrected p=0.050); FC target n=144/126; Qwen inconclusive (weak anchor, n=70, surface 0.703; perm
 p=0.741); class imbalance in hint sets (185/428, 70/464 — AUROC tolerant but report); single hint
 template (sycophancy phrasing) — template-robustness unchecked; math-only domains.
+
+
+> **Correction (2026-09-19):** the layer-mean permutation p in this file was written as
+> 0.010; the stored value in `results/bridge3_perm_llama.json` is `p_layer_mean` = 0.016983
+> (**p=0.017**). The 0.010 figure was a transcription error corrected in `CLAUDE.md` on
+> 2026-09-08 but never propagated here, so anyone re-deriving from this file reproduced it.
+> The selection-corrected best-layer p is 0.04895 (**0.049**), written here as 0.050.

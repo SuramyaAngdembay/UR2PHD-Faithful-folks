@@ -25,7 +25,7 @@ regime (ft1v2)" analysis actually measured the INCORRECT-answer regime.
 
 ## Pass-2 results (all clean)
 - soft coverage: 682 traces carry sample_0.soft_faithfulness (634 = ∩ with intervention subset ✓).
-- 61 unlabeled traces (60 ft=None, 1 ft=0; mostly aqua) consistently excluded (1364−60=1304 ✓).
+- 61 unlabeled traces (60 ft=None, 1 ft=0; mostly aqua) consistently excluded (1364−61=1303; the 1,303 census used elsewhere — this line previously wrote 1364−60=1304).
 - Question structure: 100 q × 4 models per domain (HLE: 40 q, some ×2/model) — a clustering level.
 - **Question-clustered bootstrap (335 clusters): audit headline SURVIVES** —
   incorrectness 0.696 [0.660,0.734]; soft 0.651 [0.606,0.698].

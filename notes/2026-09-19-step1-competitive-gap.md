@@ -227,3 +227,21 @@ capability: **there is no evidence of accessible headroom in the blind regime fr
 general-purpose judging.** Step 1 is complete. Steps 2–4 of the Codex track remain closed for the
 feature-based proposal; what stays open is internals (the probe reaches 0.71 there) and
 cross-provider judging.
+
+## Two further arms — frozen before running
+
+Cross-provider is unavailable (only an OpenAI key exists on Aquaman; Anvil is down), so the
+independence test against Kim et al. must wait. The two most informative OpenAI-only arms:
+
+- **gpt-5.2, prompt A, repeat.** GPT-5 has no `temperature` control, so this measures run-to-run
+  stability of a nominally fixed configuration. Non-trivial: the BonaFide judge showed 25–31%
+  disagreement across *identical* temperature-0 repeats, so "deterministic" is an assumption to
+  test, not to rely on.
+- **gpt-5.2, prompt B** (the independently-worded rubric already used for gpt-4o-mini). Completes a
+  2×2 of {4o-mini, 5.2} × {A, B} and separates "current model" from "current model + this prompt."
+
+Together with the completed arm this gives three gpt-5.2 measurements.
+
+**Pre-registered:** the blind-regime figure is expected to stay within ≈0.63–0.70. A repeat that
+moves it outside that band would mean the single-run numbers in this table carry more noise than
+their bootstrap intervals suggest, and every judge comparison here would need repeat-averaging.

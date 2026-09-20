@@ -13,7 +13,7 @@
 set -u
 cd ~/synth || exit 9
 export HF_HOME=~/hf_cache
-export HF_TOKEN=$(cat ~/.hf_token)
+[ -f ~/.hf_token ] && export HF_TOKEN=$(cat ~/.hf_token)   # token removed 2026-09-20; models are cached, none is needed
 PY=~/ur2phd-venv/bin/python
 N_EXPECTED=1304
 
@@ -33,7 +33,7 @@ run() {   # run <model> <tag> [seed]
 
 Q3=Qwen/Qwen3-8B
 Q7=Qwen/Qwen2.5-7B-Instruct
-Q25_3=Qwen/Qwen2.5-3B
+Q25_3=Qwen/Qwen2.5-3B-Instruct
 L31=meta-llama/Llama-3.1-8B-Instruct
 L3=meta-llama/Meta-Llama-3-8B-Instruct
 L32=meta-llama/Llama-3.2-3B-Instruct
@@ -58,6 +58,7 @@ echo "PHASE2_DONE $(date -Is)"
 for s in 0 1 2; do run "$Q3"    "qwen3_8b_s${s}"   "$s"; done
 for s in 0 1 2; do run "$L3"    "llama3_8b_s${s}"  "$s"; done
 for s in 0 1 2; do run "$L32"   "llama32_3b_s${s}" "$s"; done
-for s in 0 1 2; do run "$Q25_3" "qwen25_3b_s${s}"  "$s"; done
+run "$Q25_3" qwen25_3b_instruct
+ for s in 0 1 2; do run "$Q25_3" "qwen25_3b_instruct_s${s}" "$s"; done
 [ -n "$OLMO" ] && for s in 0 1 2; do run "$OLMO" "olmo3_7b_s${s}" "$s"; done
 echo "ALL_ARMS_DONE $(date -Is)"

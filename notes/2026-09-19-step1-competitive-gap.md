@@ -245,3 +245,65 @@ Together with the completed arm this gives three gpt-5.2 measurements.
 **Pre-registered:** the blind-regime figure is expected to stay within ≈0.63–0.70. A repeat that
 moves it outside that band would mean the single-run numbers in this table carry more noise than
 their bootstrap intervals suggest, and every judge comparison here would need repeat-averaging.
+
+## Three gpt-5.2 arms — RESULT, and a withdrawal
+
+| arm | corr-track | pooled | blind | correct |
+|---|---:|---:|---:|---:|
+| gpt-4o-mini A | 0.684 | 0.782 | 0.679 [.633,.721] | 0.830 |
+| gpt-4o A | 0.745 | 0.790 | 0.670 [.623,.713] | 0.786 |
+| gpt-4o-mini B | 0.662 | 0.745 | 0.667 [.623,.712] | 0.786 |
+| gpt-5.2 A | 0.816 | 0.819 | 0.653 [.606,.699] | 0.830 |
+| **gpt-5.2 A (repeat)** | 0.823 | 0.811 | **0.630 [.581,.676]** | 0.817 |
+| gpt-5.2 B | 0.815 | 0.810 | 0.654 [.606,.701] | 0.797 |
+
+### The headline: an identical configuration does not reproduce itself
+
+Paired, same 1,303 traces, **gpt-5.2 prompt A run twice with no configuration change whatsoever**
+(GPT-5 has no temperature control):
+
+| | run 1 | run 2 | paired diff | |
+|---|---:|---:|---|---|
+| **blind regime** | 0.653 | 0.630 | **+0.023 [+0.002, +0.044]** | **SIGNIFICANT** |
+| correct regime | 0.830 | 0.817 | +0.013 [−0.004, +0.029] | covers 0 |
+| correctness-tracking | 0.814 | 0.822 | −0.007 [−0.014, −0.000] | marginally sig |
+
+**Two runs of the same configuration differ significantly by the same bootstrap procedure used to
+compare different models.** Item-level: the two runs give an **identical score on only 25.9%** of
+1,303 traces, mean |Δ| = 4.3 on a 0–100 scale (max 77), Spearman 0.957. That closely matches the
+25–31% temp-0 repeat disagreement measured on the BonaFide judge — the same property, a different
+dataset, and two model generations apart.
+
+**Consequence, and it is a retraction.** I described the arms as *"monotone across three model
+generations: blind 0.679 → 0.670 → 0.653."* That spread is **0.026**; the spread between two
+identical runs is **0.023**. The apparent trend is not distinguishable from run-to-run noise and
+the "monotone decline" framing is **withdrawn**. (The paired model-vs-model test already covered
+zero, so the hedge was right; the narrative around it was not.)
+
+### Prompt sensitivity is regime-specific
+
+| gpt-5.2, prompt A vs B | diff | |
+|---|---|---|
+| blind regime | −0.001 [−0.030, +0.025] | covers 0 |
+| correct regime | **+0.033 [+0.013, +0.055]** | **SIGNIFICANT** |
+| correctness-tracking | +0.001 [−0.009, +0.011] | covers 0 |
+
+The blind regime is **essentially prompt-invariant** (−0.001) while the correct regime is
+prompt-sensitive. So the blind-regime weakness is not an artefact of rubric wording.
+
+### What survives, and what it means for the paper
+
+**Survives easily.** Correctness-tracking across the three gpt-5.2 arms is 0.816 / 0.823 / 0.815 —
+spread 0.008, a third of the blind-regime run noise — and the gap to gpt-4o-mini is **+0.131
+[+0.106, +0.159]**, roughly six times the noise floor. *A frontier judge is much better at inferring
+answer correctness and no better at detecting unfaithfulness* stands, and is now measured against a
+known noise floor rather than assumed stable.
+
+**Strengthened.** The blind-regime weakness holds across three model generations, two prompts and a
+repeat: six arms spanning 0.630–0.679. "Stable" is the claim; "declining" is not.
+
+**New methodological finding, and it applies to our own manuscript.** Single-run judge AUROCs carry
+≈±0.023 of run-to-run noise in the blind regime, which is *larger than most cross-model differences
+anyone would want to report*. The paper's judge table is single-run. The headline regime gap
+(Δ 0.152 [0.089, 0.211]) is ~6.5× the noise floor and is safe; smaller judge comparisons in this
+project are not, and should be repeat-averaged before they are quoted.

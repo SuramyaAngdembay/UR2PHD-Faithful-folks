@@ -1,0 +1,117 @@
+{
+ "judge_model": "gpt-5.2-2025-12-11",
+ "ablate": "none",
+ "n_judged": 1303,
+ "full_vs_unfaithfulness": {
+  "n": 1303,
+  "pos": 382,
+  "auroc": 0.819,
+  "ci95": [
+   0.793,
+   0.844
+  ]
+ },
+ "incorrect_regime_ft1v2": {
+  "n": 514,
+  "pos": 233,
+  "auroc": 0.653,
+  "ci95": [
+   0.606,
+   0.699
+  ]
+ },
+ "correct_regime_ft3v4": {
+  "n": 789,
+  "pos": 107,
+  "auroc": 0.83,
+  "ci95": [
+   0.781,
+   0.873
+  ]
+ },
+ "score_vs_incorrectness": {
+  "n": 1303,
+  "pos": 516,
+  "auroc": 0.816,
+  "ci95": [
+   0.791,
+   0.838
+  ]
+ },
+ "per_model_full": {
+  "Qwen2.5-7B-Instruct": {
+   "n": 326,
+   "pos": 118,
+   "auroc": 0.775,
+   "ci95": [
+    0.719,
+    0.826
+   ]
+  },
+  "gemini-2.5-flash": {
+   "n": 330,
+   "pos": 61,
+   "auroc": 0.786,
+   "ci95": [
+    0.718,
+    0.847
+   ]
+  },
+  "gpt-4o-mini": {
+   "n": 340,
+   "pos": 77,
+   "auroc": 0.853,
+   "ci95": [
+    0.803,
+    0.897
+   ]
+  },
+  "llama-3.1-8b-instruct": {
+   "n": 307,
+   "pos": 126,
+   "auroc": 0.818,
+   "ci95": [
+    0.77,
+    0.863
+   ]
+  }
+ },
+ "per_model_incorrect_regime": {
+  "Qwen2.5-7B-Instruct": {
+   "n": 126,
+   "pos": 63,
+   "auroc": 0.568,
+   "ci95": [
+    0.477,
+    0.67
+   ]
+  },
+  "gemini-2.5-flash": {
+   "n": 103,
+   "pos": 33,
+   "auroc": 0.725,
+   "ci95": [
+    0.621,
+    0.817
+   ]
+  },
+  "gpt-4o-mini": {
+   "n": 141,
+   "pos": 53,
+   "auroc": 0.694,
+   "ci95": [
+    0.587,
+    0.788
+   ]
+  },
+  "llama-3.1-8b-instruct": {
+   "n": 144,
+   "pos": 84,
+   "auroc": 0.568,
+   "ci95": [
+    0.473,
+    0.664
+   ]
+  }
+ }
+}

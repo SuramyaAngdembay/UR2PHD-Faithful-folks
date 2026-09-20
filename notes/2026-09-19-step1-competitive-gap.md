@@ -165,3 +165,65 @@ Default reasoning effort (smoke test showed **0 reasoning tokens** on a short it
 
 Cost: gpt-5.2 at $1.75/1M in, $14/1M out ⇒ ≈$2.15 for 1,303 calls. Pilot (n=30) returned 17
 distinct scores spanning 8–95, so the judge is grading rather than degenerate.
+
+---
+
+## Current-judge arm — RESULT (gpt-5.2-2025-12-11, 1303/1303, 0 errors)
+
+| judge | correctness-tracking | pooled | **blind** | correct | regime gap |
+|---|---:|---:|---:|---:|---:|
+| gpt-4o-mini (prompt A) | 0.684 | 0.782 | 0.679 [.633,.721] | 0.830 | 0.151 |
+| gpt-4o (prompt A) | 0.745 | 0.790 | 0.670 [.623,.713] | 0.786 | 0.116 |
+| gpt-4o-mini (prompt B) | 0.662 | 0.745 | 0.667 [.623,.712] | 0.786 | 0.119 |
+| **gpt-5.2 (prompt A)** | **0.816** | **0.819** | **0.653 [.606,.699]** | **0.830** | **0.177** |
+
+**Paired, same 1,303 traces, question-grouped bootstrap (gpt-5.2 − gpt-4o-mini):**
+
+| | 5.2 | 4o-mini | paired diff | |
+|---|---:|---:|---|---|
+| blind regime | 0.653 | 0.679 | **−0.026 [−0.067, +0.015]** | covers 0 |
+| correct regime | 0.830 | 0.830 | **−0.000 [−0.051, +0.046]** | covers 0 |
+| **score vs incorrectness** | 0.814 | 0.683 | **+0.131 [+0.106, +0.159]** | **SIGNIFICANT** |
+
+### The finding
+
+**A frontier judge is dramatically better at inferring answer correctness and no better at
+detecting unfaithfulness in either regime.** The only significant paired change across a
+two-generation capability jump is correctness inference (+0.131). Both faithfulness endpoints are
+flat.
+
+Yet the **pooled** score rises 0.782 → 0.819, making gpt-5.2 the best judge on the aggregate
+leaderboard number. That gain is composition, not detection: pooled AUROC is fed by cross-regime
+pairs, and the judge got better at exactly the covariate that separates those pairs. This is the
+paper's own composition thesis demonstrated on a frontier model — **the aggregate metric rewards
+correctness inference, not faithfulness detection.**
+
+Monotone across three model generations: correctness-tracking 0.684 → 0.745 → 0.816, pooled
+0.782 → 0.790 → 0.819, blind regime 0.679 → 0.670 → 0.653.
+
+### Against the pre-registered readings
+
+**Reading #1 holds**: the blind regime stays ≈0.65–0.68 — the paired difference covers zero, so
+this is *no improvement*, not a decline. The weakness is a property of the problem, not of
+2024-era judges, and the paper's claim strengthens to **stable across model generations and two
+prompts** (four arms now span 0.653–0.679, a range of 0.026).
+
+Not established: that gpt-5.2 is *worse* in the blind regime. −0.026 [−0.067, +0.015] covers zero
+and must not be reported as a decline.
+
+### Scope
+
+One prompt (A) for the new arm; prompt B untested on gpt-5.2. Two API deviations forced by the
+model family and recorded at freeze: `max_completion_tokens` replaces `max_tokens`, and GPT-5 has
+no `temperature` control (the 2024 arms used temperature 0). Default reasoning effort. One
+provider — a non-OpenAI frontier judge remains untested, and Kim et al. (ICML 2025) warn that
+error correlation *rises* with capability, so cross-provider is the meaningful independence test.
+
+### What this settles for the method direction
+
+Combined with the earlier finding that nothing computable beats a length baseline in the blind
+regime except the judge, and that the judge itself does not improve with two generations of
+capability: **there is no evidence of accessible headroom in the blind regime from stronger
+general-purpose judging.** Step 1 is complete. Steps 2–4 of the Codex track remain closed for the
+feature-based proposal; what stays open is internals (the probe reaches 0.71 there) and
+cross-provider judging.

@@ -1,0 +1,402 @@
+{
+  "spec": "step1-competitive-gap-spec.md",
+  "script_sha256": "d0b53d1221599a36999c8e77d2a2eaef000a38e179c740b7cfb4652694f03b6b",
+  "strata": {
+    "INCORRECT regime (ft1v2)": {
+      "n": 514,
+      "unfaithful": 233,
+      "detectors": {
+        "judgeA": {
+          "auroc": 0.6789,
+          "ci95": [
+            0.629,
+            0.728
+          ],
+          "n": 514,
+          "excludes_chance": true
+        },
+        "text_baseline_cv": {
+          "auroc": 0.5928,
+          "ci95": [
+            0.533,
+            0.648
+          ],
+          "n": 514,
+          "excludes_chance": true
+        },
+        "nli_min_ent": {
+          "auroc": 0.4229,
+          "ci95": [
+            0.37,
+            0.476
+          ],
+          "n": 514,
+          "excludes_chance": true
+        },
+        "words": {
+          "auroc": 0.5575,
+          "ci95": [
+            0.504,
+            0.604
+          ],
+          "n": 514,
+          "excludes_chance": true
+        },
+        "nli_mean_ent": {
+          "auroc": 0.4428,
+          "ci95": [
+            0.386,
+            0.496
+          ],
+          "n": 514,
+          "excludes_chance": true
+        },
+        "chars": {
+          "auroc": 0.5428,
+          "ci95": [
+            0.492,
+            0.591
+          ],
+          "n": 514,
+          "excludes_chance": false
+        },
+        "soft": {
+          "auroc": 0.5304,
+          "ci95": [
+            0.454,
+            0.611
+          ],
+          "n": 270,
+          "excludes_chance": false
+        },
+        "dag_lin": {
+          "auroc": 0.5271,
+          "ci95": [
+            0.476,
+            0.579
+          ],
+          "n": 514,
+          "excludes_chance": false
+        },
+        "dag_maxlb": {
+          "auroc": 0.4762,
+          "ci95": [
+            0.423,
+            0.53
+          ],
+          "n": 514,
+          "excludes_chance": false
+        },
+        "avg_impact": {
+          "auroc": 0.4811,
+          "ci95": [
+            0.407,
+            0.557
+          ],
+          "n": 270,
+          "excludes_chance": false
+        },
+        "nli_n_unsup": {
+          "auroc": 0.5184,
+          "ci95": [
+            0.464,
+            0.572
+          ],
+          "n": 514,
+          "excludes_chance": false
+        },
+        "hard": {
+          "auroc": 0.5138,
+          "ci95": [
+            0.443,
+            0.588
+          ],
+          "n": 270,
+          "excludes_chance": false
+        },
+        "nli_frac_con": {
+          "auroc": 0.4947,
+          "ci95": [
+            0.449,
+            0.543
+          ],
+          "n": 514,
+          "excludes_chance": false
+        },
+        "n_steps": {
+          "auroc": 0.5048,
+          "ci95": [
+            0.451,
+            0.556
+          ],
+          "n": 514,
+          "excludes_chance": false
+        }
+      }
+    },
+    "CORRECT regime (ft3v4)": {
+      "n": 789,
+      "unfaithful": 107,
+      "detectors": {
+        "judgeA": {
+          "auroc": 0.8304,
+          "ci95": [
+            0.782,
+            0.87
+          ],
+          "n": 789,
+          "excludes_chance": true
+        },
+        "text_baseline_cv": {
+          "auroc": 0.6932,
+          "ci95": [
+            0.63,
+            0.755
+          ],
+          "n": 789,
+          "excludes_chance": true
+        },
+        "soft": {
+          "auroc": 0.6667,
+          "ci95": [
+            0.594,
+            0.737
+          ],
+          "n": 363,
+          "excludes_chance": true
+        },
+        "avg_impact": {
+          "auroc": 0.6591,
+          "ci95": [
+            0.587,
+            0.725
+          ],
+          "n": 363,
+          "excludes_chance": true
+        },
+        "words": {
+          "auroc": 0.6582,
+          "ci95": [
+            0.612,
+            0.706
+          ],
+          "n": 789,
+          "excludes_chance": true
+        },
+        "hard": {
+          "auroc": 0.636,
+          "ci95": [
+            0.566,
+            0.706
+          ],
+          "n": 363,
+          "excludes_chance": true
+        },
+        "chars": {
+          "auroc": 0.6288,
+          "ci95": [
+            0.579,
+            0.678
+          ],
+          "n": 789,
+          "excludes_chance": true
+        },
+        "nli_n_unsup": {
+          "auroc": 0.622,
+          "ci95": [
+            0.562,
+            0.679
+          ],
+          "n": 789,
+          "excludes_chance": true
+        },
+        "n_steps": {
+          "auroc": 0.6202,
+          "ci95": [
+            0.559,
+            0.678
+          ],
+          "n": 789,
+          "excludes_chance": true
+        },
+        "dag_maxlb": {
+          "auroc": 0.5608,
+          "ci95": [
+            0.501,
+            0.613
+          ],
+          "n": 789,
+          "excludes_chance": true
+        },
+        "nli_mean_ent": {
+          "auroc": 0.4434,
+          "ci95": [
+            0.383,
+            0.5
+          ],
+          "n": 789,
+          "excludes_chance": false
+        },
+        "dag_lin": {
+          "auroc": 0.4611,
+          "ci95": [
+            0.405,
+            0.523
+          ],
+          "n": 789,
+          "excludes_chance": false
+        },
+        "nli_min_ent": {
+          "auroc": 0.4831,
+          "ci95": [
+            0.422,
+            0.542
+          ],
+          "n": 789,
+          "excludes_chance": false
+        },
+        "nli_frac_con": {
+          "auroc": 0.4935,
+          "ci95": [
+            0.433,
+            0.55
+          ],
+          "n": 789,
+          "excludes_chance": false
+        }
+      }
+    },
+    "POOLED": {
+      "n": 1303,
+      "unfaithful": 340,
+      "detectors": {
+        "judgeA": {
+          "auroc": 0.7829,
+          "ci95": [
+            0.753,
+            0.811
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "text_baseline_cv": {
+          "auroc": 0.6554,
+          "ci95": [
+            0.62,
+            0.693
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "soft": {
+          "auroc": 0.6408,
+          "ci95": [
+            0.594,
+            0.689
+          ],
+          "n": 633,
+          "excludes_chance": true
+        },
+        "words": {
+          "auroc": 0.6277,
+          "ci95": [
+            0.596,
+            0.659
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "avg_impact": {
+          "auroc": 0.6172,
+          "ci95": [
+            0.573,
+            0.666
+          ],
+          "n": 633,
+          "excludes_chance": true
+        },
+        "chars": {
+          "auroc": 0.6109,
+          "ci95": [
+            0.579,
+            0.641
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "hard": {
+          "auroc": 0.6001,
+          "ci95": [
+            0.554,
+            0.645
+          ],
+          "n": 633,
+          "excludes_chance": true
+        },
+        "nli_n_unsup": {
+          "auroc": 0.5769,
+          "ci95": [
+            0.54,
+            0.617
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "n_steps": {
+          "auroc": 0.5716,
+          "ci95": [
+            0.534,
+            0.61
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "nli_mean_ent": {
+          "auroc": 0.4525,
+          "ci95": [
+            0.412,
+            0.493
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "nli_min_ent": {
+          "auroc": 0.4583,
+          "ci95": [
+            0.42,
+            0.499
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "dag_maxlb": {
+          "auroc": 0.5395,
+          "ci95": [
+            0.504,
+            0.578
+          ],
+          "n": 1303,
+          "excludes_chance": true
+        },
+        "nli_frac_con": {
+          "auroc": 0.4696,
+          "ci95": [
+            0.433,
+            0.505
+          ],
+          "n": 1303,
+          "excludes_chance": false
+        },
+        "dag_lin": {
+          "auroc": 0.4815,
+          "ci95": [
+            0.444,
+            0.519
+          ],
+          "n": 1303,
+          "excludes_chance": false
+        }
+      }
+    }
+  }
+}

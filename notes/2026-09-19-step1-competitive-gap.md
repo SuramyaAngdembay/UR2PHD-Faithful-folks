@@ -1,0 +1,92 @@
+# Step 1 — competitive gap by regime: results (2026-09-19)
+
+Spec frozen at `60a30d3` **before** running (`step1-competitive-gap-spec.md`). Cached public data
+only, no new inference. Regimes keyed on `ft`, never on the misnamed `correct` field.
+Script `scripts/step1_competitive_gap.py`; run on Aquaman for sklearn.
+
+## Independent reproduction of the published table
+
+Computed from a different code path than `audit_corrected.py`, and it lands on the same numbers:
+
+| | this run | published |
+|---|---:|---:|
+| soft, correct regime | 0.667 | 0.6667 |
+| avg_impact, correct regime | 0.659 | 0.6591 |
+| nli_n_unsup, correct regime | 0.622 | 0.6259 |
+| step count, correct / incorrect | 0.620 / 0.505 | 0.620 / 0.505 |
+| judge, correct / incorrect | 0.830 / 0.679 | 0.830 / 0.679 |
+
+## RETRACTION — my "correction" about the judge numbers was wrong
+
+I told the user that Codex had misattributed 0.830, that it was "the pooled figure, not the
+correct-answer figure", and that the regime values were "0.675 / 0.814". **All three were wrong.**
+
+The paper reads: *"degrades exactly there **(0.830 → 0.679)**, robustly across prompts and judge
+models"*, and separately reports Δ **0.152 [0.089, 0.211], p<0.001**. The "0.675 / 0.814" figures
+belong to a *different* sentence — the ablation excluding the 340 traces GPT-4o-mini judged of its
+own generations (*"full 0.777; regimes 0.675 / 0.814"*). My fresh computation independently gives
+correct 0.830 / incorrect 0.679 / pooled 0.783.
+
+**Codex's original statement was accurate.** Root cause: I grepped "regimes 0.675 / 0.814" and
+assumed it was the main regime split without reading the sentence it sat in — and the truncated
+grep hid the `(0.830 → 0.679)` parenthetical. The `0.151 vs 0.139` gap-inflation claim I made was
+itself the fabricated quantity; the paper's own Δ is 0.152.
+
+## The answer to the pre-registered question
+
+**INCORRECT regime (n=514, 233 unfaithful) — everything computable:**
+
+| detector | AUROC | 95% CI | |
+|---|---:|---|---|
+| **judgeA** | **0.679** | [0.629, 0.728] | clears chance |
+| text baseline (TF-IDF, grouped CV) | 0.593 | [0.533, 0.648] | clears chance |
+| words | 0.557 | [0.504, 0.604] | clears chance |
+| nli_min_ent | 0.423 | [0.370, 0.476] | **inverted** |
+| nli_mean_ent | 0.443 | [0.386, 0.496] | **inverted** |
+| soft / hard / avg_impact / dag×2 / nli_n_unsup / nli_frac_con / n_steps | .476–.530 | all cover 0.5 | |
+
+**The paired tests are what matter, and they close the question:**
+
+| contrast | INCORRECT | CORRECT |
+|---|---|---|
+| **text − length** | +0.035 [−0.041, 0.111] | +0.035 [−0.042, 0.109] |
+| **judge − text** | **+0.086 [+0.028, +0.152]** | **+0.137 [+0.073, +0.200]** |
+| words − steps | +0.053 [−0.014, 0.119] | +0.038 [−0.030, 0.110] |
+
+**A supervised text baseline is not distinguishable from word count, in either regime.** Its
+nominal clearing of chance in the blind regime (0.593) is not evidence of extractable semantic
+signal. **The judge beats both, significantly, in both regimes** — it is finding something a
+bag-of-words model does not.
+
+This is **pre-registered reading #1**: in the incorrect regime nothing computable beats length
+except the judge. For the proposed correctness-matched training objective over these features,
+there is nothing to recover. **The method door closes on evidence, not on prior.**
+
+## Scoping — what this does NOT establish
+
+- **TF-IDF is a weak text model.** "No signal beyond length extractable by a bag-of-words model"
+  is not "no signal in the text." A fine-tuned encoder could find more; that is untested.
+- It says nothing about **internals** — the white-box probe reaches 0.71 in this regime.
+- It says nothing about methods operating at the **judge's** representational level, which is
+  precisely where the only surviving signal lives.
+
+## Two smaller findings
+
+**Word count vs step count.** Word count nominally clears chance in the blind regime (0.557) where
+step count does not (0.505), which would contradict the paper's *"in the incorrect regime not even
+length carries signal."* But the **paired** difference is +0.053 [−0.014, 0.119] — not established.
+**The paper's claim stands**, and I nearly committed the Gelman–Stern error I had flagged for
+others four hours earlier.
+
+**NLI inverts in the blind regime.** `nli_min_ent` 0.423 [0.370, 0.476] and `nli_mean_ent`
+0.443 [0.386, 0.496] are both significantly *below* chance. The paper reports pooled mean-entailment
+at 0.493 [0.447, 0.538]; whether the regime-specific inversion is already stated should be checked
+before treating it as new.
+
+## Repo hazard recorded
+
+`results/rigorous_features.json` ships a field named `correct` defined as `1 if ft in (1,2)` — so
+**`correct=1` means INCORRECT-answer**, the inverse of its name — while `results/judge_join.json`
+uses the opposite convention. `audit_corrected.py` keys on `ft` and is safe; the display strings at
+`rigorous_analysis.py:131-132` are stale pre-correction labels. Reading the field naively inverts
+every regime result.

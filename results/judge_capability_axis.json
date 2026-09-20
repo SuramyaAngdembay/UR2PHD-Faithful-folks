@@ -1,0 +1,170 @@
+{
+  "script_sha256": "cfcf3625b275642c1a05ce8278d9b995eed559b254103f1bbdb422cf99530f59",
+  "status": "EXPLORATORY; capability is proxied by size/family, not measured",
+  "judges": {
+    "gpt-4o-mini": {
+      "blind": {
+        "auroc": 0.6789,
+        "ci95": [
+          0.631,
+          0.725
+        ],
+        "n": 514
+      },
+      "correct": {
+        "auroc": 0.8304,
+        "ci95": [
+          0.782,
+          0.87
+        ],
+        "n": 789
+      },
+      "gap": 0.1515,
+      "parse_rate": 1.0
+    },
+    "gpt-4o": {
+      "blind": {
+        "auroc": 0.6695,
+        "ci95": [
+          0.624,
+          0.715
+        ],
+        "n": 514
+      },
+      "correct": {
+        "auroc": 0.7857,
+        "ci95": [
+          0.734,
+          0.836
+        ],
+        "n": 789
+      },
+      "gap": 0.1162,
+      "parse_rate": 1.0
+    },
+    "gpt-5.2": {
+      "blind": {
+        "auroc": 0.653,
+        "ci95": [
+          0.6,
+          0.708
+        ],
+        "n": 514
+      },
+      "correct": {
+        "auroc": 0.8299,
+        "ci95": [
+          0.783,
+          0.874
+        ],
+        "n": 789
+      },
+      "gap": 0.1769,
+      "parse_rate": 1.0
+    },
+    "Qwen2.5-7B-Instruct": {
+      "blind": {
+        "auroc": 0.6365,
+        "ci95": [
+          0.587,
+          0.684
+        ],
+        "n": 514
+      },
+      "correct": {
+        "auroc": 0.6389,
+        "ci95": [
+          0.586,
+          0.694
+        ],
+        "n": 789
+      },
+      "gap": 0.0024,
+      "parse_rate": 1.0
+    },
+    "Qwen3-8B": {
+      "blind": {
+        "auroc": 0.6366,
+        "ci95": [
+          0.59,
+          0.683
+        ],
+        "n": 514
+      },
+      "correct": {
+        "auroc": 0.666,
+        "ci95": [
+          0.605,
+          0.724
+        ],
+        "n": 789
+      },
+      "gap": 0.0294,
+      "parse_rate": 1.0
+    },
+    "Llama-3.1-8B-Instruct": {
+      "blind": {
+        "auroc": 0.6419,
+        "ci95": [
+          0.597,
+          0.692
+        ],
+        "n": 514
+      },
+      "correct": {
+        "auroc": 0.6884,
+        "ci95": [
+          0.633,
+          0.741
+        ],
+        "n": 789
+      },
+      "gap": 0.0465,
+      "parse_rate": 1.0
+    },
+    "Meta-Llama-3-8B-Instruct": {
+      "blind": {
+        "auroc": 0.6244,
+        "ci95": [
+          0.583,
+          0.669
+        ],
+        "n": 514
+      },
+      "correct": {
+        "auroc": 0.6953,
+        "ci95": [
+          0.646,
+          0.745
+        ],
+        "n": 789
+      },
+      "gap": 0.0709,
+      "parse_rate": 1.0
+    },
+    "Olmo-3-7B-Instruct": {
+      "blind": {
+        "auroc": 0.5472,
+        "ci95": [
+          0.491,
+          0.603
+        ],
+        "n": 510
+      },
+      "correct": {
+        "auroc": 0.5426,
+        "ci95": [
+          0.486,
+          0.601
+        ],
+        "n": 788
+      },
+      "gap": -0.0046,
+      "parse_rate": 0.9962
+    }
+  },
+  "excluded": {
+    "Llama-3.2-3B-Instruct": "arm not yet available",
+    "Qwen2.5-3B-Instruct": "arm not yet available"
+  }
+}

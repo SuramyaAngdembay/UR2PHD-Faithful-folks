@@ -141,3 +141,27 @@ count, and the TF-IDF text baseline. **In paired tests not one of them beats len
 (0.679) beats the text baseline by +0.086 [+0.028, +0.152] and remains the only detector that
 significantly clears the length bar. The pre-registered reading holds, with a wider margin than the
 first pass showed.
+
+---
+
+## Current-judge arm (gpt-5.2) — pre-registered reading, fixed before the run
+
+Single-variable change to a frozen procedure: `scripts/judge_baseline.py`, **prompt A verbatim**,
+same 1,303-trace population, same message skeleton; only `--model` differs. Prior arms:
+gpt-4o-mini **0.679**, gpt-4o **0.670**, prompt-B **0.667** in the blind regime — flat within 0.012
+across two models and two prompts.
+
+API deltas forced by the model family (recorded as deviations): GPT-5 rejects `max_tokens` →
+`max_completion_tokens=2000`; it has no `temperature` control → omitted. Everything else identical.
+Default reasoning effort (smoke test showed **0 reasoning tokens** on a short item).
+
+**Pre-registered readings:**
+- **Blind regime stays ≈0.67–0.68** → the weakness is a property of the problem, not of 2024-era
+  judges. The paper's claim strengthens to "stable across model generations."
+- **Blind regime rises materially (say ≥0.75)** → the "metric-blind regime" framing weakens and the
+  manuscript needs revision before submission.
+- **Correct regime moves but blind regime does not** → the gap widens; the regime asymmetry is the
+  durable finding.
+
+Cost: gpt-5.2 at $1.75/1M in, $14/1M out ⇒ ≈$2.15 for 1,303 calls. Pilot (n=30) returned 17
+distinct scores spanning 8–95, so the judge is grading rather than degenerate.

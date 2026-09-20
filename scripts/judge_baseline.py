@@ -89,12 +89,18 @@ def _pace():
         _last[0] = time.time()
 
 def call(judge_model, sys_p, user_p, retries=60):
-    body = json.dumps({
-        "model": judge_model, "temperature": 0,
-        "response_format": {"type": "json_object"},
-        "messages": [{"role": "system", "content": sys_p}, {"role": "user", "content": user_p}],
-        "max_tokens": 30,
-    }).encode()
+    # GPT-5-family reasoning models reject `max_tokens` and `temperature`; they take
+    # `max_completion_tokens` and have no temperature control. Everything else is held fixed
+    # so the prompt and message skeleton are byte-identical across judge models.
+    payload = {"model": judge_model,
+               "response_format": {"type": "json_object"},
+               "messages": [{"role": "system", "content": sys_p}, {"role": "user", "content": user_p}]}
+    if judge_model.startswith(("gpt-5", "o1", "o3", "o4")):
+        payload["max_completion_tokens"] = 2000
+    else:
+        payload["temperature"] = 0
+        payload["max_tokens"] = 30
+    body = json.dumps(payload).encode()
     for att in range(retries):
         try:
             _pace()

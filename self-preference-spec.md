@@ -116,3 +116,53 @@ as not distinguishable from noise, exactly as the gpt-5.2 repeat arm forced.
   a credible null is itself worth stating, given that the benchmark's own detector rankings pool
   across generators.
 - Either way: no manuscript restructuring, no sweep, no new inference beyond the queued arms.
+
+---
+
+## Amendment v1.1 (2026-09-19) — matched-pair design, added before any outcome was computed
+
+**Order of events, stated here because it is what makes this legitimate.** After freezing v1 and
+before computing any judge score, an inspection of record identifiers showed that FaithCoT's four
+generators answer *the same questions*: 295 of 341 question keys carry all four generators, and the
+question text is byte-identical across them (verified on samples). v1's design controlled for
+generator difficulty by differencing against non-self judges. The shared-question structure permits
+something strictly stronger, so the design is upgraded. **No judge quantity had been computed when
+this amendment was written.** The upgrade is driven by data structure, not by a result.
+
+**E1m (new primary) — question- and label-matched own-vs-other offset.** For judge J with
+self-generator G, take every question where G produced a trace with true label L and at least one
+other generator produced a trace with the *same* label L in the *same* regime. Compare J's
+unfaithfulness score on the self trace against its scores on those matched other traces, paired by
+question. Averaging over pairs gives an offset in which question difficulty and true label are both
+held fixed by construction. Negative = self-preference in the Panickssery direction.
+
+This controls more than v1's E2 did: E2 removed generator-level difficulty, E1m removes
+question-level difficulty *and* label composition simultaneously.
+
+**Power, computed as a design fact before any outcome.** Label-matched pairs available:
+
+| self-generator | blind pairs (questions) | correct pairs (questions) |
+|---|---|---|
+| Qwen2.5-7B-Instruct | 155 (95) | 363 (155) |
+| gpt-4o-mini | 152 (94) | 397 (180) |
+| llama-3.1-8b-instruct | 139 (85) | 336 (140) |
+
+A fallback rule was fixed before these were computed: E1m is primary if it retains at least 40
+blind-regime pairs, else v1's E1 is primary. All three cells clear it by a wide margin, so **E1m is
+the primary endpoint** and v1's E1/E2 become secondary corroboration.
+
+**E2m (retained control).** The same matched offset computed for judges for whom G is NOT self.
+Under the self-preference hypothesis E1m is negative and E2m is centred on zero. If E2m is also
+non-zero, the effect belongs to the generator's traces rather than to self-status, and the
+self-preference reading fails. **E2m is a falsification test, not a supporting statistic.**
+
+**Inference unchanged from v1 section 5.** Question-clustered bootstrap, 2000 draws, seed 0.
+Three primary tests (the three self-judges), Bonferroni alpha 0.0167. Correct-regime underpower
+ruling from section 2 stands: it applies to per-generator *AUROC* cells and does not bar the
+matched-offset endpoint, which is a paired mean difference and is well powered there.
+
+**Scope.** gemini-2.5-flash has no matching judge and is a pure control generator throughout.
+Two of the three self-judges (Qwen2.5-7B, Llama-3.1-8B) are still in flight; the gpt-4o-mini self
+cell is computable from cached data now and will be reported first, with the other two appended
+when their arms land. Reporting one cell before the others are available is disclosed rather than
+hidden, and the Bonferroni correction is applied over all three regardless of arrival order.

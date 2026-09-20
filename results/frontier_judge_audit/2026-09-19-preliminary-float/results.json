@@ -1,0 +1,840 @@
+{
+  "n": 1303,
+  "question_clusters": 340,
+  "native_type_counts": {
+    "1": 281,
+    "2": 233,
+    "3": 682,
+    "4": 107
+  },
+  "faithfulness_field_disagreements": 56,
+  "bootstrap": {
+    "unit": "exact question text",
+    "draws": 5000,
+    "seed": 20260919,
+    "interval": "percentile 95%, paired models and endpoints, not multiplicity adjusted",
+    "scope": "Sampling uncertainty conditional on these frozen scores; no model/run uncertainty"
+  },
+  "models": [
+    "gpt-4o-mini",
+    "gpt-5.2-2025-12-11"
+  ],
+  "targets": {
+    "four_way_derived": {
+      "pooled": {
+        "mini": 0.7829332355995358,
+        "gpt52": 0.810759880276098,
+        "difference": 0.027826644676562262,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.00023483072468633324,
+            0.054140464829968656
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7527651105508557,
+            0.8117989470209229
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7824795174091768,
+            0.8373184904193803
+          ]
+        }
+      },
+      "incorrect_regime": {
+        "mini": 0.6789058085012143,
+        "gpt52": 0.6530249110320284,
+        "difference": -0.02588089746918587,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.07013739442304891,
+            0.017815991901703465
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6306905949527595,
+            0.7256600142389201
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6006668205475016,
+            0.7047639823948733
+          ]
+        }
+      },
+      "correct_regime": {
+        "mini": 0.830425905116891,
+        "gpt52": 0.8299325787266698,
+        "difference": -0.0004933263902211493,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.04886268963135699,
+            0.04644919638094161
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7840834856275417,
+            0.8721126197950895
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7823169932985923,
+            0.8737654012282922
+          ]
+        }
+      },
+      "score_vs_incorrectness": {
+        "mini": 0.6831062320920438,
+        "gpt52": 0.8144896016728065,
+        "difference": 0.1313833695807627,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.10587334296848795,
+            0.15736210188192337
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6508705839366152,
+            0.7138463559605882
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7847642451308658,
+            0.8406496850246555
+          ]
+        }
+      },
+      "pair_auc_wrong_U_wrong_F": {
+        "mini": 0.6789058085012143,
+        "gpt52": 0.6530249110320284,
+        "difference": -0.02588089746918587,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.07013739442304891,
+            0.017815991901703465
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6306905949527595,
+            0.7256600142389201
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6006668205475016,
+            0.7047639823948733
+          ]
+        }
+      },
+      "weighted_auc_wrong_U_wrong_F": {
+        "mini": 0.13575835318551097,
+        "gpt52": 0.1305830431861218,
+        "difference": -0.005175309999389172,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.01445579760611621,
+            0.0035691817135674033
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.11150678329637026,
+            0.16266578765484616
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.10691242499031177,
+            0.15552420108359477
+          ]
+        }
+      },
+      "pair_auc_wrong_U_right_F": {
+        "mini": 0.8164889934930084,
+        "gpt52": 0.9129925868123293,
+        "difference": 0.0965035933193209,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.06888814707223666,
+            0.1259999153130786
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7838931308414491,
+            0.8469666207152735
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.8872433283096238,
+            0.9358159620302581
+          ]
+        }
+      },
+      "weighted_auc_wrong_U_right_F": {
+        "mini": 0.39626473642416465,
+        "gpt52": 0.44310060472787244,
+        "difference": 0.046835868303707784,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.032700738818197995,
+            0.062169460929990754
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.3590052380418316,
+            0.43295215383002345
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.4022118650273101,
+            0.4831269090521868
+          ]
+        }
+      },
+      "pair_auc_right_U_wrong_F": {
+        "mini": 0.7168490371503642,
+        "gpt52": 0.5673994745069345,
+        "difference": -0.14944956264342968,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.21284136695040634,
+            -0.08942605765478674
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.651916322663905,
+            0.776193133930042
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.4926193054277254,
+            0.6414134468967689
+          ]
+        }
+      },
+      "weighted_auc_right_U_wrong_F": {
+        "mini": 0.0658282939343962,
+        "gpt52": 0.052104330828904775,
+        "difference": -0.01372396310549142,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.020329954559380047,
+            -0.007916806474286489
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.0519035365775578,
+            0.0817744448129546
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.03988639351690911,
+            0.06620495504981504
+          ]
+        }
+      },
+      "pair_auc_right_U_right_F": {
+        "mini": 0.830425905116891,
+        "gpt52": 0.8299325787266698,
+        "difference": -0.0004933263902211493,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.04886268963135699,
+            0.04644919638094161
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7840834856275417,
+            0.8721126197950895
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7823169932985923,
+            0.8737654012282922
+          ]
+        }
+      },
+      "weighted_auc_right_U_right_F": {
+        "mini": 0.18508185205546396,
+        "gpt52": 0.18497190153319898,
+        "difference": -0.00010995052226497881,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.01088594238870599,
+            0.010230093627531715
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.14889039204066765,
+            0.22514981160848965
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.14891954793261356,
+            0.2245641084821279
+          ]
+        }
+      },
+      "weighted_within": {
+        "mini": 0.3208402052409749,
+        "gpt52": 0.3155549447193208,
+        "difference": -0.005285260521654123,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.019026133259154674,
+            0.008360666570549785
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.2947821155939091,
+            0.34780255708181845
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.2890272593641055,
+            0.342480564111161
+          ]
+        }
+      },
+      "weighted_cross": {
+        "mini": 0.46209303035856086,
+        "gpt52": 0.4952049355567772,
+        "difference": 0.03311190519821633,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.016436450848075025,
+            0.04976040960696589
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.436800596151245,
+            0.4883193124050971
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.4643940456471304,
+            0.5260999142467162
+          ]
+        }
+      }
+    },
+    "binary_unfaithfulness": {
+      "pooled": {
+        "mini": 0.7823402174963476,
+        "gpt52": 0.8189993803684817,
+        "difference": 0.03665916287213411,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.010386786060579883,
+            0.06315562756275002
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7535437157269159,
+            0.8084599778932483
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7930757066023376,
+            0.8437095443643052
+          ]
+        }
+      },
+      "incorrect_regime": {
+        "mini": 0.6739660472793906,
+        "gpt52": 0.6531431254069935,
+        "difference": -0.020822921872397093,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.0646433378252187,
+            0.022580718645232385
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6251159122221714,
+            0.720236993817384
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6037072007399935,
+            0.7030480039500219
+          ]
+        }
+      },
+      "correct_regime": {
+        "mini": 0.8270648785074479,
+        "gpt52": 0.8385398624239125,
+        "difference": 0.01147498391646462,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.0331490660250344,
+            0.0568004825509729
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.782556167696953,
+            0.8673660639699442
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7954175947299784,
+            0.8776618552451126
+          ]
+        }
+      },
+      "score_vs_incorrectness": {
+        "mini": 0.6831062320920438,
+        "gpt52": 0.8144896016728065,
+        "difference": 0.1313833695807627,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.10587334296848795,
+            0.15736210188192337
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6508705839366152,
+            0.7138463559605882
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7847642451308658,
+            0.8406496850246555
+          ]
+        }
+      },
+      "pair_auc_wrong_U_wrong_F": {
+        "mini": 0.6739660472793906,
+        "gpt52": 0.6531431254069935,
+        "difference": -0.020822921872397093,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.0646433378252187,
+            0.022580718645232385
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6251159122221714,
+            0.720236993817384
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6037072007399935,
+            0.7030480039500219
+          ]
+        }
+      },
+      "weighted_auc_wrong_U_wrong_F": {
+        "mini": 0.12649578480026832,
+        "gpt52": 0.12258755848127748,
+        "difference": -0.003908226318990848,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.012364468310348606,
+            0.004271727297602863
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.1031582703013639,
+            0.15205881978383798
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.1000396193252431,
+            0.14622099244479725
+          ]
+        }
+      },
+      "pair_auc_wrong_U_right_F": {
+        "mini": 0.8155126528552091,
+        "gpt52": 0.9169247711473605,
+        "difference": 0.10141211829215135,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.07456442300344292,
+            0.1305954514117048
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7844187751528792,
+            0.8447146124406907
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.8936407874815167,
+            0.9375977593570615
+          ]
+        }
+      },
+      "weighted_auc_wrong_U_right_F": {
+        "mini": 0.4041333401549647,
+        "gpt52": 0.4543888670975664,
+        "difference": 0.05025552694260166,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.03633804458217866,
+            0.06530348302048723
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.36692469022863855,
+            0.4399792761486295
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.41341619611722036,
+            0.4936088890309144
+          ]
+        }
+      },
+      "pair_auc_right_U_wrong_F": {
+        "mini": 0.709094175677,
+        "gpt52": 0.5674550027765982,
+        "difference": -0.14163917290040173,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.20121970461464783,
+            -0.08448091245149435
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.6487518138719655,
+            0.7659265813502213
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.49797933423575635,
+            0.6370831081539139
+          ]
+        }
+      },
+      "weighted_auc_right_U_wrong_F": {
+        "mini": 0.061700234777813785,
+        "gpt52": 0.049375820727527,
+        "difference": -0.012324414050286787,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.018133033006540157,
+            -0.007045338383721194
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.04892018487779375,
+            0.07610439577675823
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.03840758534253516,
+            0.062142148857010034
+          ]
+        }
+      },
+      "pair_auc_right_U_right_F": {
+        "mini": 0.8270648785074479,
+        "gpt52": 0.8385398624239125,
+        "difference": 0.01147498391646462,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.0331490660250344,
+            0.0568004825509729
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.782556167696953,
+            0.8673660639699442
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.7954175947299784,
+            0.8776618552451126
+          ]
+        }
+      },
+      "weighted_auc_right_U_right_F": {
+        "mini": 0.19001085776330076,
+        "gpt52": 0.19264713406211095,
+        "difference": 0.0026362762988101918,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.00773559135702424,
+            0.012844851998104024
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.15450033315479292,
+            0.22969159328412395
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.15739892147477313,
+            0.23082951656350487
+          ]
+        }
+      },
+      "weighted_within": {
+        "mini": 0.3165066425635691,
+        "gpt52": 0.31523469254338843,
+        "difference": -0.0012719500201806566,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            -0.014505002675206186,
+            0.011783403865562014
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.29104387643202734,
+            0.34327020024632193
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.2901675253859688,
+            0.3418355530382957
+          ]
+        }
+      },
+      "weighted_cross": {
+        "mini": 0.4658335749327785,
+        "gpt52": 0.5037646878250934,
+        "difference": 0.03793111289231493,
+        "difference_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.021745784334388396,
+            0.054572156722503054
+          ]
+        },
+        "mini_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.4402730505730173,
+            0.49149274521899183
+          ]
+        },
+        "gpt52_uncertainty": {
+          "defined_draws": 5000,
+          "total_draws": 5000,
+          "ci95": [
+            0.4725971707687089,
+            0.5336127332610002
+          ]
+        }
+      }
+    }
+  }
+}

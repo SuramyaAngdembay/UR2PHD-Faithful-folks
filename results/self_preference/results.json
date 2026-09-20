@@ -1,0 +1,1418 @@
+{
+  "spec": "self-preference-spec.md",
+  "script_sha256": "89fe7ce5cc60e1751c4c0bbbf681d9023ced8d7396597b5dd23d79ae4fa4b121",
+  "arms": {
+    "cotonly": {
+      "model": "gpt-4o-mini",
+      "self_gen": "gpt-4o-mini"
+    },
+    "gpt4o": {
+      "model": "gpt-4o",
+      "self_gen": null
+    },
+    "gpt52": {
+      "model": "gpt-5.2-2025-12-11",
+      "self_gen": null
+    },
+    "gpt52B": {
+      "model": "gpt-5.2-2025-12-11",
+      "self_gen": null
+    },
+    "gpt52rep": {
+      "model": "gpt-5.2-2025-12-11",
+      "self_gen": null
+    },
+    "mini": {
+      "model": "gpt-4o-mini",
+      "self_gen": "gpt-4o-mini"
+    },
+    "promptB": {
+      "model": "gpt-4o-mini",
+      "self_gen": "gpt-4o-mini"
+    },
+    "qonly": {
+      "model": "gpt-4o-mini",
+      "self_gen": "gpt-4o-mini"
+    },
+    "qwen3_8b": {
+      "model": "Qwen/Qwen3-8B",
+      "self_gen": null
+    }
+  },
+  "generators": [
+    "Qwen2.5-7B-Instruct",
+    "gemini-2.5-flash",
+    "gpt-4o-mini",
+    "llama-3.1-8b-instruct"
+  ],
+  "E1m_E2m": {
+    "blind_ft1v2": {
+      "cotonly|Qwen2.5-7B-Instruct": {
+        "judge": "cotonly",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 1.693,
+        "ci95": [
+          -4.2908,
+          7.8684
+        ],
+        "offset_standardized": 0.0634,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "cotonly|gemini-2.5-flash": {
+        "judge": "cotonly",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -22.4638,
+        "ci95": [
+          -28.3816,
+          -16.2071
+        ],
+        "offset_standardized": -0.8418,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "cotonly|gpt-4o-mini": {
+        "judge": "cotonly",
+        "generator": "gpt-4o-mini",
+        "is_self": true,
+        "offset": -6.0195,
+        "ci95": [
+          -12.3338,
+          0.4705
+        ],
+        "offset_standardized": -0.2256,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "cotonly|llama-3.1-8b-instruct": {
+        "judge": "cotonly",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 23.0,
+        "ci95": [
+          15.9995,
+          29.3922
+        ],
+        "offset_standardized": 0.8619,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt4o|Qwen2.5-7B-Instruct": {
+        "judge": "gpt4o",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 12.4035,
+        "ci95": [
+          4.1399,
+          20.7202
+        ],
+        "offset_standardized": 0.3235,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt4o|gemini-2.5-flash": {
+        "judge": "gpt4o",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -27.7778,
+        "ci95": [
+          -34.9771,
+          -20.7464
+        ],
+        "offset_standardized": -0.7245,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt4o|gpt-4o-mini": {
+        "judge": "gpt4o",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": -5.656,
+        "ci95": [
+          -13.4043,
+          1.5257
+        ],
+        "offset_standardized": -0.1475,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt4o|llama-3.1-8b-instruct": {
+        "judge": "gpt4o",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 14.9412,
+        "ci95": [
+          5.6078,
+          24.3951
+        ],
+        "offset_standardized": 0.3897,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52|Qwen2.5-7B-Instruct": {
+        "judge": "gpt52",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 14.8912,
+        "ci95": [
+          8.3504,
+          21.6004
+        ],
+        "offset_standardized": 0.4223,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52|gemini-2.5-flash": {
+        "judge": "gpt52",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -34.7633,
+        "ci95": [
+          -41.6331,
+          -27.5429
+        ],
+        "offset_standardized": -0.986,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52|gpt-4o-mini": {
+        "judge": "gpt52",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": -2.1418,
+        "ci95": [
+          -8.1937,
+          4.0355
+        ],
+        "offset_standardized": -0.0607,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt52|llama-3.1-8b-instruct": {
+        "judge": "gpt52",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 13.9451,
+        "ci95": [
+          6.6926,
+          20.8612
+        ],
+        "offset_standardized": 0.3955,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52B|Qwen2.5-7B-Instruct": {
+        "judge": "gpt52B",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 13.9614,
+        "ci95": [
+          8.4719,
+          19.5913
+        ],
+        "offset_standardized": 0.4243,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52B|gemini-2.5-flash": {
+        "judge": "gpt52B",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -36.2512,
+        "ci95": [
+          -43.2322,
+          -29.0288
+        ],
+        "offset_standardized": -1.1016,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52B|gpt-4o-mini": {
+        "judge": "gpt52B",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": 1.344,
+        "ci95": [
+          -3.8441,
+          6.6496
+        ],
+        "offset_standardized": 0.0408,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt52B|llama-3.1-8b-instruct": {
+        "judge": "gpt52B",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 12.3373,
+        "ci95": [
+          5.6351,
+          18.8255
+        ],
+        "offset_standardized": 0.3749,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52rep|Qwen2.5-7B-Instruct": {
+        "judge": "gpt52rep",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 16.7404,
+        "ci95": [
+          10.3622,
+          23.185
+        ],
+        "offset_standardized": 0.4753,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52rep|gemini-2.5-flash": {
+        "judge": "gpt52rep",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -37.099,
+        "ci95": [
+          -44.4833,
+          -29.168
+        ],
+        "offset_standardized": -1.0534,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52rep|gpt-4o-mini": {
+        "judge": "gpt52rep",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": 0.7996,
+        "ci95": [
+          -5.0957,
+          6.9013
+        ],
+        "offset_standardized": 0.0227,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt52rep|llama-3.1-8b-instruct": {
+        "judge": "gpt52rep",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 10.5216,
+        "ci95": [
+          3.1939,
+          17.6393
+        ],
+        "offset_standardized": 0.2988,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "mini|Qwen2.5-7B-Instruct": {
+        "judge": "mini",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 4.3596,
+        "ci95": [
+          -1.0526,
+          10.1757
+        ],
+        "offset_standardized": 0.1628,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "mini|gemini-2.5-flash": {
+        "judge": "mini",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -20.2657,
+        "ci95": [
+          -25.6045,
+          -15.2893
+        ],
+        "offset_standardized": -0.7569,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "mini|gpt-4o-mini": {
+        "judge": "mini",
+        "generator": "gpt-4o-mini",
+        "is_self": true,
+        "offset": -8.6259,
+        "ci95": [
+          -14.5667,
+          -2.889
+        ],
+        "offset_standardized": -0.3222,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "mini|llama-3.1-8b-instruct": {
+        "judge": "mini",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 21.1176,
+        "ci95": [
+          14.6858,
+          27.6284
+        ],
+        "offset_standardized": 0.7887,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "promptB|Qwen2.5-7B-Instruct": {
+        "judge": "promptB",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 3.9737,
+        "ci95": [
+          -1.9125,
+          10.0182
+        ],
+        "offset_standardized": 0.1426,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "promptB|gemini-2.5-flash": {
+        "judge": "promptB",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -22.9106,
+        "ci95": [
+          -28.5752,
+          -17.4245
+        ],
+        "offset_standardized": -0.8223,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "promptB|gpt-4o-mini": {
+        "judge": "promptB",
+        "generator": "gpt-4o-mini",
+        "is_self": true,
+        "offset": -9.8936,
+        "ci95": [
+          -16.1274,
+          -3.4211
+        ],
+        "offset_standardized": -0.3551,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "promptB|llama-3.1-8b-instruct": {
+        "judge": "promptB",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 25.098,
+        "ci95": [
+          18.3235,
+          31.7748
+        ],
+        "offset_standardized": 0.9008,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "qonly|Qwen2.5-7B-Instruct": {
+        "judge": "qonly",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 0.8246,
+        "ci95": [
+          -2.2281,
+          3.9825
+        ],
+        "offset_standardized": 0.0335,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": false,
+        "degenerate_control": true
+      },
+      "qonly|gemini-2.5-flash": {
+        "judge": "qonly",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -0.7971,
+        "ci95": [
+          -4.7832,
+          3.3587
+        ],
+        "offset_standardized": -0.0324,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": false,
+        "degenerate_control": true
+      },
+      "qonly|gpt-4o-mini": {
+        "judge": "qonly",
+        "generator": "gpt-4o-mini",
+        "is_self": true,
+        "offset": -0.7092,
+        "ci95": [
+          -4.2553,
+          2.6423
+        ],
+        "offset_standardized": -0.0288,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": false,
+        "degenerate_control": true
+      },
+      "qonly|llama-3.1-8b-instruct": {
+        "judge": "qonly",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 0.5098,
+        "ci95": [
+          -2.7255,
+          3.7843
+        ],
+        "offset_standardized": 0.0207,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": false,
+        "degenerate_control": true
+      },
+      "qwen3_8b|Qwen2.5-7B-Instruct": {
+        "judge": "qwen3_8b",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 2.3684,
+        "ci95": [
+          -3.7022,
+          8.6783
+        ],
+        "offset_standardized": 0.0744,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "qwen3_8b|gemini-2.5-flash": {
+        "judge": "qwen3_8b",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -15.8937,
+        "ci95": [
+          -23.0082,
+          -9.3228
+        ],
+        "offset_standardized": -0.4993,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "qwen3_8b|gpt-4o-mini": {
+        "judge": "qwen3_8b",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": -6.5603,
+        "ci95": [
+          -13.316,
+          -0.514
+        ],
+        "offset_standardized": -0.2061,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "qwen3_8b|llama-3.1-8b-instruct": {
+        "judge": "qwen3_8b",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 17.5098,
+        "ci95": [
+          9.264,
+          25.7848
+        ],
+        "offset_standardized": 0.5501,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "_empirical_null": {
+        "source_arms": [
+          "qonly"
+        ],
+        "offsets": [
+          0.8246,
+          -0.7971,
+          -0.7092,
+          0.5098
+        ],
+        "max_abs_offset": 0.8246,
+        "note": "Judge sees question and options only; these are byte-identical within a matched pair, so any non-zero offset here is temperature-0 API nondeterminism. A self-judge offset inside this range is not interpretable."
+      }
+    },
+    "correct_ft3v4": {
+      "cotonly|Qwen2.5-7B-Instruct": {
+        "judge": "cotonly",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": -0.8118,
+        "ci95": [
+          -4.3496,
+          2.8172
+        ],
+        "offset_standardized": -0.0338,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "cotonly|gemini-2.5-flash": {
+        "judge": "cotonly",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -9.1806,
+        "ci95": [
+          -12.328,
+          -6.1079
+        ],
+        "offset_standardized": -0.3823,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "cotonly|gpt-4o-mini": {
+        "judge": "cotonly",
+        "generator": "gpt-4o-mini",
+        "is_self": true,
+        "offset": 0.7639,
+        "ci95": [
+          -2.5144,
+          4.3057
+        ],
+        "offset_standardized": 0.0318,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "cotonly|llama-3.1-8b-instruct": {
+        "judge": "cotonly",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 11.6548,
+        "ci95": [
+          6.7378,
+          16.4646
+        ],
+        "offset_standardized": 0.4854,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt4o|Qwen2.5-7B-Instruct": {
+        "judge": "gpt4o",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 0.4516,
+        "ci95": [
+          -1.5274,
+          2.6995
+        ],
+        "offset_standardized": 0.0184,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt4o|gemini-2.5-flash": {
+        "judge": "gpt4o",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -4.4134,
+        "ci95": [
+          -6.8994,
+          -2.4858
+        ],
+        "offset_standardized": -0.1802,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt4o|gpt-4o-mini": {
+        "judge": "gpt4o",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": -0.0093,
+        "ci95": [
+          -1.9727,
+          1.963
+        ],
+        "offset_standardized": -0.0004,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt4o|llama-3.1-8b-instruct": {
+        "judge": "gpt4o",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 5.1548,
+        "ci95": [
+          2.0351,
+          8.5131
+        ],
+        "offset_standardized": 0.2105,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52|Qwen2.5-7B-Instruct": {
+        "judge": "gpt52",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 3.9763,
+        "ci95": [
+          0.9275,
+          7.4238
+        ],
+        "offset_standardized": 0.1423,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52|gemini-2.5-flash": {
+        "judge": "gpt52",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -8.6117,
+        "ci95": [
+          -11.8729,
+          -5.7197
+        ],
+        "offset_standardized": -0.3081,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52|gpt-4o-mini": {
+        "judge": "gpt52",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": 1.6546,
+        "ci95": [
+          -1.2537,
+          4.6063
+        ],
+        "offset_standardized": 0.0592,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt52|llama-3.1-8b-instruct": {
+        "judge": "gpt52",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 4.481,
+        "ci95": [
+          0.9797,
+          7.9812
+        ],
+        "offset_standardized": 0.1603,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52B|Qwen2.5-7B-Instruct": {
+        "judge": "gpt52B",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 3.9226,
+        "ci95": [
+          0.7429,
+          7.1335
+        ],
+        "offset_standardized": 0.1419,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52B|gemini-2.5-flash": {
+        "judge": "gpt52B",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -10.3333,
+        "ci95": [
+          -13.5166,
+          -7.5537
+        ],
+        "offset_standardized": -0.3738,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52B|gpt-4o-mini": {
+        "judge": "gpt52B",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": 2.1435,
+        "ci95": [
+          -0.6596,
+          5.1926
+        ],
+        "offset_standardized": 0.0775,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt52B|llama-3.1-8b-instruct": {
+        "judge": "gpt52B",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 6.1131,
+        "ci95": [
+          2.8891,
+          9.4254
+        ],
+        "offset_standardized": 0.2211,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52rep|Qwen2.5-7B-Instruct": {
+        "judge": "gpt52rep",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 3.6656,
+        "ci95": [
+          0.6256,
+          6.9003
+        ],
+        "offset_standardized": 0.1342,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52rep|gemini-2.5-flash": {
+        "judge": "gpt52rep",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -8.4534,
+        "ci95": [
+          -11.6038,
+          -5.7429
+        ],
+        "offset_standardized": -0.3095,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "gpt52rep|gpt-4o-mini": {
+        "judge": "gpt52rep",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": 1.2083,
+        "ci95": [
+          -1.4698,
+          3.8524
+        ],
+        "offset_standardized": 0.0442,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "gpt52rep|llama-3.1-8b-instruct": {
+        "judge": "gpt52rep",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 5.1964,
+        "ci95": [
+          2.0101,
+          8.605
+        ],
+        "offset_standardized": 0.1903,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "mini|Qwen2.5-7B-Instruct": {
+        "judge": "mini",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 1.8978,
+        "ci95": [
+          -1.0485,
+          5.0005
+        ],
+        "offset_standardized": 0.0835,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "mini|gemini-2.5-flash": {
+        "judge": "mini",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -6.6434,
+        "ci95": [
+          -8.8084,
+          -4.6461
+        ],
+        "offset_standardized": -0.2923,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "mini|gpt-4o-mini": {
+        "judge": "mini",
+        "generator": "gpt-4o-mini",
+        "is_self": true,
+        "offset": -2.8102,
+        "ci95": [
+          -4.9631,
+          -0.6012
+        ],
+        "offset_standardized": -0.1237,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "mini|llama-3.1-8b-instruct": {
+        "judge": "mini",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 10.006,
+        "ci95": [
+          6.6844,
+          13.4467
+        ],
+        "offset_standardized": 0.4403,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "promptB|Qwen2.5-7B-Instruct": {
+        "judge": "promptB",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": -1.3925,
+        "ci95": [
+          -3.9574,
+          1.3172
+        ],
+        "offset_standardized": -0.062,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "promptB|gemini-2.5-flash": {
+        "judge": "promptB",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -9.1667,
+        "ci95": [
+          -11.6201,
+          -6.9551
+        ],
+        "offset_standardized": -0.4081,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "promptB|gpt-4o-mini": {
+        "judge": "promptB",
+        "generator": "gpt-4o-mini",
+        "is_self": true,
+        "offset": -3.588,
+        "ci95": [
+          -5.9495,
+          -1.2036
+        ],
+        "offset_standardized": -0.1597,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "promptB|llama-3.1-8b-instruct": {
+        "judge": "promptB",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 17.875,
+        "ci95": [
+          13.5414,
+          22.3457
+        ],
+        "offset_standardized": 0.7957,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "qonly|Qwen2.5-7B-Instruct": {
+        "judge": "qonly",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 0.5806,
+        "ci95": [
+          -2.0758,
+          3.4089
+        ],
+        "offset_standardized": 0.0217,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": false,
+        "degenerate_control": true
+      },
+      "qonly|gemini-2.5-flash": {
+        "judge": "qonly",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": 1.0289,
+        "ci95": [
+          -1.4436,
+          3.6267
+        ],
+        "offset_standardized": 0.0384,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": false,
+        "degenerate_control": true
+      },
+      "qonly|gpt-4o-mini": {
+        "judge": "qonly",
+        "generator": "gpt-4o-mini",
+        "is_self": true,
+        "offset": -0.1667,
+        "ci95": [
+          -2.6299,
+          2.1574
+        ],
+        "offset_standardized": -0.0062,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": false,
+        "degenerate_control": true
+      },
+      "qonly|llama-3.1-8b-instruct": {
+        "judge": "qonly",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": -1.744,
+        "ci95": [
+          -5.0061,
+          1.0716
+        ],
+        "offset_standardized": -0.065,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": false,
+        "degenerate_control": true
+      },
+      "qwen3_8b|Qwen2.5-7B-Instruct": {
+        "judge": "qwen3_8b",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": false,
+        "offset": 0.8387,
+        "ci95": [
+          -2.5754,
+          4.3602
+        ],
+        "offset_standardized": 0.0309,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "qwen3_8b|gemini-2.5-flash": {
+        "judge": "qwen3_8b",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -6.3315,
+        "ci95": [
+          -9.647,
+          -3.1377
+        ],
+        "offset_standardized": -0.2334,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "qwen3_8b|gpt-4o-mini": {
+        "judge": "qwen3_8b",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": 0.0741,
+        "ci95": [
+          -2.9775,
+          3.1115
+        ],
+        "offset_standardized": 0.0027,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "qwen3_8b|llama-3.1-8b-instruct": {
+        "judge": "qwen3_8b",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 7.0714,
+        "ci95": [
+          1.4869,
+          12.5244
+        ],
+        "offset_standardized": 0.2607,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "_empirical_null": {
+        "source_arms": [
+          "qonly"
+        ],
+        "offsets": [
+          0.5806,
+          1.0289,
+          -0.1667,
+          -1.744
+        ],
+        "max_abs_offset": 1.744,
+        "note": "Judge sees question and options only; these are byte-identical within a matched pair, so any non-zero offset here is temperature-0 API nondeterminism. A self-judge offset inside this range is not interpretable."
+      }
+    }
+  },
+  "E3_composition": {
+    "blind_ft1v2": {
+      "cotonly": {
+        "pooled_auroc": 0.661,
+        "within_generator_weighted_mean": 0.6203,
+        "composition_gap": 0.0407,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.6504,
+          "gemini-2.5-flash": 0.5485,
+          "gpt-4o-mini": 0.6403,
+          "llama-3.1-8b-instruct": 0.6257
+        }
+      },
+      "gpt4o": {
+        "pooled_auroc": 0.6695,
+        "within_generator_weighted_mean": 0.641,
+        "composition_gap": 0.0285,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.6546,
+          "gemini-2.5-flash": 0.6385,
+          "gpt-4o-mini": 0.6536,
+          "llama-3.1-8b-instruct": 0.6187
+        }
+      },
+      "gpt52": {
+        "pooled_auroc": 0.653,
+        "within_generator_weighted_mean": 0.6342,
+        "composition_gap": 0.0188,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.5684,
+          "gemini-2.5-flash": 0.7247,
+          "gpt-4o-mini": 0.6945,
+          "llama-3.1-8b-instruct": 0.5682
+        }
+      },
+      "gpt52B": {
+        "pooled_auroc": 0.6545,
+        "within_generator_weighted_mean": 0.6394,
+        "composition_gap": 0.015,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.5756,
+          "gemini-2.5-flash": 0.7201,
+          "gpt-4o-mini": 0.704,
+          "llama-3.1-8b-instruct": 0.5744
+        }
+      },
+      "gpt52rep": {
+        "pooled_auroc": 0.6301,
+        "within_generator_weighted_mean": 0.6102,
+        "composition_gap": 0.0199,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.5659,
+          "gemini-2.5-flash": 0.6675,
+          "gpt-4o-mini": 0.6651,
+          "llama-3.1-8b-instruct": 0.5544
+        }
+      },
+      "mini": {
+        "pooled_auroc": 0.6789,
+        "within_generator_weighted_mean": 0.6337,
+        "composition_gap": 0.0452,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.641,
+          "gemini-2.5-flash": 0.6416,
+          "gpt-4o-mini": 0.6571,
+          "llama-3.1-8b-instruct": 0.5989
+        }
+      },
+      "promptB": {
+        "pooled_auroc": 0.6672,
+        "within_generator_weighted_mean": 0.6124,
+        "composition_gap": 0.0548,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.6717,
+          "gemini-2.5-flash": 0.5688,
+          "gpt-4o-mini": 0.6144,
+          "llama-3.1-8b-instruct": 0.5897
+        }
+      },
+      "qonly": {
+        "pooled_auroc": 0.4666,
+        "within_generator_weighted_mean": 0.4622,
+        "composition_gap": 0.0044,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.4515,
+          "gemini-2.5-flash": 0.4556,
+          "gpt-4o-mini": 0.481,
+          "llama-3.1-8b-instruct": 0.4578
+        }
+      },
+      "qwen3_8b": {
+        "pooled_auroc": 0.6366,
+        "within_generator_weighted_mean": 0.6262,
+        "composition_gap": 0.0104,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.6291,
+          "gemini-2.5-flash": 0.6662,
+          "gpt-4o-mini": 0.6533,
+          "llama-3.1-8b-instruct": 0.5685
+        }
+      }
+    },
+    "correct_ft3v4": {
+      "cotonly": {
+        "pooled_auroc": 0.7689,
+        "within_generator_weighted_mean": 0.7331,
+        "composition_gap": 0.0358,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.833,
+          "gemini-2.5-flash": 0.5816,
+          "gpt-4o-mini": 0.7786,
+          "llama-3.1-8b-instruct": 0.7657
+        }
+      },
+      "gpt4o": {
+        "pooled_auroc": 0.7857,
+        "within_generator_weighted_mean": 0.7581,
+        "composition_gap": 0.0276,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.824,
+          "gemini-2.5-flash": 0.6103,
+          "gpt-4o-mini": 0.8279,
+          "llama-3.1-8b-instruct": 0.798
+        }
+      },
+      "gpt52": {
+        "pooled_auroc": 0.8299,
+        "within_generator_weighted_mean": 0.8166,
+        "composition_gap": 0.0134,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.8018,
+          "gemini-2.5-flash": 0.6608,
+          "gpt-4o-mini": 0.9272,
+          "llama-3.1-8b-instruct": 0.9165
+        }
+      },
+      "gpt52B": {
+        "pooled_auroc": 0.7967,
+        "within_generator_weighted_mean": 0.7718,
+        "composition_gap": 0.0249,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.7645,
+          "gemini-2.5-flash": 0.6079,
+          "gpt-4o-mini": 0.8692,
+          "llama-3.1-8b-instruct": 0.8901
+        }
+      },
+      "gpt52rep": {
+        "pooled_auroc": 0.8169,
+        "within_generator_weighted_mean": 0.8057,
+        "composition_gap": 0.0112,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.7754,
+          "gemini-2.5-flash": 0.6863,
+          "gpt-4o-mini": 0.8889,
+          "llama-3.1-8b-instruct": 0.9074
+        }
+      },
+      "mini": {
+        "pooled_auroc": 0.8304,
+        "within_generator_weighted_mean": 0.8049,
+        "composition_gap": 0.0255,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.8635,
+          "gemini-2.5-flash": 0.6756,
+          "gpt-4o-mini": 0.8832,
+          "llama-3.1-8b-instruct": 0.8177
+        }
+      },
+      "promptB": {
+        "pooled_auroc": 0.7855,
+        "within_generator_weighted_mean": 0.7464,
+        "composition_gap": 0.0391,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.8483,
+          "gemini-2.5-flash": 0.5865,
+          "gpt-4o-mini": 0.8319,
+          "llama-3.1-8b-instruct": 0.7399
+        }
+      },
+      "qonly": {
+        "pooled_auroc": 0.5518,
+        "within_generator_weighted_mean": 0.5587,
+        "composition_gap": -0.0069,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.5556,
+          "gemini-2.5-flash": 0.5548,
+          "gpt-4o-mini": 0.5821,
+          "llama-3.1-8b-instruct": 0.5393
+        }
+      },
+      "qwen3_8b": {
+        "pooled_auroc": 0.666,
+        "within_generator_weighted_mean": 0.656,
+        "composition_gap": 0.01,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.6598,
+          "gemini-2.5-flash": 0.5128,
+          "gpt-4o-mini": 0.7942,
+          "llama-3.1-8b-instruct": 0.6822
+        }
+      }
+    }
+  },
+  "E4_auroc": {
+    "blind_ft1v2": {
+      "cotonly": {
+        "self_generator": "gpt-4o-mini",
+        "auroc_own": 0.6403,
+        "auroc_other_mean": 0.6082,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      },
+      "mini": {
+        "self_generator": "gpt-4o-mini",
+        "auroc_own": 0.6571,
+        "auroc_other_mean": 0.6272,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      },
+      "promptB": {
+        "self_generator": "gpt-4o-mini",
+        "auroc_own": 0.6144,
+        "auroc_other_mean": 0.6101,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      },
+      "qonly": {
+        "self_generator": "gpt-4o-mini",
+        "auroc_own": 0.481,
+        "auroc_other_mean": 0.455,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      }
+    },
+    "correct_ft3v4": {
+      "cotonly": {
+        "self_generator": "gpt-4o-mini",
+        "auroc_own": 0.7786,
+        "auroc_other_mean": 0.7268,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      },
+      "mini": {
+        "self_generator": "gpt-4o-mini",
+        "auroc_own": 0.8832,
+        "auroc_other_mean": 0.7856,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      },
+      "promptB": {
+        "self_generator": "gpt-4o-mini",
+        "auroc_own": 0.8319,
+        "auroc_other_mean": 0.7249,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      },
+      "qonly": {
+        "self_generator": "gpt-4o-mini",
+        "auroc_own": 0.5821,
+        "auroc_other_mean": 0.5499,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      }
+    }
+  }
+}

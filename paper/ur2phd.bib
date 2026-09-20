@@ -159,11 +159,13 @@
   year    = {2026}
 }
 
-@article{arcuschin2025wild,
-  title   = {Chain-of-Thought Reasoning In The Wild Is Not Always Faithful},
-  author  = {Arcuschin, Iv{\'a}n and Janiak, Jett and Krzyzanowski, Robert and Rajamanoharan, Senthooran and Nanda, Neel and Conmy, Arthur},
-  journal = {arXiv preprint arXiv:2503.08679},
-  year    = {2025}
+@inproceedings{arcuschin2025wild,
+  title     = {Chain-of-Thought Reasoning In The Wild Is Not Always Faithful},
+  author    = {Arcuschin, Iv{\'a}n and Janiak, Jett and Krzyzanowski, Robert and Rajamanoharan, Senthooran and Nanda, Neel and Conmy, Arthur},
+  booktitle = {Proceedings of the 43rd International Conference on Machine Learning (ICML)},
+  year      = {2026},
+  url       = {https://openreview.net/forum?id=NUyt4uxzx0},
+  note      = {arXiv:2503.08679}
 }
 
 @article{offpolicy2025probes,
@@ -302,4 +304,158 @@
   author  = {He, Zhengfu and Shu, Wentao and Ge, Xuyang and Chen, Lingjie and Wang, Junxuan and Zhou, Yunhua and Liu, Frances and Guo, Qipeng and Huang, Xuanjing and Wu, Zuxuan and Jiang, Yu-Gang and Qiu, Xipeng},
   journal = {arXiv preprint arXiv:2410.20526},
   year    = {2024}
+}
+
+% ---------------------------------------------------------------------------
+% Stratified / covariate-adjusted evaluation, metric collapsibility, and
+% ranking instability under aggregation. Added 2026-09-19. Every entry below
+% was verified against a primary source (publisher page, Crossref, PubMed,
+% ACL Anthology or the arXiv record itself); see
+% notes/2026-09-19-citation-verification.md for the per-entry provenance and
+% for four corrections that changed what we may claim.
+% ---------------------------------------------------------------------------
+
+@article{ransohoff1978spectrum,
+  author  = {Ransohoff, David F. and Feinstein, Alvan R.},
+  title   = {Problems of Spectrum and Bias in Evaluating the Efficacy of Diagnostic Tests},
+  journal = {New England Journal of Medicine},
+  year    = {1978}, volume = {299}, number = {17}, pages = {926--930},
+  doi     = {10.1056/NEJM197810262991705}
+}
+
+@article{mulherin2002spectrum,
+  author  = {Mulherin, Stephanie A. and Miller, William C.},
+  title   = {Spectrum Bias or Spectrum Effect? {S}ubgroup Variation in Diagnostic Test Evaluation},
+  journal = {Annals of Internal Medicine},
+  year    = {2002}, volume = {137}, number = {7}, pages = {598--602},
+  doi     = {10.7326/0003-4819-137-7-200210010-00011}
+}
+
+@article{janes2009adjusting,
+  author  = {Janes, Holly and Pepe, Margaret S.},
+  title   = {Adjusting for covariate effects on classification accuracy using the covariate-adjusted receiver operating characteristic curve},
+  journal = {Biometrika},
+  year    = {2009}, volume = {96}, number = {2}, pages = {371--382},
+  doi     = {10.1093/biomet/asp002}
+}
+
+@article{tseng2021spectrum,
+  author  = {Tseng, Andrew S. and Shelly-Cohen, Michal and Attia, Itzhak Z. and Noseworthy, Peter A. and Friedman, Paul A. and Oh, Jae K. and Lopez-Jimenez, Francisco},
+  title   = {Spectrum bias in algorithms derived by artificial intelligence: a case study in detecting aortic stenosis using electrocardiograms},
+  journal = {European Heart Journal - Digital Health},
+  year    = {2021}, volume = {2}, number = {4}, pages = {561--567},
+  doi     = {10.1093/ehjdh/ztab061}
+}
+
+@inproceedings{kallus2019xauc,
+  author    = {Kallus, Nathan and Zhou, Angela},
+  title     = {The Fairness of Risk Scores Beyond Classification: Bipartite Ranking and the {xAUC} Metric},
+  booktitle = {Advances in Neural Information Processing Systems 32 (NeurIPS 2019)},
+  volume    = {32}, publisher = {Curran Associates, Inc.}, year = {2019},
+  note      = {arXiv:1902.05826},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2019/hash/73e0f7487b8e5297182c5a711d20bf26-Abstract.html}
+}
+
+@inproceedings{borkan2019nuanced,
+  author    = {Borkan, Daniel and Dixon, Lucas and Sorensen, Jeffrey and Thain, Nithum and Vasserman, Lucy},
+  title     = {Nuanced Metrics for Measuring Unintended Bias with Real Data for Text Classification},
+  booktitle = {Companion Proceedings of The 2019 World Wide Web Conference ({WWW} '19 Companion)},
+  pages     = {491--500}, publisher = {ACM}, year = {2019},
+  doi       = {10.1145/3308560.3317593}
+}
+
+@inproceedings{suresh2021framework,
+  author    = {Suresh, Harini and Guttag, John},
+  title     = {A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle},
+  booktitle = {Equity and Access in Algorithms, Mechanisms, and Optimization ({EAAMO} '21)},
+  pages     = {1--9}, publisher = {ACM}, year = {2021},
+  isbn      = {978-1-4503-8553-4}, doi = {10.1145/3465416.3483305}
+}
+
+@article{mishra2021difficulty,
+  author  = {Mishra, Swaroop and Arunkumar, Anjana},
+  title   = {How Robust are Model Rankings: A Leaderboard Customization Approach for Equitable Evaluation},
+  journal = {Proceedings of the {AAAI} Conference on Artificial Intelligence},
+  year    = {2021}, volume = {35}, number = {15}, pages = {13561--13569},
+  doi     = {10.1609/aaai.v35i15.17599}
+}
+
+@misc{prost2022simpson,
+  author       = {Prost, Flavien and Packer, Ben and Chen, Jilin and Wei, Li and Kremp, Pierre and Blumm, Nicholas and Wang, Susan and Doshi, Tulsee and Osadebe, Tonia and Heldt, Lukasz and Chi, Ed H. and Beutel, Alex},
+  title        = {Simpson's Paradox in Recommender Fairness: Reconciling Differences Between Per-User and Aggregated Evaluations},
+  year         = {2022}, eprint = {2210.07755}, archivePrefix = {arXiv}, primaryClass = {cs.IR},
+  doi          = {10.48550/arXiv.2210.07755},
+  note         = {Preprint; not peer reviewed}
+}
+
+@article{vanelteren1960,
+  author  = {{van Elteren}, P. H.},
+  title   = {On the Combination of Independent Two-Sample Tests of Wilcoxon},
+  journal = {Bulletin of the International Statistical Institute},
+  year    = {1960}, volume = {37}, pages = {351--361}
+}
+
+@inproceedings{deviyani2025local,
+  author    = {Deviyani, Athiya and Diaz, Fernando},
+  title     = {Contextual Metric Meta-Evaluation by Measuring Local Metric Accuracy},
+  booktitle = {Findings of the Association for Computational Linguistics: NAACL 2025},
+  year      = {2025}, month = apr, address = {Albuquerque, New Mexico},
+  publisher = {Association for Computational Linguistics},
+  pages     = {4921--4940},
+  doi       = {10.18653/v1/2025.findings-naacl.276},
+  url       = {https://aclanthology.org/2025.findings-naacl.276/}
+}
+
+@article{jadidinejad2021simpson,
+  author    = {Jadidinejad, Amir H. and Macdonald, Craig and Ounis, Iadh},
+  title     = {The {S}impson's Paradox in the Offline Evaluation of Recommendation Systems},
+  journal   = {ACM Transactions on Information Systems},
+  year      = {2021}, volume = {40}, number = {1}, articleno = {4}, numpages = {22},
+  publisher = {Association for Computing Machinery},
+  doi       = {10.1145/3458509}
+}
+
+@article{matos2026collapsibility,
+  author        = {Matos, Jo{\~a}o and Van Calster, Ben and Riley, Richard D. and Dhiman, Paula and Collins, Gary S.},
+  title         = {Collapsibility of Performance Metrics in Clinical Predictive {AI}},
+  journal       = {arXiv preprint arXiv:2608.30568},
+  year          = {2026}, eprint = {2608.30568}, archivePrefix = {arXiv}, primaryClass = {cs.LG},
+  doi           = {10.48550/arXiv.2608.30568},
+  note          = {Preprint}
+}
+
+@inproceedings{oakdenrayner2020hidden,
+  author    = {Oakden-Rayner, Luke and Dunnmon, Jared and Carneiro, Gustavo and R{\'e}, Christopher},
+  title     = {Hidden Stratification Causes Clinically Meaningful Failures in Machine Learning for Medical Imaging},
+  booktitle = {Proceedings of the ACM Conference on Health, Inference, and Learning (ACM CHIL '20)},
+  pages     = {151--159}, year = {2020}, address = {Toronto, ON, Canada},
+  publisher = {Association for Computing Machinery},
+  isbn      = {978-1-4503-7046-2}, doi = {10.1145/3368555.3384468}
+}
+
+@article{dehghani2021benchmark,
+  author        = {Dehghani, Mostafa and Tay, Yi and Gritsenko, Alexey A. and Zhao, Zhe and Houlsby, Neil and Diaz, Fernando and Metzler, Donald and Vinyals, Oriol},
+  title         = {The Benchmark Lottery},
+  journal       = {arXiv preprint arXiv:2107.07002},
+  year          = {2021}, eprint = {2107.07002}, archivePrefix = {arXiv}, primaryClass = {cs.LG},
+  doi           = {10.48550/arXiv.2107.07002},
+  note          = {Unrefereed preprint}
+}
+
+@article{stowe2026spotlights,
+  author        = {Stowe, Kevin and Patil, Kailash},
+  title         = {Spotlights and Blindspots: Evaluating Machine-Generated Text Detection},
+  journal       = {arXiv preprint arXiv:2604.16607},
+  year          = {2026}, eprint = {2604.16607}, archivePrefix = {arXiv}, primaryClass = {cs.CL},
+  doi           = {10.48550/arXiv.2604.16607},
+  note          = {Preprint, v2}
+}
+
+@inproceedings{han2026rfeval,
+  author    = {Han, Yunseok and Lee, Yejoon and Do, Jaeyoung},
+  title     = {{RFEval}: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models},
+  booktitle = {The Fourteenth International Conference on Learning Representations (ICLR)},
+  year      = {2026},
+  url       = {https://openreview.net/forum?id=2Gc8aj0afg},
+  note      = {Poster. arXiv:2602.17053}
 }

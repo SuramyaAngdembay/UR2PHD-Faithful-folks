@@ -1,0 +1,33 @@
+{
+  "script": {
+    "path": "/Users/suramya/Ur2Phd/scripts/audit_frontier_judge.py",
+    "sha256": "dbfa856d3c06645b04d5fd22f3974329b2a23339112118cf5c543a859990c1bd"
+  },
+  "inputs": [
+    {
+      "path": "/Users/suramya/Ur2Phd-review-2026-09-07/deep-research-2026-09-11/sources/faithcot-repo/faithcot.zip",
+      "sha256": "9ef674e33cae2654b2fe00ee2a00610f595eedb4ae649c4ed6a277b4a7eb6eba"
+    },
+    {
+      "path": "/Users/suramya/Ur2Phd/results/judge_raw_mini.jsonl",
+      "sha256": "f1aa9974d7b5487db1697b27ff0c4195106ddb92626bc40a1771921694aa3476"
+    },
+    {
+      "path": "/Users/suramya/Ur2Phd/results/judge_raw_gpt52.jsonl",
+      "sha256": "268bd6edb7df6492bca78fe009e6cd0d46e96ab4c01bfa04d86b4276aeca5031"
+    }
+  ],
+  "output": {
+    "path": "results.json",
+    "sha256": "d7f13c3e3ec33f7d3d3d530c595c3d69d9e39aa348019de347dc0ec65beb475b"
+  },
+  "numpy_version": "2.0.2",
+  "arguments": {
+    "archive": "/Users/suramya/Ur2Phd-review-2026-09-07/deep-research-2026-09-11/sources/faithcot-repo/faithcot.zip",
+    "mini": "results/judge_raw_mini.jsonl",
+    "gpt52": "results/judge_raw_gpt52.jsonl",
+    "out": "results/frontier_judge_audit/2026-09-19",
+    "draws": 5000,
+    "seed": 20260919
+  }
+}

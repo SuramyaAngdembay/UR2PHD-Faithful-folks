@@ -1,0 +1,853 @@
+{
+  "method": "percentile CI -> approximate z; triage only, see module docstring",
+  "script_sha256": "bef9e186b19448d0f37548d44a1e6910bb850850d9b7a5ed20fa439449ea448e",
+  "n_estimates_in_paper": 115,
+  "families": {
+    "bonafide_posthoc": {
+      "n_tests": 2,
+      "bonferroni_z_threshold": 2.241
+    },
+    "bonafide_prereg": {
+      "n_tests": 7,
+      "bonferroni_z_threshold": 2.69
+    },
+    "faithcot_regimes": {
+      "n_tests": 14,
+      "bonferroni_z_threshold": 2.914
+    },
+    "faithcot_table1": {
+      "n_tests": 10,
+      "bonferroni_z_threshold": 2.807
+    },
+    "judge_ablations": {
+      "n_tests": 7,
+      "bonferroni_z_threshold": 2.69
+    },
+    "regime_deltas": {
+      "n_tests": 3,
+      "bonferroni_z_threshold": 2.394
+    },
+    "transfer_grid": {
+      "n_tests": 8,
+      "bonferroni_z_threshold": 2.734
+    }
+  },
+  "claims": [
+    {
+      "family": "bonafide_prereg",
+      "claim": "judge AUROC inverted on BonaFide",
+      "estimate": 0.419,
+      "ci95": [
+        0.372,
+        0.464
+      ],
+      "null": 0.5,
+      "preregistered": true,
+      "z_approx": -3.451,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 7,
+      "note": "ABSTRACT headline"
+    },
+    {
+      "family": "bonafide_prereg",
+      "claim": "second judge prompt near chance",
+      "estimate": 0.482,
+      "ci95": [
+        0.437,
+        0.53
+      ],
+      "null": 0.5,
+      "preregistered": true,
+      "z_approx": -0.759,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 7,
+      "note": "null"
+    },
+    {
+      "family": "bonafide_prereg",
+      "claim": "gpt-4o judge far below chance",
+      "estimate": 0.27,
+      "ci95": [
+        0.231,
+        0.31
+      ],
+      "null": 0.5,
+      "preregistered": true,
+      "z_approx": -11.412,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": ""
+    },
+    {
+      "family": "bonafide_prereg",
+      "claim": "step count discriminates",
+      "estimate": 0.878,
+      "ci95": [
+        0.852,
+        0.902
+      ],
+      "null": 0.5,
+      "preregistered": true,
+      "z_approx": 29.635,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": "ABSTRACT headline"
+    },
+    {
+      "family": "bonafide_prereg",
+      "claim": "NLI unsupported-step count",
+      "estimate": 0.826,
+      "ci95": [
+        0.795,
+        0.855
+      ],
+      "null": 0.5,
+      "preregistered": true,
+      "z_approx": 21.298,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": ""
+    },
+    {
+      "family": "bonafide_prereg",
+      "claim": "answer-tracing below chance",
+      "estimate": 0.284,
+      "ci95": [
+        0.171,
+        0.401
+      ],
+      "null": 0.5,
+      "preregistered": true,
+      "z_approx": -3.681,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": "4-generator subset"
+    },
+    {
+      "family": "bonafide_prereg",
+      "claim": "prefix instability below chance",
+      "estimate": 0.172,
+      "ci95": [
+        0.101,
+        0.265
+      ],
+      "null": 0.5,
+      "preregistered": true,
+      "z_approx": -7.84,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": "4-generator subset"
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "answer incorrectness (oracle)",
+      "estimate": 0.696,
+      "ci95": [
+        0.662,
+        0.734
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 10.671,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 10,
+      "note": ""
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "answer-tracing (inverted)",
+      "estimate": 0.651,
+      "ci95": [
+        0.611,
+        0.695
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 7.047,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 10,
+      "note": ""
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "prefix instability (inverted)",
+      "estimate": 0.626,
+      "ci95": [
+        0.583,
+        0.67
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 5.677,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 10,
+      "note": ""
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "NLI unsupported steps",
+      "estimate": 0.569,
+      "ci95": [
+        0.523,
+        0.615
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 2.94,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 10,
+      "note": ""
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "NLI mean entailment",
+      "estimate": 0.493,
+      "ci95": [
+        0.447,
+        0.538
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -0.302,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 10,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "trace length",
+      "estimate": 0.575,
+      "ci95": [
+        0.527,
+        0.618
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 3.231,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 10,
+      "note": ""
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "DAG linearity",
+      "estimate": 0.53,
+      "ci95": [
+        0.483,
+        0.577
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 1.251,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 10,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "DAG max lookback",
+      "estimate": 0.543,
+      "ci95": [
+        0.496,
+        0.588
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 1.832,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 10,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "prompted judge",
+      "estimate": 0.782,
+      "ci95": [
+        0.756,
+        0.808
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 21.258,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 10,
+      "note": ""
+    },
+    {
+      "family": "faithcot_table1",
+      "claim": "soft_faithfulness intended dir",
+      "estimate": 0.349,
+      "ci95": [
+        0.305,
+        0.389
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -7.047,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 10,
+      "note": "ABSTRACT headline (inversion)"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "judge, blind regime",
+      "estimate": 0.679,
+      "ci95": [
+        0.633,
+        0.721
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 7.973,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 14,
+      "note": "ABSTRACT headline"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "judge, correct regime",
+      "estimate": 0.83,
+      "ci95": [
+        0.786,
+        0.872
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 15.042,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 14,
+      "note": "ABSTRACT headline"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "answer-tracing, correct",
+      "estimate": 0.667,
+      "ci95": [
+        0.592,
+        0.736
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 4.546,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 14,
+      "note": ""
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "prefix instability, correct",
+      "estimate": 0.659,
+      "ci95": [
+        0.588,
+        0.73
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 4.389,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 14,
+      "note": ""
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "NLI, correct",
+      "estimate": 0.626,
+      "ci95": [
+        0.556,
+        0.696
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 3.528,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 14,
+      "note": ""
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "trace length, correct",
+      "estimate": 0.622,
+      "ci95": [
+        0.552,
+        0.691
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 3.441,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 14,
+      "note": ""
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "DAG max lookback, correct",
+      "estimate": 0.562,
+      "ci95": [
+        0.491,
+        0.634
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 1.7,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 14,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "DAG linearity, correct",
+      "estimate": 0.535,
+      "ci95": [
+        0.462,
+        0.609
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 0.933,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 14,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "answer-tracing, blind",
+      "estimate": 0.53,
+      "ci95": [
+        0.462,
+        0.598
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 0.865,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 14,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "prefix instability, blind",
+      "estimate": 0.481,
+      "ci95": [
+        0.408,
+        0.549
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -0.528,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 14,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "NLI, blind",
+      "estimate": 0.541,
+      "ci95": [
+        0.476,
+        0.608
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 1.218,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 14,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "DAG, blind",
+      "estimate": 0.493,
+      "ci95": [
+        0.424,
+        0.561
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -0.2,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 14,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "soft, blind (uninformative)",
+      "estimate": 0.47,
+      "ci95": [
+        0.402,
+        0.538
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -0.865,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 14,
+      "note": "null"
+    },
+    {
+      "family": "faithcot_regimes",
+      "claim": "soft, correct (inverted)",
+      "estimate": 0.333,
+      "ci95": [
+        0.264,
+        0.408
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -4.546,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 14,
+      "note": ""
+    },
+    {
+      "family": "regime_deltas",
+      "claim": "judge regime gap",
+      "estimate": 0.152,
+      "ci95": [
+        0.089,
+        0.211
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 4.884,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 3,
+      "note": "ABSTRACT headline"
+    },
+    {
+      "family": "regime_deltas",
+      "claim": "answer-tracing regime gap",
+      "estimate": 0.136,
+      "ci95": [
+        0.035,
+        0.235
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 2.666,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 3,
+      "note": ""
+    },
+    {
+      "family": "regime_deltas",
+      "claim": "prefix instability regime gap",
+      "estimate": 0.178,
+      "ci95": [
+        0.078,
+        0.279
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 3.471,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 3,
+      "note": ""
+    },
+    {
+      "family": "transfer_grid",
+      "claim": "Llama math-sycophancy transfer",
+      "estimate": 0.185,
+      "ci95": [
+        0.081,
+        0.289
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 3.486,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 8,
+      "note": "the one positive cell"
+    },
+    {
+      "family": "transfer_grid",
+      "claim": "Llama math-metadata",
+      "estimate": 0.02,
+      "ci95": [
+        -0.045,
+        0.084
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 0.608,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 8,
+      "note": "null"
+    },
+    {
+      "family": "transfer_grid",
+      "claim": "Llama LogiQA",
+      "estimate": 0.038,
+      "ci95": [
+        -0.055,
+        0.133
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 0.792,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 8,
+      "note": "null"
+    },
+    {
+      "family": "transfer_grid",
+      "claim": "Llama TruthfulQA",
+      "estimate": 0.021,
+      "ci95": [
+        -0.048,
+        0.09
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 0.597,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 8,
+      "note": "null"
+    },
+    {
+      "family": "transfer_grid",
+      "claim": "Qwen math-sycophancy",
+      "estimate": -0.031,
+      "ci95": [
+        -0.103,
+        0.042
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": -0.838,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 8,
+      "note": "null"
+    },
+    {
+      "family": "transfer_grid",
+      "claim": "Qwen math-metadata",
+      "estimate": -0.002,
+      "ci95": [
+        -0.085,
+        0.082
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": -0.047,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 8,
+      "note": "null"
+    },
+    {
+      "family": "transfer_grid",
+      "claim": "Qwen LogiQA",
+      "estimate": 0.038,
+      "ci95": [
+        -0.019,
+        0.095
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 1.307,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 8,
+      "note": "null"
+    },
+    {
+      "family": "transfer_grid",
+      "claim": "Qwen TruthfulQA",
+      "estimate": 0.009,
+      "ci95": [
+        -0.052,
+        0.069
+      ],
+      "null": 0.0,
+      "preregistered": false,
+      "z_approx": 0.292,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 8,
+      "note": "null"
+    },
+    {
+      "family": "judge_ablations",
+      "claim": "question-only, full",
+      "estimate": 0.487,
+      "ci95": [
+        0.456,
+        0.519
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -0.809,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 7,
+      "note": "null (intended)"
+    },
+    {
+      "family": "judge_ablations",
+      "claim": "question-only, blind",
+      "estimate": 0.467,
+      "ci95": [
+        0.421,
+        0.512
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -1.422,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 7,
+      "note": "null (intended)"
+    },
+    {
+      "family": "judge_ablations",
+      "claim": "question-only, correct",
+      "estimate": 0.552,
+      "ci95": [
+        0.503,
+        0.6
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 2.101,
+      "survives_own_family_bonferroni": false,
+      "survives_whole_paper_bonferroni": false,
+      "family_size": 7,
+      "note": "grazes 0.5"
+    },
+    {
+      "family": "judge_ablations",
+      "claim": "CoT-only, full",
+      "estimate": 0.693,
+      "ci95": [
+        0.662,
+        0.725
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 12.009,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": ""
+    },
+    {
+      "family": "judge_ablations",
+      "claim": "CoT-only, blind",
+      "estimate": 0.661,
+      "ci95": [
+        0.614,
+        0.704
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 7.012,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": ""
+    },
+    {
+      "family": "judge_ablations",
+      "claim": "CoT-only, correct",
+      "estimate": 0.769,
+      "ci95": [
+        0.72,
+        0.817
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 10.871,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": ""
+    },
+    {
+      "family": "judge_ablations",
+      "claim": "CoT-only vs incorrectness",
+      "estimate": 0.56,
+      "ci95": [
+        0.53,
+        0.59
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 3.92,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 7,
+      "note": ""
+    },
+    {
+      "family": "bonafide_posthoc",
+      "claim": "judge inversion, instruct-only",
+      "estimate": 0.332,
+      "ci95": [
+        0.285,
+        0.381
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": -6.86,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 2,
+      "note": "ABSTRACT headline, POST-HOC"
+    },
+    {
+      "family": "bonafide_posthoc",
+      "claim": "NLI under strictest conditioning",
+      "estimate": 0.603,
+      "ci95": [
+        0.57,
+        0.638
+      ],
+      "null": 0.5,
+      "preregistered": false,
+      "z_approx": 5.938,
+      "survives_own_family_bonferroni": true,
+      "survives_whole_paper_bonferroni": true,
+      "family_size": 2,
+      "note": "1.4% of pairs"
+    }
+  ]
+}

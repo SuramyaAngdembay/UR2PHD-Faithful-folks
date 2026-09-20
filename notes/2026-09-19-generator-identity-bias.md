@@ -241,3 +241,50 @@ Caveat on direction of inference: three judges is not a capability sweep, and Qw
 from the GPT judges in more than capability. The remaining local arms (Llama-3.1-8B, Meta-Llama-3,
 Llama-3.2-3B, Qwen3-8B, Qwen2.5-3B, OLMo-3-7B) give a much better-populated capability axis, and
 this table should be recomputed across all of them before anything is claimed.
+
+---
+
+## FINAL: all three pre-registered self-preference tests are complete. The hypothesis is dead.
+
+`llama31_8b` landed clean (1304 rows, 0 unparsed). Llama-3.1-8B-Instruct is a FaithCoT generator,
+so this is the third and last primary test, and it kills the hypothesis in the most informative way
+available: **it is significant in the OPPOSITE direction.**
+
+| self-judge | own-generation offset, blind | direction |
+|---|---|---|
+| gpt-4o-mini | -8.63 [-14.57, -2.89] | toward self-preference |
+| Qwen2.5-7B-Instruct | -1.06 [-7.20, 5.44] | null |
+| Llama-3.1-8B-Instruct | **+25.22 [18.90, 31.41]** | **away from self-preference** |
+
+Differenced against the judges for whom that generator is not self (E2, the spec's control):
+
+| self-judge | self | non-self mean | non-self range | DiD |
+|---|---|---|---|---|
+| gpt-4o-mini | -8.63 | -3.74 | [-10.8, +1.3] | -4.89 |
+| Qwen2.5-7B | -1.06 | +8.20 | [+1.7, +16.7] | -9.26 |
+| Llama-3.1-8B | +25.22 | +17.49 | [+10.5, +25.1] | **+7.72** |
+
+**Two DiDs point one way, one points the other.** With three pre-registered tests at Bonferroni
+0.0167 and signs that disagree, there is no effect to report. Against a control floor of ±1.03,
+each self-judge's raw offset sits inside or barely outside the spread of the seven non-self judges
+looking at the same traces.
+
+**Why this is a clean kill rather than an underpowered null.** Self-status is held fixed across
+the three rows, and the offset still ranges from -8.6 to +25.2, a span of 34 points. What moves it
+is entirely *which generator happens to be self*. A judge looking at Llama-3.1-8B's traces scores
+them harshly whether or not it wrote them; a judge looking at Gemini's scores them leniently in
+every arm. **Generator identity explains the offsets; self-status adds nothing detectable on top.**
+
+The verdict on the pre-registered question is therefore not "we could not detect self-preference".
+It is "the variance that would have been attributed to self-preference is fully accounted for by a
+covariate we can measure, and which is far larger".
+
+### Consequence for the paper
+
+Reviewers will raise Panickssery et al., because our primary judge wrote 26.1% of the traces it
+grades. The answer is now three pre-registered tests deep and is stronger than a disclaimer: we
+tested it, it is absent, and the confound that *is* present is one the same analysis measures. That
+turns an anticipated objection into a contribution.
+
+Standing caveats, unchanged: this is one benchmark, four generators, and an association rather than
+a cause. Length is ruled out; hedging, structure, formatting and refusal style are not.

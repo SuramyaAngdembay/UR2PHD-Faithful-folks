@@ -288,3 +288,83 @@ turns an anticipated objection into a contribution.
 
 Standing caveats, unchanged: this is one benchmark, four generators, and an association rather than
 a cause. Length is ruled out; hedging, structure, formatting and refusal style are not.
+
+---
+
+## Update (2026-09-20): nine distinct judge models. Unanimity claim CORRECTED and narrowed.
+
+All 26 overnight arms complete. The generator-identity effect now has nine distinct judge models
+across three vendors, API and 4-bit local, plus seed replicates.
+
+### Correction to an earlier claim in this note
+
+Earlier, on eight arms that were mostly OpenAI prompt variants, I wrote that all judges "rank
+gemini lowest and gpt-4o-mini second-lowest, unanimously". **With nine distinct judge models that
+is no longer exactly true and is corrected here.**
+
+Per-generator deviation from the matched question-and-label mean, blind regime:
+
+| judge | gemini-2.5-flash | gpt-4o-mini | Qwen2.5-7B | llama-3.1-8b |
+|---|---|---|---|---|
+| gpt-4o-mini | -11.7 | -4.7 | +2.2 | +12.2 |
+| gpt-4o | -16.3 | -2.9 | +6.8 | +8.9 |
+| gpt-5.2 | -20.3 | -1.5 | +8.8 | +8.3 |
+| Qwen2.5-7B-Instruct | -10.5 | -1.7 | -1.1 | +11.6 |
+| Qwen3-8B | -9.1 | -3.6 | +0.8 | +10.4 |
+| Llama-3.1-8B-Instruct | -12.8 | -5.6 | +1.7 | +14.7 |
+| Meta-Llama-3-8B-Instruct | -7.6 | +0.2 | +0.7 | +5.2 |
+| Llama-3.2-3B-Instruct | -6.6 | -1.4 | +4.7 | +1.8 |
+| Olmo-3-7B-Instruct | -2.0 | -4.4 | +2.6 | +3.7 |
+| **question-only control** | **-0.4** | **-0.5** | **+0.3** | **+0.5** |
+
+- **Gemini lowest: 8 of 9**, not 9 of 9. The dissenter is Olmo-3-7B, the only judge near chance in
+  both regimes, which puts gpt-4o-mini marginally lower (-4.4 against -2.0).
+- **llama-3.1-8b highest: 7 of 9.** gpt-5.2 puts Qwen2.5-7B marginally higher (+8.8 against +8.3)
+  and Llama-3.2-3B does so more clearly (+4.7 against +1.8).
+
+### What IS unanimous, and it is the claim to make
+
+**The two-group partition holds for all nine judges without exception.** Gemini-2.5-flash and
+gpt-4o-mini traces are always scored more faithful than Qwen2.5-7B and llama-3.1-8b traces, on the
+same questions with the same human label. No judge crosses a trace between the groups.
+
+That is weaker than a total order and stronger than "most judges agree". It is also the version
+that survives the noise: the within-pair differences that break the fine-grained ordering are 0.5
+to 3 points, at or below the run-to-run noise, while the between-group gaps are 6 to 29 points.
+
+### The effect scales with judge capability
+
+Generator spread, blind regime, tracks judge strength the same way correct-regime AUROC does:
+
+| judge | generator spread | label effect |
+|---|---|---|
+| gpt-5.2 | 29.1 | 8.0 |
+| Llama-3.1-8B | 27.5 | 12.3 |
+| gpt-4o | 25.2 | 19.7 |
+| Qwen2.5-7B | 22.0 | 8.3 |
+| Qwen3-8B | 19.5 | 16.1 |
+| Meta-Llama-3-8B | 12.8 | 4.8 |
+| Llama-3.2-3B | 11.3 | 7.6 |
+| Olmo-3-7B | ~8 | low |
+
+A weaker judge shows less of everything, which is what a near-chance scorer must do. **So the
+generator effect is not a failure mode of weak judges. It is largest in the strongest judge
+tested.** gpt-5.2 has the biggest generator spread of any arm and one of the smallest label
+effects, giving it the worst ratio in the set.
+
+**Every real judge has a generator spread exceeding its label effect**, ratios 1.06 to 5.90, and
+the seed replicates reproduce each model's value within its own noise. The question-only control
+stays at 1.1.
+
+### Determinism cross-check
+
+`qwen3_8b` and `qwen3_8b_greedy2` return byte-identical values on every quantity here: spread 19.5,
+label 16.1, ratio 1.21. That is a second confirmation of exact greedy reproducibility, arriving
+through a completely different analysis path.
+
+### Method fix applied
+
+`generator_identity_effect.py` filtered arms by an absolute count of 1300 scored rows, which
+silently dropped Olmo-3-7B for having five unparsed items out of 1304. Replaced with a 0.95 parse
+**rate** and an explicit skip message. The real exclusion criterion is heavy, non-random
+missingness, which is the Qwen2.5-3B base-model case, not five stray rows.

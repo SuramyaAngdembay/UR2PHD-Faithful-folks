@@ -76,11 +76,16 @@ BOOT = [rng_master.integers(0, len(QS), len(QS)) for _ in range(B)]   # shared d
 print(f"{'judge':10s} {'label effect':>22s} {'generator spread':>22s} {'ratio':>18s}")
 for f in sorted(RES.glob('judge_raw_*.jsonl')):
     tag = f.stem.replace('judge_raw_', '')
-    sc = {}
+    sc = {}; n_rows = 0
     for line in f.open():
-        d = json.loads(line)
+        d = json.loads(line); n_rows += 1
         if d.get('score') is not None: sc[d['rid']] = float(d['score'])
-    if len(sc) < 1300: continue
+    # Parse RATE, not an absolute count: an absolute 1300 threshold silently dropped
+    # Olmo-3-7B (1299 scored of 1304) for five unparsed rows, which is not a reason to exclude it.
+    # The real exclusion criterion is heavy, non-random missingness -- see the Qwen2.5-3B base arms.
+    if len(sc) / max(n_rows, 1) < 0.95: 
+        print(f'  skipping {tag}: parse rate {len(sc)/max(n_rows,1):.3f}')
+        continue
     lab, dev = per_question(sc, QS)
     base = stats(QS, lab, dev)
     if base is None: continue

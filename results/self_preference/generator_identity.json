@@ -1,0 +1,223 @@
+{
+  "endpoint": "E5 (EXPLORATORY -- not pre-registered; see spec amendment note)",
+  "regime": "blind_ft1v2",
+  "script_sha256": "6e4b7778b7c808b311d88b41e45fd34739c57d12f26b0d069f8782861b0f323e",
+  "judges": {
+    "cotonly": {
+      "label_effect": 15.446,
+      "label_effect_ci95": [
+        9.98,
+        21.04
+      ],
+      "generator_spread": 26.386,
+      "generator_spread_ci95": [
+        20.43,
+        32.22
+      ],
+      "ratio": 1.708,
+      "ratio_ci95": [
+        1.13,
+        2.81
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -12.989,
+        "gpt-4o-mini": -2.886,
+        "Qwen2.5-7B-Instruct": 0.303,
+        "llama-3.1-8b-instruct": 13.397
+      },
+      "n_questions_label": 86
+    },
+    "gpt4o": {
+      "label_effect": 19.729,
+      "label_effect_ci95": [
+        11.38,
+        28.1
+      ],
+      "generator_spread": 25.228,
+      "generator_spread_ci95": [
+        19.47,
+        33.19
+      ],
+      "ratio": 1.279,
+      "ratio_ci95": [
+        0.83,
+        2.44
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -16.316,
+        "gpt-4o-mini": -2.934,
+        "Qwen2.5-7B-Instruct": 6.781,
+        "llama-3.1-8b-instruct": 8.912
+      },
+      "n_questions_label": 86
+    },
+    "gpt52": {
+      "label_effect": 8.047,
+      "label_effect_ci95": [
+        0.72,
+        15.51
+      ],
+      "generator_spread": 29.065,
+      "generator_spread_ci95": [
+        24.11,
+        36.11
+      ],
+      "ratio": 3.612,
+      "ratio_ci95": [
+        1.59,
+        20.49
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -20.262,
+        "gpt-4o-mini": -1.536,
+        "llama-3.1-8b-instruct": 8.309,
+        "Qwen2.5-7B-Instruct": 8.803
+      },
+      "n_questions_label": 86
+    },
+    "gpt52B": {
+      "label_effect": 9.025,
+      "label_effect_ci95": [
+        1.7,
+        16.19
+      ],
+      "generator_spread": 29.887,
+      "generator_spread_ci95": [
+        24.6,
+        36.56
+      ],
+      "ratio": 3.311,
+      "ratio_ci95": [
+        1.69,
+        12.49
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -21.611,
+        "gpt-4o-mini": 0.888,
+        "llama-3.1-8b-instruct": 7.312,
+        "Qwen2.5-7B-Instruct": 8.275
+      },
+      "n_questions_label": 86
+    },
+    "gpt52rep": {
+      "label_effect": 5.378,
+      "label_effect_ci95": [
+        -2.36,
+        12.84
+      ],
+      "generator_spread": 31.748,
+      "generator_spread_ci95": [
+        25.41,
+        38.48
+      ],
+      "ratio": 5.903,
+      "ratio_ci95": [
+        -43.36,
+        66.5
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -21.83,
+        "gpt-4o-mini": 0.27,
+        "llama-3.1-8b-instruct": 6.336,
+        "Qwen2.5-7B-Instruct": 9.918
+      },
+      "n_questions_label": 86
+    },
+    "mini": {
+      "label_effect": 15.184,
+      "label_effect_ci95": [
+        9.7,
+        20.65
+      ],
+      "generator_spread": 23.925,
+      "generator_spread_ci95": [
+        19.11,
+        29.11
+      ],
+      "ratio": 1.576,
+      "ratio_ci95": [
+        1.07,
+        2.52
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -11.739,
+        "gpt-4o-mini": -4.663,
+        "Qwen2.5-7B-Instruct": 2.237,
+        "llama-3.1-8b-instruct": 12.186
+      },
+      "n_questions_label": 86
+    },
+    "promptB": {
+      "label_effect": 17.752,
+      "label_effect_ci95": [
+        10.84,
+        24.7
+      ],
+      "generator_spread": 28.742,
+      "generator_spread_ci95": [
+        22.93,
+        34.85
+      ],
+      "ratio": 1.619,
+      "ratio_ci95": [
+        1.06,
+        2.84
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -13.684,
+        "gpt-4o-mini": -5.408,
+        "Qwen2.5-7B-Instruct": 1.816,
+        "llama-3.1-8b-instruct": 15.059
+      },
+      "n_questions_label": 86
+    },
+    "qonly": {
+      "label_effect": -1.066,
+      "label_effect_ci95": [
+        -3.69,
+        1.39
+      ],
+      "generator_spread": 1.052,
+      "generator_spread_ci95": [
+        0.75,
+        5.34
+      ],
+      "ratio": -0.987,
+      "ratio_ci95": [
+        -21.82,
+        24.06
+      ],
+      "per_generator_deviation": {
+        "gpt-4o-mini": -0.532,
+        "gemini-2.5-flash": -0.386,
+        "Qwen2.5-7B-Instruct": 0.342,
+        "llama-3.1-8b-instruct": 0.52
+      },
+      "n_questions_label": 86
+    },
+    "qwen3_8b": {
+      "label_effect": 16.095,
+      "label_effect_ci95": [
+        7.77,
+        24.61
+      ],
+      "generator_spread": 19.53,
+      "generator_spread_ci95": [
+        12.41,
+        26.84
+      ],
+      "ratio": 1.213,
+      "ratio_ci95": [
+        0.66,
+        2.59
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -9.118,
+        "gpt-4o-mini": -3.555,
+        "Qwen2.5-7B-Instruct": 0.825,
+        "llama-3.1-8b-instruct": 10.412
+      },
+      "n_questions_label": 86
+    }
+  }
+}

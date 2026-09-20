@@ -1,6 +1,6 @@
 # Current research state
 
-Updated September 19, 2026. Research driver: Codex, following the user's explicit
+Updated September 20, 2026. Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
@@ -156,6 +156,59 @@ Earlier audit entries below are historical where superseded by that executed
 repair. The prior containment/F1 labels and saved regime JSON stay preserved,
 but are not the current correctness-stratified analysis. Reserved exposure is
 204/807 responses across 156 questions (397 responses sharing those questions).
+
+## Judge-identity campaign and multiplicity ledger (September 19-20)
+
+Local open-weight judge arms on Aquaman, same prompt A and same 1,304 traces as the
+API judges. Six complete: Qwen3-8B, Qwen2.5-3B, OLMo-3-7B (5 unparsed), Qwen2.5-7B,
+Llama-3.1-8B, Meta-Llama-3-8B. Llama-3.2-3B running; roughly twenty seed arms queued.
+Four queue scripts had deadlocked on a `pgrep -f judge_local.py` wait that also matches
+the wrappers holding that text as unexpanded heredoc; replaced by one sequential
+idempotent runner, `scripts/run_all_arms.sh`.
+
+Judge self-preference (Panickssery) is settled and the audit's earlier clean verdict on
+it was wrong, having been argued from BonaFide family non-overlap and never checked on
+FaithCoT, where gpt-4o-mini is both our primary judge and the author of 26.1% of the
+traces. Three pre-registered tests, spec frozen before any per-generator quantity was
+computed: gpt-4o-mini -8.63 [-14.57,-2.89], Qwen2.5-7B -1.06 [-7.20,5.44], Llama-3.1-8B
++25.22 [18.90,31.41]. Signs disagree, difference-in-differences are -4.89, -9.26, +7.72,
+and self-status held fixed still spans 34 points. No self-preference effect.
+
+What is there instead is generator identity. Holding question and human faithfulness
+label fixed, judges score traces 19.5 to 31.7 points apart by which model wrote them,
+against a faithfulness-label effect of 5.4 to 19.7 and a question-only control floor of
+1.1. All nine judges rank Gemini most faithful and Llama-3.1-8B least, unanimously.
+Length explains 8 to 16%. The ratio interval excludes one for six of nine judges.
+Exploratory; not pre-registered; discovered through the self-preference falsification
+test. See `notes/2026-09-19-generator-identity-bias.md` and `self-preference-spec.md`.
+
+The headline regime gap survives stratification by generator and pooling understates it:
+three of four generators show roughly +0.22 against the pooled +0.152, independently
+reproduced at +0.152 [0.089,0.215]. Two heterogeneities. Gemini traces show no regime
+structure under three judges, but that cell has 18 correct-regime positives and is
+barred from claims by the spec's power ruling. More consequentially the gap needs a
+capable judge: Qwen2.5-7B shows +0.002 [-0.068,0.074] pooled, with blind 0.637 against
+GPT's 0.653-0.679 but correct 0.639 against GPT's 0.830. Blind performance is flat in
+capability; capability buys the correct regime only. Recompute across all arms before
+claiming.
+
+Multiplicity ledger built, discharging action 3 of the p-hacking audit. 83 distinct
+inferential claims, about 115 interval-bearing estimates, 7 pre-registered, 73 with no
+pre-registration statement. Every abstract headline clears a whole-paper Bonferroni over
+all 115 except the BonaFide judge inversion at z -3.45 against 3.52, which is the only
+pre-registered headline and clears its own 7-test family at 2.69. Nulls are all
+comfortably null. Nothing needs withdrawing; name the correction families in the paper
+and keep the BonaFide pre-registration beside its number. Method is percentile-interval
+to z, triage not re-analysis. See `notes/2026-09-19-multiplicity-ledger.md`.
+
+Citations: 17 added after primary-source verification, `arcuschin2025wild` corrected to
+ICML 2026 main conference (the widely-cited ICLR 2025 is a workshop paper), RFEval given
+its first bib entry. Four claims narrowed: Matos supports F1 decomposition but labels it
+model-dependent rather than strictly collapsible and separately proves AUC
+non-collapsible; Oakden-Rayner is CXR14 not CheXpert and CHIL 2020 not the arXiv
+abstract; our Mulherin and Miller quote is truncated mid-sentence and the stratified-ROC
+attribution is unverifiable behind a paywall; Kallus and Zhou state but do not separately
+prove the double-sum form. See `notes/2026-09-19-citation-verification.md`.
 
 ## Controlled verification experiment: frozen and launched (September 14, ~20:30 UTC)
 

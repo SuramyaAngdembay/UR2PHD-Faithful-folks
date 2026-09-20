@@ -368,3 +368,62 @@ through a completely different analysis path.
 silently dropped Olmo-3-7B for having five unparsed items out of 1304. Replaced with a 0.95 parse
 **rate** and an explicit skip message. The real exclusion criterion is heavy, non-random
 missingness, which is the Qwen2.5-3B base-model case, not five stray rows.
+
+---
+
+## LIMITING RESULT (2026-09-20): the generator effect does NOT change detector rankings
+
+The actionable worry raised in the "Why it matters" section above was this: if judge scores carry a
+20-to-30-point generator-identity offset while the faithfulness signal is 5 to 20 points, then a
+pooled leaderboard is partly ranking generator style. **That inference was tested and it does not
+hold on our data. The section above overstates the consequence and is corrected here.**
+
+Eighteen detectors (nine judges, nine metric signals) on the 633 complete-feature rows scored by
+every judge. Pooled AUROC against the size-weighted mean of within-generator AUROCs, and the two
+induced rankings compared:
+
+| regime | Spearman(pooled rank, within rank) | pairwise inversions |
+|---|---|---|
+| blind (ft1v2), n=270 | **0.9897** | 4 of 153 (2.6%) |
+| correct (ft3v4), n=363 | **0.9835** | 4 of 153 (2.6%) |
+
+Composition gaps per detector are small and, more importantly, **similar across detectors**: mostly
+±0.001 to 0.016 in the blind regime and within ±0.014 in the correct regime, against generator
+score offsets of 20 to 30 points. No detector in the blind regime moves more than 2 rank positions.
+
+### Why the large score effect is nearly inert on rankings
+
+AUROC is rank-based within the evaluated set, and a generator offset shifts **all** of that
+generator's traces together, faithful and unfaithful alike. It therefore degrades cross-generator
+pairs symmetrically rather than favouring any particular detector. The effect is large in score
+space and close to neutral in ranking space, and those are different spaces.
+
+This is the same structural point the spec made at the outset about AUROC being invariant to a
+constant offset. It applied to the self-preference endpoint then; it applies to the leaderboard
+consequence now. **We should have predicted this and did not** — the "Why it matters" paragraph was
+written before the test.
+
+### The one exception worth recording
+
+**Judge Qwen2.5-7B moves 3 rank positions in the correct regime**, pooled 0.608 against
+within-generator 0.650, a gap of -0.041 and the largest single shift in either table. Pooling
+*understates* that judge. It is one detector of eighteen, and it is the self-judge cell, which is
+worth keeping in mind though the self-preference study found nothing.
+
+### What the generator finding is now, stated at its correct scope
+
+**Survives:** judge scores carry a large, systematic, cross-vendor generator-identity offset.
+Holding question and human label fixed, traces are scored 19.5 to 31.7 points apart by author
+model, against a 1.1-point control floor. The two-group partition is unanimous across nine judges.
+The effect is largest in the strongest judge tested. This is a real property of LLM-judge scores
+and a caution for anyone who interprets an individual judge score as a faithfulness measurement.
+
+**Does not survive:** any claim that this destabilises benchmark detector rankings, or that
+published leaderboards are ranking generator style. On our data the ranking is near-perfectly
+preserved under generator stratification.
+
+**Consequence for the paper.** This is a scoping result, not a headline, and it should be written
+as one. It belongs beside the run-to-run noise finding as a measurement caution about judge scores,
+not in the composition argument, where the correctness covariate does the work and generator
+identity demonstrably does not. Reporting it honestly also pre-empts a reviewer who notices the
+generator effect and assumes we ignored its consequences: we measured them, and they are small.

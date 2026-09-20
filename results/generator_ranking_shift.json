@@ -1,0 +1,274 @@
+{
+  "script_sha256": "dd76295ef8dc2e13dc4b95694c4f5b9e746db5605f4100888ea8b028c769e7e3",
+  "n_rows": 633,
+  "regimes": {
+    "blind_ft1v2": {
+      "n": 270,
+      "spearman_rank_corr": 0.9897,
+      "pairwise_inversions": 4,
+      "pairs": 153,
+      "detectors": {
+        "soft": {
+          "pooled": 0.4696,
+          "within_generator_weighted": 0.4757,
+          "composition_gap": -0.0062,
+          "rank_pooled": 18,
+          "rank_within": 18
+        },
+        "hard": {
+          "pooled": 0.4862,
+          "within_generator_weighted": 0.4865,
+          "composition_gap": -0.0003,
+          "rank_pooled": 15,
+          "rank_within": 15
+        },
+        "avg_impact": {
+          "pooled": 0.4811,
+          "within_generator_weighted": 0.4766,
+          "composition_gap": 0.0045,
+          "rank_pooled": 16,
+          "rank_within": 17
+        },
+        "dag_lin": {
+          "pooled": 0.5299,
+          "within_generator_weighted": 0.5352,
+          "composition_gap": -0.0053,
+          "rank_pooled": 12,
+          "rank_within": 12
+        },
+        "dag_maxlb": {
+          "pooled": 0.4932,
+          "within_generator_weighted": 0.4914,
+          "composition_gap": 0.0018,
+          "rank_pooled": 14,
+          "rank_within": 14
+        },
+        "nli_n_unsup": {
+          "pooled": 0.5405,
+          "within_generator_weighted": 0.5354,
+          "composition_gap": 0.0051,
+          "rank_pooled": 11,
+          "rank_within": 11
+        },
+        "nli_min_ent": {
+          "pooled": 0.5682,
+          "within_generator_weighted": 0.5662,
+          "composition_gap": 0.002,
+          "rank_pooled": 8,
+          "rank_within": 9
+        },
+        "nli_mean_ent": {
+          "pooled": 0.5181,
+          "within_generator_weighted": 0.524,
+          "composition_gap": -0.0059,
+          "rank_pooled": 13,
+          "rank_within": 13
+        },
+        "n_steps": {
+          "pooled": 0.5467,
+          "within_generator_weighted": 0.5426,
+          "composition_gap": 0.0041,
+          "rank_pooled": 10,
+          "rank_within": 10
+        },
+        "judge gpt-4o-mini": {
+          "pooled": 0.635,
+          "within_generator_weighted": 0.6185,
+          "composition_gap": 0.0165,
+          "rank_pooled": 2,
+          "rank_within": 2
+        },
+        "judge gpt-4o": {
+          "pooled": 0.6364,
+          "within_generator_weighted": 0.6354,
+          "composition_gap": 0.001,
+          "rank_pooled": 1,
+          "rank_within": 1
+        },
+        "judge gpt-5.2": {
+          "pooled": 0.5701,
+          "within_generator_weighted": 0.5683,
+          "composition_gap": 0.0018,
+          "rank_pooled": 7,
+          "rank_within": 8
+        },
+        "judge Qwen2.5-7B": {
+          "pooled": 0.6079,
+          "within_generator_weighted": 0.5974,
+          "composition_gap": 0.0106,
+          "rank_pooled": 3,
+          "rank_within": 4
+        },
+        "judge Qwen3-8B": {
+          "pooled": 0.5956,
+          "within_generator_weighted": 0.5968,
+          "composition_gap": -0.0012,
+          "rank_pooled": 5,
+          "rank_within": 5
+        },
+        "judge Llama-3.1-8B": {
+          "pooled": 0.5941,
+          "within_generator_weighted": 0.5822,
+          "composition_gap": 0.0119,
+          "rank_pooled": 6,
+          "rank_within": 6
+        },
+        "judge Meta-Llama-3": {
+          "pooled": 0.6003,
+          "within_generator_weighted": 0.5977,
+          "composition_gap": 0.0026,
+          "rank_pooled": 4,
+          "rank_within": 3
+        },
+        "judge Llama-3.2-3B": {
+          "pooled": 0.5649,
+          "within_generator_weighted": 0.5711,
+          "composition_gap": -0.0062,
+          "rank_pooled": 9,
+          "rank_within": 7
+        },
+        "judge Olmo-3-7B": {
+          "pooled": 0.4772,
+          "within_generator_weighted": 0.4782,
+          "composition_gap": -0.0009,
+          "rank_pooled": 17,
+          "rank_within": 16
+        }
+      }
+    },
+    "correct_ft3v4": {
+      "n": 363,
+      "spearman_rank_corr": 0.9835,
+      "pairwise_inversions": 4,
+      "pairs": 153,
+      "detectors": {
+        "soft": {
+          "pooled": 0.3333,
+          "within_generator_weighted": 0.3241,
+          "composition_gap": 0.0091,
+          "rank_pooled": 18,
+          "rank_within": 18
+        },
+        "hard": {
+          "pooled": 0.364,
+          "within_generator_weighted": 0.3667,
+          "composition_gap": -0.0027,
+          "rank_pooled": 17,
+          "rank_within": 17
+        },
+        "avg_impact": {
+          "pooled": 0.6591,
+          "within_generator_weighted": 0.662,
+          "composition_gap": -0.0029,
+          "rank_pooled": 6,
+          "rank_within": 6
+        },
+        "dag_lin": {
+          "pooled": 0.465,
+          "within_generator_weighted": 0.4575,
+          "composition_gap": 0.0075,
+          "rank_pooled": 16,
+          "rank_within": 16
+        },
+        "dag_maxlb": {
+          "pooled": 0.5618,
+          "within_generator_weighted": 0.5739,
+          "composition_gap": -0.0121,
+          "rank_pooled": 12,
+          "rank_within": 12
+        },
+        "nli_n_unsup": {
+          "pooled": 0.6259,
+          "within_generator_weighted": 0.6377,
+          "composition_gap": -0.0118,
+          "rank_pooled": 9,
+          "rank_within": 10
+        },
+        "nli_min_ent": {
+          "pooled": 0.4984,
+          "within_generator_weighted": 0.5008,
+          "composition_gap": -0.0024,
+          "rank_pooled": 15,
+          "rank_within": 15
+        },
+        "nli_mean_ent": {
+          "pooled": 0.5242,
+          "within_generator_weighted": 0.5137,
+          "composition_gap": 0.0105,
+          "rank_pooled": 14,
+          "rank_within": 14
+        },
+        "n_steps": {
+          "pooled": 0.6223,
+          "within_generator_weighted": 0.6363,
+          "composition_gap": -0.0141,
+          "rank_pooled": 10,
+          "rank_within": 11
+        },
+        "judge gpt-4o-mini": {
+          "pooled": 0.8324,
+          "within_generator_weighted": 0.8429,
+          "composition_gap": -0.0105,
+          "rank_pooled": 2,
+          "rank_within": 2
+        },
+        "judge gpt-4o": {
+          "pooled": 0.8084,
+          "within_generator_weighted": 0.8123,
+          "composition_gap": -0.004,
+          "rank_pooled": 3,
+          "rank_within": 3
+        },
+        "judge gpt-5.2": {
+          "pooled": 0.8406,
+          "within_generator_weighted": 0.8533,
+          "composition_gap": -0.0127,
+          "rank_pooled": 1,
+          "rank_within": 1
+        },
+        "judge Qwen2.5-7B": {
+          "pooled": 0.6085,
+          "within_generator_weighted": 0.6495,
+          "composition_gap": -0.0411,
+          "rank_pooled": 11,
+          "rank_within": 8
+        },
+        "judge Qwen3-8B": {
+          "pooled": 0.6679,
+          "within_generator_weighted": 0.6699,
+          "composition_gap": -0.0019,
+          "rank_pooled": 5,
+          "rank_within": 5
+        },
+        "judge Llama-3.1-8B": {
+          "pooled": 0.6456,
+          "within_generator_weighted": 0.6591,
+          "composition_gap": -0.0134,
+          "rank_pooled": 8,
+          "rank_within": 7
+        },
+        "judge Meta-Llama-3": {
+          "pooled": 0.683,
+          "within_generator_weighted": 0.6829,
+          "composition_gap": 0.0001,
+          "rank_pooled": 4,
+          "rank_within": 4
+        },
+        "judge Llama-3.2-3B": {
+          "pooled": 0.652,
+          "within_generator_weighted": 0.6461,
+          "composition_gap": 0.006,
+          "rank_pooled": 7,
+          "rank_within": 9
+        },
+        "judge Olmo-3-7B": {
+          "pooled": 0.5261,
+          "within_generator_weighted": 0.5281,
+          "composition_gap": -0.002,
+          "rank_pooled": 13,
+          "rank_within": 13
+        }
+      }
+    }
+  }
+}

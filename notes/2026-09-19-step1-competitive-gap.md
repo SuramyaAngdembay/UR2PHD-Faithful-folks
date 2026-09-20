@@ -90,3 +90,54 @@ before treating it as new.
 uses the opposite convention. `audit_corrected.py` keys on `ft` and is safe; the display strings at
 `rigorous_analysis.py:131-132` are stale pre-correction labels. Reading the field naively inverts
 every regime result.
+
+---
+
+## FOLLOW-UP (same day) — the "NLI inversion" is WITHDRAWN, and a 14/14 exact reproduction
+
+I flagged `nli_min_ent` 0.423 and `nli_mean_ent` 0.443 in the blind regime as a possible second
+metric inversion. **It is not an inversion.** Both measure *entailment* — higher entailment means
+more support, hence more faithful — so as predictors of **un**faithfulness their natural direction
+is negated. `audit_corrected.py` applies exactly that (`("nli_mean_ent","nli_mean_ent",-1)`). My
+step-1 table reported the **raw** direction, so values below 0.5 are the metric working correctly.
+
+Contrast with the paper's genuine inversion: `soft_intended` at **0.3333** in the correct regime.
+`soft_faithfulness` is *already oriented* so that higher = more faithful, and it still lands far
+below chance. That is an inversion. Entailment sitting below 0.5 in its raw direction is not.
+
+**Two causes of my discrepancy, both now resolved:** the sign convention above, and population —
+`audit_corrected.py` filters to rows complete on all of `soft/nli_*/dag_*` (**n=633**, because
+`soft` exists only for the two open-weight models), whereas my step-1 run used all 1,303 rows for
+the NLI and DAG signals.
+
+**Exact reproduction.** Applying the published sign map on the published subset, a fresh
+implementation reproduces `audit_corrected.json` in **14 of 14 cells to 4 decimal places** across
+both regimes (soft_raw, soft_intended, nli_n_unsup, nli_mean_ent, dag_lin, dag_maxlb,
+interventions). Independent verification of the paper's central table.
+
+### Does anything in the blind regime beat length once signed?
+
+Tested on the **full labeled set** (n=514, 233 unfaithful) rather than the 270-row subset the
+paper's "all n.s." claim rests on:
+
+| signal (signed) | AUROC | 95% CI | |
+|---|---:|---|---|
+| nli_min_ent | 0.577 | [0.524, 0.630] | clears chance |
+| nli_mean_ent | 0.557 | [0.504, 0.614] | clears chance |
+| **words (length)** | 0.557 | [0.504, 0.604] | clears chance |
+| nli_n_unsup | 0.518 | [0.464, 0.572] | covers 0.5 |
+
+**Paired, signed nli_min_ent − words: +0.020 [−0.059, 0.102] — covers zero.**
+
+So on the larger population several weak signals nominally clear chance, but **none is
+distinguishable from a length baseline.** That is not a contradiction of the paper, whose claim is
+scoped to the complete-feature subset; it is a power difference, and the paired test settles it the
+same way as the text baseline (+0.035 [−0.041, 0.111]).
+
+### Net effect on the step-1 conclusion: strengthened
+
+Four things in the blind regime nominally clear chance — min-entailment, mean-entailment, word
+count, and the TF-IDF text baseline. **In paired tests not one of them beats length.** The judge
+(0.679) beats the text baseline by +0.086 [+0.028, +0.152] and remains the only detector that
+significantly clears the length bar. The pre-registered reading holds, with a wider margin than the
+first pass showed.

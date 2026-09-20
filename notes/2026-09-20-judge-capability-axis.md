@@ -84,3 +84,99 @@ within-model error bars on each row, which is what the current table most lacks.
   queued in its place.
 - Olmo-3-7B has 5 unparsed of 1304, which is negligible.
 - Eight judges, one benchmark, one prompt.
+
+---
+
+## Update: all 26 arms complete. Two additions, one of which REFINES the claim above.
+
+### 1. Local greedy judges are exactly reproducible. API judges at temperature 0 are not.
+
+Qwen3-8B was run twice under identical greedy decoding, same prompt, same 1,304 traces.
+
+| | result |
+|---|---|
+| identical item scores | **1304 / 1304 = 100.00%** |
+| mean absolute difference | 0.000 |
+| blind AUROC, run 1 vs run 2 | 0.6366 vs 0.6366 |
+| correct AUROC, run 1 vs run 2 | 0.6660 vs 0.6660 |
+
+Set against the API measurements from the same campaign:
+
+| judge | identical scores on a repeat | mean abs difference |
+|---|---|---|
+| Qwen3-8B, local greedy | **100.0%** | 0.000 |
+| gpt-4o-mini, temperature 0 | 83.9% | 6.19 |
+| gpt-5.2, identical configuration | 25.9% | 4.3 |
+
+**This is a methodological result worth reporting on its own.** A single-run API judge AUROC carries
+roughly ±0.023 of run-to-run noise that cannot be removed by setting temperature to zero, because
+the provider does not guarantee determinism. A local open-weight judge under greedy decoding has
+exactly zero. Any reported difference between two API judge configurations smaller than about 0.05
+is not interpretable from single runs, and the field routinely reports such differences.
+
+Sampled local decoding at temperature 0.7, three seeds per model, gives a median AUROC spread of
+**0.014** across twelve model-by-regime cells, maximum 0.053. **Sampling locally at 0.7 is less
+noisy in AUROC terms than the API is at temperature 0.**
+
+### 2. The capability picture with all ten judges
+
+Adding Llama-3.2-3B-Instruct and Qwen2.5-3B-Instruct changes the reading, so the section above is
+narrowed rather than confirmed.
+
+| judge | blind | correct | gap |
+|---|---|---|---|
+| gpt-4o-mini | 0.679 | 0.830 | +0.152 |
+| gpt-4o | 0.669 | 0.786 | +0.116 |
+| gpt-5.2 | 0.653 | 0.830 | +0.177 |
+| Llama-3.1-8B-Instruct | 0.642 | 0.688 | +0.046 |
+| Qwen3-8B | 0.637 | 0.666 | +0.029 |
+| Qwen2.5-7B-Instruct | 0.636 | 0.639 | +0.002 |
+| Meta-Llama-3-8B-Instruct | 0.624 | 0.695 | +0.071 |
+| Llama-3.2-3B-Instruct | 0.561 | 0.648 | +0.087 |
+| Qwen2.5-3B-Instruct | 0.553 | 0.535 | -0.018 |
+| Olmo-3-7B-Instruct | 0.547 | 0.543 | -0.005 |
+
+**WITHDRAWN as stated: "blind-regime performance does not move with judge capability."** With only
+the eight larger judges the blind spread was 0.054 and that reading looked safe. The three small or
+weak judges sit at 0.547 to 0.561, so across all ten the blind spread is 0.132. Blind-regime
+performance *does* move with capability. The earlier sentence overreached on a truncated sample and
+is retracted rather than rephrased.
+
+**What survives, and it is still the useful claim:**
+
+| | range across 10 judges |
+|---|---|
+| blind regime | 0.132 |
+| correct regime | 0.295 |
+
+Capability buys **2.2x more** in the correct regime than in the blind regime. Restricted to the
+seven judges at 7B and above the asymmetry is sharper, 0.055 against 0.191, a ratio of 3.5.
+
+**And the simplest form is the strongest, because it needs no capability proxy at all: no judge of
+the ten exceeds 0.679 in the blind regime.** That set includes a frontier reasoning model. The same
+ten reach 0.830 in the correct regime. The blind-regime ceiling is low and is not lifted by
+anything we can put against it.
+
+That is what the manuscript should claim. It is a ceiling result, which is falsifiable by a single
+counterexample, rather than a flatness result, which the 3B judges already falsified.
+
+### Revised reading of the floor cases
+
+Three judges sit near chance in the blind regime. Two of them, Qwen2.5-3B-Instruct (-0.018) and
+Olmo-3-7B (-0.005), are near chance in **both** regimes and show no regime structure, consistent
+with being below the threshold to detect anything. **Llama-3.2-3B is not that case**: blind 0.561
+but correct 0.648, a gap of +0.087 larger than Llama-3.1-8B's. So low blind performance does not
+imply an inability to exploit the correct regime, and the floor is specific to the blind regime
+rather than general incompetence.
+
+One oddity worth flagging rather than explaining: Llama-3.2-3B's greedy blind AUROC of 0.561 sits
+*below* all three of its sampled seeds (0.578, 0.602, 0.603), a gap of about 0.042 that exceeds its
+own seed spread of 0.025. Greedy decoding appears to land in a worse mode than sampling for this
+model. Not investigated.
+
+### Housekeeping
+
+`Qwen/Qwen2.5-3B` base-model arms are excluded and confirmed as the right call: the base model had
+265/1304 unparsed and its three seed arms 337-339 each, while **Qwen2.5-3B-Instruct parses
+1304/1304**. The diagnosis that the missing `-Instruct` suffix caused the parse failures is
+verified, not inferred.

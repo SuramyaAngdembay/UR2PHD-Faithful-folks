@@ -1,0 +1,157 @@
+{
+  "script_sha256": "5d1afb733f79bc42785b416e7a8074fd906101cea66fdec1681be9cea012b58c",
+  "greedy_determinism": {
+    "model": "Qwen3-8B",
+    "n": 1304,
+    "identical_frac": 1.0,
+    "mean_abs_delta": 0.0,
+    "max_abs_delta": 0,
+    "auroc_blind": [
+      0.6366,
+      0.6366
+    ],
+    "auroc_correct": [
+      0.666,
+      0.666
+    ]
+  },
+  "seed_spread": {
+    "Qwen3-8B": {
+      "blind": {
+        "greedy": 0.6366,
+        "seeds": [
+          0.6225,
+          0.633,
+          0.6235
+        ],
+        "spread": 0.0105,
+        "sd": 0.0058
+      },
+      "correct": {
+        "greedy": 0.666,
+        "seeds": [
+          0.6719,
+          0.6742,
+          0.658
+        ],
+        "spread": 0.0162,
+        "sd": 0.0088
+      }
+    },
+    "Qwen2.5-7B-Instruct": {
+      "blind": {
+        "greedy": 0.6365,
+        "seeds": [
+          0.5979,
+          0.618,
+          0.6115
+        ],
+        "spread": 0.02,
+        "sd": 0.0102
+      },
+      "correct": {
+        "greedy": 0.6389,
+        "seeds": [
+          0.6506,
+          0.6477,
+          0.6438
+        ],
+        "spread": 0.0068,
+        "sd": 0.0034
+      }
+    },
+    "Llama-3.1-8B-Instruct": {
+      "blind": {
+        "greedy": 0.6419,
+        "seeds": [
+          0.6203,
+          0.6117,
+          0.6172
+        ],
+        "spread": 0.0086,
+        "sd": 0.0043
+      },
+      "correct": {
+        "greedy": 0.6884,
+        "seeds": [
+          0.6912,
+          0.6774,
+          0.6988
+        ],
+        "spread": 0.0213,
+        "sd": 0.0108
+      }
+    },
+    "Meta-Llama-3-8B-Instruct": {
+      "blind": {
+        "greedy": 0.6244,
+        "seeds": [
+          0.6108,
+          0.6178,
+          0.6148
+        ],
+        "spread": 0.007,
+        "sd": 0.0035
+      },
+      "correct": {
+        "greedy": 0.6953,
+        "seeds": [
+          0.6874,
+          0.6899,
+          0.7039
+        ],
+        "spread": 0.0165,
+        "sd": 0.0089
+      }
+    },
+    "Llama-3.2-3B-Instruct": {
+      "blind": {
+        "greedy": 0.561,
+        "seeds": [
+          0.6028,
+          0.5782,
+          0.6016
+        ],
+        "spread": 0.0246,
+        "sd": 0.0139
+      },
+      "correct": {
+        "greedy": 0.6476,
+        "seeds": [
+          0.6646,
+          0.658,
+          0.6691
+        ],
+        "spread": 0.0111,
+        "sd": 0.0056
+      }
+    },
+    "Olmo-3-7B-Instruct": {
+      "blind": {
+        "greedy": 0.5472,
+        "seeds": [
+          0.5526,
+          0.5451,
+          0.551
+        ],
+        "spread": 0.0075,
+        "sd": 0.0039
+      },
+      "correct": {
+        "greedy": 0.5426,
+        "seeds": [
+          0.5751,
+          0.5944,
+          0.5411
+        ],
+        "spread": 0.0532,
+        "sd": 0.027
+      }
+    }
+  },
+  "summary": {
+    "median_seed_spread": 0.0136,
+    "max_seed_spread": 0.0532,
+    "api_noise_reference": 0.023
+  }
+}

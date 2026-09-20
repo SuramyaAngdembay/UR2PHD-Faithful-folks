@@ -142,6 +142,26 @@
       "gap": 0.0709,
       "parse_rate": 1.0
     },
+    "Llama-3.2-3B-Instruct": {
+      "blind": {
+        "auroc": 0.561,
+        "ci95": [
+          0.517,
+          0.605
+        ],
+        "n": 514
+      },
+      "correct": {
+        "auroc": 0.6476,
+        "ci95": [
+          0.591,
+          0.704
+        ],
+        "n": 789
+      },
+      "gap": 0.0866,
+      "parse_rate": 1.0
+    },
     "Olmo-3-7B-Instruct": {
       "blind": {
         "auroc": 0.5472,
@@ -161,10 +181,27 @@
       },
       "gap": -0.0046,
       "parse_rate": 0.9962
+    },
+    "Qwen2.5-3B-Instruct": {
+      "blind": {
+        "auroc": 0.5529,
+        "ci95": [
+          0.488,
+          0.619
+        ],
+        "n": 263
+      },
+      "correct": {
+        "auroc": 0.5347,
+        "ci95": [
+          0.483,
+          0.584
+        ],
+        "n": 331
+      },
+      "gap": -0.0182,
+      "parse_rate": 1.0
     }
   },
-  "excluded": {
-    "Llama-3.2-3B-Instruct": "arm not yet available",
-    "Qwen2.5-3B-Instruct": "arm not yet available"
-  }
+  "excluded": {}
 }

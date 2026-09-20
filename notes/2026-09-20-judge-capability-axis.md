@@ -180,3 +180,52 @@ model. Not investigated.
 265/1304 unparsed and its three seed arms 337-339 each, while **Qwen2.5-3B-Instruct parses
 1304/1304**. The diagnosis that the missing `-Instruct` suffix caused the parse failures is
 verified, not inferred.
+
+---
+
+## FINAL (2026-09-20): campaign complete, 41 arms, 10 judge models
+
+Qwen2.5-3B-Instruct replacement arms landed clean (1304 rows, 0-1 unparsed against the base
+model's 265-339). Final table is the one above with Qwen2.5-3B-Instruct at blind 0.568
+[0.522, 0.611] and correct 0.524 [0.483, 0.565].
+
+| | across 10 judge models |
+|---|---|
+| blind regime | 0.547 to **0.679**, spread 0.132 |
+| correct regime | 0.524 to **0.830**, spread 0.307 |
+| ratio | **2.3x** |
+
+**The ceiling claim in final form: the best blind-regime AUROC achieved by any of ten judge models
+is 0.679.** The same set reaches 0.830 in the correct regime.
+
+### An awkward detail worth reporting rather than burying
+
+**gpt-4o-mini attains the ceiling in BOTH regimes** — 0.679 blind and 0.830 correct. It is the
+cheapest and among the oldest models in the set, and it is not beaten in either regime by gpt-4o
+(0.669 / 0.786) or by gpt-5.2 (0.653 / 0.830).
+
+Do not overread it. The three GPT judges span 0.026 in the blind regime against a measured
+run-to-run noise floor of 0.023, so they are not separable there, and 0.830 versus 0.830 is a tie.
+This project has already withdrawn one "monotone across model generations" claim for exactly this
+reason. **The correct statement is that the three API judges are indistinguishable from each other
+in both regimes, and the API-versus-local separation is the only judge difference in this campaign
+that clears the noise.**
+
+It does, however, kill any suggestion that the blind-regime ceiling is an artefact of using a cheap
+judge. The cheap judge is the best one here.
+
+### Final within-model noise floors
+
+Fourteen model-by-regime cells, three seeds each at temperature 0.7:
+
+| | value |
+|---|---|
+| median seed spread | 0.014 |
+| max seed spread | 0.053 (Olmo-3-7B correct regime, a near-chance cell) |
+| greedy repeat, Qwen3-8B | **0.000** |
+| API identical-config repeat, gpt-5.2 | 0.023 |
+
+Two cells show a greedy-versus-sampled gap larger than their own seed spread: Llama-3.2-3B blind
+(greedy 0.561 against seeds 0.578-0.603) and Qwen2.5-3B-Instruct blind (greedy 0.568 against seeds
+0.521-0.569, spread 0.048). Both are small models in the blind regime. Greedy decoding appears less
+stable than sampling for small models on this task. Flagged, not explained.

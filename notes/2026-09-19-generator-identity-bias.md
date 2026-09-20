@@ -178,3 +178,66 @@ that judge capability buys correct-regime performance and buys nothing in the bl
 blind AUROC is 0.637, identical to Qwen3-8B's 0.637 despite being a different model of a different
 generation. Its correct-regime composition gap is -0.002, the only near-zero gap among real judges,
 so its pooled correct-regime number is almost entirely within-generator discrimination.
+
+---
+
+## Does the paper's headline regime gap survive stratification by generator?
+
+**Yes, and pooling was understating it.** This is the check the stratified-evaluation literature
+demands of anyone who makes our argument, applied to our own central claim. EXPLORATORY: 4
+generators x 3 judges = 12 gap estimates, no correction applied.
+
+The manuscript's headline is the regime gap for `judgeA` (gpt-4o-mini): correct-regime AUROC 0.830
+minus blind-regime 0.679 = **+0.152**. A fresh implementation here reproduces it at
+**+0.152 [0.089, 0.215]** against the paper's [0.089, 0.211] — independent verification of the
+central number, the small upper-bound difference being bootstrap draws.
+
+Stratified by who wrote the trace, judge gpt-4o-mini:
+
+| generator | blind | correct | gap | 95% CI |
+|---|---|---|---|---|
+| Qwen2.5-7B-Instruct | 0.641 | 0.863 | **+0.223** | [0.114, 0.328] |
+| gpt-4o-mini | 0.657 | 0.883 | **+0.226** | [0.095, 0.344] |
+| llama-3.1-8b-instruct | 0.599 | 0.818 | **+0.219** | [0.075, 0.356] |
+| gemini-2.5-flash | 0.642 | 0.676 | +0.034 | [-0.115, 0.188] |
+| pooled | 0.679 | 0.830 | +0.152 | [0.089, 0.215] |
+
+**Three of four generators show a gap around +0.22, half again larger than the pooled +0.152.**
+Pooling across generators *attenuates* the regime gap rather than manufacturing it. So the
+composition concern that applies to the judge's raw scores does **not** undermine the headline; if
+anything the published number is conservative. That is a meaningful robustness result and worth
+stating in the paper, since a referee who accepts our own composition argument will immediately ask
+whether it eats our main claim. It does not.
+
+### Two genuine heterogeneities it exposes
+
+**1. Gemini-generated traces show no regime structure, consistently.** The gap is +0.034 for
+gpt-4o-mini, -0.064 for gpt-5.2, +0.017 for Qwen2.5-7B. Three independent judges, all near zero.
+**Do not overread it:** that cell has only 18 correct-regime positives and every interval is wide
+enough to cover the other generators' +0.22. It is suggestive, underpowered, and exactly the kind
+of cell the spec's power ruling already barred from carrying a claim. Worth a targeted test, not a
+sentence in the abstract.
+
+**2. The regime gap requires a capable judge.** Qwen2.5-7B-Instruct as judge shows **no gap at
+all**: pooled +0.002 [-0.068, 0.074], and within every generator the gap is between -0.001 and
++0.066, every interval covering zero.
+
+| judge | pooled blind | pooled correct | gap |
+|---|---|---|---|
+| gpt-4o-mini | 0.679 | 0.830 | +0.152 |
+| gpt-5.2 | 0.653 | 0.830 | +0.177 |
+| Qwen2.5-7B-Instruct | 0.637 | 0.639 | +0.002 |
+
+This sharpens the capability reading rather than contradicting it. All three judges sit at
+0.64-0.68 in the blind regime, so blind-regime performance is flat in capability as the paper
+already argues. What capability buys is the **correct** regime, 0.830 for both GPT judges against
+0.639 for Qwen2.5-7B. A judge too weak to exploit the correct regime shows no two-regime structure,
+because it is near chance in both. **The two regimes are a property of judges that can detect at
+all, not of the data alone** — which is a claim the paper does not currently make and should,
+because it is the natural objection to "the blind regime is hard": maybe the correct regime is
+easy only for strong judges. On this evidence, yes.
+
+Caveat on direction of inference: three judges is not a capability sweep, and Qwen2.5-7B differs
+from the GPT judges in more than capability. The remaining local arms (Llama-3.1-8B, Meta-Llama-3,
+Llama-3.2-3B, Qwen3-8B, Qwen2.5-3B, OLMo-3-7B) give a much better-populated capability axis, and
+this table should be recomputed across all of them before anything is claimed.

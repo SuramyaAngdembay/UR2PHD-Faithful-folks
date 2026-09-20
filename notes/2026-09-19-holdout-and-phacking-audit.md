@@ -229,12 +229,54 @@ directly answers it. The inputs (`wbrep_llama*.npz`, `acts_llama*`) are on Aquam
 run, the claim must be narrowed to "the sycophancy cell is significant and the others are not,"
 which is a statement about each cell, not about a difference between them.
 
-### CLEAN — item 39: judge self-preference (Panickssery et al. 2024)
+### ~~CLEAN~~ **CORRECTED 2026-09-19 (later same day)** — item 39: judge self-preference
 
-**Verified.** BonaFide's generators are Olmo-3/3.1 (AI2), Qwen3 (Alibaba), DeepSeek-R1-Distill-Llama
-and Llama-3.3 (Meta). Our judges are GPT-4o / GPT-4o-mini (OpenAI). **No family overlap**, so the
-self-preference confound — an evaluator scoring its own family's generations higher — does not
-apply. Worth stating explicitly in the paper; it is a confound reviewers will ask about.
+**The original verdict below was scoped to the wrong dataset and its reasoning does not transfer.**
+It is struck through rather than deleted, because the error is instructive: it is a claim about our
+own setup asserted from a family-overlap argument, never checked against the dataset that carries
+the paper's main results. Exactly the drift `research-claim-triage` §5 warns about.
+
+> ~~**Verified.** BonaFide's generators are Olmo-3/3.1 (AI2), Qwen3 (Alibaba),
+> DeepSeek-R1-Distill-Llama and Llama-3.3 (Meta). Our judges are GPT-4o / GPT-4o-mini (OpenAI).
+> **No family overlap**, so the self-preference confound — an evaluator scoring its own family's
+> generations higher — does not apply.~~
+
+**What is actually true.** The no-overlap argument holds for **BonaFide only**. The paper's primary
+results are on **FaithCoT**, whose four generator models are Qwen2.5-7B-Instruct, gemini-2.5-flash,
+**gpt-4o-mini** and llama-3.1-8b-instruct — verified from record identifiers, not assumed. Our
+primary judge (`judgeA`, byte-identical to the `mini` arm) **is gpt-4o-mini**. So on the dataset
+that produces the headline numbers, the judge wrote a quarter of the traces it grades:
+
+| | own-generation share |
+|---|---|
+| overall | 340/1304 = 26.1% |
+| blind regime (ft1v2) | 141/514 = 27.4% |
+| correct regime (ft3v4) | 199/789 = 25.2% |
+
+**So the confound applies and had to be measured, not argued away.** It now has been; see
+`notes/2026-09-19-generator-identity-bias.md` and `self-preference-spec.md`.
+
+**Empirical verdict, two of three pre-registered tests complete: self-preference is NOT present,
+but a larger generator-identity effect IS.**
+
+- gpt-4o-mini on its own generations: -8.63 [-14.57, -2.89], matched on question and true label.
+  Significant, but it **fails its own pre-registered falsification test**: gpt-4o gives -5.66 and
+  cross-family Qwen3-8B gives -6.56 on the same traces, so the effect belongs to the traces rather
+  than to self-status.
+- Qwen2.5-7B-Instruct on its own generations: -1.06 [-7.20, 5.44]. **Null.**
+- Llama-3.1-8B-Instruct: pending.
+
+- **But** every judge scores traces 19.5 to 31.7 points apart by generator identity, holding
+  question and true label fixed, against a question-only control floor of 1.1 and a
+  faithfulness-label effect of only 5.4 to 19.7. All nine judges rank gemini's traces most faithful
+  and llama-3.1-8b's least, unanimously. Trace length explains 8 to 16% of it.
+
+**Net effect on the audit's risk register.** The specific Panickssery confound is retired *on
+evidence* rather than on an argument, which is stronger than the original verdict. But a broader
+confound the audit never listed — generator identity as an uncontrolled covariate the judge tracks
+more strongly than the target — is now open and is larger. It is the same structural problem as the
+correctness covariate already in the manuscript. **Reviewers will ask about self-preference; the
+honest answer is that we tested it, it is absent, and we found something bigger next to it.**
 
 ### CLEAN — item 33: cross-partition duplicates (Kapoor & Narayanan L1.4)
 

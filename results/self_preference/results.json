@@ -34,6 +34,10 @@
       "model": "gpt-4o-mini",
       "self_gen": "gpt-4o-mini"
     },
+    "qwen25_7b": {
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "self_gen": "Qwen2.5-7B-Instruct"
+    },
     "qwen3_8b": {
       "model": "Qwen/Qwen3-8B",
       "self_gen": null
@@ -526,6 +530,66 @@
         "n_questions": 85,
         "excludes_zero": false,
         "degenerate_control": true
+      },
+      "qwen25_7b|Qwen2.5-7B-Instruct": {
+        "judge": "qwen25_7b",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": true,
+        "offset": -1.0632,
+        "ci95": [
+          -7.2036,
+          5.4373
+        ],
+        "offset_standardized": -0.0381,
+        "n_pairs": 95,
+        "n_questions": 95,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "qwen25_7b|gemini-2.5-flash": {
+        "judge": "qwen25_7b",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -17.5821,
+        "ci95": [
+          -24.7893,
+          -10.422
+        ],
+        "offset_standardized": -0.6304,
+        "n_pairs": 69,
+        "n_questions": 69,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "qwen25_7b|gpt-4o-mini": {
+        "judge": "qwen25_7b",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": -3.1684,
+        "ci95": [
+          -9.2306,
+          2.3903
+        ],
+        "offset_standardized": -0.1136,
+        "n_pairs": 94,
+        "n_questions": 94,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "qwen25_7b|llama-3.1-8b-instruct": {
+        "judge": "qwen25_7b",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 18.9647,
+        "ci95": [
+          12.5347,
+          25.4221
+        ],
+        "offset_standardized": 0.68,
+        "n_pairs": 85,
+        "n_questions": 85,
+        "excludes_zero": true,
+        "degenerate_control": false
       },
       "qwen3_8b|Qwen2.5-7B-Instruct": {
         "judge": "qwen3_8b",
@@ -1082,6 +1146,66 @@
         "excludes_zero": false,
         "degenerate_control": true
       },
+      "qwen25_7b|Qwen2.5-7B-Instruct": {
+        "judge": "qwen25_7b",
+        "generator": "Qwen2.5-7B-Instruct",
+        "is_self": true,
+        "offset": -1.1538,
+        "ci95": [
+          -5.2658,
+          3.1531
+        ],
+        "offset_standardized": -0.0398,
+        "n_pairs": 155,
+        "n_questions": 155,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "qwen25_7b|gemini-2.5-flash": {
+        "judge": "qwen25_7b",
+        "generator": "gemini-2.5-flash",
+        "is_self": false,
+        "offset": -11.2225,
+        "ci95": [
+          -15.8984,
+          -6.8329
+        ],
+        "offset_standardized": -0.3871,
+        "n_pairs": 179,
+        "n_questions": 179,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
+      "qwen25_7b|gpt-4o-mini": {
+        "judge": "qwen25_7b",
+        "generator": "gpt-4o-mini",
+        "is_self": false,
+        "offset": -2.7241,
+        "ci95": [
+          -6.6781,
+          1.5204
+        ],
+        "offset_standardized": -0.094,
+        "n_pairs": 180,
+        "n_questions": 180,
+        "excludes_zero": false,
+        "degenerate_control": false
+      },
+      "qwen25_7b|llama-3.1-8b-instruct": {
+        "judge": "qwen25_7b",
+        "generator": "llama-3.1-8b-instruct",
+        "is_self": false,
+        "offset": 19.1286,
+        "ci95": [
+          14.2282,
+          23.831
+        ],
+        "offset_standardized": 0.6599,
+        "n_pairs": 140,
+        "n_questions": 140,
+        "excludes_zero": true,
+        "degenerate_control": false
+      },
       "qwen3_8b|Qwen2.5-7B-Instruct": {
         "judge": "qwen3_8b",
         "generator": "Qwen2.5-7B-Instruct",
@@ -1247,6 +1371,17 @@
           "llama-3.1-8b-instruct": 0.4578
         }
       },
+      "qwen25_7b": {
+        "pooled_auroc": 0.6365,
+        "within_generator_weighted_mean": 0.6137,
+        "composition_gap": 0.0228,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.5843,
+          "gemini-2.5-flash": 0.5942,
+          "gpt-4o-mini": 0.6592,
+          "llama-3.1-8b-instruct": 0.6088
+        }
+      },
       "qwen3_8b": {
         "pooled_auroc": 0.6366,
         "within_generator_weighted_mean": 0.6262,
@@ -1348,6 +1483,17 @@
           "llama-3.1-8b-instruct": 0.5393
         }
       },
+      "qwen25_7b": {
+        "pooled_auroc": 0.6389,
+        "within_generator_weighted_mean": 0.6406,
+        "composition_gap": -0.0017,
+        "per_generator_auroc": {
+          "Qwen2.5-7B-Instruct": 0.6288,
+          "gemini-2.5-flash": 0.6107,
+          "gpt-4o-mini": 0.6583,
+          "llama-3.1-8b-instruct": 0.675
+        }
+      },
       "qwen3_8b": {
         "pooled_auroc": 0.666,
         "within_generator_weighted_mean": 0.656,
@@ -1386,6 +1532,12 @@
         "auroc_own": 0.481,
         "auroc_other_mean": 0.455,
         "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      },
+      "qwen25_7b": {
+        "self_generator": "Qwen2.5-7B-Instruct",
+        "auroc_own": 0.5843,
+        "auroc_other_mean": 0.6207,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
       }
     },
     "correct_ft3v4": {
@@ -1411,6 +1563,12 @@
         "self_generator": "gpt-4o-mini",
         "auroc_own": 0.5821,
         "auroc_other_mean": 0.5499,
+        "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
+      },
+      "qwen25_7b": {
+        "self_generator": "Qwen2.5-7B-Instruct",
+        "auroc_own": 0.6288,
+        "auroc_other_mean": 0.648,
         "note": "SECONDARY. A constant self-preference offset does not change within-subset AUROC, so a null here is not evidence against E1m."
       }
     }

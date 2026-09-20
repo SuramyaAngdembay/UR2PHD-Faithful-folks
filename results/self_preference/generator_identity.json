@@ -195,6 +195,30 @@
       },
       "n_questions_label": 86
     },
+    "qwen25_7b": {
+      "label_effect": 8.3,
+      "label_effect_ci95": [
+        1.96,
+        14.38
+      ],
+      "generator_spread": 22.038,
+      "generator_spread_ci95": [
+        15.54,
+        28.26
+      ],
+      "ratio": 2.655,
+      "ratio_ci95": [
+        1.31,
+        10.56
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -10.464,
+        "gpt-4o-mini": -1.665,
+        "Qwen2.5-7B-Instruct": -1.109,
+        "llama-3.1-8b-instruct": 11.575
+      },
+      "n_questions_label": 86
+    },
     "qwen3_8b": {
       "label_effect": 16.095,
       "label_effect_ci95": [

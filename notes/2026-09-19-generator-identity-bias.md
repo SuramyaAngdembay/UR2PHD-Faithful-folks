@@ -133,3 +133,48 @@ reading with proper power.
 
 Artefacts: `results/self_preference/results.json`, `results/self_preference/generator_identity.json`,
 `scripts/self_preference_analysis.py`, `scripts/generator_identity_effect.py`.
+
+---
+
+## Update (2026-09-19, later): the Qwen2.5-7B self-judge arm lands
+
+`qwen25_7b` completed clean (1304 rows, 0 unparsed). Qwen2.5-7B-Instruct **is** one of FaithCoT's
+four generator models, so this is the second of the three pre-registered primary tests.
+
+**Primary test 2 of 3: NULL.** Matched own-vs-other offset, blind regime:
+**-1.06 [-7.20, 5.44]**, 95 pairs over 95 questions. The interval covers zero comfortably, so it is
+null at any stricter Bonferroni level too. For context on the same generator's traces, the
+cross-family Qwen3-8B judge gives **+2.37** and gpt-4o-mini gives **+4.36**, both also covering
+zero, while the question-only control floor is **+0.82**. The self-judge is the most negative of
+the Qwen-generator column but is not distinguishable from its neighbours.
+
+Scoreboard on the pre-registered hypothesis, two tests down:
+
+| self-judge | matched offset, blind | verdict |
+|---|---|---|
+| gpt-4o-mini | -8.63 [-14.57, -2.89] | excludes zero, but **fails E2m**: non-self judges show -5.66 and -6.56 on the same traces |
+| Qwen2.5-7B-Instruct | -1.06 [-7.20, 5.44] | **null** |
+| Llama-3.1-8B-Instruct | running | pending |
+
+**The self-preference reading is now clearly dead**, not merely unsupported by one cell. One cell
+was significant and failed its own falsification test; the second is flat.
+
+**The generator-identity effect replicates on the new judge**, which matters because this judge was
+never involved in discovering it:
+
+| | value |
+|---|---|
+| generator spread | 22.0 [15.54, 28.26] |
+| label effect | 8.3 [1.96, 14.38] |
+| ratio | 2.66 [1.31, 10.56] |
+
+The ratio interval excludes 1, bringing that to **six of nine** real judges. The generator ordering
+is unchanged: gemini -17.58, gpt-4o-mini -3.17, Qwen2.5-7B -1.06, llama-3.1-8b +18.96. Gemini
+lowest and llama highest, as for every other judge.
+
+**Unrelated observation worth keeping.** Qwen2.5-7B's **correct-regime** pooled AUROC is **0.639**,
+against 0.786 to 0.830 for the GPT judges and 0.666 for Qwen3-8B. That extends the earlier reading
+that judge capability buys correct-regime performance and buys nothing in the blind regime: its
+blind AUROC is 0.637, identical to Qwen3-8B's 0.637 despite being a different model of a different
+generation. Its correct-regime composition gap is -0.002, the only near-zero gap among real judges,
+so its pooled correct-regime number is almost entirely within-generator discrimination.

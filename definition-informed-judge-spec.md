@@ -74,3 +74,19 @@ companion experiment (a published trained detector on the blind stratum) is bloc
 A positive result would not show the judges detect *faithfulness*: BonaFide's authors argue these
 labels track implausible or wrong reasoning, and a rubric that says so explicitly could raise
 agreement with the labels for that reason.
+
+---
+
+## Amendment v1.1 (2026-09-21) — made on parse rates alone, before any accuracy quantity existed
+
+The parse-only smoke (8 traces per arm, as the spec permits) showed rubrics **D1 and R parse 8/8 on
+every judge**, local and API. Rubric **D2 does not parse reliably on the local judges**: they echo
+the prompt's `output_format` scaffold before reaching the `classification` field, so the label is
+not emitted within the 96-token budget (Qwen3-8B 4/8). Raising the budget far enough would cost
+roughly six hours per judge, for an arm that is secondary and exploratory.
+
+**Change:** D2 runs on the API judge only (gpt-4o-mini, 8/8 parsed at a 220-token budget). The three
+partial local D2 files were deleted so that no incomplete arm can enter the analysis. D1 (primary)
+and R are unchanged and run on all four judges. The decision rule, which concerns D1 only, is
+unaffected. No AUROC, mean score or label-conditioned quantity had been computed when this was
+written; the smoke rows are retained and the full arms resume from them.

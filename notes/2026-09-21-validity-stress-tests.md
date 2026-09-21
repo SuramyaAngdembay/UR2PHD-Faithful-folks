@@ -103,3 +103,50 @@ question-grouped CV, from the frozen step-1 run:
 The sentence is true of step count and false of word count. The accurate claim is the paired one:
 several cheap signals nominally clear chance, **none beats word count** (text - length
 +0.035 [-0.041, +0.111]), and only the judge does.
+
+---
+
+## 6. Two method-motivating hypotheses, tested on cached data — both negative
+
+Run to answer "is a methodology direction possible?". Exploratory, single-pass, Measured.
+
+**6a. Does a judge detect unfaithful errors better on questions it answered correctly itself?**
+Three of our judges are also FaithCoT generators, so each judge's own correctness per question is
+known from its own trace. Blind regime, traces by the *other* three generators only.
+
+| judge | it answered correctly | it answered wrong |
+|---|---|---|
+| gpt-4o-mini | 0.685 [0.571, 0.790] (n=111) | 0.659 [0.597, 0.723] (n=261) |
+| Qwen2.5-7B | 0.761 [0.661, 0.845] (n=117) | 0.595 [0.530, 0.661] (n=256) |
+| Llama-3.1-8B | 0.703 [0.582, 0.826] (n=74) | 0.590 [0.521, 0.655] (n=252) |
+
+The pooled gap for the two local judges looks like support for the Krumdick et al. account, but it
+is **mostly domain composition**: the "answered correctly" bucket is 41% / 32% AQuA against 5-6% in
+the other bucket, and AQuA is the easy domain. Within domain the effect is small and inconsistent
+(LogiQA +0.07 to +0.10 at n=25-37; TruthfulQA zero or negative). For gpt-4o-mini in AQuA the judge
+scores 0.92 whether or not it got the question right itself (n=30 / n=22). **What matters is whether
+the domain's steps are checkable from the text, not whether the judge knows the answer.** This lowers
+the prior that a reference-guided ("solve-then-judge") method breaks the ceiling.
+
+**6b. Does inter-judge agreement identify where blind-regime detection works?** Seven-judge ensemble,
+abstaining on the items where judges disagree most (selection uses no labels).
+
+| coverage | all domains | AQuA removed |
+|---|---|---|
+| 100% | 0.700 | 0.652 |
+| 50% most-agreed | 0.710 | 0.636 |
+| 33% most-agreed | 0.692 | 0.629 |
+| 25% most-agreed | 0.656 | 0.576 |
+
+Against random subsets of equal size at 33% coverage, non-math: observed 0.629, null mean 0.652,
+p = 0.73. **Agreement carries no information about where the judges are right.** An
+agreement-based abstaining monitor has no support.
+
+**Reading the two nulls together with test 2.** In the non-mathematical blind regime the judges agree
+with one another, are wrong together, gain nothing from being averaged, and give no behavioural
+signal that separates the items they get right from the ones they get wrong. That is the signature
+of a target that is either not observable from the text or not reliably labelled. If so, a better
+*text-side* method cannot find it, which bears directly on the trained-detector direction. The one
+signal in our data that is uncorrelated with the judge and still informative in this regime is the
+internal probe (judge-probe Spearman 0.05; Llama held-out 0.67; combination 0.699 against the judge
+alone, paired delta [+0.02, +0.19], n=144).

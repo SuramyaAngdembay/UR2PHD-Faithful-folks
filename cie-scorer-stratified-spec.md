@@ -90,3 +90,28 @@ for pooled accuracy, which is evidence it may have learned correctness.
 It covers one generator and 307 traces. A positive result would show the signal is in Llama's
 internals, not that a deployable monitor exists for closed models. A negative result binds this
 detector as retrained by us, with the release-versus-paper gaps listed above.
+
+---
+
+## Amendment v1.1 (2026-09-21) — fixed before any GPU job was submitted
+
+**Pooled-detector hyperparameters.** v1 fixed the pooled model's circuit settings (λ = β = 0.5) but
+not its detector settings. Fixed now, as the modal values of the paper's Table 3 and the released
+code's defaults: fusion weight α = 0.5, two GIN layers, width 256 (hidden and projection), learning
+rate 1e-4, weight decay 1e-4, margin 2.0, 20 epochs, `seq_weight` 1.0, `sim_weight` 0.4. Inside
+each cross-validation fold the training part is split again 70/30, stratified on the label, and the
+authors' own `train()` selects epoch and threshold on that inner validation set, exactly as their
+script does. The held-out fold is never seen by that selection.
+
+**Two properties of the released code, recorded because they affect what a reproduction means.**
+(1) Its loader assigns label 0, faithful, to any trace that has no `unfaithfulness` field. FaithCoT
+ships 60 unlabelled traces; if circuits were built for them they would enter training as faithful.
+Our driver builds circuits for labelled traces only and asserts that no unlabelled trace reaches
+training. (2) Circuits are built for each reasoning step **in isolation** — the step's text alone is
+the prompt — not in the context of the question or the preceding steps.
+
+**Operational.** The queue history on this account shows long GPU jobs waiting about three days and
+30-minute jobs starting within minutes, so circuits are built in short resumable jobs.
+`scripts/anvil/cie_build_circuits.py` calls the authors' functions with their constants and changes
+only operations: a wall-clock budget for a clean exit, atomic writes so a killed job cannot leave a
+half-written graph that a resume would trust, and per-graph timing so SU projections are measured.

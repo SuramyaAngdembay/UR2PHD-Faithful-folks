@@ -11,6 +11,7 @@ Uses the authors' classes and their train()/evaluate() unchanged. Three modes:
 import argparse, json, os, random, sys, time
 from pathlib import Path
 import numpy as np, torch
+import hf_offline_fix  # noqa: F401  (must precede any tokenizer load)
 from sklearn.model_selection import StratifiedKFold, train_test_split
 
 ap = argparse.ArgumentParser()

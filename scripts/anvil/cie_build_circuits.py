@@ -13,6 +13,7 @@ Per-graph timings go to a JSONL so SU projections are measured, not guessed.
 import argparse, json, os, sys, time
 from pathlib import Path
 import torch
+import hf_offline_fix  # noqa: F401  (must precede any tokenizer load)
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--faithcot_root", required=True)

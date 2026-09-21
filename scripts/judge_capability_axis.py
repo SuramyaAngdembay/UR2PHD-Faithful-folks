@@ -20,6 +20,7 @@ EXCLUSIONS are applied and reported, never silent:
 
 Run: python scripts/judge_capability_axis.py   Out: results/judge_capability_axis.json
 """
+N_EXPECTED_ROWS = 1303   # a partial in-flight arm must never enter: audit 2026-09-21 finding 4
 import json, hashlib, collections
 from pathlib import Path
 import numpy as np
@@ -74,6 +75,8 @@ for tag, label in AXIS.items():
         d = json.loads(line); n_tot += 1
         if d.get('score') is not None: sc[d['rid']] = float(d['score'])
     rate = len(sc) / max(n_tot, 1)
+    if n_tot < N_EXPECTED_ROWS:
+        out['excluded'][label] = f'arm incomplete: {n_tot} rows'; print(f'{label:28s}  EXCLUDED (incomplete: {n_tot} rows)'); continue
     if rate < MIN_PARSE_RATE:
         out['excluded'][label] = f'parse rate {rate:.3f} below {MIN_PARSE_RATE}; non-random missingness'
         print(f'{label:28s}  EXCLUDED (parse rate {rate:.1%})')

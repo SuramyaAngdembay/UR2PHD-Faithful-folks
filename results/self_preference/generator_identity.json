@@ -1,7 +1,7 @@
 {
   "endpoint": "E5 (EXPLORATORY -- not pre-registered; see spec amendment note)",
   "regime": "blind_ft1v2",
-  "script_sha256": "9b3c5fdb05c10a202185f8f4394d02ae0a248e4080146c76e5daa217093f0144",
+  "script_sha256": "6d175b1d3ec4fbfbc48b16aa301dbc5a0cea152fd55ee0123556b25a1ab9d284",
   "judges": {
     "cotonly": {
       "label_effect": 15.446,
@@ -580,28 +580,100 @@
       "n_questions_label": 86
     },
     "qwen25_3b_instruct": {
-      "label_effect": 6.896,
+      "label_effect": 5.126,
       "label_effect_ci95": [
-        -3.23,
-        16.83
+        -0.99,
+        11.38
       ],
-      "generator_spread": 26.636,
+      "generator_spread": 15.96,
       "generator_spread_ci95": [
-        15.77,
-        38.26
+        8.87,
+        22.99
       ],
-      "ratio": 3.863,
+      "ratio": 3.114,
       "ratio_ci95": [
-        -46.54,
-        36.6
+        -15.22,
+        20.96
       ],
       "per_generator_deviation": {
-        "gemini-2.5-flash": -10.729,
-        "gpt-4o-mini": -3.043,
-        "Qwen2.5-7B-Instruct": 0.479,
-        "llama-3.1-8b-instruct": 15.907
+        "gemini-2.5-flash": -8.225,
+        "gpt-4o-mini": -1.48,
+        "Qwen2.5-7B-Instruct": 0.518,
+        "llama-3.1-8b-instruct": 7.735
       },
-      "n_questions_label": 40
+      "n_questions_label": 86
+    },
+    "qwen25_3b_instruct_s0": {
+      "label_effect": 1.463,
+      "label_effect_ci95": [
+        -4.26,
+        7.72
+      ],
+      "generator_spread": 13.595,
+      "generator_spread_ci95": [
+        9.52,
+        20.47
+      ],
+      "ratio": 9.291,
+      "ratio_ci95": [
+        -62.52,
+        72.47
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -6.546,
+        "gpt-4o-mini": -4.672,
+        "Qwen2.5-7B-Instruct": 3.07,
+        "llama-3.1-8b-instruct": 7.049
+      },
+      "n_questions_label": 86
+    },
+    "qwen25_3b_instruct_s1": {
+      "label_effect": 5.716,
+      "label_effect_ci95": [
+        -0.78,
+        12.15
+      ],
+      "generator_spread": 14.608,
+      "generator_spread_ci95": [
+        8.68,
+        20.66
+      ],
+      "ratio": 2.556,
+      "ratio_ci95": [
+        -17.39,
+        18.93
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -7.76,
+        "gpt-4o-mini": -0.988,
+        "Qwen2.5-7B-Instruct": 0.487,
+        "llama-3.1-8b-instruct": 6.848
+      },
+      "n_questions_label": 85
+    },
+    "qwen25_3b_instruct_s2": {
+      "label_effect": 9.314,
+      "label_effect_ci95": [
+        2.73,
+        15.82
+      ],
+      "generator_spread": 10.135,
+      "generator_spread_ci95": [
+        5.09,
+        16.16
+      ],
+      "ratio": 1.088,
+      "ratio_ci95": [
+        0.44,
+        3.79
+      ],
+      "per_generator_deviation": {
+        "gemini-2.5-flash": -5.882,
+        "Qwen2.5-7B-Instruct": 0.027,
+        "gpt-4o-mini": 0.445,
+        "llama-3.1-8b-instruct": 4.253
+      },
+      "n_questions_label": 86
     },
     "qwen25_7b": {
       "label_effect": 8.3,

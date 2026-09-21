@@ -13,6 +13,7 @@ scored on identical rows; that is a smaller and differently-composed set than th
 
 Run: python scripts/generator_ranking_shift.py   Out: results/generator_ranking_shift.json
 """
+N_EXPECTED_ROWS = 1303   # a partial in-flight arm must never enter: audit 2026-09-21 finding 4
 import json, hashlib, collections, itertools
 from pathlib import Path
 import numpy as np

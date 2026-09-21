@@ -1,5 +1,8 @@
 # Multiplicity ledger (2026-09-19)
 
+> **CORRECTED 2026-09-21 — see `2026-09-21-independent-code-audit.md` finding 9.** The BonaFide judge inversion is **not** "the one pre-registered headline": the registered hypothesis was the opposite (judge above chance) and it failed. 0.419 is the outcome of a registered analysis, not a confirmed registered claim; the correction-family argument applies to the analysis, the framing below does not. Family sizes were counted from this ledger's own rows, three tests appear twice as mirrors, and "every null below 2.1" skips question-only/correct at z = +2.10. No verdict flips; the answer-tracing regime gap (z = 2.67) is fragile to family size.
+
+
 Action 3 of `notes/2026-09-19-holdout-and-phacking-audit.md`, which required this "before anything
 enters the manuscript". Artefacts: `scripts/multiplicity_ledger.py`,
 `results/multiplicity_ledger.json`.

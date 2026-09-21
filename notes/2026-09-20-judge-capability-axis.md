@@ -1,5 +1,8 @@
 # The blind regime is hard invariantly across judge capability (2026-09-20)
 
+> **CORRECTED 2026-09-21 — see `2026-09-21-independent-code-audit.md` and `2026-09-21-validity-stress-tests.md`.** "3.5x among the seven at 7B and above" excluded Olmo-3-7B, which is a 7B model — selection on the outcome; with it the ratio is 2.2x. The ten-judge table in the first update used a partial 594-row arm for Qwen2.5-3B-Instruct. The "greedy below all seeds" oddity is wrong for Qwen2.5-3B-Instruct and overstated for Llama-3.2-3B; the genuine outlier is Llama-3.1-8B blind. The 0.023 API noise figure is blind-regime only (correct regime 0.013). The ceiling is a pooled, single-judge, generic-prompt number: within generator it is ~0.64, in AQuA the blind regime reaches 0.75-0.88, a seven-judge ensemble reaches 0.700, and published work (BonaFide) shows a definition-informed judge far exceeding a generic one.
+
+
 **EXPLORATORY.** Not pre-registered. Capability is proxied by model size, family and generation,
 not measured. These judges differ in more than capability: instruct-tuning, 4-bit quantization,
 vendor and training data all vary. The table supports a qualitative reading, not a scaling law.

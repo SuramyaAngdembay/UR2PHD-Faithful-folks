@@ -1,5 +1,8 @@
 # Judge scores encode WHO WROTE the trace, not just whether it is unfaithful (2026-09-19)
 
+> **CORRECTED 2026-09-21 — read `2026-09-21-independent-code-audit.md` first.** An independent audit overturned three things in this note. (1) The "LIMITING RESULT" ranking test ran on a subset containing only two of the four generators; on the full population pooling inflates every blind-regime judge AUROC by 0.014-0.045 and the leader changes (rank correlation 0.94, not 0.99). (2) Self-preference is **not identifiable** with this design, not "absent": all three differenced effects exclude zero at the pre-registered Bonferroni level but differ in sign, and 29% of placebo cells do too. (3) The question-only arm is not a valid floor for the spread statistic; the permutation floor is 4.5-6.7, so "18x-29x" is 2.3x-5.6x, the range across nine distinct judges is 8.1-29.1 not 19.5-31.7, Olmo's spread is noise, and the partition is **not** unanimous across seed arms. The direction of the generator-vs-label comparison survives a fair variance decomposition. Original text preserved below for provenance.
+
+
 **Status: EXPLORATORY.** This was not the pre-registered hypothesis. It is what the pre-registered
 falsification test in `self-preference-spec.md` turned up when the hypothesis it was guarding
 failed. The order of events is recorded in full below because that is what makes the finding

@@ -1,5 +1,8 @@
 # Judge-identity campaign: consolidated summary (2026-09-19/20)
 
+> **CORRECTED 2026-09-21 — see `2026-09-21-independent-code-audit.md`, `2026-09-21-validity-stress-tests.md` and `2026-09-21-scoop-check-six-contributions.md`.** Of the five "findings that survive" below: #2 (judge nondeterminism) is already published by others and should be reported as practice, not contribution; #3's figures and its unanimity claim are wrong as stated; #4 (self-preference "absent, Verified") is downgraded to "not identifiable"; #1 (the ceiling) carries four caveats — pooled over generators (within-generator ceiling ~0.64), not uniform over domains (AQuA blind 0.75-0.88), possibly a label-reliability limit, possibly prompt-bound. The withdrawal in table row 3 rested on an invalid test. "2.2x" came from a partial in-flight arm; the final figure is 2.3x.
+
+
 Written for the ChainTrackers team and Dr. Rahimi. Synthesises six notes from a single campaign.
 Every number below traces to a committed artefact; per-finding detail is in the linked notes.
 

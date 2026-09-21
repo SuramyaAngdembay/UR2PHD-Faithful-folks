@@ -17,6 +17,7 @@ within-question mean, on the same questions, in the blind (incorrect-answer) reg
 
 Run: python scripts/generator_identity_effect.py   Out: results/self_preference/generator_identity.json
 """
+N_EXPECTED_ROWS = 1303   # a partial in-flight arm must never enter: audit 2026-09-21 finding 4
 import json, hashlib, collections
 from pathlib import Path
 import numpy as np
@@ -83,7 +84,7 @@ for f in sorted(RES.glob('judge_raw_*.jsonl')):
     # Parse RATE, not an absolute count: an absolute 1300 threshold silently dropped
     # Olmo-3-7B (1299 scored of 1304) for five unparsed rows, which is not a reason to exclude it.
     # The real exclusion criterion is heavy, non-random missingness -- see the Qwen2.5-3B base arms.
-    if len(sc) / max(n_rows, 1) < 0.95: 
+    if n_rows < N_EXPECTED_ROWS or len(sc) / max(n_rows, 1) < 0.95: 
         print(f'  skipping {tag}: parse rate {len(sc)/max(n_rows,1):.3f}')
         continue
     lab, dev = per_question(sc, QS)

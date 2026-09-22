@@ -115,3 +115,20 @@ the prompt — not in the context of the question or the preceding steps.
 `scripts/anvil/cie_build_circuits.py` calls the authors' functions with their constants and changes
 only operations: a wall-clock budget for a clean exit, atomic writes so a killed job cannot leave a
 half-written graph that a resume would trust, and per-graph timing so SU projections are measured.
+
+---
+
+## Stage 1 log (2026-09-21)
+
+**A100 40 GB smoke (job 20839008): out of memory at model load; 0.15 SU spent, no circuit built.**
+Llama-3.1-8B in bf16 (16 GB) plus the 32 CRV transcoder encoders (1.07 B parameters per layer;
+~34 GB with the decoders lazily loaded, which is circuit-tracer's default) exceeds 40 GB before
+attribution starts. This answers the question the A100 copy was submitted to ask: the pipeline
+needs an 80 GB card, consistent with the paper's stated hardware. The A100 allocation is not usable
+for stage 2 without code changes to the authors' loading path, which the spec does not permit.
+Nothing about accuracy was observed. The training step then failed on an empty record set, which is
+the plumbing check behaving correctly on absent input; the same code will be exercised by the H100
+job.
+
+**H100 80 GB smoke (job 20839007): queued**, estimated start given by the scheduler as 20:03 local.
+Expected resident footprint ~50 GB, leaving ~30 GB for attribution batches.

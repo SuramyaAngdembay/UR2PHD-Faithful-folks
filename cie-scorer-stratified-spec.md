@@ -147,3 +147,13 @@ procedure: the whole call should have been diffed against the signature.
 
 **SU spent through attempt 2: 52 min 53 s of single-GPU time ≈ 0.9 SU** (A100 9:09, H100 16:50
 cancelled, H100 26:54), against the 1.5 SU smoke ceiling. No accuracy quantity has been observed.
+
+**H100 smoke, attempt 3 (job 20844136): the pipeline works; the gate trips.** With the complete
+compatibility layer, all 11 graphs for the first AQuA trace were built and saved (peak 57.0 GB),
+then the 30-minute wall clock ended the job during the second dataset. **Measured cost: 105–181 s
+per graph (median ≈140 s).** The full population is 2,540 graphs (AQuA 677, LogiQA 795, TruthfulQA
+742, HLE-Bio 326), projecting to **74–128 SU for circuits alone**, above the 60 SU stage-2 gate and
+consuming most or all of the 100 SU cap before any training. **Per the gate rule, stage 2 is not
+launched.** SU spent through attempt 3: 1 h 23 min ≈ 1.4 SU (smoke ceiling 1.5). The authors'
+code offloads all 32 transcoders to CPU around every attribution; a `--offload none` flag has been
+added to the driver as an operational (not methodological) option, untested and unspent.

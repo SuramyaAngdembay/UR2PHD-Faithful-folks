@@ -26,6 +26,7 @@ ap.add_argument("--limit", type=int, default=0)
 ap.add_argument("--budget_min", type=float, default=0, help="stop cleanly after this many minutes (0 = no limit)")
 ap.add_argument("--model_name", default="meta-llama/Llama-3.1-8B-Instruct")
 ap.add_argument("--transcoder_name", default="facebook/crv-8b-instruct-transcoders")
+ap.add_argument("--offload", default="cpu", choices=["cpu", "none"], help="authors hard-code cpu; none keeps transcoders resident (operational only)")
 a = ap.parse_args()
 T0 = time.time()
 
@@ -72,7 +73,7 @@ for row, rp, steps, td, need in todo:
         graph = C.attribute_compressed(
             prompt=sentence, model=model, max_n_logits=C.MAX_N_LOGITS, desired_logit_prob=C.DESIRED_LOGIT_PROB,
             batch_size=C.BATCH_SIZE, max_feature_nodes=C.MAX_FEATURE_NODES,
-            max_features_per_position=C.MAX_FEATURES_PER_POSITION, offload="cpu", verbose=False,
+            max_features_per_position=C.MAX_FEATURES_PER_POSITION, offload=(None if a.offload == "none" else a.offload), verbose=False,
             update_interval=C.UPDATE_INTERVAL, selected_positions=selected, target_pos=target_pos)
         gp = td / f"step_{k}.pt"; tmp = td / f".step_{k}.pt.tmp"
         graph.to_pt(tmp); os.replace(tmp, gp)

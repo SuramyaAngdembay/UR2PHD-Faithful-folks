@@ -1,6 +1,6 @@
 # Current research state
 
-Updated September 20, 2026. Research driver: Codex, following the user's explicit
+Updated September 21, 2026. Research driver: Codex, following the user's explicit
 handoff from the previous session. This file supersedes older orientation and
 claims; it does not alter the historical frozen experiment.
 
@@ -156,6 +156,34 @@ Earlier audit entries below are historical where superseded by that executed
 repair. The prior containment/F1 labels and saved regime JSON stay preserved,
 but are not the current correctness-stratified analysis. Reserved exposure is
 204/807 responses across 156 questions (397 responses sharing those questions).
+
+## Definition-informed judge, CIE-Scorer reproduction, and the audit (September 21)
+
+An independent audit of the 19-20 September scripts overturned three conclusions: the
+ranking-stability test had run on the two open-weight generators only; self-preference is "not
+identifiable", not "absent"; and the question-only arm was never a valid floor for the spread
+statistic (`notes/2026-09-21-independent-code-audit.md`). Stress tests: the benchmark's two human
+label fields disagree 7.0% in the blind regime against 2.5% in the correct one; judge errors there
+are shared (ensembling three API judges adds +0.007 against +0.045 on correct answers); in AQuA the
+blind regime is not blind (judges 0.75-0.88). A scoop check found the wrong-answer-stratum
+evaluation and the constructed-to-annotated transfer test unclaimed elsewhere; the metric inversion
+strongly anticipated; judge nondeterminism already published (`notes/2026-09-21-scoop-check-six-
+contributions.md`).
+
+Definition-informed judge, pre-registered (`definition-informed-judge-spec.md`), verdict ROBUST:
+FaithCoT's own annotator criteria verbatim move blind-regime AUROC by -0.016 to +0.003 on four
+judges, best 0.682; the benchmark's own judge prompt is lower. Revealing the gold answer makes all
+four judges worse in the blind regime (gpt-4o-mini 0.679 -> 0.617) because the score becomes a
+correctness grader (AUROC vs incorrectness 0.683 -> 0.918): the composition mechanism induced on
+demand, and the Krumdick objection answered in the wrong direction for it
+(`notes/2026-09-21-definition-informed-judge-results.md`).
+
+CIE-Scorer reproduction on Anvil (`cie-scorer-stratified-spec.md`, frozen before any GPU time, hard
+cap 100 SU on tra250034-ai). Release ships no checkpoint, so the detector is retrained from released
+code. Environment built, transcoders and hash-verified Llama weights staged, drivers written with
+atomic resumable circuit building. A100 40 GB cannot load the pipeline (52.8 GB resident); the H100
+smoke hit a circuit-tracer rename (`scan` -> `scan_name`) at the packaging step, shimmed without
+touching the authors' code, and is resubmitted. About 0.4 SU spent.
 
 ## Judge-identity campaign and multiplicity ledger (September 19-20)
 

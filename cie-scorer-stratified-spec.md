@@ -132,3 +132,18 @@ job.
 
 **H100 80 GB smoke (job 20839007): queued**, estimated start given by the scheduler as 20:03 local.
 Expected resident footprint ~50 GB, leaving ~30 GB for attribution batches.
+
+**H100 smoke, attempt 2 (job 20840687): completed, 0 circuits, 26:54 elapsed.** Model and
+transcoders loaded (52.8 GB); token selection and attribution ran; packaging failed on a second
+removed constructor argument (`logit_tokens`). Root cause established from circuit-tracer's history:
+the argument was removed on 2026-02-23 (commit 43933d1) and CRV top-k transcoder support was added
+on 2026-04-17 (4b1b491). **No upstream commit has both**, so CIE-Scorer (released 2026-07-27) was
+written against a private build — consistent with its README's reference to unreleased "bundled
+circuit-tracer archives". Pinning is therefore impossible; `scripts/anvil/cie_compat.py` translates
+the authors' call to the current API losslessly (`logit_tokens` → `LogitTarget` list, `scan` →
+`scan_name`), and the full construct/save/load/read-back path was exercised on the login node
+before resubmission. Attempt 1 had shimmed only the first failing field, which was the wrong
+procedure: the whole call should have been diffed against the signature.
+
+**SU spent through attempt 2: 52 min 53 s of single-GPU time ≈ 0.9 SU** (A100 9:09, H100 16:50
+cancelled, H100 26:54), against the 1.5 SU smoke ceiling. No accuracy quantity has been observed.

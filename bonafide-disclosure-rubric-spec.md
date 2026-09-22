@@ -48,3 +48,5 @@ the frozen judge excludes zero. NOT-EXPLAINED: H < 0.60. MIXED otherwise. Expect
 doubt is that their judge was Gemini and saw their own prompt format.
 
 **Smoke:** up to 8 rows for parse rate only. Rows kept; run resumes from them.
+
+**Analysis script:** `scripts/bonafide_rubric_H_analysis.py`, sha256 `1976f0d37b800d13…`, committed while both arms were in flight and before any row of either was read.

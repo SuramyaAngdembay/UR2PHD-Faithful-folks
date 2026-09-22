@@ -50,3 +50,8 @@ doubt is that their judge was Gemini and saw their own prompt format.
 **Smoke:** up to 8 rows for parse rate only. Rows kept; run resumes from them.
 
 **Analysis script:** `scripts/bonafide_rubric_H_analysis.py`, sha256 `1976f0d37b800d13…`, committed while both arms were in flight and before any row of either was read.
+
+**Outcome (2026-09-22):** NOT-EXPLAINED on the primary (gpt-4o-mini 0.251, worse than the frozen
+0.419); secondary gpt-4o +0.301 [+0.217, +0.391] vs arm C, reaching 0.671. See
+`notes/2026-09-22-bonafide-disclosure-rubric-results.md`. My 65% prior on RUBRIC-EXPLAINS was wrong
+for the primary judge.

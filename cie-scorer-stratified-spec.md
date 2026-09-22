@@ -159,3 +159,26 @@ code offloads all 32 transcoders to CPU around every attribution; a `--offload n
 added to the driver as an operational (not methodological) option, untested and unspent.
 
 **Amendment (2026-09-22):** one further 20-minute timing smoke (≈0.3 SU, exceeding the 1.5 SU smoke ceiling by that amount) with `--offload none`, submitted on my own authority because it is the one measurement that decides whether stage 2 fits the 100 SU cap. Operational only; no accuracy quantity.
+
+## Amendment v1.2 (2026-09-22) — resident transcoders: measurement, and an acceptance rule fixed before the null run is read
+
+**Measured.** Keeping the 32 transcoders resident (`--offload none`) instead of the authors'
+hard-coded CPU offload cuts per-graph time from a median ≈140 s to ≈35 s (3.9×) on the same
+AQuA trace, with peak memory 57.9 GB against 57.0 GB. Projection for the 2,540-graph population:
+**≈25 SU**, under the 60 SU gate.
+
+**Not identical.** Against the offloaded run of the same trace: token positions, selected
+features and logit targets are identical on all 11 graphs; adjacency weights differ on ≈11% of
+entries by at most 0.2–2.4% of the largest weight (Pearson ≥ 0.99996); the detector's edge sets
+are identical and its edge features correlate at 0.997. The differences sit on a 1/16 grid,
+consistent with bf16 accumulation order, i.e. GPU nondeterminism rather than a change in what is
+computed — but that is a hypothesis until a same-setting repeat is compared.
+
+**Acceptance rule, fixed now.** A second resident run of the same trace (job 20862638, ≈0.15 SU)
+is compared to the first with the same script (`adj_compare.py`). The resident setting is
+accepted as an operational-only deviation **iff** the offload-vs-resident differences are no
+larger than the resident-vs-resident differences on both measures (max relative adjacency
+difference and detector edge-feature correlation). If resident-vs-resident is exactly identical,
+the offload path introduces real numerical change and the authors' setting is kept at ≈100 SU,
+which returns the decision to the user. Either way, the run-to-run figure is reported in the
+results as the reproducibility floor of a circuit-based detector.

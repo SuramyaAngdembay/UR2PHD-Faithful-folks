@@ -157,3 +157,5 @@ consuming most or all of the 100 SU cap before any training. **Per the gate rule
 launched.** SU spent through attempt 3: 1 h 23 min ≈ 1.4 SU (smoke ceiling 1.5). The authors'
 code offloads all 32 transcoders to CPU around every attribution; a `--offload none` flag has been
 added to the driver as an operational (not methodological) option, untested and unspent.
+
+**Amendment (2026-09-22):** one further 20-minute timing smoke (≈0.3 SU, exceeding the 1.5 SU smoke ceiling by that amount) with `--offload none`, submitted on my own authority because it is the one measurement that decides whether stage 2 fits the 100 SU cap. Operational only; no accuracy quantity.
